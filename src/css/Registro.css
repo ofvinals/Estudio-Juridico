@@ -1,0 +1,126 @@
+.register{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content:space-between;
+    flex-direction: row;
+    background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+    url(../public/01.jpg);
+    background-size:cover;
+    object-fit:cover;
+    background-position:center;
+}
+.login-tituloreg{
+    text-align: center;
+    width: 100%;
+    margin-top: 3vw;
+    margin-bottom: 3vw;
+    font-size: 4vw;
+    color: rgb(143, 142, 139);
+}
+#loginFormreg{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 8vw;
+    width: 80%;
+    margin-bottom: 10vw;
+    border-radius: 5px;
+    border: 0.3vw outset rgb(143, 142, 139);
+    opacity: 0.85;
+}
+.labelreg{
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+    margin-bottom: 1vw;
+    background-color: rgb(36, 36, 36)!important;
+    color:rgb(143, 142, 139);
+    font-size: 2vw;
+}
+.inputreg{
+    color: rgb(143, 142, 139);
+    width: 100%;
+    margin-bottom: 1vw;
+    border-radius: 5px;
+    outline-color: rgb(143, 142, 139);
+    font-size: 2vw;
+}
+.input-submitreg{
+    font-size: 1.5vw;
+    font-weight: 700;
+    margin-top: 2vw;
+    transition: var(--transition);
+    background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 50%;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.input-submitreg:hover{
+    opacity:0.8;
+    color: white;
+    background-color: transparent;
+}
+.input-submitreg:disabled{
+    opacity:0.3;
+    background-color: transparent;
+}
+
+.parraforeg{
+    font-size: 1.5vw;
+    font-family:'Poppins', sans-serif;
+    color: rgb(143, 142, 139);
+    margin-top: 15px;
+    font-weight: 700;
+}
+.parraforeg a{
+    text-decoration: underline;
+    color: rgb(255, 255, 255);
+    font-weight: bold;
+}
+.parraforeg a:hover{
+    opacity:0.8;
+    background-color: transparent;
+}
+.swal2-html-container {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px !important;
+    color: rgb(143, 142, 139) !important;
+  }
+
+@media(max-width: 300px){
+    .parrafo {
+
+   
+    font-size: 14px;
+    text-align: center;
+
+    }
+}
+@media (max-width: 280px){
+    .login-titulo{
+			 font-size:1.5rem !important;
+			 }
+
+	  .login{
+			padding: 0px !important;
+		}
+        
+		.login-input{
+			padding: 0.4em !important;
+		}
+
+		.login-input-submit{
+			padding: 0.3em !important;
+		}
+
+    
+} 
+.olviparr{
+    margin-top: 10px;  
+    font-size: 14px;
+    text-decoration: none !important;
+    color:rgb(143, 142, 139);
+}

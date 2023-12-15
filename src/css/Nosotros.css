@@ -1,0 +1,49 @@
+.about{
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+    url(../public/01.jpg);
+    background-size: cover;
+    object-fit: cover;
+    background-position: center;
+}
+.tituloabout{
+	color:rgb(143, 142, 139);
+    font-size: 4vw;
+    margin-top: 8vw;
+    font-weight: 700;
+}
+.subtituloabout {
+	color:rgb(143, 142, 139);
+    font-size: 2vw;
+    margin-top: 4vw;
+    margin-bottom: 3vw;
+    font-weight: 800;
+}
+.parrafoabout{
+    font-size: 1.5vw;
+    color:rgb(143, 142, 139);
+    font-weight: 700;
+    text-align: justify;
+    margin-left: 15vw;
+    margin-right: 15vw;
+}
+.cardabout{
+    color:rgb(143, 142, 139);
+    border: 0.4vw outset rgb(143, 142, 139);
+    text-align: center;
+    margin-right:  20vw;
+    margin-left: 20vw;
+}
+.cardtitle{
+    font-size: 3vw;
+    font-weight: 700;
+}
+.contcard{
+    font-size: 1vw;
+}

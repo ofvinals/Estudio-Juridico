@@ -1,0 +1,71 @@
+.esp{
+    display: flex;
+    flex-wrap: wrap;
+
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+    url(../public/01.jpg);
+    background-size: cover;
+    object-fit:fill;
+    background-position: center;
+}
+.cardbody{
+    display: flex;
+    flex: auto!important;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 1vw!important;
+}
+.titlees{
+    font-size: 4vw!important;
+    font-weight: 800;
+    color: rgb(143, 142, 139);
+    text-align: center;
+    margin-top: 4vw!important;
+    margin-bottom: 4vw!important;
+}
+.titleesp{
+    font-size: 1.8vw!important;
+    font-weight: 800;
+    color: rgb(143, 142, 139);
+    text-align: center;
+    margin-top:2vw;
+    margin-bottom:2vw;    
+}
+.articleesp{
+    height:25vw;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 1vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;    box-shadow: 10px 5px 5px rgb(143, 142, 139);
+    color:rgb(143, 142, 139);
+    background-color: black;
+    opacity: 0.7;
+    font-size: 1vw;
+}
+.listado{
+    font-size: 1.3vw!important;
+    margin-left: 1vw;
+    margin-bottom:1vw;
+}
+.cardlink1{
+    font-weight: 600;   
+    text-decoration: none;
+    background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    font-size: 1.5vw;
+    border-radius: 5px;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+    padding: 0.5vw;
+    margin-bottom: 1vw;
+}
+.cardlink1:hover{
+    opacity:0.8;
+    background-color: transparent;
+    color: white;
+}

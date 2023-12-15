@@ -1,0 +1,60 @@
+.interes{
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+    url(../public/01.jpg);
+    background-size: cover;
+    object-fit:cover;
+    background-position: center;
+    padding-bottom: 8vw!important;
+}
+.titleint{
+    font-size: 4vw;
+    font-weight: 700;
+    color: rgb(143, 142, 139);
+    margin-top: 8vw;
+    margin-bottom: 3vw
+}
+.subtitleint{
+    font-size: 2vw!important;
+    font-weight: 600;
+    color: rgb(143, 142, 139);
+    text-align: center;
+}
+.articleint{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    height: 90%;
+    align-items: center;
+    text-align: center;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+    border-radius: 9px;
+    box-shadow: 10px 5px 5px rgb(143, 142, 139);
+    color:rgb(143, 142, 139);
+    background-color: black;
+    opacity: 0.7;
+    margin-left: 2vw;
+    margin-top: 2vw;
+}
+.imgcard{
+    margin-top: 1vw;
+    object-fit: cover;
+    width: 50%;
+    height: auto;
+}
+.cardlink{
+    font-weight: 600;
+    text-decoration: none;
+    color: rgb(143, 142, 139);
+    font-size: 100%;
+    border: 0.4vw outset rgb(143, 142, 139);
+    padding: 1vw;
+    margin-bottom: 3vw;
+}
+

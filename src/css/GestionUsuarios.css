@@ -1,0 +1,96 @@
+.bodygestion {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+		url(../public/01.jpg);
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+    padding-bottom: 10vw;
+}
+.btnusu {
+	font-weight: 700;
+	font-size: 1.5vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 30vw;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+	border-radius: 9px;
+    padding: 1vw;
+    cursor: pointer;
+	text-align: center;
+    margin-top: 2vw;
+    text-decoration: none;
+}
+.btnusu:hover{
+    opacity:0.8;
+	background-color: rgb(27, 27, 27);
+}
+.modal-header{
+    background-color: rgb(27, 27, 27)!important;
+    color:rgb(143, 142, 139);
+}
+.btn-close{
+    background-color: rgb(143, 142, 139)!important;
+    color:rgb(143, 142, 139);
+}
+.modal-body{
+    background-color: rgb(27, 27, 27)!important;
+    color:rgb(143, 142, 139);
+}
+.modal-footer{
+    background-color: rgb(27, 27, 27)!important;
+    color:rgb(143, 142, 139);
+}
+.btnusumodal {
+	background-color:rgb(143, 142, 139) ;
+	font-weight: 700;
+	font-size: 80%;
+	margin-top: 1vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 30%;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+	border-radius: 9px;
+    cursor: pointer;
+	text-align: center;
+    text-decoration: none;
+
+}
+.btnusumodal:hover{
+    opacity:0.8;
+	background-color: rgb(27, 27, 27);
+} 
+.titleadm{
+    font-size: 3vw;
+    font-weight: 600;
+}
+.btnacc{
+    color: rgb(27, 27, 27);
+    width: 8vw!important;
+    margin-left: 1vw;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+	border-radius: 9px;
+    cursor: pointer;
+	text-align: center;
+}
+.accico{
+    font-size: 100%;
+    color: rgb(27, 27, 27);
+}
+
+.modedittitle{
+    font-size: 3vw;
+
+}
+.modeditinput{
+    font-size: 2vw;
+}
+.modeditlabel{
+    font-size: 2vw;
+}

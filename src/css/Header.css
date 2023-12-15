@@ -1,0 +1,59 @@
+.header{
+    height: auto;
+}
+.menu{
+    margin-right: 1vw;
+    background-color: rgb(143, 142, 139);
+    color:rgb(27,27,27);
+    font-size: 2.5vw;
+    margin-top:2vw;
+}
+.colapse{
+    display: flex;
+    flex-direction: column;
+
+}
+.navtitle{
+    font-size: 2.5vw;
+    color:rgb(143, 142, 139)
+}
+.botones{
+    display: flex ;
+    justify-content: between;
+    align-items: center;
+}
+.botonnav{
+    text-decoration: none;
+    text-align: center;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    font-size: 1.5vw!important;
+    font-weight: 700;
+    color: rgb(143, 142, 139);
+    background-color: rgb(27,27,27);
+    padding: 1vw;
+    margin-left: 1vw;
+}
+.botonnav:hover{
+    color: rgb(255, 255, 255);
+    opacity:0.8;
+    background-color: transparent;
+}
+.linknav{
+    font-size: 1.5vw;
+    padding: 1vw;
+
+
+    text-align: center;
+    text-decoration: none;
+    color: rgb(143, 142, 139);
+    border: 0.2vw outset rgb(143, 142, 139);
+    border-radius: 5px;
+    margin-bottom: 1.5vw;
+    margin-left: 1vw;
+}
+.linknav:hover{
+    color: rgb(255, 255, 255);
+    opacity:0.8;
+    background-color: transparent;
+}

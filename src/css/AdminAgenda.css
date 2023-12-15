@@ -1,0 +1,47 @@
+.datepicker{
+  background-color: blue;
+  color: aquamarine;
+}
+.bodyagusu{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 4vw;
+  margin-top: 4vw;
+}
+.titleagusu{
+  color:rgb(143, 142, 139);
+  font-size: 5vw;
+  margin-top: 4vw;
+  margin-bottom: 3vw;
+  font-weight: 800;
+  width: 100%;
+}
+.btnesagusu{
+  display: flex;
+  justify-content: space-between;
+}
+.btnagusu{
+  font-weight: 700;
+	font-size: 2vw;
+  margin-left: 1vw;
+	margin-top: 5vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 40%;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding-top: 1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+	padding-bottom: 1vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.btnagusu:hover{
+    opacity:0.8;
+	color: white;
+	background-color: transparent;
+}

@@ -1,0 +1,86 @@
+.bodycontact {
+	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+		url(../public/01.jpg);
+	background-size: cover;
+	background-position: 100%;
+	object-fit: cover;
+	background-position: center;
+    padding-bottom: 8vw;
+}
+.cajaForm{
+    display: flex;
+    flex-wrap: wrap;
+	flex-direction: column;
+    justify-content: center;
+	align-items: center;
+    margin-top: 3vw;
+	padding-top: 3vw;
+    margin-bottom: 7vw;
+    border-radius: 5px;
+    border: 0.3vw outset rgb(143, 142, 139);
+    opacity: 0.85;
+}
+.titulocont {
+	color:rgb(143, 142, 139);
+    font-size: 8vw;
+	font-weight: 700;
+	margin-top:8vw;
+}
+.form-label {
+	color: rgb(143, 142, 139);
+}
+.labelcontact{
+    font-weight: 600;
+	text-align: center;
+    color:rgb(143, 142, 139);
+    font-size: 2vw;
+
+}
+.inputcontact{
+	font-size: 1.5vw;
+	margin-bottom: 2vw;
+	width: 100%;
+}
+.Parrafo2 {
+	color: rgb(143, 142, 139);
+    font-size: 2vw;
+}
+.cajaForm {
+	border: 0.3vw  outset rgb(143, 142, 139);
+	margin-left: 10vw;
+	margin-right: 10vw;
+}
+.btncont {
+	font-weight: 700;
+	font-size: 2vw;
+	margin-top: 1vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 40%;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+
+	padding-top: 1vw;
+	padding-bottom: 1vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.btncont:hover{
+    opacity:0.8;
+	color: white;
+	background-color: transparent;
+}
+
+@media (min-width: 940px) {
+	#CajaForm {
+		width: 60%;
+	}
+}
+/* ipad mini */
+@media (min-width: 768px) {
+	#CajaForm {
+		width: 50%;
+	}
+}
