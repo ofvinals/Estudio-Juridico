@@ -13,13 +13,13 @@
 }
 .btnusu {
 	font-weight: 700;
-	font-size: 1.5vw;
+	font-size: 2vw;
 	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
     width: 30vw;
     border: 0.3vw outset rgb(143, 142, 139)!important;
-	border-radius: 9px;
+	border-radius: 5px;
     padding: 1vw;
     cursor: pointer;
 	text-align: center;
@@ -70,12 +70,16 @@
     font-size: 3vw;
     font-weight: 600;
 }
+.acciones{
+    width: 10%;
+}
 .btnacc{
+
     color: rgb(27, 27, 27);
-    width: 8vw!important;
+    width: 5%vw!important;
     margin-left: 1vw;
     border: 0.3vw outset rgb(143, 142, 139)!important;
-	border-radius: 9px;
+	border-radius: 5px;
     cursor: pointer;
 	text-align: center;
 }

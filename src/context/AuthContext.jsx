@@ -1,6 +1,5 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 import { auth } from '../firebase';
-
 import React from 'react';
 import {
 	signInWithPopup,
@@ -12,17 +11,17 @@ import {
 } from 'firebase/auth';
 
 // crea contexto
-export const authContext = createContext();
+export const AuthContext = createContext();
 
 // funcion que retorna el contexto del objeto creado por useContext
 export const useAuth = () => {
-	const context = useContext(authContext);
+	const context = useContext(AuthContext);
 	if (!context) {
 		console.log('Error, no creaste el contexto!');
 	}
 	return context;
 };
-
+// guarda el estado actual, si hay usuario logueado o no
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState('');
 
@@ -33,6 +32,7 @@ export function AuthProvider({ children }) {
 				setUser('');
 			} else {
 				setUser(currentUser);
+				console.log(user);
 			}
 		});
 		return () => subscribed();
@@ -47,33 +47,24 @@ export function AuthProvider({ children }) {
 		console.log(response);
 	};
 	const login = async (email, password) => {
-		const response = await signInWithEmailAndPassword(
-			auth,
-			email,
-			password
-		);
+		const response = await signInWithEmailAndPassword(auth, email, password);
 		console.log(response);
 	};
 
 	const loginWithGoogle = async () => {
 		const responseGoogle = new GoogleAuthProvider();
-		return signInWithPopup(auth, responseGoogle);
+		return await signInWithPopup(auth, responseGoogle);
 	};
+	// falta agregar try catch
 	const logout = async () => {
 		const response = await signOut(auth);
 		console.log(response);
 	};
 
 	return (
-		<authContext.Provider
-			value={{
-				register,
-				login,
-				loginWithGoogle,
-				logout,
-                user
-			}}>
+		<AuthContext.Provider
+			value={{ register, login, loginWithGoogle, logout, user }}>
 			{children}
-		</authContext.Provider>
+		</AuthContext.Provider>
 	);
 }

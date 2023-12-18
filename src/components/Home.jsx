@@ -5,98 +5,88 @@ import '../css/Home.css';
 
 export const Home = () => {
 	return (
-		<div className='bg-dark  container-fluid'>
+		<div className='bg-dark container-fluid'>
 			<div className='imagennav'>
-				<p className='text-white parrafo1'>
+				<p className='parrafo1'>
 					Evolucionamos el concepto de estudio juridico
 				</p>
-				<p className='text-white parrafo2'>
+				<p className='parrafo2'>
 					SOMOS EL PRIMER ESTUDIO JURIDICO ONLINE DE TUCUMAN
 				</p>
-				<Link
-					className=' botonturno'
-					to='/login'>
+				<Link className=' botonturno' to='/login'>
+					<i className='icosec4 bi bi-calendar-check me-2'></i>
 					Agenda tu turno ahora!
 				</Link>
 			</div>
-			<div className='carrousel bg-dark'>
-				<Carousel fade>
-					<Carousel.Item className='cardcarrousel'>
-						<img
-							className='imgcar'
-							src='/vista-superior-elementos-orientacion-profesional-jueces.jpg'
-						/>
-						<Carousel.Caption className='textcar'>
-							<h3 className='titlecard'>Disponibilidad</h3>
-							<ul className='listacard'>
+
+			<Carousel fade>
+				<Carousel.Item>
+					<div className='imagencar1'>
+						<Carousel.Caption>
+							<h3 className='titlecar1'>Disponibilidad</h3>
+							<ul className='listacar1'>
 								<li>Varias vias de comunicacion</li>
-								<li>Videollamadas/Reuniones Virtuales</li>
-								<li>Meet/Zoom/Discord</li>
-								<li>Whatsapp/Telegram</li>
+								<li>Videollamadas - Reuniones Virtuales</li>
+								<li>Meet - Zoom - Discord</li>
+								<li>Whatsapp - Telegram</li>
 								<li>Correo Electronico</li>
 							</ul>
 						</Carousel.Caption>
-					</Carousel.Item>
-					<Carousel.Item>
-						<img className='imgcar' src='/descarga (1).jpeg' />
-						<Carousel.Caption className='textcar'>
-							<h3 className='titlecard'>Expediente Virtual</h3>
-							<ul className='listacard'>
+					</div>
+				</Carousel.Item>
+				<Carousel.Item>
+					<div className='imagencar2'>
+						<Carousel.Caption>
+							<h3 className='titlecar2'>Expediente Virtual</h3>
+							<ul className='listacar2'>
 								<li>
-									Conoce el estado y situacion de tu
-									expediente judicial en tiempo real
+									Conoce el estado y situacion de tu expediente
+									judicial en tiempo real
 								</li>
 								<li>Adjunta documentacion digitalizada</li>
 								<li>
-									Recordatorios automaticos de
-									audiencias,reuniones y vencimientos
+									Recordatorios automaticos de audiencias,reuniones y
+									vencimientos
 								</li>
 							</ul>
 						</Carousel.Caption>
-					</Carousel.Item>
-					<Carousel.Item>
-						<img className='imgcar' src='/descarga (2).jpeg' />
-						<Carousel.Caption className='textcar'>
-							<h3 className=' titlecard'>Formas de pago</h3>
-							<ul className='listacard'>
+					</div>
+				</Carousel.Item>
+				<Carousel.Item>
+					<div className='imagencar3'>
+						<Carousel.Caption>
+							<h3 className=' titlecar3'>Formas de pago</h3>
+							<ul className='listacar3'>
 								<li>Paga de la forma que mas te convenga</li>
 								<li>Planes de Pago</li>
 								<li>Abonos mensuales para empresas</li>
 								<li>Efectivo o transferencias bancarias</li>
-								<li>Tarjeta de credito/Debito/MercadoPago</li>
+								<li>Tarjeta de credito - Debito - MercadoPago</li>
 								<li>Criptomonedas</li>
 							</ul>
 						</Carousel.Caption>
-					</Carousel.Item>
-				</Carousel>
-			</div>
-
-			<div className='section4'>
-				<div className='imgsection4'>
-					<img className='img-fluid ' src='414635-PD6SLS-602-1a.jpg' alt='imagencontacto' />
+					</div>
+				</Carousel.Item>
+			</Carousel>
+			
+			<div className='imagensection4'>
+				<h1 className='titlecontac'>Contactanos!</h1>
+				<div className='conttel'>
+					<i className='icosec4 bi bi-telephone-fill me-2'></i>
+					<p>+54 381-4581382</p>
 				</div>
-				<div className='textocontacto'>
-					<h1 className='titlecontac'>Contactanos!</h1>
-					<div className='d-flex flex-row  justify-content-center'>
-						<i className='color icosec4 bi bi-telephone-fill me-2 '></i>
-						<p>+54 381-4581383</p>
-					</div>
-					<div className='d-flex flex-row  justify-content-center'>
-						<i className='color icosec4 bi bi-envelope-at-fill me-2 '></i>
-						<p>admin@gmail.com</p>
-					</div>
-					<h4 className='icosec4 color'>-------- O --------</h4>
-					<div className='d-flex flex-row  justify-content-center'>
-						<i className='color icosec4 bi bi-calendar-check me-2 '></i>
-						<h4 className='color icosec4'>
-							Agenda tu consulta YA!
-						</h4>
-						<Link className='botonturnoabajo' to='/login'>
-						AGENDA TU TURNO ONLINE!
-					</Link>
-					</div>
-
+				<div className='contmail'>
+					<i className='icosec4 bi bi-envelope-at-fill me-2'></i>
+					<p>ofvinals@gmail.com</p>
 				</div>
+				<div className='contdir'>
+					<i className='icosec4 bi bi-geo-alt-fill me-2'></i>
+					<p>Buenos Aires 555 - SMT</p>
+				</div>
+				<Link className='botonturnoabajo' to='/login'>
+					<i className='icosec4 bi bi-calendar-check me-1'></i>
+					AGENDA TU TURNO ONLINE!
+				</Link>
 			</div>
 		</div>
 	);

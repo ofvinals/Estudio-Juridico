@@ -1,312 +1,290 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Modal } from 'react-bootstrap';
+import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
-import { Form } from 'react-bootstrap';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
-
 import '../css/GestionAgenda.css';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+
 
 export const GestionAgenda = () => {
+	const auth = useAuth();
+	const { email } = auth.user;
+	console.log(email);
 
-	const [usuarios, setUsuarios] = useState([]);
-	const [divTurnoVisible, setDivTurnoVisible] = useState(false);
-	const [turnosOcupados, setTurnosOcupados] = useState([]);
+	const [show, setShow] = useState(false);
+	// const [usuarios, setUsuarios] = useState([]);
 	const [turnos, setTurnos] = useState([]);
-	const [fechaTurno, setFechaTurno] = useState('');
-	const [horaTurno, setHoraTurno] = useState('');
-	const [turnoSeleccionado, setTurnoSeleccionado] = useState('');
-	const [motivo, setMotivo] = useState('');
-	
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-    const [isTimePickerVisible, setTimePickerVisibility] = useState(false);
+	const [tablaTurnos, setTablaTurnos] = useState();
+	const [formValues, setFormValues] = useState({
+		turnoEditarTurno: '',
+		emailEditarTurno: '',
+		motivoEditarTurno: '',
+		turnoIndex: null,
+	});
+	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 
-	class Turno {
-		constructor(id, nombre, apellido, fecha, hora, motivo) {
-			this.id = id;
-			this.nombre = nombre;
-			this.apellido= apellido;
-			this.fecha = fecha;
-			this.hora = hora;
-			this.motivo = motivo;
-		}
-	}
+	const handleClose = () => setShow(false);
+	const handleShow = () => setShow(true);
 
-	class UsarTurno {
-		constructor(id, nombre, apellido, fecha, hora, motivo) {
-			this.id = id;
-			this.nombre = nombre;
-			this.apellido= apellido;
-			this.fecha = fecha;
-			this.hora = hora;
-			this.motivo = motivo;
-		}
-	}
-
+	// // Cargar turnos desde el localStorage al montar el componente
 	useEffect(() => {
-		let turnosOcupado = [];
-		turnosOcupado =
+		// const ListaUsuarios =
+		// 	JSON.parse(localStorage.getItem('usuarios')) || [];
+		// setUsuarios(ListaUsuarios);
+		const ListaTurnos =
 			JSON.parse(localStorage.getItem('turnosOcupados')) || [];
-		let turnos = [];
-		turnos = JSON.parse(localStorage.getItem('turnos')) || [];
 
-		cargarUsuarios();
+		// Ordenar por la propiedad 'turno'
+		ListaTurnos.sort((a, b) => a.turno.localeCompare(b.turno));
+
+		setTurnos(ListaTurnos);
 	}, []);
 
-	const cargarUsuarios = () => {
-		const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-		setUsuarios(usuarios);
-	};
-	/*FECHA ACTUAL */
-	const fechaActual = new Date();
-	// Obtiene los componentes de la fecha
-	const año = fechaActual.getFullYear();
-	const mes = (fechaActual.getMonth() + 1).toString().padStart(2, '0'); // Suma 1 al mes porque los meses comienzan desde 0
-	const dia = fechaActual.getDate().toString().padStart(2, '0');
-	const fechaFormateada = `${año}-${mes}-${dia}`;
+	useEffect(() => {
+		cargarTablaTurnos();
+	}, [turnos]);
 
-	console.log(fechaFormateada);
+	function cargarTablaTurnos() {
+		const tabla = turnos.map((turnos) => (
+			<tr key={turnos.id}>
+				{/* <td className='align-middle'>{usuario.id}</td> */}
+				<td className='align-middle '>{turnos.id}</td>
+				<td className='align-middle '>{turnos.turno}</td>
+				<td className='align-middle '>{turnos.email}</td>
+				<td className='align-middle '>{turnos.motivo}</td>
+				<td>
+					<div className='d-flex flex-row justify-content-around'>
+						<button
+							className='btnacc btn btn-success'
+							onClick={() => mostrarEditarTurnoModal(turnos.id)}>
+							<i className='bi bi-pen  accico'></i>
+						</button>
+						<button
+							className='btnacc btn btn-danger'
+							onClick={() => borrarTurno(turnos.id)}>
+							<i className='bi bi-trash-fill  accico'></i>
+						</button>
+					</div>
+				</td>
+			</tr>
+		));
 
-	//recorro los medicos para cargar los horarios que tengan
-	//falta comparar los horarios ocupados para no incluirlos
+		setTablaTurnos(tabla);
+	}
 
-	const cargarHorarios = () => {
-		const fechaSelec = document.getElementById('fechaTurno').value;
-		if (fechaSelec < fechaFormateada) {
-			alert('No puede seleccionar una fecha anterior al día de hoy');
-			document.getElementById('fechaTurno').value = fechaFormateada;
-		}
-
-		const horarioTurnos = document.getElementById('horarioTurnos');
-		horarioTurnos.innerHTML = '';
-
-		const turnosDisponibles = ['09', '10', '11'];
-
-		turnosDisponibles.forEach((turno) => {
-			const nuevoTurno = document.createElement('button');
-			nuevoTurno.textContent = turno;
-
-			nuevoTurno.onclick = function () {
-				setTurnoSeleccionado(turno);
-				this.classList.add('turnoSeleccionado');
-
-				const otrosTurnos =
-					horarioTurnos.querySelectorAll('.turnoHorario-btn');
-				otrosTurnos.forEach((otroTurno) => {
-					if (otroTurno !== nuevoTurno) {
-						otroTurno.classList.remove('turnoSeleccionado');
-					}
-				});
-			};
-			nuevoTurno.className = 'turnoHorario-btn';
-			horarioTurnos.appendChild(nuevoTurno);
+	// funcion para mostrar el modal de edicion de usuarios
+	function mostrarEditarTurnoModal(id) {
+		const turno = turnos.find((turno) => turno.id === id);
+		// Establecer los valores en el estado
+		setFormValues({
+			...formValues,
+			turnoEditarTurno: turno.turno,
+			motivoEditarTurno: turno.motivo,
+			turnoIndex: id,
 		});
-	};
+		// Mostrar el modal
+		setShow(true);
+	}
 
-	const confirmarTurno = () => {
-		// Lógica para confirmar el turno
+	function editarTurno(e) {
+		e.preventDefault();
+
+		const { turnoEditarTurno, motivoEditarTurno, usuarioIndex } = formValues;
+
 		Swal.fire({
 			icon: 'success',
-			title: 'Listo!',
-			text: 'Su Turno fue agendado exitosamente!',
-			timer: 1500,
+			text: 'Editado exitosamente!',
+			confirmButtonColor: '#8f8e8b',
 		});
 
-		// aqui deberiamos cargar el localStorage
-
-		const id = Date.now();
-		const varFechaTurno = fechaTurno.value;
-		const varHorario = turnoSeleccionado.textContent;
-		const varMotivo = motivo.value;
-		const nombrePaciente =
-			document.getElementById('listaPaciente').value || '';
-		const newTurno = new Turno(
-			id,
-			nombrePaciente,
-			varFechaTurno,
-			varHorario,
-			varMotivo
-		);
-		setTurnos([...turnos, newTurno]);
-		localStorage.setItem('turnos', JSON.stringify([...turnos, newTurno]));
-
-		const newUsarTurno = new UsarTurno(varFechaTurno, varHorario);
-		setTurnosOcupados([...turnosOcupados, newUsarTurno]);
-		localStorage.setItem(
-			'turnosOcupados',
-			JSON.stringify([...turnosOcupados, newUsarTurno])
+		const turnoIndexInt = parseInt(formValues.turnoIndex, 10);
+		const turnoeditado = turnos.map((turno) =>
+			turno.id === turnoIndexInt
+				? {
+						...turno,
+						turno: formValues.turnoEditarTurno,
+						motivo: formValues.motivoEditarTurno,
+				  }
+				: { ...turno }
 		);
 
-		cerrarModal();
-	};
+		// Actualiza el estado de turnos, luego de editar
+		setTurnos(turnoeditado);
 
-	const cargarTurnos = () => {
-		let turnoCont = 0;
-		const nuevaFilaTarjetas = [];
+		localStorage.setItem('turnosOcupados', JSON.stringify(turnoeditado));
+		cargarTablaTurnos();
+		setShow(false);
+		setShowConfirmationModal(false);
+	}
 
-		turnos.forEach(function (turno02) {
-			if (turno02.usuarios === listaPaciente.value) {
-				const div = (
-					<div
-						key={turno02.id}
-						className='mb-4 col-md-6 col-lg-4 col-xl-4 col-xxl-3'>
-						<div className='card'>
-							<div className='card-body'>
-								<p className='card-text'>
-									Fecha y hora: {turno02.fecha} -{' '}
-									{turno02.horario} hs.{' '}
-								</p>
-								<p className='card-text'>
-									Motivo: {turno02.motivo}
-								</p>
-							</div>
-						</div>
-					</div>
+	// funcion para eliminar usuarios
+	function borrarTurno(id) {
+		Swal.fire({
+			title: '¿Estás seguro?',
+			text: 'Confirmas la eliminacion del turno',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#8f8e8b',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Filtrar
+				const eliminaTurno = turnos.filter(function (turno) {
+					return turno.id !== id;
+				});
+				localStorage.setItem(
+					'turnosOcupados',
+					JSON.stringify(eliminaTurno)
 				);
-				nuevaFilaTarjetas.push(div);
-
-				turnoCont++;
-
-				// Si hemos alcanzado 4 tarjetas, crear una nueva fila
-				if (turnoCont === 4) {
-					nuevaFilaTarjetas.push(
-						<div key={`saltoLinea-${turnoCont}`} />
-					);
-					turnoCont = 0;
-				}
+				setTurnos(eliminaTurno);
+				cargarTablaTurnos();
+				Swal.fire(
+					'Eliminado',
+					'El turno fue eliminado con exito',
+					'success'
+				);
 			}
 		});
-
-		setTurnos(nuevaFilaTarjetas);
-	};
-
-	const mostrarModal = () => {
-		var modal = document.getElementById('modal');
-		modal.style.display = 'block';
-	};
-
-	const cerrarModal = () => {
-		var modal = document.getElementById('modal');
-		setFechaTurno('');
-		setTurnoSeleccionado('');
-		setMotivo('');
-		modal.style.display = 'none';
-		cargarTurnos();
-	};
-
-	const mostrarModal2 = () => {
-		// Obtener el modal por su ID
-		var modal = document.getElementById('modal2');
-
-		// Mostrar el modal
-		modal.style.display = 'block';
-	};
-
-	const cerrarModal2 = () => {
-		// Obtener el modal por su ID
-		var modal = document.getElementById('modal2');
-		document.getElementById('divTurno').hidden = true;
-		// Cerrar el modal
-		modal.style.display = 'none';
-
-		cargarTurnos();
-	};
-
-	const validarDatos = () => {
-		if (fechaTurno === '' || turnoSeleccionado === '' || motivo === '') {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Atención',
-				text: 'Debes completar todos los campos para agendar tu turno!',
-			});
-		}
-	};
+	}
 
 	return (
 		<>
-			<div className='bodygestionag container-fluid bg-dark'>
+			<div className='bodygestionagusu container-fluid bg-dark'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, Admin</h4>
-					<p className=''>Panel de Administracion de Agenda</p>
+					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
+					<p className=''>Panel de Administracion de Turnos</p>
 				</div>
 			</div>
+
 			<div className='bg-dark'>
 				<div className='d-flex justify-content-around'>
-					<Link
-						to='/Admin'
-						className='btnusu modal m-3 align-self-center p-2'>
+					<Link to='/Admin' className='btnagusu align-self-center '>
 						Volver al Panel
 					</Link>
 				</div>
-			</div>
-
-			<div>
 				<div>
-					<h2>Paciente:</h2>
-					<select
-						id='listaPaciente'
-						onChange={cargarTurnos}
-						className='form-control'></select>
+					<p className='titleagusu text-center'>Turnos registrados</p>
 				</div>
-
-				<div>
-					<button onClick={() => setDivTurnoVisible(true)}>
-						Nuevo turno
-					</button>
+				<div className='container table-responsive'>
+					<Table
+						striped
+						hover
+						variant='dark'
+						className='text-center table   border border-secondary-subtle'>
+						<thead>
+							<tr>
+								<th>#ID</th>
+								<th>Turno</th>
+								<th>Usuario</th>
+								<th>Motivo</th>
+								<th className='acciones'>Acciones</th>
+							</tr>
+						</thead>
+						<tbody id='tablaTurnos' className='table-group-divider'>
+							{tablaTurnos}
+						</tbody>
+					</Table>
 				</div>
-			</div>
-			<hr />
-			<div id='divTurno' hidden={!divTurnoVisible}>
-				<div id='datosTurno'>
-					<h2 className='w-50'>Disponible</h2>
-					<input
-						id='fechaTurno'
-						type='date'
-						onChange={cargarHorarios}
-					/>
-
-					<div id='horarioTurnos'></div>
-
-					<div>
-						<label>Motivo de la consulta:</label>
-						<textarea id='motivo' cols='80' rows='10'></textarea>
-					</div>
+				{/* <!-- Modal Editar Usuario --> */} */
+				<div id='editTurnoModal' className='modal my-auto mx-auto'>
+					<Modal show={show} onHide={handleClose}>
+						<Modal.Header closeButton>
+							<Modal.Title className='modedittitle'>
+								Editar Turno
+							</Modal.Title>
+						</Modal.Header>
+						<Modal.Body>
+							<Form>
+								<Form.Group
+									className='mb-3'
+									controlId='turnoEditarTurno'>
+									<Form.Label className='modeditlabel'>
+										Turno
+									</Form.Label>
+									<Form.Control
+										className='modeditinput'
+										type='text'
+										placeholder='Turno'
+										value={formValues.turnoEditarTurno}
+										onChange={(e) =>
+											setFormValues({
+												...formValues,
+												turnoEditarTurno: e.target.value,
+											})
+										}
+										autoFocus
+									/>
+								</Form.Group>
+								<Form.Group
+									className='mb-3'
+									controlId='motivoEditarTurno'>
+									<Form.Label className='modeditlabel'>
+										Motivo
+									</Form.Label>
+									<Form.Control
+										className='modeditinput'
+										type='email'
+										placeholder='name@example.com'
+										value={formValues.motivoEditarTurno}
+										onChange={(e) =>
+											setFormValues({
+												...formValues,
+												motivoEditarTurno: e.target.value,
+											})
+										}
+									/>
+								</Form.Group>
+							</Form>
+						</Modal.Body>
+						<Modal.Footer>
+							<button
+								className='btnacc btn btn-success w-50'
+								onClick={(e) => setShowConfirmationModal(true)}>
+								Guardar cambios
+							</button>
+							<button
+								className='btnacc btn btn-danger'
+								onClick={(e) => handleClose()}>
+								Cancelar
+							</button>
+							<p id='formErrorModalEditUser' className='m-3'></p>
+						</Modal.Footer>
+					</Modal>
 				</div>
-
-				<p id='turnoSeleccionado'></p>
-				<div>
-					<button onClick={validarDatos}>Confirmar</button>
-					<button onClick={mostrarModal2}>Cancelar</button>
-				</div>
-			</div>
-
-			<div id='modal' className='modal'>
-				<div className='modal-content'>
-					<p>¿Quiere confirmar el turno?</p>
-					<button onClick={confirmarTurno}>Sí</button>
-					<button onClick={cerrarModal}>No</button>
-				</div>
-			</div>
-
-			<div id='modal2' className='modal2'>
-				<div className='modal-content2'>
-					<p>
-						Estás por borrar los datos ingresados ¿Quiere cancelar
-						el turno?
-					</p>
-					<button onClick={confirmarTurno}>Sí</button>
-					<button onClick={cerrarModal2}>No</button>
-				</div>
-			</div>
-
-			<hr />
-
-			<div id='pruebaM'>Turnos pendientes:</div>
-
-			<div className='container mt-4 ' id='contenedorCard'>
-				<div className='row ' id='filaTarjetas'></div>
+				{/* <!-- Modal para confirmar edicion --> */}
+				<Modal
+					show={showConfirmationModal}
+					onHide={() => setShowConfirmationModal(false)}>
+					<Modal.Header closeButton>
+						<Modal.Title>Confirmar cambios</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						¿Estás seguro de que deseas guardar los cambios?
+					</Modal.Body>
+					<Modal.Footer>
+						<button
+							className='btnacc btn btn-success w-50'
+							onClick={(e) => {
+								editarTurno(e);
+								handleClose();
+							}}>
+							Confirmar
+						</button>
+						<button
+							className='btnacc btn btn-danger'
+							onClick={() => {
+								setShowConfirmationModal(false);
+								handleClose();
+							}}>
+							Cancelar
+						</button>
+					</Modal.Footer>
+				</Modal>
 			</div>
 		</>
 	);

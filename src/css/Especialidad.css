@@ -8,18 +8,24 @@
     background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
     url(../public/01.jpg);
     background-size: cover;
-    object-fit:fill;
+    object-fit:cover;
     background-position: center;
 }
 .cardbody{
     display: flex;
-    flex: auto!important;
     flex-direction: column;
     flex-wrap: wrap;
     justify-content: center;
+    height:27vw;
     align-items: center;
-
-    margin-bottom: 1vw!important;
+    text-align: center;
+    margin-bottom: 1vw;
+    margin-left:2vw;
+    border: 0.3vw outset rgb(143, 142, 139)!important;    
+    box-shadow: 5px 5px 5px rgb(143, 142, 139);
+    color:rgb(143, 142, 139);
+    background-color: black;
+    opacity: 0.7;
 }
 .titlees{
     font-size: 4vw!important;
@@ -29,25 +35,15 @@
     margin-top: 4vw!important;
     margin-bottom: 4vw!important;
 }
-.titleesp{
+.titlecard{
     font-size: 1.8vw!important;
     font-weight: 800;
     color: rgb(143, 142, 139);
     text-align: center;
-    margin-top:2vw;
-    margin-bottom:2vw;    
+    margin-top:1vw;
+    margin-bottom:2vw!important;    
 }
-.articleesp{
-    height:25vw;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 1vw;
-    border: 0.2vw outset rgb(143, 142, 139)!important;    box-shadow: 10px 5px 5px rgb(143, 142, 139);
-    color:rgb(143, 142, 139);
-    background-color: black;
-    opacity: 0.7;
-    font-size: 1vw;
-}
+
 .listado{
     font-size: 1.3vw!important;
     margin-left: 1vw;
@@ -58,11 +54,11 @@
     text-decoration: none;
     background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     border-radius: 5px;
     border: 0.3vw outset rgb(143, 142, 139)!important;
-    padding: 0.5vw;
-    margin-bottom: 1vw;
+    padding: 1vw;
+    margin-top:2vw;
 }
 .cardlink1:hover{
     opacity:0.8;

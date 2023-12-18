@@ -47,11 +47,11 @@
     font-size: 2vw;
 }
 .input-submitreg{
-    font-size: 1.5vw;
+    font-size: 2vw;
     font-weight: 700;
     margin-top: 2vw;
     transition: var(--transition);
-    background-color: rgb(27, 27, 27);
+	background-color: rgb(10, 61, 4)!important;
     color: rgb(143, 142, 139);
     width: 50%;
     border: 0.3vw outset rgb(143, 142, 139)!important;
@@ -64,6 +64,7 @@
     background-color: transparent;
 }
 .input-submitreg:disabled{
+    background-color: rgb(10, 61, 4);
     opacity:0.3;
     background-color: transparent;
 }
@@ -118,9 +119,4 @@
 
     
 } 
-.olviparr{
-    margin-top: 10px;  
-    font-size: 14px;
-    text-decoration: none !important;
-    color:rgb(143, 142, 139);
-}
+

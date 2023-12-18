@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-
 import '../css/Registro.css';
+import { useAuth } from '../context/AuthContext';
 
 export const Registro = () => {
+	const auth = useAuth();
+	const [emailRegister, setEmailRegister] = useState('');
+	const [passwordRegister, setPasswordRegister] = useState('');
+
 	const initialForm = {
 		nombre: '',
 		apellido: '',
@@ -15,8 +18,8 @@ export const Registro = () => {
 		domicilio: '',
 		celular: '',
 		email: '',
-		contrasena: '',
-		confcontrasena: '',
+		password: '',
+		confpassword: '',
 	};
 
 	const [form, setForm] = useState(initialForm);
@@ -29,6 +32,7 @@ export const Registro = () => {
 		setUsuarios(usuariosGuardados);
 	}, []);
 
+	// funcion para agregar usuarios 
 	const agregarUsuario = (newUser) => {
 		const ListaUsuarios = [...usuarios, newUser];
 		setUsuarios(ListaUsuarios);
@@ -39,6 +43,7 @@ export const Registro = () => {
 		setForm({ ...form, [e.target.name]: e.target.value });
 	};
 
+	// Verifica que todos los campos contengan datos
 	const handleBlur = (e) => {
 		if (e.target.value === '' || +e.target.value === 0) {
 			Swal.fire({
@@ -50,10 +55,14 @@ export const Registro = () => {
 			return;
 		}
 	};
-
-	function handleSubmit(e) {
+	// funcion para registrar mail y contraseña solamente en Firebase
+	async function handleSubmit(e) {
 		e.preventDefault();
-
+		try {
+			await auth.register(emailRegister, passwordRegister);
+		} catch (error) {
+			console.error('Error al registrar', error.message);
+		}
 		const {
 			nombre,
 			apellido,
@@ -61,10 +70,11 @@ export const Registro = () => {
 			domicilio,
 			celular,
 			email,
-			contrasena,
-			confcontrasena,
+			password,
+			confpassword,
 		} = form;
 
+		// Validaciones
 		const validarEmail = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/;
 		const resultadoValidacion = validarEmail.test(email);
 		if (celular.length < 10 || celular.length > 11) {
@@ -83,7 +93,7 @@ export const Registro = () => {
 				confirmButtonColor: '#8f8e8b',
 			});
 			return;
-		} else if (contrasena.length < 7) {
+		} else if (password.length < 7) {
 			Swal.fire({
 				icon: 'warning',
 				title: 'Oops...',
@@ -91,7 +101,7 @@ export const Registro = () => {
 				confirmButtonColor: '#8f8e8b',
 			});
 			return;
-		} else if (contrasena !== confcontrasena) {
+		} else if (password !== confpassword) {
 			Swal.fire({
 				icon: 'warning',
 				title: 'Oops...',
@@ -101,6 +111,7 @@ export const Registro = () => {
 			return;
 		}
 
+		// Verifica si el mail o DNI ya se encuentran registrados en el Local Storage
 		const existeEmail = usuarios.find((usuario) => usuario.email === email);
 		const existeDni = usuarios.find((usuario) => usuario.dni === dni);
 
@@ -130,7 +141,7 @@ export const Registro = () => {
 			domicilio,
 			celular,
 			email,
-			contrasena,
+			password,
 		};
 
 		agregarUsuario(newUser);
@@ -154,6 +165,7 @@ export const Registro = () => {
 		<section className='register'>
 			<Form id='loginFormreg' className='container fluid bg-dark'>
 				<h2 className='login-tituloreg'>Crear Nueva Cuenta</h2>
+
 				<Form.Group className='mb-3' controlId='inputname'>
 					<Form.Label className='labelreg'>Nombre/s</Form.Label>
 					<Form.Control
@@ -165,6 +177,7 @@ export const Registro = () => {
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3' controlId='inputsubname'>
 					<Form.Label className='labelreg'>Apellido/s</Form.Label>
 					<Form.Control
@@ -176,6 +189,7 @@ export const Registro = () => {
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3' controlId='inputdni'>
 					<Form.Label className='labelreg'>DNI/CUIT/CUIL</Form.Label>
 					<Form.Control
@@ -187,6 +201,7 @@ export const Registro = () => {
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3' controlId='inputdomic'>
 					<Form.Label className='labelreg'>Domicilio</Form.Label>
 					<Form.Control
@@ -198,6 +213,7 @@ export const Registro = () => {
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3' controlId='inputcel'>
 					<Form.Label className='labelreg'>Celular</Form.Label>
 					<Form.Control
@@ -209,6 +225,7 @@ export const Registro = () => {
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3' controlId='inputemail'>
 					<Form.Label className='labelreg'>Email</Form.Label>
 					<Form.Control
@@ -216,21 +233,29 @@ export const Registro = () => {
 						type='email'
 						name='email'
 						value={form.email}
-						onChange={handleChange}
+						onChange={(e) => {
+							handleChange(e);
+							setEmailRegister(e.target.value);
+						}}
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3'>
 					<Form.Label className='labelreg'>Contraseña</Form.Label>
 					<Form.Control
 						className='inputreg'
 						type='password'
-						name='contrasena'
-						value={form.contrasena}
-						onChange={handleChange}
+						name='password'
+						value={form.password}
+						onChange={(e) => {
+							handleChange(e);
+							setPasswordRegister(e.target.value);
+						}}
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
+
 				<Form.Group className='mb-3'>
 					<Form.Label className='labelreg' controlid='inputconfirm'>
 						Confirmar Contraseña
@@ -238,8 +263,8 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='password'
-						name='confcontrasena'
-						value={form.confcontrasena}
+						name='confpassword'
+						value={form.confpassword}
 						onChange={handleChange}
 						onBlur={handleBlur}
 					/>

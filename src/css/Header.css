@@ -2,8 +2,12 @@
     height: auto;
 }
 .menu{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-right: 1vw;
-    background-color: rgb(143, 142, 139);
+    background-color: rgb(143, 142, 139)!important;
     color:rgb(27,27,27);
     font-size: 2.5vw;
     margin-top:2vw;
@@ -19,31 +23,104 @@
 }
 .botones{
     display: flex ;
-    justify-content: between;
+    flex-wrap: wrap;
+    justify-content: center;
     align-items: center;
 }
-.botonnav{
-    text-decoration: none;
+.estadolog{
+    font-size: 1.5vw;
     text-align: center;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
-    border-radius: 5px;
-    font-size: 1.5vw!important;
-    font-weight: 700;
-    color: rgb(143, 142, 139);
-    background-color: rgb(27,27,27);
-    padding: 1vw;
-    margin-left: 1vw;
+    align-items: center;
+    width: 100%;
 }
-.botonnav:hover{
-    color: rgb(255, 255, 255);
+
+.btnnav {
+	font-weight: 600;
+	font-size: 2vw;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
+	transition: var(--transition);
+	background-color: rgb(28, 28, 28);
+    color: rgb(143, 142, 139);
+    width: 60%;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding:1vw;
+	padding-left:2vw;
+	padding-right:2vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.btnnav:hover{
     opacity:0.8;
+	color: white;
+	background-color: transparent;
+}
+.botonnavlog {
+	font-weight: 600;
+	font-size: 2vw;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
+	margin-right: 1.5vw;
+	transition: var(--transition);
+	background-color: rgb(10, 61, 4)!important;
+    color: rgb(143, 142, 139);
+    width: 100%;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding:1vw;
+	padding-left:1vw;
+	padding-right:1vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.botona{
+    margin-right:2vw;
+}
+.botonnavlog:hover{
+    opacity:0.8;
+    color: white;
+    background-color: transparent;
+}
+.botonnavlog:disabled{
+    background-color: rgb(10, 61, 4);
+    opacity:0.3;
+    background-color: transparent;
+}
+.botonnavreg {
+	font-weight: 600;
+	font-size: 2vw;
+	margin-top: 1vw;
+	margin-bottom: 1vw;
+	transition: var(--transition);
+	background-color: rgb(81, 74, 7);
+    color: rgb(143, 142, 139);
+    width: 100%!important;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding:1vw;
+	padding-left:1vw;
+	padding-right:1vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.botonnavreg:hover{
+    opacity:0.8;
+    color: white;
+    background-color: transparent;
+}
+.botonnavreg:disabled{
+    background-color: rgb(10, 61, 4);
+
+    opacity:0.3;
     background-color: transparent;
 }
 .linknav{
     font-size: 1.5vw;
     padding: 1vw;
-
-
     text-align: center;
     text-decoration: none;
     color: rgb(143, 142, 139);

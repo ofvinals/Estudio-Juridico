@@ -13,22 +13,22 @@
     url(../public/01.jpg);
     background-size: cover;
     object-fit: cover;
-    background-position: center;   
+    background-position: center;    
 }
-
-.login-titulolog{
+.titulolog{
     text-align: center;
     width: 100%;
     font-size: 4vw;
     margin-top:4vw;
+    margin-bottom: 4vw;
     color: rgb(143, 142, 139);
 }
-.login #loginForm{
+.logform{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 65%;
+    width: 60%;
     border-radius: 5px;
     border: 0.3vw outset rgb(143, 142, 139);
     opacity: 0.85;
@@ -41,16 +41,22 @@
     background-color: rgb(36, 36, 36)!important;
     color:rgb(143, 142, 139);
     font-size: 2vw;
-
 }
 .inputlog{
     align-items: center;
-    font-size: 1.5vw;
+    font-size: 2.5vw;
     align-self: center;
-    width: 120%;
-    margin-bottom: 1vw;
+    width: 90%;
+    margin-bottom: 1.5vw;
+    margin-top:1.5vw;
     border-radius: 5px;
     outline-color: rgb(143, 142, 139);
+}
+.botoneslogin{
+    margin-bottom: 2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .input-submitlog{
     text-align: center;
@@ -60,7 +66,7 @@
     padding: 1vw;
     text-decoration: none;
     transition: var(--transition);
-    background-color: rgb(27, 27, 27)!important;
+	background-color: rgb(10, 61, 4);
     color: rgb(143, 142, 139);
     width: 50%;
     border-radius: 5px;
@@ -72,7 +78,26 @@
     color: white;
     background-color: transparent;
 }
-
+.input-googlelog{
+    text-align: center;
+    font-size: 2vw!important;
+    font-weight: 700;
+    margin-top: 3vw;
+    padding: 1vw;
+    text-decoration: none;
+    transition: var(--transition);
+	background-color: rgb(9, 19, 92);
+    color: rgb(143, 142, 139);
+    width: 80%;
+    border-radius: 5px;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+    cursor: pointer;
+}
+.input-googlelog:hover{
+    opacity:0.8;
+    color: white;
+    background-color: transparent;
+}
 .parrafolog{
     font-size: 2vw;
     font-family:'Poppins', sans-serif;

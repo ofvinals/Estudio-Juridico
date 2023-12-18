@@ -14,9 +14,10 @@
 }
 .titleint{
     font-size: 4vw;
-    font-weight: 700;
+    font-weight: 800;
     color: rgb(143, 142, 139);
     margin-top: 8vw;
+
     margin-bottom: 3vw
 }
 .subtitleint{
@@ -29,7 +30,6 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
     height: 90%;
     align-items: center;
     text-align: center;

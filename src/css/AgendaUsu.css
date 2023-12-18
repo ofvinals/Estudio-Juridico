@@ -1,0 +1,172 @@
+.css-a643pv-MuiStack-root{
+  width: 50%;
+margin-left: 15vw;
+}
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+  background-color: rgb(27, 27, 27);
+  color: rgb(143, 142, 139)!important;
+  border: 0.2vw outset rgb(143, 142, 139)!important;
+  border-radius: 5px!important;
+  text-align: center;
+  font-size: 2.5vw!important;
+  border-color: rgb(143, 142, 139)!important;
+}
+.css-kzf2d7-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
+  border-color: rgb(143, 142, 139)!important;
+}
+.css-1g7nc1s-MuiPickersLayout-root .MuiPickersLayout-toolbar{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-y0fr9s-MuiButtonBase-root-MuiTab-root {
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1b9e08i-MuiTypography-root-MuiPickersToolbarText-root {  
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-mvmxd9-MuiTypography-root-MuiPickersToolbarText-root{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1e4tpwf-MuiTypography-root-MuiPickersToolbarText-root-MuiDateTimePickerToolbar-separator{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1hbyad5-MuiTypography-root{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-13vtpvu-MuiTypography-root-MuiPickersToolbarText-root{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1q04gal-MuiDateCalendar-root{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-rhmlg1-MuiTypography-root-MuiDayCalendar-weekDayLabel{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root:disabled{ 
+  color: rgb(71, 68, 68)!important;
+}
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
+  color: rgb(33, 186, 19)!important;
+}
+.css-1g7nc1s-MuiPickersLayout-root .MuiPickersLayout-actionBar{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
+  color: rgb(143, 142, 139)!important;
+}
+.css-ku1d3k-MuiTimeClock-root{
+  background-color: rgb(27, 27, 27)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-4f0ona-MuiClock-clock{
+  background-color: rgb(17, 16, 16)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-1vooibu-MuiSvgIcon-root{
+  color: rgb(143, 142, 139)!important;
+}
+.css-umzx0k-MuiClock-pin{
+  background-color: rgb(143, 142, 139)!important;
+}
+.css-rdq5h4-MuiClockPointer-root{
+  background-color: rgb(143, 142, 139)!important;
+}
+.css-eg3pzz-MuiClockPointer-thumb{
+  background-color: rgb(143, 142, 139)!important;
+  color: rgb(143, 142, 139)!important;
+}
+.css-d0vs79-MuiClockPointer-root{
+background-color: rgb(143, 142, 139)!important;
+color: rgb(143, 142, 139)!important;
+}
+.css-1ys9rbi-MuiClock-wrapper{
+  background-color: rgb(143, 142, 139)!important;
+}
+.css-zddqwy-MuiClockNumber-root{
+  color: rgb(143, 142, 139)!important;
+}
+.css-zddqwy-MuiClockNumber-root.Mui-disabled{
+  color: rgb(68, 60, 60)!important;
+}
+.css-zddqwy-MuiClockNumber-root.Mui-selected{
+  color: rgb(27, 27, 27)!important;
+  background-color: rgb(143, 142, 139);
+}
+.css-53ccts-MuiClockNumber-root.Mui-disabled{
+  color: rgb(68, 60, 60)!important;
+}
+.css-53ccts-MuiClockNumber-root{
+color: rgb(143, 142, 139)!important;
+}
+.css-53ccts-MuiClockNumber-root.Mui-selected{
+  color: rgb(27, 27, 27)!important;
+  background-color: rgb(143, 142, 139);
+}
+.css-rdq5h4-MuiClockPointer-root{
+  color: rgb(27, 27, 27)!important;
+  background-color: rgb(143, 142, 139);
+}
+.bodyagusu{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 4vw;
+  margin-top: 4vw;
+}
+.titleagusu{
+  color:rgb(143, 142, 139);
+  font-size: 5vw;
+  margin-top: 4vw;
+  margin-bottom: 3vw;
+  font-weight: 800;
+  width: 100%;
+}
+.subtitleagusu{
+  color:rgb(143, 142, 139);
+  font-size: 3vw;
+  margin-top: 4vw;
+  margin-bottom: 3vw;
+  font-weight: 800;
+  width: 100%;
+}
+.btnesagusu{
+  display: flex;
+  justify-content: space-between;
+}
+.btnagusu{
+  font-weight: 700;
+	font-size: 2vw;
+  margin-left: 1vw;
+	margin-top: 5vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+  color: rgb(143, 142, 139);
+  width: 40%;
+  border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding-top: 1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+	padding-bottom: 1vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.btnagusu:hover{
+    opacity:0.8;
+	color: white;
+	background-color: transparent;
+}

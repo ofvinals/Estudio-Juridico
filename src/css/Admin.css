@@ -43,3 +43,25 @@ margin-top:4vw;
     color: white;
     background-color: transparent;
 }
+.botonlogout{
+    margin-right: 5vw;
+    margin-bottom: 5vw;
+    font-weight: 700;
+    padding: 1vw;
+	transition: var(--transition);
+	background-color: rgb(60, 5, 5)!important;
+    color: rgb(143, 142, 139);
+    width: 20%;
+    border: 0.3vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+    cursor: pointer;
+	text-align: center;
+    text-decoration: none;
+    align-self: center;
+    font-size:1.5vw;
+}
+.botonlogout:hover{
+    opacity:0.8;
+    color: white;
+    background-color: transparent;
+}
