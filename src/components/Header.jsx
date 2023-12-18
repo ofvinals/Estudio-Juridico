@@ -42,7 +42,7 @@ export const Header = () => {
 				className='bg-dark'
 				expanded={expanded}
 				onSelect={() => setExpanded(false)}>
-				<Container className=''>
+				<Container className='allnav'>
 					<Navbar.Brand as={Link} to='/home'>
 						<img src='/logo estudio.png' width='50px' alt='logoestudio' />
 					</Navbar.Brand>
@@ -59,7 +59,7 @@ export const Header = () => {
 						id='responsive-navbar-nav'
 						placement='end'
 						onClick={handleNavLinkClick}>
-						<Nav className='menu bg-dark'>
+						<Nav className='menu bg-dark allnav'>
 							<NavLink
 								className='btnnav'
 								to='/home'

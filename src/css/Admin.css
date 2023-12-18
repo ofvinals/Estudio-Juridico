@@ -1,12 +1,13 @@
 .titlead{
-    margin-top: 5vw;
-    margin-bottom: 2vw;
-    font-size: 4vw;
+    margin-top: 3vw;
+    margin-bottom: 5vw;
+    font-size: 3vw;
+    font-weight: 800;
     color:var(--main-color)
 }
 p{
     color: var(--main-color);
-    font-size: 3vw;
+    font-size: 2vw;
 }
 .main {
 	display: flex;
@@ -19,24 +20,24 @@ flex-wrap: wrap ;
 align-items: center;
 align-content: center;
 justify-content: center;
-margin-top:4vw;
+margin-top:5vw;
 }
 .botonadm{
-    margin-right: 5vw;
-    margin-bottom: 5vw;
+    margin-right: 3vw;
+    margin-bottom: 3vw;
     font-weight: 700;
     padding: 1vw;
 	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
-    width: 20%;
-    border: 0.3vw outset rgb(143, 142, 139)!important;
+    width: 15%;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     cursor: pointer;
 	text-align: center;
     text-decoration: none;
     align-self: center;
-    font-size:1.5vw;
+    font-size:1vw;
 }
 .botonadm:hover{
     opacity:0.8;
@@ -44,21 +45,21 @@ margin-top:4vw;
     background-color: transparent;
 }
 .botonlogout{
-    margin-right: 5vw;
-    margin-bottom: 5vw;
+    margin-right: 3vw;
+    margin-bottom: 3vw;
     font-weight: 700;
     padding: 1vw;
 	transition: var(--transition);
 	background-color: rgb(60, 5, 5)!important;
     color: rgb(143, 142, 139);
-    width: 20%;
-    border: 0.3vw outset rgb(143, 142, 139)!important;
+    width: 15%;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     cursor: pointer;
 	text-align: center;
     text-decoration: none;
     align-self: center;
-    font-size:1.5vw;
+    font-size:1vw;
 }
 .botonlogout:hover{
     opacity:0.8;

@@ -1,6 +1,8 @@
 .css-a643pv-MuiStack-root{
-  width: 50%;
-margin-left: 15vw;
+  width: 60%;
+  font-size: 1.5vw!important;
+margin-left: 8vw;
+margin-bottom:3vw;
 }
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
   background-color: rgb(27, 27, 27);
@@ -123,22 +125,22 @@ color: rgb(143, 142, 139)!important;
   display: flex;
   text-align: center;
   justify-content: center;
-  margin-bottom: 4vw;
-  margin-top: 4vw;
+  margin-bottom: 2vw;
+  margin-top: 2vw;
 }
 .titleagusu{
   color:rgb(143, 142, 139);
-  font-size: 5vw;
-  margin-top: 4vw;
-  margin-bottom: 3vw;
+  font-size: 3vw;
+  margin-top: 3vw;
+  margin-bottom: 4vw;
   font-weight: 800;
   width: 100%;
 }
 .subtitleagusu{
   color:rgb(143, 142, 139);
-  font-size: 3vw;
-  margin-top: 4vw;
-  margin-bottom: 3vw;
+  font-size: 1.5vw;
+  margin-top: 1vw;
+  margin-bottom: 2vw;
   font-weight: 800;
   width: 100%;
 }
@@ -146,15 +148,15 @@ color: rgb(143, 142, 139)!important;
   display: flex;
   justify-content: space-between;
 }
-.btnagusu{
+.btnagusuverif{
   font-weight: 700;
-	font-size: 2vw;
+	font-size: 1vw;
   margin-left: 1vw;
-	margin-top: 5vw;
+	margin-top: 1vw;
 	transition: var(--transition);
-	background-color: rgb(27, 27, 27);
+	background-color: rgb(10, 61, 4);
   color: rgb(143, 142, 139);
-  width: 40%;
+  width: 30%;
   border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
 	padding-top: 1vw;
@@ -165,7 +167,36 @@ color: rgb(143, 142, 139)!important;
 	text-align: center;
 	text-decoration: none;
 }
-.btnagusu:hover{
+.btnagusuverif:hover{
+    opacity:0.8;
+	color: white;
+	background-color: transparent;
+}
+.botonnavlog:disabled{
+  background-color: rgb(10, 61, 4);
+  opacity:0.3;
+  background-color: transparent;
+}
+.btnagusuvolver{
+  font-weight: 700;
+	font-size: 1vw;
+  margin-left: 1vw;
+	margin-top: 1vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+  color: rgb(143, 142, 139);
+  width: 30%;
+  border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+	padding-top: 1vw;
+  padding-left: 1vw;
+  padding-right: 1vw;
+	padding-bottom: 1vw;
+    cursor: pointer;
+	text-align: center;
+	text-decoration: none;
+}
+.btnagusuvolver:hover{
     opacity:0.8;
 	color: white;
 	background-color: transparent;

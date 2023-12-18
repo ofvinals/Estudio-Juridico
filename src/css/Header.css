@@ -9,8 +9,8 @@
     margin-right: 1vw;
     background-color: rgb(143, 142, 139)!important;
     color:rgb(27,27,27);
-    font-size: 2.5vw;
-    margin-top:2vw;
+    font-size: 1vw;
+    margin-top:1vw;
 }
 .colapse{
     display: flex;
@@ -18,7 +18,7 @@
 
 }
 .navtitle{
-    font-size: 2.5vw;
+    font-size: 2vw;
     color:rgb(143, 142, 139)
 }
 .botones{
@@ -28,26 +28,25 @@
     align-items: center;
 }
 .estadolog{
-    font-size: 1.5vw;
+    font-size: 1vw;
     text-align: center;
     align-items: center;
     width: 100%;
 }
-
 .btnnav {
-	font-weight: 600;
-	font-size: 2vw;
+	font-weight: 700;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	transition: var(--transition);
 	background-color: rgb(28, 28, 28);
     color: rgb(143, 142, 139);
-    width: 60%;
+    width: 40%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
 	padding:1vw;
-	padding-left:2vw;
-	padding-right:2vw;
+	padding-left:1vw;
+	padding-right:1vw;
     cursor: pointer;
 	text-align: center;
 	text-decoration: none;
@@ -58,11 +57,11 @@
 	background-color: transparent;
 }
 .botonnavlog {
-	font-weight: 600;
-	font-size: 2vw;
+	font-weight: 700;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
-	margin-right: 1.5vw;
+	margin-right: 1vw;
 	transition: var(--transition);
 	background-color: rgb(10, 61, 4)!important;
     color: rgb(143, 142, 139);
@@ -77,7 +76,7 @@
 	text-decoration: none;
 }
 .botona{
-    margin-right:2vw;
+    margin-right:1vw;
 }
 .botonnavlog:hover{
     opacity:0.8;
@@ -90,8 +89,8 @@
     background-color: transparent;
 }
 .botonnavreg {
-	font-weight: 600;
-	font-size: 2vw;
+	font-weight: 700;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	transition: var(--transition);
@@ -118,19 +117,20 @@
     opacity:0.3;
     background-color: transparent;
 }
-.linknav{
-    font-size: 1.5vw;
-    padding: 1vw;
-    text-align: center;
-    text-decoration: none;
-    color: rgb(143, 142, 139);
-    border: 0.2vw outset rgb(143, 142, 139);
-    border-radius: 5px;
-    margin-bottom: 1.5vw;
-    margin-left: 1vw;
-}
-.linknav:hover{
-    color: rgb(255, 255, 255);
-    opacity:0.8;
-    background-color: transparent;
+
+
+@media(min-width: 1400px){
+    .allnav {
+    display:flex;
+        flex-direction: row;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+    .btnnav{
+        width: 30%;
+        padding-top: 1vw;
+        padding-bottom:1vw
+    }
+
 }

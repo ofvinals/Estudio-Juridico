@@ -163,10 +163,10 @@ export const AgendaUsu = () => {
 							</DemoContainer>
 						</LocalizationProvider>
 						<div className='btnesagusu'>
-							<button className='btnagusu' onClick={handleCrearCita}>
+							<button className='btnagusuverif' disabled={!!startDate} onClick={handleCrearCita}>
 								Verificar turno
 							</button>
-							<Link to='/AdminUsu' className='btnagusu'>
+							<Link to='/AdminUsu' className='btnagusuvolver'>
 								Volver al Panel
 							</Link>
 						</div>

@@ -154,7 +154,7 @@ export const GestionAgenda = () => {
 
 	return (
 		<>
-			<div className='bodygestionagusu container-fluid bg-dark'>
+			<div className='bodygestionag container-fluid bg-dark'>
 				<div className='main px-3 '>
 					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
 					<p className=''>Panel de Administracion de Turnos</p>
@@ -163,19 +163,19 @@ export const GestionAgenda = () => {
 
 			<div className='bg-dark'>
 				<div className='d-flex justify-content-around'>
-					<Link to='/Admin' className='btnagusu align-self-center '>
+					<Link to='/Admin' className='btnag align-self-center '>
 						Volver al Panel
 					</Link>
 				</div>
 				<div>
-					<p className='titleagusu text-center'>Turnos registrados</p>
+					<p className='titleag text-center'>Turnos registrados</p>
 				</div>
 				<div className='container table-responsive'>
 					<Table
 						striped
 						hover
 						variant='dark'
-						className='text-center table   border border-secondary-subtle'>
+						className='text-center table border border-secondary-subtle'>
 						<thead>
 							<tr>
 								<th>#ID</th>

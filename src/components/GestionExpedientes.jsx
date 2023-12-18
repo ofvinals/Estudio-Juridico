@@ -177,7 +177,7 @@ export const GestionExpedientes = () => {
 					</div>
 
 					<div>
-						<p className='titleagusu text-center'>
+						<p className='titleagexp text-center'>
 							Expedientes en tramite
 						</p>
 					</div>

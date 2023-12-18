@@ -48,7 +48,7 @@ export const Footer = () => {
 						</Link>
 					</div>
 					
-					<div className='logofooter col-12 col-md-4 text-center align-items-center'>
+					<div className='logofooter col-12 col-md-4 mt-md-5 mt-lg-4 text-center align-items-center'>
 						<Link className=' text-center' to='/home'>
 							<img
 								src='/logo estudio.png'

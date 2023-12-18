@@ -8,15 +8,15 @@
 }
 .titulocont {
 	color:rgb(143, 142, 139);
-   font-size: 8vw;
-	font-weight: 700;
+   font-size: 3vw;
+	font-weight: 800;
 	padding-top: 5vw;
 }
 .Parrafo2 {
 	color: rgb(143, 142, 139);
-   font-size: 2vw;
-	font-weight: 600;
-	padding: 3vw;
+   font-size: 1.5vw;
+	font-weight: 700;
+	padding: 2vw;
 }
 .cajaForm{
    display: flex;
@@ -26,34 +26,34 @@
 	align-items: center;
 	width: auto;
    margin-top: 5vw;
-	margin-left: 10vw;
-	margin-right: 10vw;
+	margin-left: 20vw;
+	margin-right: 20vw;
 	padding-top: 2vw;
    border-radius: 5px;
-   border: 0.3vw outset rgb(143, 142, 139);
+   border: 0.2vw outset rgb(143, 142, 139);
    opacity: 0.85;
 }
 .labelcontact{
    font-weight: 700;
 	text-align: center;
    color:rgb(143, 142, 139);
-   font-size: 2vw;
+   font-size: 1vw;
 	margin-left:1vw!important;
 	margin-right: 40vw;
 	padding-bottom: 1vw;
 }
 .inputcontactcoment{
-	font-size: 2vw;
-	margin-bottom: 2vw;
+	font-size: 1vw;
+	margin-bottom: 1vw;
 
 }
 .inputcontactemail{
-	font-size: 2vw;
-	margin-bottom: 2vw;
+	font-size: 1vw;
+	margin-bottom: 1vw;
 }
 .btncont {
-	font-weight: 600;
-	font-size: 2vw;
+	font-weight: 700;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	transition: var(--transition);
@@ -63,8 +63,8 @@
    border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
 	padding:1vw;
-	padding-left:2vw;
-	padding-right:2vw;
+	padding-left:1vw;
+	padding-right:1vw;
    cursor: pointer;
 	text-align: center;
 	text-decoration: none;

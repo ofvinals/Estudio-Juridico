@@ -5,7 +5,6 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-
     background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
     url(../public/01.jpg);
     background-size: cover;
@@ -14,40 +13,126 @@
 }
 .tituloabout{
 	color:rgb(143, 142, 139);
-    font-size: 4vw;
-    margin-top: 8vw;
-    font-weight: 700;
+    font-size: 3vw;
+    margin-top: 3vw;
+    font-weight: 800;
 }
 .subtituloabout {
 	color:rgb(143, 142, 139);
-    font-size: 2.5vw;
-    margin-top: 4vw;
-    margin-bottom: 2vw;
-    font-weight: 800;
+    font-size: 2vw;
+    margin-top: 5vw;
+    margin-bottom: 1vw;
+    font-weight: 700;
 }
 .parrafoabout{
-    font-size: 1.5vw;
+    font-size: 1vw;
     color:rgb(143, 142, 139);
-    font-weight: 700;
+    font-weight: 600;
     text-align: justify;
     margin-left: 15vw;
     margin-right: 15vw;
 }
 .cardabout{
     color:rgb(143, 142, 139);
-    border: 0.4vw outset rgb(143, 142, 139);
+    border: 0.2vw outset rgb(143, 142, 139);
     text-align: center;
     margin-right:  20vw;
-    padding:3vw;
+    padding-top: 2vw;
     margin-left: 20vw;
-    margin-bottom:2vw;
+    margin-bottom:1vw;
 }
-.cardtitle{
-    font-size: 4vw;
-    font-weight: 700;
-    margin-bottom:2vw;
+.cardtitleabout{
+    color:rgb(143, 142, 139)!important;
+    font-size: 2vw!important;
+    font-weight: 700!important;
+    margin-top: 1vw!important;
+    margin-bottom:1vw!important;
 }
 .contcard{
-    font-size: 1.5vw;
+    font-size: 1vw;
     font-weight: 600;
+    margin-left: 10vw;
+    margin-right:10vw;
+    padding-bottom: 2vw;
+}
+.team{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    align-content: center;
+
+}
+.tituloaboutteam{
+    color:rgb(143, 142, 139);
+    font-size: 3vw;
+    margin-top: 4vw;
+    margin-bottom:2vw ;
+    font-weight: 700;
+    width: 100%;
+    text-align: center;
+}
+.our-team {
+    align-content: center;
+    border: 0.2vw outset rgb(143, 142, 139);
+    margin-top: 1vw;
+    
+}
+.our-team .team-image {
+    position: relative;
+    text-align: center;
+    align-content: center;
+}
+.our-team-title {
+    font-size: 2vw;
+    padding-bottom: 5px;
+}
+.our-team img {
+    background-size: contain;
+    width: 100%;
+}
+.cardnosotros{
+    margin-left:2vw;
+    height: 20vw!important;
+}
+.our-team .description {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 1vw;
+    color: #fff;
+    line-height: 30px;
+    padding: 30px 30px;
+    opacity: 0;
+    background-color:  rgb(143, 142, 139);
+    transition: all 0.5s ease 0s;
+}
+.our-team:hover .description {
+    opacity: 0.7;
+}
+.our-team .team-info {
+    padding: 20px;
+}
+.our-team .title {
+    font-size: 2vw;
+    color:  rgb(143, 142, 139);
+    letter-spacing: 4px;
+    margin: 0 0 15px 0;
+    transition: all 0.5s ease 0s;
+    text-align: center;
+    font-weight: 700;
+}
+.our-team .post {
+    display: block;
+    font-size: 1vw;
+    color:  rgb(143, 142, 139);
+    text-transform: capitalize;
+    text-align: center;
+}
+.our-team .title:hover,
+.our-team .post:hover {
+    color:  rgb(143, 142, 139);
 }

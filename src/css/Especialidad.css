@@ -1,7 +1,6 @@
 .esp{
     display: flex;
     flex-wrap: wrap;
-
     align-items: center;
     justify-content: center;
     flex-direction: column;
@@ -14,51 +13,51 @@
 .cardbody{
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
-    height:27vw;
+    height:21vw!important;
     align-items: center;
     text-align: center;
     margin-bottom: 1vw;
-    margin-left:2vw;
-    border: 0.3vw outset rgb(143, 142, 139)!important;    
+    margin-left:1vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;    
     box-shadow: 5px 5px 5px rgb(143, 142, 139);
-    color:rgb(143, 142, 139);
-    background-color: black;
+    color:rgb(143, 142, 139)!important;
+    background-color: black!important;
     opacity: 0.7;
 }
 .titlees{
-    font-size: 4vw!important;
+    font-size: 3vw!important;
     font-weight: 800;
     color: rgb(143, 142, 139);
     text-align: center;
-    margin-top: 4vw!important;
-    margin-bottom: 4vw!important;
+    margin-top: 3vw!important;
+    margin-bottom: 5vw!important;
 }
 .titlecard{
-    font-size: 1.8vw!important;
-    font-weight: 800;
+    font-size: 1.5vw!important;
+    font-weight: 700;
     color: rgb(143, 142, 139);
     text-align: center;
-    margin-top:1vw;
+    margin-top:2vw!important;
     margin-bottom:2vw!important;    
 }
-
 .listado{
-    font-size: 1.3vw!important;
-    margin-left: 1vw;
-    margin-bottom:1vw;
+    font-size: 1vw!important;
+    margin-left: 1vw!important;
 }
 .cardlink1{
     font-weight: 600;   
     text-decoration: none;
     background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
-    font-size: 1.3vw;
+    font-size: 1vw;
     border-radius: 5px;
-    border: 0.3vw outset rgb(143, 142, 139)!important;
-    padding: 1vw;
-    margin-top:2vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    padding-top: 0.5vw;
+    padding-bottom: 0.5vw;
+    margin-bottom: 1vw;
+    margin-top: 1vw;
 }
 .cardlink1:hover{
     opacity:0.8;

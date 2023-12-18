@@ -2,7 +2,6 @@
     --font-family: 'Poppins', sans-serif;
     --transition: all 0.1s cubic-bezier (0.645, 0.045, 0.355, 1);
 }
-
 .login{
     display: flex;
     flex-wrap: wrap;
@@ -18,51 +17,52 @@
 .titulolog{
     text-align: center;
     width: 100%;
-    font-size: 4vw;
-    margin-top:4vw;
-    margin-bottom: 4vw;
+    font-size: 3vw;
+    margin-top:2vw;
+    margin-bottom: 2vw;
     color: rgb(143, 142, 139);
+    font-weight: 800;
 }
 .logform{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 60%;
+    width: 45%;
     border-radius: 5px;
-    border: 0.3vw outset rgb(143, 142, 139);
+    border: 0.2vw outset rgb(143, 142, 139);
     opacity: 0.85;
-    margin-top: 15vw;
-    margin-bottom: 15vw;
+    margin-top: 10vw;
+    margin-bottom: 10vw;
 }
 .labellog{
     font-weight: 700;
     text-align: center;
     background-color: rgb(36, 36, 36)!important;
     color:rgb(143, 142, 139);
-    font-size: 2vw;
+    font-size: 1.5vw;
 }
 .inputlog{
     align-items: center;
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     align-self: center;
-    width: 90%;
-    margin-bottom: 1.5vw;
-    margin-top:1.5vw;
+    width: 100%;
+    margin-bottom: 1vw;
+    margin-top:1vw;
     border-radius: 5px;
     outline-color: rgb(143, 142, 139);
 }
 .botoneslogin{
-    margin-bottom: 2vw;
+    margin-bottom: 1vw;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 .input-submitlog{
     text-align: center;
-    font-size: 2vw!important;
+    font-size: 1vw!important;
     font-weight: 700;
-    margin-top: 3vw;
+    margin-top: 1vw;
     padding: 1vw;
     text-decoration: none;
     transition: var(--transition);
@@ -70,7 +70,7 @@
     color: rgb(143, 142, 139);
     width: 50%;
     border-radius: 5px;
-    border: 0.3vw outset rgb(143, 142, 139)!important;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
     cursor: pointer;
 }
 .input-submitlog:hover{
@@ -80,17 +80,17 @@
 }
 .input-googlelog{
     text-align: center;
-    font-size: 2vw!important;
+    font-size: 1vw!important;
     font-weight: 700;
-    margin-top: 3vw;
+    margin-top: 1vw;
     padding: 1vw;
     text-decoration: none;
     transition: var(--transition);
 	background-color: rgb(9, 19, 92);
     color: rgb(143, 142, 139);
-    width: 80%;
+    width: 100%;
     border-radius: 5px;
-    border: 0.3vw outset rgb(143, 142, 139)!important;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
     cursor: pointer;
 }
 .input-googlelog:hover{
@@ -99,7 +99,7 @@
     background-color: transparent;
 }
 .parrafolog{
-    font-size: 2vw;
+    font-size: 1vw;
     font-family:'Poppins', sans-serif;
     color: rgb(143, 142, 139);
     margin-top: 1vw;
@@ -121,12 +121,7 @@
 }
 .swal2-html-container {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 30px !important;
+    font-size: 1.5vw !important;
     color: rgb(143, 142, 139) !important;
 }
-.olviparr{
-    margin-top: 10px;  
-    font-size: 14px;
-    text-decoration: none !important;
-    color:rgb(143, 142, 139);
-}
+

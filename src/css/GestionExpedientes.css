@@ -13,20 +13,24 @@
 }
 .btnadexped {
    font-weight: 700;
-   font-size: 2vw;
+   font-size: 1vw;
    transition: var(--transition);
    background-color: rgb(27, 27, 27);
    color: rgb(143, 142, 139);
-   width: 30vw;
-   border: 0.3vw outset rgb(143, 142, 139)!important;
+   width: 15%;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    padding: 1vw;
    cursor: pointer;
    text-align: center;
-   margin-top: 2vw;
+   margin-top: 1vw;
    text-decoration: none;
 }
 .btnadexped:hover{
    opacity:0.8;
    background-color: rgb(27, 27, 27);
+}
+.titleagexp{
+   font-size: 2vw;
+   font-weight: 700;
 }

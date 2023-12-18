@@ -73,15 +73,15 @@ export const Home = () => {
 				<h1 className='titlecontac'>Contactanos!</h1>
 				<div className='conttel'>
 					<i className='icosec4 bi bi-telephone-fill me-2'></i>
-					<p>+54 381-4581382</p>
+					<p className='textosec4'>+54 381-4581382</p>
 				</div>
 				<div className='contmail'>
 					<i className='icosec4 bi bi-envelope-at-fill me-2'></i>
-					<p>ofvinals@gmail.com</p>
+					<p className='textosec4'>ofvinals@gmail.com</p>
 				</div>
 				<div className='contdir'>
 					<i className='icosec4 bi bi-geo-alt-fill me-2'></i>
-					<p>Buenos Aires 555 - SMT</p>
+					<p className='textosec4'>Buenos Aires 555 - SMT</p>
 				</div>
 				<Link className='botonturnoabajo' to='/login'>
 					<i className='icosec4 bi bi-calendar-check me-1'></i>
