@@ -32,11 +32,14 @@ export function AuthProvider({ children }) {
 				setUser('');
 			} else {
 				setUser(currentUser);
-				console.log(user);
 			}
 		});
 		return () => subscribed();
 	}, []);
+
+	useEffect(() => {
+		console.log('Estado del usuario después del inicio de sesión:', user);
+	 }, [user]);
 
 	const register = async (email, password) => {
 		const response = await createUserWithEmailAndPassword(
@@ -47,18 +50,29 @@ export function AuthProvider({ children }) {
 		console.log(response);
 	};
 	const login = async (email, password) => {
-		const response = await signInWithEmailAndPassword(auth, email, password);
-		console.log(response);
+		try {
+			const response = await signInWithEmailAndPassword(
+				auth,
+				email,
+				password
+			);
+			console.log(response);
+		} catch (error) {
+			console.error('Error al iniciar sesión:', error.message);
+		}
 	};
 
 	const loginWithGoogle = async () => {
 		const responseGoogle = new GoogleAuthProvider();
 		return await signInWithPopup(auth, responseGoogle);
 	};
-	// falta agregar try catch
+
 	const logout = async () => {
-		const response = await signOut(auth);
+		try{ const response = await signOut(auth);
 		console.log(response);
+	} catch (error) {
+		console.error('Error al iniciar sesión:', error.message);
+	}
 	};
 
 	return (

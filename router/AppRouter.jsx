@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { BrowserRouter, Routes, Route, RouterProvider } from 'react-router-dom';
+import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { Login } from '../src/components/Login';
 import { Header } from '../src/components/Header';
@@ -19,7 +19,7 @@ import { GestionGastos } from '../src/components/GestionGastos';
 import { AgendaUsu } from '../src/components/AgendaUsu';
 import { AdminUsu } from '../src/components/AdminUsu';
 import { CargaExptes } from '../src/components/CargaExptes';
-import PrivateRoute from './PrivateRoute';
+import  PrivateRoute  from './PrivateRoute';
 import { AuthProvider } from '../src/context/AuthContext';
 
 export const AppRouter = () => {
