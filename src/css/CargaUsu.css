@@ -1,0 +1,108 @@
+.registerusu{
+   display: flex;
+   flex-wrap: nowrap;
+   align-items: center;
+   justify-content:space-between;
+   flex-direction: row;
+   background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+   url(../public/01.jpg);
+   background-size:cover;
+   object-fit:cover;
+   background-position:center;
+}
+.titulocargausu{
+   text-align: center;
+   width: 100%;
+   margin-top: 2vw;
+   margin-bottom: 2vw;
+   font-size: 3vw;
+   color: rgb(143, 142, 139);
+}
+.FormcargaUsu{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-around;
+   align-items: center;
+   align-content: center;
+   margin-top: 5vw;
+   width: 70%!important;
+   margin-bottom: 5vw;
+   border-radius: 5px;
+   border: 0.2vw outset rgb(143, 142, 139);
+   opacity: 0.85;
+}
+.labelcarusu{
+   font-weight: 700;
+   width: 100%;
+   margin-left:1vw;
+   margin-right: 1vw;
+   margin-bottom: 1vw;
+   background-color: rgb(36, 36, 36)!important;
+   color:rgb(143, 142, 139);
+   font-size: 1vw;
+}
+.botonescarusu{
+   display: flex;
+   justify-content: center;
+   flex-direction: row;
+   align-items: center;
+   width: 100%;
+}
+.inputcarusu{
+   text-align: center;
+   color: rgb(143, 142, 139);
+   width: 100%!important;
+   margin-left:1vw;
+   margin-bottom: 1vw;
+   border-radius: 5px;
+   outline-color: rgb(143, 142, 139);
+   font-size: 1vw!important;
+   padding: 0.5vw!important;
+}
+.btncarusu{
+   font-size: 1vw!important;
+   font-weight: 700;
+   margin-top: 1vw;
+   margin-right: 1vw;
+   margin-bottom:1vw;
+   background-color: rgb(10, 61, 4)!important;
+   color: rgb(143, 142, 139);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   width: 20%;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
+   cursor: pointer;
+   padding:0.2vw!important;
+}
+.btncarusu:hover{
+   opacity:0.8;
+   color: white;
+   background-color: transparent;
+}
+.btncancusu{
+   font-size: 1vw!important;
+   font-weight: 700;
+   margin-top: 1vw;
+   margin-bottom: 1vw;
+   background-color: rgb(111, 8, 10)!important;
+   color: rgb(143, 142, 139);
+   width: 15%!important;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   padding:0.2vw!important;
+   text-align: center;
+   text-decoration: none;
+}
+.btncancusu:hover{
+   opacity:0.8;
+   color: white;
+   background-color: transparent;
+}
+

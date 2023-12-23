@@ -6,6 +6,8 @@ import { esES } from '@mui/x-date-pickers/locales';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { useAuth } from '../context/AuthContext';
+import { Table } from 'react-bootstrap';
+
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 import 'dayjs/locale';
@@ -15,6 +17,8 @@ export const AgendaUsu = () => {
 	const auth = useAuth();
 	const { email } = auth.user;
 	console.log(email);
+	const [tablaTurnos, setTablaTurnos] = useState();
+	const [turnos, setTurnos] = useState([]);
 
 	// deshabilita seleccion de dias de fin de semana
 	const lastMonday = dayjs().startOf('week');
@@ -36,6 +40,7 @@ export const AgendaUsu = () => {
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setturnoOcupado] = useState([]);
 	console.log(startDate);
+
 	useEffect(() => {
 		const turnosOcupados =
 			JSON.parse(localStorage.getItem('turnosOcupados')) || [];
@@ -63,7 +68,6 @@ export const AgendaUsu = () => {
 			});
 			return;
 		} else {
-
 			// si no esta ocupado lanza modal para ingresar motivo de consulta y guarda en Localstorage
 			const {
 				value: motivoConsulta,
@@ -108,6 +112,49 @@ export const AgendaUsu = () => {
 		return;
 	};
 
+	useEffect(() => {
+		cargarTablaTurnos();
+	}, [turnoOcupado]);
+
+	function cargarTablaTurnos() {
+		const turnosFiltrados = turnoOcupado.filter(
+			(turno) => email === turno.email
+		);
+		if (turnosFiltrados.length > 0) {
+			console.log(email);
+			const tabla = turnosFiltrados.map((turnos) => (
+				<tr key={turnos.id}>
+					{/* <td className='align-middle'>{usuario.id}</td> */}
+					<td className='align-middle '>{turnos.turno}</td>
+					<td className='align-middle '>{turnos.email}</td>
+					<td className='align-middle '>{turnos.motivo}</td>
+					<td>
+						<div className='d-flex flex-row justify-content-around'>
+							<Link
+								className='btnaccag'
+								to={`/editarturnos/${turnos.id}`}>
+								<i className='bi bi-pen  accicoag'></i>
+							</Link>
+							<button
+								className='btnborrarag '
+								onClick={() => borrarTurno(turnos.id)}>
+								<i className='bi bi-trash-fill  accicoag'></i>
+							</button>
+						</div>
+					</td>
+				</tr>
+			));
+
+			setTablaTurnos(tabla);
+		} else {
+			setTablaTurnos(
+				<div>
+					<p>Usted no tiene turnos pendientes</p>
+				</div>
+			);
+		}
+	}
+
 	return (
 		<>
 			<div className='container-fluid'>
@@ -122,7 +169,7 @@ export const AgendaUsu = () => {
 						<p className='subtitleagusu'>
 							Selecciona el dia y hora de tu preferencia:{' '}
 						</p>
-						
+
 						<LocalizationProvider
 							dateAdapter={AdapterDayjs}
 							adapterLocale='esES'
@@ -163,12 +210,36 @@ export const AgendaUsu = () => {
 							</DemoContainer>
 						</LocalizationProvider>
 						<div className='btnesagusu'>
-							<button className='btnagusuverif' disabled={!!startDate} onClick={handleCrearCita}>
+							<button
+								className='btnagusuverif'
+								onClick={handleCrearCita}>
+								<i class='me-2 fs-6 bi bi-calendar-check'></i>
 								Verificar turno
 							</button>
 							<Link to='/AdminUsu' className='btnagusuvolver'>
+								<i class='me-2 fs-6 bi bi-box-arrow-left'></i>
 								Volver al Panel
 							</Link>
+						</div>
+						<h2 className='titleagusu'>Turnos pendientes</h2>
+						<div className='container table-responsive'>
+							<Table
+								striped
+								hover
+								variant='dark'
+								className='tablaagenda table border border-secondary-subtle'>
+								<thead>
+									<tr>
+										<th>Turno</th>
+										<th>Usuario</th>
+										<th>Motivo</th>
+										<th className='accag'>Acciones</th>
+									</tr>
+								</thead>
+								<tbody id='tablaTurnos' className='table-group-divider'>
+									{tablaTurnos}
+								</tbody>
+							</Table>
 						</div>
 					</div>
 				</div>

@@ -19,9 +19,14 @@ import { GestionGastos } from '../src/components/GestionGastos';
 import { AgendaUsu } from '../src/components/AgendaUsu';
 import { AdminUsu } from '../src/components/AdminUsu';
 import { CargaExptes } from '../src/components/CargaExptes';
-import  PrivateRoute  from './PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 import { AuthProvider } from '../src/context/AuthContext';
-
+import { EditarExptes } from '../src/components/EditarExptes';
+import { AuthContext } from '../src/context/AuthContext';
+import { CargaUsu } from '../src/components/CargaUsu';
+import { EditarUsu } from '../src/components/EditarUsu';
+import { GestionExpteUsu } from '../src/components/GestionExpteUsu';
+import { EditarTurnos } from '../src/components/EditarTurnos';
 export const AppRouter = () => {
 	return (
 		<AuthProvider>
@@ -31,6 +36,7 @@ export const AppRouter = () => {
 					<Route path='/' element={<Home />}></Route>
 					<Route path='/home' element={<Home />}></Route>
 					<Route path='/login' element={<Login />}></Route>
+					<Route path='/authcontext' element={<AuthContext />}></Route>
 					<Route path='/registro' element={<Registro />}></Route>
 					<Route path='/nosotros' element={<Nosotros />}></Route>
 					<Route path='/contact' element={<Contact />}></Route>
@@ -38,10 +44,19 @@ export const AppRouter = () => {
 					<Route path='/especialidad' element={<Especialidad />}></Route>
 					<Route path='/interes' element={<Interes />}></Route>
 					<Route element={<PrivateRoute />}>
+						<Route path='/editarusu/:id' element={<EditarUsu />}></Route>
+						<Route path='/editarturnos/:id' element={<EditarTurnos />}></Route>
+						<Route
+							path='/editarexptes/:id'
+							element={<EditarExptes />}></Route>
+						<Route path='/cargausu' element={<CargaUsu />}></Route>
 						<Route path='/admin' element={<Admin />}></Route>
 						<Route
 							path='/gestionusuarios'
 							element={<GestionUsuarios />}></Route>
+													<Route
+							path='/gestionexpteusu'
+							element={<GestionExpteUsu />}></Route>
 						<Route
 							path='/gestionexpedientes'
 							element={<GestionExpedientes />}></Route>

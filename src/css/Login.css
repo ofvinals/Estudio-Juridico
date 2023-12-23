@@ -121,7 +121,12 @@
 }
 .swal2-html-container {
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.5vw !important;
+    font-size: 1vw !important;
     color: rgb(143, 142, 139) !important;
 }
-
+.swal2-styled.swal2-confirm{
+    font-size: 1.5vw!important;
+}
+.swal2-styled.swal2-cancel{
+    font-size: 1.5vw!important;
+}

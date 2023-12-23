@@ -13,14 +13,16 @@
 }
 .btnusu {
 	font-weight: 700;
-	font-size: 1vw;
-	transition: var(--transition);
+	font-size: 1.2vw;
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
-    width: 15vw;
+    width: 20vw;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-    padding: 1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
     cursor: pointer;
 	text-align: center;
     margin-top: 1vw;
@@ -51,7 +53,6 @@
 	font-weight: 700;
 	font-size: 1vw;
 	margin-top: 1vw;
-	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
     width: 30%;
@@ -68,23 +69,46 @@
 } 
 .titleadm{
     font-size: 2vw;
+    margin-top:2vw;
     font-weight: 700;
+}
+.tablausuarios{
+    font-size: 1.5vw!important;
+    color: rgb(143, 142, 139)!important;
+    text-align: center;
 }
 .acciones{
     width: 10%;
 }
-.btnacc{
-    color: rgb(27, 27, 27);
+.btnacept{
+    color: rgb(143, 142, 139);
     margin-left: 1vw;
+    margin-top:1vw;
+    background-color: rgb(10, 61, 4);
     border: 0.1vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
+    padding: 1vw;
     cursor: pointer;
 	text-align: center;
-    font-size: 1vw;
+    font-size: 2vw!important;
+    font-weight: 700!important;
+}
+.btncanc{
+    color: rgb(143, 142, 139);
+    margin-left: 1vw;
+    margin-top:1vw;
+    background-color: rgb(111, 8, 10)!important;
+    border: 0.1vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+    padding: 1vw;
+    cursor: pointer;
+	text-align: center;
+    font-size: 2vw!important;
+    font-weight: 700!important;
 }
 .accico{
     font-size: 100%;
-    color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139)!important;
 }
 .modedittitle{
     font-size: 1.5vw!important;
@@ -95,4 +119,21 @@
 }
 .modeditlabel{
     font-size: 1vw!important;
+}
+.btnaccusu{
+    color: rgb(143, 142, 139);
+    background-color:rgb(10, 61, 4);
+    padding:1vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 1vw;
+}
+.btnborrarusu{
+    color: rgb(143, 142, 139);
+    background-color: rgb(111, 8, 10);
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    padding:1vw;
+    cursor: pointer;
 }

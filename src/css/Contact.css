@@ -8,7 +8,7 @@
 }
 .titulocont {
 	color:rgb(143, 142, 139);
-   font-size: 3vw;
+   font-size: 4vw;
 	font-weight: 800;
 	padding-top: 5vw;
 }
@@ -39,16 +39,15 @@
    color:rgb(143, 142, 139);
    font-size: 1vw;
 	margin-left:1vw!important;
-	margin-right: 40vw;
-	padding-bottom: 1vw;
+	margin-right: 30vw;
 }
 .inputcontactcoment{
-	font-size: 1vw;
+	font-size: 1vw!important;
 	margin-bottom: 1vw;
 
 }
 .inputcontactemail{
-	font-size: 1vw;
+	font-size: 1vw!important;
 	margin-bottom: 1vw;
 }
 .btncont {

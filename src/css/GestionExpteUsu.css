@@ -1,0 +1,57 @@
+.bodyexpusu {
+   display: flex;
+   flex-wrap: wrap;
+   align-items: center;
+   justify-content: center;
+   flex-direction: row;
+   background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+   url(../public/01.jpg);
+   background-size: cover;
+   background-position: center;
+   object-fit: cover;
+   padding-bottom: 10vw;
+}
+.btnaccexpteusu {
+	font-weight: 700;
+	font-size: 1.2vw;
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 17vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5vw;
+    cursor: pointer;
+	text-align: center;
+    margin-top: 1vw;
+    text-decoration: none;
+}
+.btnaccexpteusu:hover{
+   opacity:0.8;
+   background-color: rgb(27, 27, 27);
+}
+.titleexpusu{
+   font-size: 2vw;
+   margin-top:2vw;
+   font-weight: 700;
+}
+.tablaexpusu{
+    font-size: 1.5vw!important;
+    text-align: center;
+    color: rgb(143, 142, 139)!important;
+}
+.btnverexp {
+    color: rgb(143, 142, 139);
+    background-color:rgb(21, 100, 160);
+    padding:1vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 1vw;
+}
+.btnusu:hover{
+    opacity:0.8;
+	background-color: rgb(27, 27, 27);
+}

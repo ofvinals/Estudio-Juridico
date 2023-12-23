@@ -1,7 +1,7 @@
 .css-a643pv-MuiStack-root{
-  width: 60%;
-  font-size: 1.5vw!important;
-margin-left: 8vw;
+  width: 45vw;
+  font-size: 1.3vw!important;
+margin-left: 3vw;
 margin-bottom:3vw;
 }
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
@@ -150,20 +150,20 @@ color: rgb(143, 142, 139)!important;
 }
 .btnagusuverif{
   font-weight: 700;
-	font-size: 1vw;
+	font-size: 1.2vw;
   margin-left: 1vw;
 	margin-top: 1vw;
 	transition: var(--transition);
 	background-color: rgb(10, 61, 4);
   color: rgb(143, 142, 139);
-  width: 30%;
+  width: 40%;
   border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-	padding-top: 1vw;
-  padding-left: 1vw;
-  padding-right: 1vw;
-	padding-bottom: 1vw;
-    cursor: pointer;
+  padding: 0.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 	text-align: center;
 	text-decoration: none;
 }
@@ -179,20 +179,20 @@ color: rgb(143, 142, 139)!important;
 }
 .btnagusuvolver{
   font-weight: 700;
-	font-size: 1vw;
+	font-size: 1.2vw;
   margin-left: 1vw;
 	margin-top: 1vw;
 	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
   color: rgb(143, 142, 139);
-  width: 30%;
+  width: 40%;
   border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-	padding-top: 1vw;
-  padding-left: 1vw;
-  padding-right: 1vw;
-	padding-bottom: 1vw;
-    cursor: pointer;
+  padding: 0.5vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 	text-align: center;
 	text-decoration: none;
 }

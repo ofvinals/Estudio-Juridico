@@ -11,16 +11,18 @@
    object-fit: cover;
    padding-bottom: 10vw;
 }
-.btnadexped {
+.btngestexpad {
    font-weight: 700;
-   font-size: 1vw;
-   transition: var(--transition);
+   font-size: 1.2vw;
    background-color: rgb(27, 27, 27);
    color: rgb(143, 142, 139);
-   width: 15%;
+   width: 20%;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
-   padding: 1vw;
+   padding: 0.5vw;
+   display: flex;
+   align-items: center;
+   justify-content: center;
    cursor: pointer;
    text-align: center;
    margin-top: 1vw;
@@ -32,5 +34,56 @@
 }
 .titleagexp{
    font-size: 2vw;
+   margin-top:2vw;
    font-weight: 700;
+}
+.btngestexp {
+	font-weight: 700;
+	font-size: 1vw;
+	transition: var(--transition);
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 15vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+    padding: 0.5vw;
+    cursor: pointer;
+	text-align: center;
+    margin-top: 1vw;
+    text-decoration: none;
+}
+.btnusu:hover{
+    opacity:0.8;
+	background-color: rgb(27, 27, 27);
+}
+.tablaexpte{
+    font-size: 1.5vw!important;
+    text-align: center;
+    color: rgb(143, 142, 139)!important;
+}
+.btnaccgestexp{
+    color: rgb(143, 142, 139);
+    background-color:rgb(10, 61, 4);
+    padding:1vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 1vw;
+}
+.btnborrargestexp{
+    color: rgb(143, 142, 139);
+    background-color: rgb(111, 8, 10);
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    padding:1vw;
+    cursor: pointer;
+    margin-right: 1vw;
+}
+.btnvergestexp{
+    color: rgb(143, 142, 139);
+    background-color: rgb(21, 100, 160);
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+    border-radius: 5px;
+    padding:1vw;
+    cursor: pointer;
 }

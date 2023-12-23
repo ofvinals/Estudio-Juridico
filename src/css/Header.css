@@ -15,10 +15,12 @@
 .colapse{
     display: flex;
     flex-direction: column;
-
+}
+.navbar-toggler-icon{
+    font-size: 2.5vw;
 }
 .navtitle{
-    font-size: 2vw;
+    font-size: 1.8vw;
     color:rgb(143, 142, 139)
 }
 .botones{
@@ -35,18 +37,19 @@
 }
 .btnnav {
 	font-weight: 700;
-	font-size: 1vw;
+	font-size: 1.3vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	transition: var(--transition);
 	background-color: rgb(28, 28, 28);
     color: rgb(143, 142, 139);
-    width: 40%;
+    width: 50%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-	padding:1vw;
-	padding-left:1vw;
-	padding-right:1vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+	padding:0.5vw;
     cursor: pointer;
 	text-align: center;
 	text-decoration: none;
@@ -58,7 +61,7 @@
 }
 .botonnavlog {
 	font-weight: 700;
-	font-size: 1vw;
+	font-size: 1.3vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	margin-right: 1vw;
@@ -68,6 +71,9 @@
     width: 100%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 	padding:1vw;
 	padding-left:1vw;
 	padding-right:1vw;
@@ -87,10 +93,11 @@
     background-color: rgb(10, 61, 4);
     opacity:0.3;
     background-color: transparent;
+    text-decoration: none;
 }
 .botonnavreg {
 	font-weight: 700;
-	font-size: 1vw;
+	font-size: 1.3vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	transition: var(--transition);
@@ -99,6 +106,9 @@
     width: 100%!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 	padding:1vw;
 	padding-left:1vw;
 	padding-right:1vw;
@@ -113,11 +123,9 @@
 }
 .botonnavreg:disabled{
     background-color: rgb(10, 61, 4);
-
     opacity:0.3;
     background-color: transparent;
 }
-
 
 @media(min-width: 1400px){
     .allnav {
@@ -128,9 +136,15 @@
         align-items: center;
     }
     .btnnav{
-        width: 30%;
+        width: 15%;
+        height: 5vw;
+        margin-left: 0.5vw;
+        margin-right: 0.5vw;
         padding-top: 1vw;
-        padding-bottom:1vw
+        padding-bottom:1vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
 
 }

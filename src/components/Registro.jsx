@@ -10,6 +10,7 @@ export const Registro = () => {
 	const auth = useAuth();
 	const [emailRegister, setEmailRegister] = useState('');
 	const [passwordRegister, setPasswordRegister] = useState('');
+	const [displayNameRegister, setDisplayNameRegister]=useState('');
 
 	const initialForm = {
 		nombre: '',
@@ -50,7 +51,7 @@ export const Registro = () => {
 				icon: 'warning',
 				title: 'Oops...',
 				text: 'Todos los campos son obligatorios!',
-				confirmButtonColor: '#8f8e8b',
+				timer: 1500,
 			});
 			return;
 		}
@@ -154,7 +155,7 @@ export const Registro = () => {
 		}).then(() => {
 			// Después de mostrar el SweetAlert, redirigir al usuario al formulario de inicio de sesión (login.html)
 
-			window.location.href = '/login';
+			window.location.href = '/adminusu';
 
 			// Restablecer el formulario después de la redirección
 			setForm(initialForm);
@@ -173,7 +174,10 @@ export const Registro = () => {
 						type='text'
 						name='nombre'
 						value={form.nombre}
-						onChange={handleChange}
+						onChange={(e) => {
+							handleChange(e);
+							setDisplayNameRegister(e.target.value);
+						}}
 						onBlur={handleBlur}
 					/>
 				</Form.Group>
@@ -271,7 +275,7 @@ export const Registro = () => {
 				</Form.Group>
 
 				<Form.Group
-					className='mb-3 d-flex justify-content-center flex-column align-items-center'
+					className='mb-3 botonesreg'
 					controlId='inputpassword'>
 					<Button
 						disabled={Object.values(form).some(

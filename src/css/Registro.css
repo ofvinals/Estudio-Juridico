@@ -22,6 +22,8 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    align-items: center;
+    align-content: center;
     margin-top: 5vw;
     width: 70%;
     margin-bottom: 5vw;
@@ -33,28 +35,37 @@
     font-weight: 700;
     width: 100%;
     margin-left:1vw;
+    margin-right: 1vw;
     margin-bottom: 1vw;
     background-color: rgb(36, 36, 36)!important;
     color:rgb(143, 142, 139);
     font-size: 1vw;
 }
+.botonesreg{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
 .inputreg{
+    text-align: center;
     color: rgb(143, 142, 139);
-    width: 70%!important;
+    width: 100%!important;
     margin-left:1vw;
     margin-bottom: 1vw;
     border-radius: 5px;
     outline-color: rgb(143, 142, 139);
-    font-size: 1vw;
+    font-size: 1vw!important;
 }
 .input-submitreg{
-    font-size: 1vw;
+    font-size: 1vw!important;
     font-weight: 700;
     margin-top: 1vw;
     transition: var(--transition);
 	background-color: rgb(10, 61, 4)!important;
     color: rgb(143, 142, 139);
-    width: 50%;
+    width: 20%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
     cursor: pointer;
@@ -90,6 +101,5 @@
     font-size: 1.5vw !important;
     color: rgb(143, 142, 139) !important;
 }
-
 
 

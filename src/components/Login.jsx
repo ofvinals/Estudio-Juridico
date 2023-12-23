@@ -53,28 +53,29 @@ export const Login = () => {
 			});
 			return;
 		}
-		const existeUsuario = usuarios.find((usuario) => usuario.email === email);
+		auth.login(email, password, navigate);
+		// const existeUsuario = usuarios.find((usuario) => usuario.email === email);
 
-		if (existeUsuario && existeUsuario.password === password) {
-			auth.login(email, password);
-			Swal.fire({
-				icon: 'success',
-				title: 'Inicio de sesión exitoso!',
-				showConfirmButton: false,
-				timer: 2000,
-			}).then(() => {
-				if (existeUsuario.email === 'admin@gmail.com') {
-					navigate('/admin');
-				} else navigate('/adminusu');
-			});
-		} else {
-			Swal.fire({
-				icon: 'error',
-				title: 'Ingreso rechazado',
-				text: 'El usuario y/o contraseña no son correctos!',
-				confirmButtonColor: '#8f8e8b',
-			});
-		}
+		// if (existeUsuario && existeUsuario.password === password) {
+		// 	auth.login(email, password);
+		// 	Swal.fire({
+		// 		icon: 'success',
+		// 		title: 'Inicio de sesión exitoso!',
+		// 		showConfirmButton: false,
+		// 		timer: 2000,
+		// 	}).then(() => {
+		// 		if (existeUsuario.email === 'admin@gmail.com') {
+		// 			navigate('/admin', { replace: true });
+		// 		} else navigate('/adminusu', { replace: true });
+		// 	});
+		// } else {
+		// 	Swal.fire({
+		// 		icon: 'error',
+		// 		title: 'Ingreso rechazado',
+		// 		text: 'El usuario y/o contraseña no son correctos!',
+		// 		confirmButtonColor: '#8f8e8b',
+		// 	});
+		// }
 	};
 
 	return (
@@ -122,7 +123,6 @@ export const Login = () => {
 
 				<p className='parrafolog text-center'>
 					No tienes una cuenta?<br></br>
-					
 					<Link
 						className='parrafolog text-decoration-underline'
 						to='/registro'>

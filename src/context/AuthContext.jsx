@@ -9,6 +9,8 @@ import {
 	signOut,
 	onAuthStateChanged,
 } from 'firebase/auth';
+import { Navigate, useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 // crea contexto
 export const AuthContext = createContext();
@@ -24,6 +26,7 @@ export const useAuth = () => {
 // guarda el estado actual, si hay usuario logueado o no
 export function AuthProvider({ children }) {
 	const [user, setUser] = useState('');
+	// const navigate = useNavigate();
 
 	useEffect(() => {
 		const subscribed = onAuthStateChanged(auth, (currentUser) => {
@@ -39,26 +42,47 @@ export function AuthProvider({ children }) {
 
 	useEffect(() => {
 		console.log('Estado del usuario después del inicio de sesión:', user);
-	 }, [user]);
+	}, [user]);
 
-	const register = async (email, password) => {
+	const register = async (email, password, nombre) => {
 		const response = await createUserWithEmailAndPassword(
 			auth,
 			email,
-			password
+			password,
+			nombre
 		);
 		console.log(response);
 	};
-	const login = async (email, password) => {
+
+	const login = async (email, password, navigate) => {
 		try {
 			const response = await signInWithEmailAndPassword(
 				auth,
 				email,
 				password
 			);
+			Swal.fire({
+				icon: 'success',
+				title: 'Inicio de sesión exitoso!',
+				showConfirmButton: false,
+				timer: 2000,
+			});
+			if (email === 'admin@gmail.com') {
+				navigate('/admin');
+				// navigate('/admin', { replace: true });
+			} else {
+				navigate('/adminusu');
+			}
+			// navigate('/adminusu', { replace: true });
 			console.log(response);
 		} catch (error) {
 			console.error('Error al iniciar sesión:', error.message);
+			Swal.fire({
+				icon: 'error',
+				title: 'Ingreso rechazado',
+				text: 'El usuario y/o contraseña no son correctos!',
+				confirmButtonColor: '#8f8e8b',
+			});
 		}
 	};
 
@@ -68,11 +92,12 @@ export function AuthProvider({ children }) {
 	};
 
 	const logout = async () => {
-		try{ const response = await signOut(auth);
-		console.log(response);
-	} catch (error) {
-		console.error('Error al iniciar sesión:', error.message);
-	}
+		try {
+			const response = await signOut(auth);
+			console.log(response);
+		} catch (error) {
+			console.error('Error al iniciar sesión:', error.message);
+		}
 	};
 
 	return (

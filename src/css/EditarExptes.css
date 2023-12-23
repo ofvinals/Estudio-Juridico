@@ -1,0 +1,105 @@
+.editexpe{
+   display: flex;
+   flex-wrap: nowrap;
+   align-items: center;
+   justify-content:space-between;
+   flex-direction: row;
+   background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
+   url(../public/01.jpg);
+   background-size:cover;
+   object-fit:cover;
+   background-position:center;
+}
+.titleeditexp{
+   text-align: center;
+   width: 100%;
+   margin-top: 2vw;
+   margin-bottom: 2vw;
+   font-size: 3vw;
+   color: rgb(143, 142, 139);
+}
+.editexpForm{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   margin-top: 2vw;
+   width: 50%!important;
+   margin-bottom: 2vw;
+   border-radius: 5px;
+   border: 0.3vw outset rgb(143, 142, 139);
+   opacity: 0.85;
+   padding-bottom:2vw
+}
+.labeleditexp{
+   font-weight: 700;
+   width: 100%;
+   text-align: start;
+   background-color: rgb(36, 36, 36)!important;
+   color:rgb(143, 142, 139);
+   font-size: 1vw!important;
+}
+.inputeditexp{
+   color: rgb(143, 142, 139);
+   width: 100%!important;
+   margin-bottom: 1vw;
+   border-radius: 5px;
+   outline-color: rgb(143, 142, 139);
+   font-size: 1vw!important;
+   padding:0.6vw!important;
+}
+.botoneseditexp{
+   display: flex;
+   justify-content: center;
+   flex-direction: row;
+   align-items: center;
+   width: 100%;
+}
+.btneditexp{
+   font-size: 1vw!important;
+   font-weight: 700;
+   margin-top: 1vw;
+   margin-bottom: 1vw;
+   margin-right:2vw!important;
+   background-color: rgb(10, 61, 4)!important;
+   color: rgb(143, 142, 139);
+   width: 30%!important;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   padding:0.5vw!important;
+}
+.botoneditcancexp{
+   font-size: 1vw!important;
+   font-weight: 700;
+   margin-top: 1vw;
+   margin-bottom: 1vw;
+   background-color: rgb(111, 8, 10)!important;
+   color: rgb(143, 142, 139);
+   width: 20%!important;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   cursor: pointer;
+   padding:0.5vw!important;
+   text-decoration: none;
+   text-align: center;
+}
+.formselec{
+   width: 100%!important;
+   font-size: 1vw!important;
+}
+.botoneditexp:hover{
+   opacity:0.8;
+   color: white;
+   background-color: transparent;
+}
+.botoneditcancexp:hover{
+   opacity:0.8;
+   color: white;
+   background-color: transparent;
+}

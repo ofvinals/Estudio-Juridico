@@ -1,14 +1,16 @@
 .titlead{
     margin-top: 3vw;
     margin-bottom: 5vw;
-    font-size: 3vw;
+    font-size: 3.5vw;
     font-weight: 800;
     color:var(--main-color)
 }
-p{
-    color: var(--main-color);
-    font-size: 2vw;
+.subtitleadusu{ 
+    font-size: 3vw;
+    font-weight: 600;
+    color: rgb(143, 142, 139);
 }
+
 .main {
 	display: flex;
 	flex-direction: column;
@@ -30,14 +32,17 @@ margin-top:5vw;
 	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
-    width: 15%;
+    width: 20%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
 	text-align: center;
     text-decoration: none;
     align-self: center;
-    font-size:1vw;
+    font-size:1.2vw;
 }
 .botonadm:hover{
     opacity:0.8;
@@ -48,18 +53,21 @@ margin-top:5vw;
     margin-right: 3vw;
     margin-bottom: 3vw;
     font-weight: 700;
-    padding: 1vw;
+    padding: 0.5vw;
 	transition: var(--transition);
 	background-color: rgb(60, 5, 5)!important;
     color: rgb(143, 142, 139);
     width: 15%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 	text-align: center;
     text-decoration: none;
     align-self: center;
-    font-size:1vw;
+    font-size:1.2vw;
 }
 .botonlogout:hover{
     opacity:0.8;
