@@ -84,7 +84,7 @@
 .btnaccag{
     color: rgb(143, 142, 139);
     background-color:rgb(10, 61, 4);
-    padding:1vw;
+    padding:0.5vw;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
     cursor: pointer;
@@ -95,7 +95,7 @@
     background-color: rgb(111, 8, 10);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
-    padding:1vw;
+    padding:0.5vw;
     cursor: pointer;
 }
 .accicoag{

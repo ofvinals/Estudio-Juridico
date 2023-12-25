@@ -27,6 +27,9 @@ import { CargaUsu } from '../src/components/CargaUsu';
 import { EditarUsu } from '../src/components/EditarUsu';
 import { GestionExpteUsu } from '../src/components/GestionExpteUsu';
 import { EditarTurnos } from '../src/components/EditarTurnos';
+import { MovExptes } from '../src/components/MovExptes';
+import { ModalMovExptes } from '../src/components/ModalMovExptes';
+
 export const AppRouter = () => {
 	return (
 		<AuthProvider>
@@ -44,6 +47,7 @@ export const AppRouter = () => {
 					<Route path='/especialidad' element={<Especialidad />}></Route>
 					<Route path='/interes' element={<Interes />}></Route>
 					<Route element={<PrivateRoute />}>
+					<Route path='/movexptes/:id' element={<MovExptes />}></Route>
 						<Route path='/editarusu/:id' element={<EditarUsu />}></Route>
 						<Route path='/editarturnos/:id' element={<EditarTurnos />}></Route>
 						<Route

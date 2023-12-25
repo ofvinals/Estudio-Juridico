@@ -37,19 +37,19 @@
 }
 .btnnav {
 	font-weight: 700;
-	font-size: 1.3vw;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
-	transition: var(--transition);
 	background-color: rgb(28, 28, 28);
     color: rgb(143, 142, 139);
-    width: 50%;
+    width: 10vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-    display: flex;
-    justify-content: center;
+    padding: 0vw!important;
+
+    display: flex!important;
+    justify-content: center!important;
     align-items: center;
-	padding:0.5vw;
     cursor: pointer;
 	text-align: center;
 	text-decoration: none;
@@ -61,7 +61,7 @@
 }
 .botonnavlog {
 	font-weight: 700;
-	font-size: 1.3vw;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	margin-right: 1vw;
@@ -97,10 +97,9 @@
 }
 .botonnavreg {
 	font-weight: 700;
-	font-size: 1.3vw;
+	font-size: 1vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
-	transition: var(--transition);
 	background-color: rgb(81, 74, 7);
     color: rgb(143, 142, 139);
     width: 100%!important;

@@ -35,26 +35,25 @@
 .labelcargaexp{
    font-weight: 700;
    width: 100%!important;
-   text-align: center;
-   margin-bottom: 1vw;
-   margin-left:2vw!important;
+   margin-left:1vw!important;
    margin-right: 1vw!important;
    background-color: rgb(36, 36, 36)!important;
    color:rgb(143, 142, 139);
    font-size: 1vw!important;
-   margin-top: 1vw;
 }
 .inputcargaexp{
-
    color: rgb(36, 36, 36);
    width: 100%!important;
-   margin-left:2vw!important;
-   margin-right: 1vw;
+   margin-left:1vw!important;
+   margin-right: 1vw!important;
    margin-bottom: 1vw;
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
    font-size: 1vw!important;
    padding:0.4vw!important;
+}
+.formcargaexp{
+   margin-left: 1vw;
 }
 .botonescarexp{
    display: flex;

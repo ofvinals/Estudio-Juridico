@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/EditarTurnos.css';
 import { Modal, Button } from 'react-bootstrap';
-import Swal from 'sweetalert2';
 
 export const EditarTurnos = ({}) => {
 	const auth = useAuth();
@@ -13,7 +12,7 @@ export const EditarTurnos = ({}) => {
 	const { email } = auth.user;
 	const navigate = useNavigate();
 
-   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
+	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 	const [show, setShow] = useState(false);
 	const [turnos, setTurnos] = useState([]);
 	const [formValues, setFormValues] = useState({
@@ -23,7 +22,7 @@ export const EditarTurnos = ({}) => {
 		turnoIndex: '',
 	});
 
-   // funcion boton cancelar
+	// funcion boton cancelar
 	const handleCancel = () => {
 		setShowConfirmationModal(false);
 		handleClose();
@@ -52,7 +51,7 @@ export const EditarTurnos = ({}) => {
 				...formValues,
 				turnoEditarTurno: turno.turno,
 				motivoEditarTurno: turno.motivo,
-            turnoIndex: id,
+				turnoIndex: id,
 			});
 		}
 	}, [id, turnos]);
@@ -75,7 +74,6 @@ export const EditarTurnos = ({}) => {
 		localStorage.setItem('turnosOcupados', JSON.stringify(turnoeditado));
 		setShow(false);
 		setShowConfirmationModal(false);
-
 	}
 
 	const handleChange = (e) => {
@@ -94,7 +92,7 @@ export const EditarTurnos = ({}) => {
 						<Form.Control
 							className='inputedittur'
 							type='text'
-                     name='turnoEditarTurno'
+							name='turnoEditarTurno'
 							value={formValues.turnoEditarTurno}
 							onChange={handleChange}
 							autoFocus
@@ -106,8 +104,9 @@ export const EditarTurnos = ({}) => {
 						<Form.Control
 							className='inputedittur'
 							as='textarea'
-							rows={5}
-                     name='motivoEditarTurno'
+							rows={7}
+							cols={70}
+							name='motivoEditarTurno'
 							value={formValues.motivoEditarTurno}
 							onChange={handleChange}
 						/>
@@ -120,10 +119,18 @@ export const EditarTurnos = ({}) => {
 							<i className='me-2 fs-6 bi bi-check2-square'></i>
 							Guardar cambios
 						</Button>
-						<Link to='/gestionagenda' className='botoncanctur'>
+						<Button
+							onClick={() => {
+								if (email === 'admin@gmail.com') {
+									navigate('/gestionagenda');
+								} else {
+									navigate('/agendausu');
+								}
+							}}
+							className='botoncanctur'>
 							<i className='me-2 fs-6 bi bi-x-circle-fill'></i>
 							Cancelar
-						</Link>
+						</Button>
 					</Form.Group>
 				</Form>
 			</div>
@@ -143,7 +150,11 @@ export const EditarTurnos = ({}) => {
 						className='btnacc btn btn-success w-50'
 						onClick={(e) => {
 							editarTurno(e);
-							navigate('/gestionagenda');
+							if (email === 'admin@gmail.com') {
+								navigate('/gestionagenda');
+							} else {
+								navigate('/agendausu');
+							}
 						}}>
 						Confirmar
 					</button>

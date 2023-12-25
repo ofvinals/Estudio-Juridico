@@ -10,13 +10,12 @@
    object-fit:cover;
    background-position:center;
 }
-
 .titleeditusu{
    text-align: center;
    width: 100%;
    margin-top: 2vw;
    margin-bottom: 2vw;
-   font-size: 3vw;
+   font-size: 2.5vw;
    color: rgb(143, 142, 139);
 }
 .editusuForm{
@@ -46,7 +45,8 @@
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
    font-size: 1vw!important;
-   padding:0.5vw!important;
+   padding:0.4vw!important;
+   margin-left: 1vw;
 }
 .botoneseditusu{
    display: flex;

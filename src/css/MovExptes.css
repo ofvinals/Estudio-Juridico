@@ -1,4 +1,4 @@
-.bodyadexped {
+.bodymovexped {
    display: flex;
    flex-wrap: wrap;
    align-items: center;
@@ -13,14 +13,14 @@
 }
 .btngestexpad {
    font-weight: 700;
-   font-size: 1.2vw!important;
-   background-color: rgb(27, 27, 27)!important;
-   color: rgb(143, 142, 139)!important;
+   font-size: 1.2vw;
+   background-color: rgb(27, 27, 27);
+   color: rgb(143, 142, 139);
    width: 20%;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    padding: 0.5vw;
-   display: flex!important;
+   display: flex;
    align-items: center;
    justify-content: center;
    cursor: pointer;
@@ -29,18 +29,18 @@
    text-decoration: none;
 }
 .btnadexped:hover{
-   opacity:0.8;
-   background-color: rgb(27, 27, 27);
+    opacity:0.8;
+    background-color: rgb(27, 27, 27);
 }
-.titleagexp{
-   font-size: 2vw;
-   margin-top:2vw;
-   font-weight: 700;
+.titlemovexp{
+    color: rgb(143, 142, 139);
+    font-size: 2vw;
+    margin-top: 2vw;
+    font-weight: 700;
 }
 .btngestexp {
 	font-weight: 700;
 	font-size: 1vw;
-	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
     width: 15vw;
@@ -56,10 +56,16 @@
     opacity:0.8;
 	background-color: rgb(27, 27, 27);
 }
-.tablaexpte{
+.tablamovexpte{
     font-size: 1.5vw!important;
     text-align: center;
     color: rgb(143, 142, 139)!important;
+}
+.datosmovexpte{
+    color: rgb(143, 142, 139);
+    font-size: 1.2vw;
+    margin-top: 2vw;
+    font-weight: 700;
 }
 .btnaccgestexp{
     color: rgb(143, 142, 139);

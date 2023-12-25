@@ -126,7 +126,7 @@ export const CargaExptes = () => {
 				<Form className='Formcargexp container fluid bg-dark'>
 					<h2 className='titlecargaexp'>Agregar Nuevo Expediente</h2>
 
-					<Form.Group className='' controlId='inputname'>
+					<Form.Group className='formcargaexp' controlId='inputname'>
 						<Form.Label className='labelcargaexp'>Cliente</Form.Label>
 						<select
 							size='sm'
@@ -145,7 +145,7 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputname'>
+					<Form.Group className='formcargaexp' controlId='inputname'>
 						<Form.Label className='labelcargaexp'>
 							Nro Expediente
 						</Form.Label>
@@ -159,7 +159,7 @@ export const CargaExptes = () => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputsubname'>
+					<Form.Group className='formcargaexp' controlId='inputsubname'>
 						<Form.Label className='labelcargaexp'>
 							Fuero de Radicacion
 						</Form.Label>
@@ -188,7 +188,7 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputsubname'>
+					<Form.Group className='formcargaexp' controlId='inputsubname'>
 						<Form.Label className='labelcargaexp'>
 							{' '}
 							Juzgado de Radicacion
@@ -218,7 +218,7 @@ export const CargaExptes = () => {
 					</Form.Group>
 
 					<Form.Group
-						className='d-flex flex-column text-center'
+						className='formcargaexp'
 						controlId='inputdomic'>
 						<Form.Label className='labelcargaexp'>Actor</Form.Label>
 						<Form.Control
@@ -231,7 +231,7 @@ export const CargaExptes = () => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputcel'>
+					<Form.Group className='formcargaexp' controlId='inputcel'>
 						<Form.Label className='labelcargaexp'>Demandado</Form.Label>
 						<Form.Control
 							className='inputcargaexp'
@@ -243,7 +243,7 @@ export const CargaExptes = () => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputemail'>
+					<Form.Group className='formcargaexp' controlId='inputemail'>
 						<Form.Label className='labelcargaexp'>
 							Tipo de Proceso
 						</Form.Label>
@@ -272,7 +272,7 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputsubname'>
+					<Form.Group className='formcargaexp' controlId='inputsubname'>
 						<Form.Label className='labelcargaexp'>Estado</Form.Label>
 						<select
 							size='sm'
@@ -291,8 +291,8 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='w-100' controlId='inputcel'>
-						<Form.Label className='w-100 labelcargaexp'>
+					<Form.Group className='w-100 text-center' controlId='inputcel'>
+						<Form.Label className='labelcargaexp'>
 							Caratula
 						</Form.Label>
 						<Form.Label

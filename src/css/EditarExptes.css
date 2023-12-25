@@ -15,13 +15,13 @@
    width: 100%;
    margin-top: 2vw;
    margin-bottom: 2vw;
-   font-size: 3vw;
+   font-size: 2.5vw;
    color: rgb(143, 142, 139);
 }
 .editexpForm{
    display: flex;
    flex-wrap: wrap;
-   justify-content: space-between;
+   justify-content: space-around;
    margin-top: 2vw;
    width: 50%!important;
    margin-bottom: 2vw;
@@ -37,15 +37,19 @@
    background-color: rgb(36, 36, 36)!important;
    color:rgb(143, 142, 139);
    font-size: 1vw!important;
+   margin-left: 1vw;
+   margin-right: 1vw;
 }
 .inputeditexp{
    color: rgb(143, 142, 139);
    width: 100%!important;
    margin-bottom: 1vw;
+   margin-left: 1vw;
+   margin-right: 1vw;
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
    font-size: 1vw!important;
-   padding:0.6vw!important;
+   padding:0.4vw!important;
 }
 .botoneseditexp{
    display: flex;
@@ -62,14 +66,14 @@
    margin-right:2vw!important;
    background-color: rgb(10, 61, 4)!important;
    color: rgb(143, 142, 139);
-   width: 30%!important;
+   width: 27%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    display: flex;
    align-items: center;
    justify-content: center;
    cursor: pointer;
-   padding:0.5vw!important;
+   padding:0.4vw!important;
 }
 .botoneditcancexp{
    font-size: 1vw!important;
@@ -78,20 +82,16 @@
    margin-bottom: 1vw;
    background-color: rgb(111, 8, 10)!important;
    color: rgb(143, 142, 139);
-   width: 20%!important;
+   width: 18%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    display: flex;
    align-items: center;
    justify-content: center;
    cursor: pointer;
-   padding:0.5vw!important;
+   padding:0.4vw!important;
    text-decoration: none;
    text-align: center;
-}
-.formselec{
-   width: 100%!important;
-   font-size: 1vw!important;
 }
 .botoneditexp:hover{
    opacity:0.8;

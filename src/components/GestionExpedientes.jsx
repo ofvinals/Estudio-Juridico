@@ -50,7 +50,7 @@ export const GestionExpedientes = () => {
 						</button>
 						<Link
 							className='btnvergestexp'
-							to={`/editarexptes/${expte.id}`}>
+							to={`/movexptes/${expte.id}`}>
 							<i className='bi bi-search accico'></i>
 						</Link>
 					</div>

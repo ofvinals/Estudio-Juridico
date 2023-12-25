@@ -38,7 +38,7 @@ export const EditarUsu = () => {
 		setUsuarios(ListaUsuarios);
 	}, []);
 
-	// funcion para mostrar  edicion de usuarios
+	// funcion para buscar usuario seleccionado para editar
 	useEffect(() => {
 		const usuario = usuarios.find((user) => user.id === parseInt(id, 10));
 		// Establecer los valores en el estado

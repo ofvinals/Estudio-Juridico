@@ -38,7 +38,7 @@ export const GestionExpteUsu = () => {
 					<td className='align-middle '>{expte.caratula}</td>
 					<td>
 						<div className='d-flex flex-row justify-content-around'>
-							<Link className='btnverexp' to={`/exptes/${expte.id}`}>
+							<Link className='btnverexp' to={`/movexptes/${expte.id}`}>
 								<i className='bi bi-search accico'></i>
 							</Link>
 						</div>
