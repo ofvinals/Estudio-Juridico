@@ -1,69 +1,102 @@
 import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 import '../css/GestionAgenda.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import dayjs from 'dayjs';
 
 export const GestionAgenda = () => {
 	const auth = useAuth();
 	const { email } = auth.user;
-
-	const [show, setShow] = useState(false);
 	const [turnos, setTurnos] = useState([]);
+	const [turnosVencidos, setTurnosVencidos] = useState([]);
 	const [tablaTurnos, setTablaTurnos] = useState();
-	const [formValues, setFormValues] = useState({
-		turnoEditarTurno: '',
-		emailEditarTurno: '',
-		motivoEditarTurno: '',
-		turnoIndex: null,
-	});
-	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
+	const [tablaVencidos, setTablaVencidos] = useState();
 
 	// // Cargar turnos desde el localStorage al montar el componente
 	useEffect(() => {
 		const ListaTurnos =
 			JSON.parse(localStorage.getItem('turnosOcupados')) || [];
-
-		// Ordenar por la propiedad 'turno'
-		ListaTurnos.sort((a, b) => a.turno.localeCompare(b.turno));
-
-		setTurnos(ListaTurnos);
+		// Filtrar turnos pendientes (posteriores a la fecha actual)
+		const turnosPendientes = ListaTurnos.filter((turno) => {
+			const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
+			const fechaActual = dayjs();
+			return fechaTurno.isAfter(fechaActual);
+		});
+		// Filtrar turnos vencidos (anteriores a la fecha actual)
+		const turnosVencidos = ListaTurnos.filter((turno) => {
+			const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
+			const fechaActual = dayjs();
+			return (
+				fechaTurno.isBefore(fechaActual) || fechaTurno.isSame(fechaActual)
+			);
+		});
+		// Ordenar los turnos pendientes por fecha
+		turnosPendientes.sort((a, b) => a.turno.localeCompare(b.turno));
+		turnosVencidos.sort((a, b) => a.turno.localeCompare(b.turno));
+		setTurnos(turnosPendientes);
+		setTurnosVencidos(turnosVencidos);
 	}, []);
 
 	useEffect(() => {
 		cargarTablaTurnos();
+		cargarTablaVencidos();
 	}, [turnos]);
 
 	function cargarTablaTurnos() {
-		const tabla = turnos.map((turnos) => (
-			<tr key={turnos.id}>
+		const tabla = turnos.map((turno) => (
+			<tr key={turno.id}>
 				{/* <td className='align-middle'>{usuario.id}</td> */}
-				<td className='align-middle '>{turnos.turno}</td>
-				<td className='align-middle '>{turnos.email}</td>
-				<td className='align-middle '>{turnos.motivo}</td>
+				<td className='align-middle '>
+					{dayjs(turno.turno, 'DD-MM-YYYY HH:mm').format(
+						'DD-MM-YYYY HH:mm'
+					)}
+				</td>
+				<td className='align-middle '>{turno.email}</td>
+				<td className='align-middle '>{turno.motivo}</td>
 				<td>
 					<div className='d-flex flex-row justify-content-around'>
-						<Link className='btnaccag' to={`/editarturnos/${turnos.id}`}>
+						<Link className='btnaccag' to={`/editarturnos/${turno.id}`}>
 							<i className='bi bi-pen  accicoag'></i>
 						</Link>
 						<button
 							className='btnborrarag '
-							onClick={() => borrarTurno(turnos.id)}>
+							onClick={() => borrarTurno(turno.id)}>
 							<i className='bi bi-trash-fill  accicoag'></i>
 						</button>
 					</div>
 				</td>
 			</tr>
 		));
-
 		setTablaTurnos(tabla);
+	}
+
+	function cargarTablaVencidos() {
+		const tabla = turnosVencidos.map((turno) => (
+			<tr key={turno.id}>
+				{/* <td className='align-middle'>{usuario.id}</td> */}
+				<td className='align-middle '>
+					{dayjs(turno.turno, 'DD-MM-YYYY HH:mm').format(
+						'DD-MM-YYYY HH:mm'
+					)}
+				</td>
+				<td className='align-middle '>{turno.email}</td>
+				<td className='align-middle '>{turno.motivo}</td>
+				<td className='d-flex flex-row justify-content-around'>
+					<Link className='btnaccag' to={`/editarturnos/${turno.id}`}>
+						<i className='bi bi-pen  accicoag'></i>
+					</Link>
+					<button
+						className='btnborrarag '
+						onClick={() => borrarTurno(turno.id)}>
+						<i className='bi bi-trash-fill  accicoag'></i>
+					</button>
+				</td>
+			</tr>
+		));
+		setTablaVencidos(tabla);
 	}
 
 	// funcion para eliminar usuarios
@@ -137,6 +170,28 @@ export const GestionAgenda = () => {
 						</thead>
 						<tbody id='tablaTurnos' className='table-group-divider'>
 							{tablaTurnos}
+						</tbody>
+					</Table>
+				</div>
+				<div>
+					<p className='mt-3 subtitleadusu text-center'>Turnos vencidos</p>
+				</div>
+				<div className='container table-responsive'>
+					<Table
+						striped
+						hover
+						variant='dark'
+						className='tablaagenda table border border-secondary-subtle'>
+						<thead>
+							<tr>
+								<th>Turno</th>
+								<th>Usuario</th>
+								<th>Motivo</th>
+								<th className='accag'>Acciones</th>
+							</tr>
+						</thead>
+						<tbody id='tablaTurnos' className='table-group-divider'>
+							{tablaVencidos}
 						</tbody>
 					</Table>
 				</div>

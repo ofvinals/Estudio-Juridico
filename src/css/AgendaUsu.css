@@ -1,8 +1,9 @@
 .css-a643pv-MuiStack-root{
   width: 45vw;
   font-size: 1.3vw!important;
-margin-left: 3vw;
-margin-bottom:3vw;
+  margin-left: 20vw;
+  margin-right: 20vw;
+  margin-bottom:3vw;
 }
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
   background-color: rgb(27, 27, 27);
@@ -146,23 +147,22 @@ color: rgb(143, 142, 139)!important;
 }
 .btnesagusu{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 }
 .btnagusuverif{
   font-weight: 700;
 	font-size: 1.2vw;
   margin-left: 1vw;
 	margin-top: 1vw;
-	transition: var(--transition);
 	background-color: rgb(10, 61, 4);
   color: rgb(143, 142, 139);
-  width: 40%;
+  width: 30%;
   border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
   padding: 0.5vw;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: flex!important;
+  justify-content: center!important;
+  align-items: center!important;
   cursor: pointer;
 	text-align: center;
 	text-decoration: none;
@@ -185,7 +185,7 @@ color: rgb(143, 142, 139)!important;
 	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
   color: rgb(143, 142, 139);
-  width: 40%;
+  width: 30%;
   border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
   padding: 0.5vw;

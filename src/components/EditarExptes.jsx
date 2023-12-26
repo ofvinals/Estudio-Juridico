@@ -11,11 +11,11 @@ export const EditarExptes = ({}) => {
 	const { id } = useParams();
 	const { email } = auth.user;
 	const navigate = useNavigate();
-
-	const [show, setShow] = useState(false);
 	const [exptes, setExptes] = useState([]);
+	const [usuarios, setUsuarios] = useState([]);
 	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
 	const [formValues, setFormValues] = useState({
+		cliente: '',
 		nroexpteEditar: '',
 		radicacionEditar: '',
 		juzgadoEditar: '',
@@ -33,12 +33,16 @@ export const EditarExptes = ({}) => {
 		navigate('/gestionexpedientes');
 	};
 
-	const handleShow = () => setShow(true);
-
 	// Cargar expedientes desde el localStorage al montar el componente
 	useEffect(() => {
 		const ListaExpte = JSON.parse(localStorage.getItem('exptes')) || [];
 		setExptes(ListaExpte);
+	}, []);
+
+	// Cargar usuarios desde el localStorage al montar el componente
+	useEffect(() => {
+		const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+		setUsuarios(usuarios);
 	}, []);
 
 	useEffect(() => {
@@ -47,6 +51,7 @@ export const EditarExptes = ({}) => {
 		if (expte) {
 			setFormValues({
 				...formValues,
+				clienteEditar: expte.cliente,
 				nroexpteEditar: expte.nroexpte,
 				radicacionEditar: expte.radicacion,
 				juzgadoEditar: expte.juzgado,
@@ -67,10 +72,11 @@ export const EditarExptes = ({}) => {
 			expte.id === expteIndexInt
 				? {
 						...expte,
+						cliente: formValues.clienteEditar,
 						nroexpte: formValues.nroexpteEditar,
 						radicacion: formValues.radicacionEditar,
 						juzgado: formValues.juzgadoEditar,
-						caratula: formValues.caratulaEditar,
+						caratula: `${formValues.actorEditar} C/ ${formValues.demandadoEditar} S/ ${formValues.procesoEditar}`,
 						actor: formValues.actorEditar,
 						demandado: formValues.demandadoEditar,
 						proceso: formValues.procesoEditar,
@@ -83,7 +89,6 @@ export const EditarExptes = ({}) => {
 		setExptes(nuevosExptes);
 
 		localStorage.setItem('exptes', JSON.stringify(nuevosExptes));
-		setShow(false);
 		setShowConfirmationModal(false);
 	}
 
@@ -95,8 +100,26 @@ export const EditarExptes = ({}) => {
 	return (
 		<>
 			<section className='editexpe'>
-				<Form className='pe-4 editexpForm container fluid bg-dark'>
+				<Form className='editexpForm container fluid bg-dark'>
 					<h2 className='titleeditexp'>Editar Datos de Expediente</h2>
+					<Form.Group className='formcargaexp' controlId='inputname'>
+						<Form.Label className='labeleditexp'>Cliente</Form.Label>
+						<select
+							size='sm'
+							className='inputeditexp'
+							aria-label='Default select example'
+							name='cliente'
+							value={formValues.clienteEditar}
+							onChange={handleChange}>
+							<option>Selecciona..</option>
+							{usuarios.map((usuario) => (
+								<option key={usuario.id} value={usuario.email}>
+									{usuario.email}
+								</option>
+							))}
+						</select>
+					</Form.Group>
+
 					<Form.Group className='' controlId='inputname'>
 						<Form.Label className='labeleditexp'>
 							Nro Expediente
@@ -116,7 +139,6 @@ export const EditarExptes = ({}) => {
 							Fuero de Radicacion
 						</Form.Label>
 						<select
-							size='sm'
 							className='inputeditexp'
 							aria-label='Default select example'
 							name='radicacionEditar'
@@ -145,7 +167,6 @@ export const EditarExptes = ({}) => {
 							Juzgado de Radicacion
 						</Form.Label>
 						<select
-							size='sm'
 							className='inputeditexp'
 							aria-label='Default select example'
 							name='juzgadoEditar'
@@ -215,12 +236,11 @@ export const EditarExptes = ({}) => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputemail'>
-						<Form.Label className='labeleditexp'>
-							Estado
-						</Form.Label>
+					<Form.Group
+						className='grupoinputeditexpte'
+						controlId='inputemail'>
+						<Form.Label className='labeleditexp'>Estado</Form.Label>
 						<select
-							size='sm'
 							className='inputeditexp'
 							aria-label='Default select example'
 							name='estadoEditar'
@@ -241,11 +261,11 @@ export const EditarExptes = ({}) => {
 						<Button
 							className='btneditexp'
 							onClick={(e) => setShowConfirmationModal(true)}>
-							<i className='me-2 fs-6 bi bi-check2-square'></i>
+							<i className='iconavbar bi bi-check2-square'></i>
 							Guardar Cambios
 						</Button>
 						<Link to='/gestionexpedientes' className='botoneditcancexp'>
-							<i className='me-2 fs-6 bi bi-x-circle-fill'></i>
+							<i className='iconavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Link>
 					</Form.Group>
@@ -264,7 +284,7 @@ export const EditarExptes = ({}) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnacc btn btn-success w-50'
+						className='btnacept'
 						onClick={(e) => {
 							editarExpte(e);
 							navigate('/gestionexpedientes');
@@ -272,7 +292,7 @@ export const EditarExptes = ({}) => {
 						Confirmar
 					</button>
 					<button
-						className='btnacc btn btn-danger'
+						className='btncanc'
 						onClick={() => {
 							handleCancel();
 						}}>

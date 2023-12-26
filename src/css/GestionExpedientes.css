@@ -36,11 +36,11 @@
    font-size: 2vw;
    margin-top:2vw;
    font-weight: 700;
+   color:rgb(143, 142, 139)
 }
 .btngestexp {
 	font-weight: 700;
 	font-size: 1vw;
-	transition: var(--transition);
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
     width: 15vw;
@@ -64,7 +64,7 @@
 .btnaccgestexp{
     color: rgb(143, 142, 139);
     background-color:rgb(10, 61, 4);
-    padding:1vw;
+    padding:0.5vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
     cursor: pointer;
@@ -75,7 +75,7 @@
     background-color: rgb(111, 8, 10);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
-    padding:1vw;
+    padding:0.5vw!important;
     cursor: pointer;
     margin-right: 1vw;
 }
@@ -84,6 +84,6 @@
     background-color: rgb(21, 100, 160);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
-    padding:1vw;
+    padding:0.5vw!important;
     cursor: pointer;
 }

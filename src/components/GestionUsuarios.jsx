@@ -104,11 +104,11 @@ export const GestionUsuarios = () => {
 						className='btnusu align-self-center '
 						data-bs-toggle='modal'
 						data-bs-target='#Modal'>
-						<i class='me-2 fs-6 bi bi-file-earmark-plus'></i>
+						<i className='iconavbar bi bi-file-earmark-plus'></i>
 						Agregar usuario
 					</Link>
 					<Link to='/Admin' className='btnusu align-self-center '>
-						<i class='me-2 fs-6 bi bi-box-arrow-left'></i>
+						<i className='iconavbar bi bi-box-arrow-left'></i>
 						Volver al Panel
 					</Link>
 				</div>

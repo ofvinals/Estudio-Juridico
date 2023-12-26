@@ -70,7 +70,6 @@ export const EditarTurnos = ({}) => {
 		);
 		// Actualiza el estado de turnos, luego de editar
 		setTurnos(turnoeditado);
-
 		localStorage.setItem('turnosOcupados', JSON.stringify(turnoeditado));
 		setShow(false);
 		setShowConfirmationModal(false);
@@ -147,7 +146,7 @@ export const EditarTurnos = ({}) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnacc btn btn-success w-50'
+						className='btnacept'
 						onClick={(e) => {
 							editarTurno(e);
 							if (email === 'admin@gmail.com') {
@@ -159,7 +158,7 @@ export const EditarTurnos = ({}) => {
 						Confirmar
 					</button>
 					<button
-						className='btnacc btn btn-danger'
+						className='btncanc'
 						onClick={() => {
 							handleCancel();
 						}}>

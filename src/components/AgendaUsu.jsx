@@ -16,9 +16,7 @@ import '../css/AgendaUsu.css';
 export const AgendaUsu = () => {
 	const auth = useAuth();
 	const { email } = auth.user;
-	console.log(email);
 	const [tablaTurnos, setTablaTurnos] = useState();
-	const [turnos, setTurnos] = useState([]);
 
 	// deshabilita seleccion de dias de fin de semana
 	const lastMonday = dayjs().startOf('week');
@@ -39,22 +37,20 @@ export const AgendaUsu = () => {
 	// agarro el turno seleccionado por el cliente y traigo turnos ocupados del Local Storage
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setturnoOcupado] = useState([]);
-	console.log(startDate);
 
 	useEffect(() => {
 		const turnosOcupados =
 			JSON.parse(localStorage.getItem('turnosOcupados')) || [];
+			turnosOcupados.sort((a, b) => a.turno.localeCompare(b.turno));
+
 		setturnoOcupado(turnosOcupados);
 	}, []);
 
 	// funcion para crear nuevo turno
 	const handleCrearCita = async () => {
-		console.log(startDate);
-
-		// Convierte el turno seleccionado al formato de cadena
-		const formatoTurnoSeleccionado = startDate.format('DD/MM/YYYY HH:mm');
-		console.log(formatoTurnoSeleccionado);
-
+		// Convierte el turno seleccionado al formato
+		const formatoTurnoSeleccionado = dayjs(startDate).format('DD-MM-YYYY HH:mm')
+		console.log(formatoTurnoSeleccionado)
 		// Comprueba si el turno seleccionado ya está ocupado
 		const isTurnoOcupado = turnoOcupado.some(
 			(turno) => turno.turno === formatoTurnoSeleccionado
@@ -116,43 +112,71 @@ export const AgendaUsu = () => {
 		cargarTablaTurnos();
 	}, [turnoOcupado]);
 
+	// funcion para cargar turnos
 	function cargarTablaTurnos() {
 		const turnosFiltrados = turnoOcupado.filter(
 			(turno) => email === turno.email
 		);
 		if (turnosFiltrados.length > 0) {
-			console.log(email);
 			const tabla = turnosFiltrados.map((turnos) => (
 				<tr key={turnos.id}>
-					{/* <td className='align-middle'>{usuario.id}</td> */}
-					<td className='align-middle '>{turnos.turno}</td>
+					<td className='align-middle w-50'>{turnos.turno}</td>
 					<td className='align-middle '>{turnos.email}</td>
 					<td className='align-middle '>{turnos.motivo}</td>
-					<td>
-						<div className='d-flex flex-row justify-content-around'>
-							<Link
-								className='btnaccag'
-								to={`/editarturnos/${turnos.id}`}>
-								<i className='bi bi-pen  accicoag'></i>
-							</Link>
-							<button
-								className='btnborrarag '
-								onClick={() => borrarTurno(turnos.id)}>
-								<i className='bi bi-trash-fill  accicoag'></i>
-							</button>
-						</div>
+					<td className='d-flex flex-row align-content-center justify-content-around w-100'>
+						<Link className='btnaccag' to={`/editarturnos/${turnos.id}`}>
+							<i className='bi bi-pen accicoag'></i>
+						</Link>
+						<button
+							className='btnborrarag '
+							onClick={() => borrarTurno(turnos.id)}>
+							<i className='bi bi-trash-fill accicoag'></i>
+						</button>
 					</td>
 				</tr>
 			));
-
 			setTablaTurnos(tabla);
 		} else {
 			setTablaTurnos(
-				<div>
-					<p>Usted no tiene turnos pendientes</p>
-				</div>
+				<tr key='no-turnos'>
+					<td colSpan='4'>
+						<p>Usted no tiene turnos pendientes</p>
+					</td>
+				</tr>
 			);
 		}
+	}
+
+	// funcion para borrar turnos
+	function borrarTurno(id) {
+		Swal.fire({
+			title: '¿Estás seguro?',
+			text: 'Confirmas la eliminacion del turno',
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#d33',
+			cancelButtonColor: '#8f8e8b',
+			confirmButtonText: 'Sí, eliminar',
+			cancelButtonText: 'Cancelar',
+		}).then((result) => {
+			if (result.isConfirmed) {
+				// Filtrar
+				const eliminaTurno = turnoOcupado.filter(function (turno) {
+					return turno.id !== id;
+				});
+				localStorage.setItem(
+					'turnosOcupados',
+					JSON.stringify(eliminaTurno)
+				);
+				setturnoOcupado(eliminaTurno);
+				cargarTablaTurnos();
+				Swal.fire(
+					'Eliminado',
+					'El turno fue eliminado con exito',
+					'success'
+				);
+			}
+		});
 	}
 
 	return (
@@ -160,19 +184,24 @@ export const AgendaUsu = () => {
 			<div className='container-fluid'>
 				<div className='main px-3 bodycontact'>
 					<h4 className='titlead'>Bienvenido, {email}</h4>
-					<p className='mb-0'>Panel de Turnos </p>
+					<p className='titleagusu'>Panel de Turnos </p>
 				</div>
-
+				<div className='d-flex justify-content-center'>
+					<Link to='/AdminUsu' className='btnagusuvolver'>
+						<i className='iconavbar bi bi-box-arrow-left'></i>
+						Volver al Panel
+					</Link>
+				</div>
 				<div className='bodyagusu'>
 					<div>
 						<h1 className='titleagusu'>Turnos Online</h1>
 						<p className='subtitleagusu'>
-							Selecciona el dia y hora de tu preferencia:{' '}
+							Seleccioná el dia y hora de tu preferencia:{' '}
 						</p>
 
 						<LocalizationProvider
 							dateAdapter={AdapterDayjs}
-							adapterLocale='esES'
+							adapterLocale='en-gb'
 							localeText={
 								esES.components.MuiLocalizationProvider.defaultProps
 									.localeText
@@ -213,13 +242,9 @@ export const AgendaUsu = () => {
 							<button
 								className='btnagusuverif'
 								onClick={handleCrearCita}>
-								<i class='me-2 fs-6 bi bi-calendar-check'></i>
+								<i className='iconavbar bi bi-calendar-check'></i>
 								Verificar turno
 							</button>
-							<Link to='/AdminUsu' className='btnagusuvolver'>
-								<i class='me-2 fs-6 bi bi-box-arrow-left'></i>
-								Volver al Panel
-							</Link>
 						</div>
 						<h2 className='titleagusu'>Turnos pendientes</h2>
 						<div className='container table-responsive'>
@@ -232,7 +257,7 @@ export const AgendaUsu = () => {
 									<tr>
 										<th>Turno</th>
 										<th>Usuario</th>
-										<th>Motivo</th>
+										<th className='w-100'>Motivo de consulta</th>
 										<th className='accag'>Acciones</th>
 									</tr>
 								</thead>

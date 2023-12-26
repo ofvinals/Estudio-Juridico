@@ -107,8 +107,9 @@
     font-weight: 700!important;
 }
 .accico{
-    font-size: 100%;
+    font-size: 100%!important;
     color: rgb(143, 142, 139)!important;
+    padding:0.5vw;
 }
 .modedittitle{
     font-size: 1.5vw!important;

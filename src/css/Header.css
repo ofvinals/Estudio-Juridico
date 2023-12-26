@@ -9,7 +9,7 @@
     margin-right: 1vw;
     background-color: rgb(143, 142, 139)!important;
     color:rgb(27,27,27);
-    font-size: 1vw;
+    font-size: 1.5vw;
     margin-top:1vw;
 }
 .colapse{
@@ -17,7 +17,7 @@
     flex-direction: column;
 }
 .navbar-toggler-icon{
-    font-size: 2.5vw;
+    font-size: 2vw;
 }
 .navtitle{
     font-size: 1.8vw;
@@ -34,6 +34,8 @@
     text-align: center;
     align-items: center;
     width: 100%;
+    color:rgb(143, 142, 139)
+
 }
 .btnnav {
 	font-weight: 700;
@@ -42,11 +44,11 @@
 	margin-bottom: 1vw;
 	background-color: rgb(28, 28, 28);
     color: rgb(143, 142, 139);
-    width: 10vw!important;
+    width: 15vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-    padding: 0vw!important;
-
+    padding-left: 1vw!important;
+    padding-right: 1vw!important;
     display: flex!important;
     justify-content: center!important;
     align-items: center;
@@ -58,6 +60,11 @@
     opacity:0.8;
 	color: white;
 	background-color: transparent;
+}
+.iconavbar{
+    font-size: 2vw;
+    padding-right: 1.5vw;
+;
 }
 .botonnavlog {
 	font-weight: 700;

@@ -19,33 +19,34 @@
    color: rgb(143, 142, 139);
 }
 .editexpForm{
-   display: flex;
+   display: flex!important;
    flex-wrap: wrap;
+   flex-direction: row;
    justify-content: space-around;
+   align-items: center;
    margin-top: 2vw;
-   width: 50%!important;
+   width: 70%!important;
    margin-bottom: 2vw;
    border-radius: 5px;
    border: 0.3vw outset rgb(143, 142, 139);
    opacity: 0.85;
-   padding-bottom:2vw
 }
 .labeleditexp{
    font-weight: 700;
    width: 100%;
-   text-align: start;
+   text-align: center;
+   margin-bottom:2vw;
+   margin-top:2vw;
    background-color: rgb(36, 36, 36)!important;
    color:rgb(143, 142, 139);
    font-size: 1vw!important;
    margin-left: 1vw;
-   margin-right: 1vw;
 }
 .inputeditexp{
    color: rgb(143, 142, 139);
-   width: 100%!important;
-   margin-bottom: 1vw;
-   margin-left: 1vw;
-   margin-right: 1vw;
+   width: 100%;
+   margin-left: 1vw!important;
+   margin-right: 2vw!important;
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
    font-size: 1vw!important;
@@ -61,7 +62,7 @@
 .btneditexp{
    font-size: 1vw!important;
    font-weight: 700;
-   margin-top: 1vw;
+   margin-top: 2vw;
    margin-bottom: 1vw;
    margin-right:2vw!important;
    background-color: rgb(10, 61, 4)!important;
@@ -69,7 +70,7 @@
    width: 27%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
-   display: flex;
+   display: flex!important;
    align-items: center;
    justify-content: center;
    cursor: pointer;
@@ -78,14 +79,14 @@
 .botoneditcancexp{
    font-size: 1vw!important;
    font-weight: 700;
-   margin-top: 1vw;
+   margin-top: 2vw;
    margin-bottom: 1vw;
    background-color: rgb(111, 8, 10)!important;
    color: rgb(143, 142, 139);
    width: 18%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
-   display: flex;
+   display: flex!important;
    align-items: center;
    justify-content: center;
    cursor: pointer;

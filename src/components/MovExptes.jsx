@@ -18,13 +18,13 @@ export const MovExptes = () => {
 	const [datosExpte, setDatosExpte] = useState();
 	const [tablaMov, setTablaMov] = useState();
 	const [movExpte, setMovExpte] = useState([]);
-	const [editarMov, setMovEditar] = useState([]);
 	const [movimientos, setMovimientos] = useState([]);
 	const [showVerMovModal, setShowVerMovModal] = useState(false);
 	const [showEditMovModal, setShowEditMovModal] = useState(false);
 	const [showCreaMovModal, setShowCreaMovModal] = useState(false);
 	const initialForm = {
-		fechamov: '',
+		nroexpte: '',
+		fecha: '',
 		movimiento: '',
 		archivo: '',
 		id: '',
@@ -32,14 +32,8 @@ export const MovExptes = () => {
 	const [form, setForm] = useState(initialForm);
 
 	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 
-	const [formValues, setFormValues] = useState({
-		fechaEditar: '',
-		movimientoEditar: '',
-		archivoEditar: '',
-	});
-
+	// Cierra modales
 	const handleCancel = () => {
 		setShowVerMovModal(false);
 		setShowCreaMovModal(false);
@@ -61,15 +55,14 @@ export const MovExptes = () => {
 
 	// Renderiza tabla de movimientos y datos del expediente
 	useEffect(() => {
-		cargarTablaMov();
 		cargarDatosExpte();
+		cargarTablaMov();
 	}, [id, exptes, movimientos]);
 
 	// funcion para cargar datos del expediente
 	function cargarDatosExpte() {
-		const expteIndexInt = parseInt(id, 10);
-		const datosexpte = exptes
-			.filter((expte) => expte.id === expteIndexInt)
+		const datosExpte = exptes
+			.filter((expte) => expte.id === Number(id))
 			.map((expte) => (
 				<div key={expte.id}>
 					<p className='datosmovexpte'>Nro Expte: {expte.nroexpte}</p>
@@ -79,30 +72,38 @@ export const MovExptes = () => {
 					</p>
 				</div>
 			));
-		setDatosExpte(datosexpte);
+		setDatosExpte(datosExpte);
 	}
 
 	// Funcion para cargar tabla de movimientos traida de Local Storage
 	function cargarTablaMov() {
-		const tabla = movimientos.map((movimiento) => (
+		const nroExpteFiltrado = exptes.find((expte) => expte.id === Number(id));
+		const movimientosFiltrados = movimientos
+			.filter(
+				(movimiento) => movimiento.nroexpte === nroExpteFiltrado.nroexpte
+			)
+			.sort((a, b) => {
+				const fechaA = new Date(a.fecha);
+				const fechaB = new Date(b.fecha);
+				return fechaB - fechaA;
+			});
+
+		const tabla = movimientosFiltrados.map((movimiento) => (
 			<tr key={movimiento.id}>
 				<td className='align-middle'>{movimiento.fecha}</td>
 				<td className='align-middle '>{movimiento.movimiento}</td>
 				<td className='align-middle '>{movimiento.archivo}</td>
 				<td>
 					<div className='d-flex flex-row justify-content-around'>
-						{/* solo visible para admin */}
+						{/* Edit solo visible para admin */}
 						{email === 'admin@gmail.com' && (
-							<button
+							<Link
 								className='btnaccgestexp'
-								onClick={(e) => {
-									setShowEditMovModal(true);
-									editMovExpte(movimiento.id);
-								}}>
+								to={`/editarmov/${movimiento.id}`}>
 								<i className='bi bi-pen  accico'></i>
-							</button>
+							</Link>
 						)}
-						{/* solo visible para admin */}
+						{/* Borrar solo visible para admin */}
 						{email === 'admin@gmail.com' && (
 							<button
 								className='btnborrargestexp'
@@ -125,39 +126,36 @@ export const MovExptes = () => {
 		setTablaMov(tabla);
 	}
 
+	const handleChange = (e) => {
+		const { name, value } = e.target;
+		setForm({ ...form, [name]: value });
+	};
+
 	//funcion para agregar movimientos
 	const agregarMov = (newMov) => {
 		const ListaMov = [...movimientos, newMov];
 		setMovimientos(ListaMov);
 		localStorage.setItem('movimientos', JSON.stringify(ListaMov));
-		setShow(false);
 		setShowCreaMovModal(false);
 	};
-
-	// Atrapa datos del imput y carga en form
-	const handleChange = (e) => {
-		setForm({ ...form, [e.target.name]: e.target.value });
-	};
-
 	// crea nuevo movimiento y llama a agregarMov
 	function handleSubmit(e) {
-		const { fechamov, movimiento, archivo } = form;
-		// Convierte el turno seleccionado al formato de cadena
-		const fecha = new Date(fechamov).toLocaleString('es-AR', {
-			day: 'numeric',
-			month: 'numeric',
-			year: 'numeric',
-		});
-		const id = Date.now();
+		const { fecha, movimiento, archivo } = form;
+
+		const currentExpte = exptes.find((expte) => expte.id === Number(id));
+
+		const nroexpte = currentExpte ? currentExpte.nroexpte : '';
+
 		const newMov = {
-			id,
+			id: Date.now(),
+			nroexpte,
 			fecha,
 			movimiento,
 			archivo,
 		};
+
 		agregarMov(newMov);
 		setForm(initialForm);
-		window.location.reload();
 		handleClose();
 	}
 
@@ -169,32 +167,6 @@ export const MovExptes = () => {
 		setMovExpte(movimientoSeleccionado);
 		setShowVerMovModal(true);
 	}
-
-	// funcion para editar movimientos del expediente
-	function editMovExpte(id) {
-		const movimientoSeleccionado = movimientos.find(
-			(movimiento) => movimiento.id === id
-		);
-		console.log(movimientoSeleccionado);
-		if (movimientoSeleccionado) {
-			setFormValues = ({
-				...formValues,
-				fechaEditar: movimientoSeleccionado.fecha,
-				movimientoEditar: movimientoSeleccionado.movimiento,
-				archivoEditar: movimientoSeleccionado.archivo,
-			});
-		}
-
-		// Actualiza el estado de turnos, luego de editar
-		setMovEditar(movimientoSeleccionado);
-		localStorage.setItem('movimientos', JSON.stringify(movimientosEditados));
-		setShowEditMovModal(true);
-	}
-
-	const handleChangeEdit = (e) => {
-		const { name, value } = e.target;
-		setFormValues({ ...formValues, [name]: value });
-	};
 
 	// funcion para eliminar movimientos
 	function borrarMov(id) {
@@ -216,7 +188,6 @@ export const MovExptes = () => {
 				setMovimientos(nuevosMov);
 				localStorage.setItem('movimientos', JSON.stringify(nuevosMov));
 				cargarTablaMov();
-				window.location.reload();
 				Swal.fire(
 					'Eliminado',
 					'El expediente fue eliminado con exito',
@@ -241,7 +212,7 @@ export const MovExptes = () => {
 							<Button
 								className='btngestexpad'
 								onClick={(e) => setShowCreaMovModal(true)}>
-								<i className='me-2 fs-6 bi bi-file-earmark-plus'></i>
+								<i className='iconavbar bi bi-file-earmark-plus'></i>
 								Agregar movimiento
 							</Button>
 						)}
@@ -254,14 +225,14 @@ export const MovExptes = () => {
 								}
 							}}
 							className='btngestexpad'>
-							<i className='me-2 fs-6 bi bi-box-arrow-left'></i>
+							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Button>
 					</div>
 
 					<div>
 						<div>
-							<h2 className='titlemovexp'>Datos del Expediente</h2>
+							<h2 className='subtitleadusu'>Datos del Expediente</h2>
 							{datosExpte}
 						</div>
 					</div>
@@ -299,19 +270,23 @@ export const MovExptes = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group
-							className='mb-3'
-							onChange={handleChange}
-							controlId=''>
+						<Form.Group>
 							<Form.Label>Fecha</Form.Label>
-							<Form.Control type='date' name='fechamov' />
+							<Form.Control
+								type='date'
+								name='fecha'
+								className='mb-3'
+								onChange={handleChange}></Form.Control>
 						</Form.Group>
-						<Form.Group
-							className='mb-3'
-							onChange={handleChange}
-							controlId=''>
+						<Form.Group>
 							<Form.Label>Movimiento</Form.Label>
-							<Form.Control as='textarea' rows={3} name='movimiento' />
+							<Form.Control
+								className='mb-3'
+								onChange={handleChange}
+								as='textarea'
+								rows={3}
+								name='movimiento'
+							/>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId=''>
 							<Form.Label>Agregar archivos</Form.Label>
@@ -348,7 +323,7 @@ export const MovExptes = () => {
 							<Form.Label>Fecha: {movExpte.fecha}</Form.Label>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId=''>
-							<Form.Label>Movimiento:{movExpte.movimiento}</Form.Label>
+							<Form.Label>Movimiento: {movExpte.movimiento}</Form.Label>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId=''>
 							<Form.Label>
@@ -364,78 +339,6 @@ export const MovExptes = () => {
 							handleCancel();
 						}}>
 						Volver
-					</button>
-				</Modal.Footer>
-			</Modal>
-
-			{/* Modal para editar movimientos al expediente */}
-			<Modal
-				show={showEditMovModal}
-				onHide={() => setShowEditMovModal(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title>Editar Movimientos</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group
-							className='mb-3'
-							onChange={(e) =>
-								setFormValues({
-									...formValues,
-									fechaEditar: e.target.value,
-								})
-							}
-							controlId=''>
-							<Form.Label>Fecha</Form.Label>
-							<Form.Control
-								type='date'
-								name='fechamov'
-								value={formValues.fecha}
-							/>
-						</Form.Group>
-
-						<Form.Group className='mb-3' controlId=''>
-							<Form.Label>Movimiento</Form.Label>
-							<Form.Control
-								onChange={(e) =>
-									setFormValues({
-										...formValues,
-										movimientoEditar: e.target.value,
-									})
-								}
-								as='textarea'
-								rows={3}
-								name='movimiento'
-								value={formValues.movimiento}
-							/>
-						</Form.Group>
-
-						<Form.Group className='mb-3' controlId=''>
-							<Form.Label>Agregar archivos</Form.Label>
-							<Form.Control
-								type='file'
-								name='archivo'
-								onChange={(e) =>
-									setFormValues({
-										...formValues,
-										archivoEditar: e.target.value,
-									})
-								}
-								value={formValues.archivo}
-							/>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<button className='btnaccag' onClick={handleSubmit}>
-						Confirmar cambios
-					</button>
-					<button
-						className='btnborrarag '
-						onClick={() => {
-							handleCancel();
-						}}>
-						Cancelar
 					</button>
 				</Modal.Footer>
 			</Modal>

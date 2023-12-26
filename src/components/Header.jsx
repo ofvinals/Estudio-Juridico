@@ -64,40 +64,42 @@ export const Header = () => {
 								className='btnnav'
 								to='/home'
 								onClick={handleNavLinkClick}>
-								<i className='me-2 fs-5 bi bi-house-fill'></i>
+								<i className='iconavbar bi bi-house-fill'></i>
 								Home
 							</NavLink>
 							<NavLink
 								className='btnnav'
 								to='/especialidad'
-								onClick={handleNavLinkClick}><i className="me-2 fs-5 bi bi-server"></i>
+								onClick={handleNavLinkClick}>
+								<i className='iconavbar bi bi-server'></i>
 								Areas de Actuacion
 							</NavLink>
 							<NavLink
 								className='btnnav'
 								to='/nosotros'
 								onClick={handleNavLinkClick}>
-								<i className='me-2 fs-5 bi bi-file-person-fill'></i>
+								<i className='iconavbar bi bi-file-person-fill'></i>
 								Quienes Somos
 							</NavLink>
 							<NavLink
 								className='btnnav'
 								to='/contact'
 								onClick={handleNavLinkClick}>
-								<i className='me-2 fs-5 bi bi-chat-square-text-fill'></i>
+								<i className='iconavbar bi bi-chat-square-text-fill'></i>
 								Contacto
 							</NavLink>
 							<NavLink
 								className='btnnav'
 								to='/interes'
-								onClick={handleNavCollapse}><i className="me-2 fs-5 bi bi-browser-safari"></i>
+								onClick={handleNavCollapse}>
+								<i className='iconavbar bi bi-browser-safari'></i>
 								Sitios de interes
 							</NavLink>
 							<NavLink
 								className='btnnav'
 								to='/adminusu'
 								onClick={handleNavCollapse}>
-								<i className='me-2 fs-5 bi bi-person-fill-check'></i>
+								<i className='iconavbar bi bi-person-fill-check'></i>
 								Panel de Usuarios
 							</NavLink>
 							<div className='botones'>
@@ -108,7 +110,7 @@ export const Header = () => {
 									<button
 										disabled={!!auth.user}
 										className='botonnavlog'>
-										<i className='me-2 fs-5 bi bi-box-arrow-in-right'></i>
+										<i className='iconavbar bi bi-box-arrow-in-right'></i>
 										Inicia sesion
 									</button>
 								</a>
@@ -116,7 +118,7 @@ export const Header = () => {
 									<button
 										disabled={!!auth.user}
 										className='botonnavreg'>
-										<i className='me-2 fs-5 bi bi-r-circle-fill'></i>
+										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme
 									</button>
 								</a>

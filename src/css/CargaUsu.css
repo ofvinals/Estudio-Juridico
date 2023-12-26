@@ -57,7 +57,7 @@
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
    font-size: 1vw!important;
-   padding: 0.5vw!important;
+   padding: 0.3vw!important;
 }
 .btncarusu{
    font-size: 1vw!important;
@@ -67,7 +67,7 @@
    margin-bottom:1vw;
    background-color: rgb(10, 61, 4)!important;
    color: rgb(143, 142, 139);
-   display: flex;
+   display: flex!important;
    justify-content: center;
    align-items: center;
    text-align: center;

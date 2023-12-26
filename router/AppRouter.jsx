@@ -25,10 +25,10 @@ import { EditarExptes } from '../src/components/EditarExptes';
 import { AuthContext } from '../src/context/AuthContext';
 import { CargaUsu } from '../src/components/CargaUsu';
 import { EditarUsu } from '../src/components/EditarUsu';
-import { GestionExpteUsu } from '../src/components/GestionExpteUsu';
 import { EditarTurnos } from '../src/components/EditarTurnos';
 import { MovExptes } from '../src/components/MovExptes';
-import { ModalMovExptes } from '../src/components/ModalMovExptes';
+import { ExptesArchivados } from '../src/components/ExptesArchivados';
+import { EditarMov } from '../src/components/EditarMov';
 
 export const AppRouter = () => {
 	return (
@@ -47,8 +47,10 @@ export const AppRouter = () => {
 					<Route path='/especialidad' element={<Especialidad />}></Route>
 					<Route path='/interes' element={<Interes />}></Route>
 					<Route element={<PrivateRoute />}>
+					<Route path='/exptesarchivados' element={<ExptesArchivados />}></Route>
 					<Route path='/movexptes/:id' element={<MovExptes />}></Route>
 						<Route path='/editarusu/:id' element={<EditarUsu />}></Route>
+						<Route path='/editarmov/:id' element={<EditarMov />}></Route>
 						<Route path='/editarturnos/:id' element={<EditarTurnos />}></Route>
 						<Route
 							path='/editarexptes/:id'
@@ -58,9 +60,6 @@ export const AppRouter = () => {
 						<Route
 							path='/gestionusuarios'
 							element={<GestionUsuarios />}></Route>
-													<Route
-							path='/gestionexpteusu'
-							element={<GestionExpteUsu />}></Route>
 						<Route
 							path='/gestionexpedientes'
 							element={<GestionExpedientes />}></Route>

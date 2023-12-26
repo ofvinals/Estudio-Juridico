@@ -84,7 +84,7 @@
 .btnaccag{
     color: rgb(143, 142, 139);
     background-color:rgb(10, 61, 4);
-    padding:0.5vw;
+    padding:0.5vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
     cursor: pointer;
@@ -95,12 +95,13 @@
     background-color: rgb(111, 8, 10);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
-    padding:0.5vw;
+    padding:0.5vw!important;
     cursor: pointer;
 }
 .accicoag{
     font-size: 100%;
     color: rgb(143, 142, 139)!important;
+    padding:0.5vw!important;
 }
 
 .modedittitle{

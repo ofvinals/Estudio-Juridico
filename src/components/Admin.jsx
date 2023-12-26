@@ -7,8 +7,6 @@ import '../css/Admin.css';
 export const Admin = () => {
 	const auth = useAuth();
 	const { email } = auth.user;
-	console.log(email);
-
 	const navigate = useNavigate();
 
 	const handleLogOut = () => {
@@ -31,25 +29,25 @@ export const Admin = () => {
 				</div>
 
 				<div className='botonesadm'>
-					<Link className='botonadm' to='/gestionusuarios'><i className="me-2 fs-6 bi bi-people-fill"></i>
+					<Link className='botonadm' to='/gestionusuarios'>
+						<i className='iconavbar bi bi-people-fill'></i>
 						Gestionar Usuarios
 					</Link>
 					<Link className='botonadm' to='/gestionexpedientes'>
-						<i className='me-2 fs-6 bi bi-archive-fill'></i>
+						<i className='iconavbar bi bi-archive-fill'></i>
 						Gestionar Expedientes
 					</Link>
 					<Link className='botonadm' to='/gestionagenda'>
-						<i className='me-2 fs-6 bi bi-calendar-check'></i>
+						<i className='iconavbar bi bi-calendar-check'></i>
 						Gestionar Agenda
 					</Link>
 					<Link className='botonadm' to='/gestiongastos'>
-						<i className='me-2 fs-6 bi bi-coin'></i>
+						<i className='iconavbar bi bi-coin'></i>
 						Gestionar Gastos
 					</Link>
 
 					<Link className='botonlogout' onClick={handleLogOut} to='/home'>
-						{' '}
-						<i className='me-2 fs-6 bi bi-x-circle'></i>
+						<i className='iconavbar bi bi-x-circle'></i>
 						Cerrar Sesion
 					</Link>
 				</div>
