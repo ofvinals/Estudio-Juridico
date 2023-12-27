@@ -29,6 +29,8 @@ import { EditarTurnos } from '../src/components/EditarTurnos';
 import { MovExptes } from '../src/components/MovExptes';
 import { ExptesArchivados } from '../src/components/ExptesArchivados';
 import { EditarMov } from '../src/components/EditarMov';
+import { CargaGastos } from '../src/components/CargaGastos';
+import { EditarGastos } from '../src/components/EditarGastos';
 
 export const AppRouter = () => {
 	return (
@@ -47,11 +49,22 @@ export const AppRouter = () => {
 					<Route path='/especialidad' element={<Especialidad />}></Route>
 					<Route path='/interes' element={<Interes />}></Route>
 					<Route element={<PrivateRoute />}>
-					<Route path='/exptesarchivados' element={<ExptesArchivados />}></Route>
-					<Route path='/movexptes/:id' element={<MovExptes />}></Route>
+						<Route
+							path='/exptesarchivados'
+							element={<ExptesArchivados />}></Route>
+						<Route path='/movexptes/:id' element={<MovExptes />}></Route>
+						<Route
+							path='/gestiongastos'
+							element={<GestionGastos />}></Route>
+						<Route path='/cargagastos' element={<CargaGastos />}></Route>
+						<Route
+							path='/editargastos/:id'
+							element={<EditarGastos />}></Route>
 						<Route path='/editarusu/:id' element={<EditarUsu />}></Route>
 						<Route path='/editarmov/:id' element={<EditarMov />}></Route>
-						<Route path='/editarturnos/:id' element={<EditarTurnos />}></Route>
+						<Route
+							path='/editarturnos/:id'
+							element={<EditarTurnos />}></Route>
 						<Route
 							path='/editarexptes/:id'
 							element={<EditarExptes />}></Route>

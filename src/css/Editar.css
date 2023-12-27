@@ -1,4 +1,4 @@
-.editexpe{
+.bodyedit{
    display: flex;
    flex-wrap: nowrap;
    align-items: center;
@@ -10,7 +10,7 @@
    object-fit:cover;
    background-position:center;
 }
-.titleeditexp{
+.titleedit{
    text-align: center;
    width: 100%;
    margin-top: 2vw;
@@ -18,12 +18,10 @@
    font-size: 2.5vw;
    color: rgb(143, 142, 139);
 }
-.editexpForm{
-   display: flex!important;
+.formedit{
+   display: flex;
    flex-wrap: wrap;
-   flex-direction: row;
    justify-content: space-around;
-   align-items: center;
    margin-top: 2vw;
    width: 70%!important;
    margin-bottom: 2vw;
@@ -31,76 +29,110 @@
    border: 0.3vw outset rgb(143, 142, 139);
    opacity: 0.85;
 }
-.labeleditexp{
+.labeledit{
    font-weight: 700;
    width: 100%;
    text-align: center;
-   margin-bottom:2vw;
-   margin-top:2vw;
+   margin-bottom: 1vw;
    background-color: rgb(36, 36, 36)!important;
    color:rgb(143, 142, 139);
    font-size: 1vw!important;
-   margin-left: 1vw;
 }
-.inputeditexp{
+.inputedit{
    color: rgb(143, 142, 139);
    width: 100%;
-   margin-left: 1vw!important;
-   margin-right: 2vw!important;
+   margin-bottom: 1vw;
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
    font-size: 1vw!important;
    padding:0.4vw!important;
+   margin-left: 1vw;
 }
-.botoneseditexp{
+.botonesedit{
    display: flex;
    justify-content: center;
    flex-direction: row;
    align-items: center;
    width: 100%;
 }
-.btneditexp{
+.botonedit{
    font-size: 1vw!important;
    font-weight: 700;
-   margin-top: 2vw;
+   margin-top: 1vw;
+   margin-bottom: 1vw;
+   margin-right:1vw!important;
+   background-color: rgb(10, 61, 4)!important;
+   color: rgb(143, 142, 139);
+   width: 20%!important;
+   display: flex!important;
+   align-items: center;
+   justify-content: center;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
+   cursor: pointer;
+   padding:0.3vw!important;
+}
+.botoncancedit{
+   font-size: 1vw!important;
+   font-weight: 700;
+   margin-top: 1vw;
+   margin-bottom: 1vw;
+   background-color: rgb(111, 8, 10)!important;
+   color: rgb(143, 142, 139);
+   width: 15%!important;
+   display: flex!important;
+   align-items: center;
+   justify-content: center;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
+   cursor: pointer;
+   padding:0.5vw!important;
+   text-decoration: none;
+   text-align: center;
+}
+.botonedit:hover{
+   opacity:0.8;
+   color: white;
+   background-color: transparent;
+}
+.botoncancedit:hover{
+   opacity:0.8;
+   color: white;
+   background-color: transparent;
+}
+.btnconfmodal{
+   font-size: 1.5vw!important;
+   font-weight: 700;
+   margin-top: 1vw;
    margin-bottom: 1vw;
    margin-right:2vw!important;
    background-color: rgb(10, 61, 4)!important;
    color: rgb(143, 142, 139);
-   width: 27%!important;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
+   width: 20%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
    cursor: pointer;
-   padding:0.4vw!important;
+   padding:0.5vw!important;
 }
-.botoneditcancexp{
-   font-size: 1vw!important;
+.btncancmodal{
+   font-size: 1.5vw!important;
    font-weight: 700;
-   margin-top: 2vw;
+   margin-top: 1vw;
    margin-bottom: 1vw;
    background-color: rgb(111, 8, 10)!important;
    color: rgb(143, 142, 139);
-   width: 18%!important;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
+   width: 15%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
+   border: 0.2vw outset rgb(143, 142, 139)!important;
+   border-radius: 5px;
    cursor: pointer;
-   padding:0.4vw!important;
+   padding:0.5vw!important;
    text-decoration: none;
    text-align: center;
 }
-.botoneditexp:hover{
-   opacity:0.8;
-   color: white;
-   background-color: transparent;
-}
-.botoneditcancexp:hover{
-   opacity:0.8;
-   color: white;
-   background-color: transparent;
-}
+

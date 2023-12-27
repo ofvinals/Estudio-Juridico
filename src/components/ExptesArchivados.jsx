@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import '../css/GestionExpedientes.css';
+import '../css/Gestion.css';
 
 export const ExptesArchivados = () => {
 	const auth = useAuth();
@@ -36,19 +36,19 @@ export const ExptesArchivados = () => {
 						<td>
 							<div className='d-flex flex-row justify-content-around'>
 								<Link
-									className='btnaccgestexp'
+									className='btnvergestion'
 									to={`/editarexptes/${expte.id}`}>
-									<i className='bi bi-pen  accico'></i>
+									<i className='bi bi-pen  acciconogestion'></i>
 								</Link>
 								<button
-									className='btnborrargestexp'
+									className='btnvergestion'
 									onClick={() => borrarExpte(expte.id)}>
-									<i className='bi bi-trash-fill  accico'></i>
+									<i className='bi bi-trash-fill  acciconogestion'></i>
 								</button>
 								<Link
-									className='btnvergestexp'
+									className='btnvergestion'
 									to={`/movexptes/${expte.id}`}>
-									<i className='bi bi-search accico'></i>
+									<i className='bi bi-search acciconogestion'></i>
 								</Link>
 							</div>
 						</td>
@@ -92,26 +92,26 @@ export const ExptesArchivados = () => {
 	return (
 		<>
 			<div className='container-fluid bg-dark'>
-				<div className='main px-3 bodyadexped '>
-					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
-					<p className='subtitleadusu'>
+				<div className='main px-3 bodygestion'>
+					<h4 className='titlegestion'>Bienvenido de nuevo, {email}</h4>
+					<p className='subtitlegestion'>
 						Panel de Administracion de Expedientes Archivados
 					</p>
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						<Link to='' className='btngestexpad'>
+						<Link to='' className='btnpanelgestion'>
 							<i className='iconavbar bi bi-search'></i>
 							Buscar Expediente
 						</Link>
-						<Link to='/gestionexpedientes' className='btngestexpad'>
+						<Link to='/gestionexpedientes' className='btnpanelgestion'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
 					</div>
 
 					<div>
-						<p className='titleagexp text-center'>
+						<p className='titlegestion text-center'>
 							Expedientes Archivados
 						</p>
 					</div>
@@ -121,14 +121,14 @@ export const ExptesArchivados = () => {
 							striped
 							hover
 							variant='dark'
-							className='tablaexpte text-center table border border-secondary-subtle'>
+							className='tablagestion text-center table border border-secondary-subtle'>
 							<thead>
 								<tr>
 									<th>Expte</th>
 									<th>Fuero</th>
 									<th>Juzgado</th>
 									<th className='w-50'>Caratula</th>
-									<th className='acciones'>Acciones</th>
+									<th className='botonescciongestion'>Acciones</th>
 								</tr>
 							</thead>
 							<tbody id='tablaTurnos' className='table-group-divider'>

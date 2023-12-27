@@ -1,9 +1,9 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import '../css/EditarTurnos.css';
+import '../css/Editar.css';
 import { Modal, Button } from 'react-bootstrap';
 
 export const EditarTurnos = ({}) => {
@@ -11,9 +11,7 @@ export const EditarTurnos = ({}) => {
 	const { id } = useParams();
 	const { email } = auth.user;
 	const navigate = useNavigate();
-
 	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-	const [show, setShow] = useState(false);
 	const [turnos, setTurnos] = useState([]);
 	const [formValues, setFormValues] = useState({
 		turnoEditarTurno: '',
@@ -32,8 +30,6 @@ export const EditarTurnos = ({}) => {
 			navigate('/agendausu');
 		}
 	};
-
-	const handleShow = () => setShow(true);
 
 	// // Cargar turnos desde el localStorage al montar el componente
 	useEffect(() => {
@@ -71,7 +67,6 @@ export const EditarTurnos = ({}) => {
 		// Actualiza el estado de turnos, luego de editar
 		setTurnos(turnoeditado);
 		localStorage.setItem('turnosOcupados', JSON.stringify(turnoeditado));
-		setShow(false);
 		setShowConfirmationModal(false);
 	}
 
@@ -82,14 +77,14 @@ export const EditarTurnos = ({}) => {
 
 	return (
 		<>
-			<div className='edittur'>
-				<Form className='editturForm bg-dark'>
-					<h2 className='titleedittur'>Modificar Turno</h2>
+			<div className='bodyedit'>
+				<Form className='formedit bg-dark'>
+					<h2 className='titleedit'>Modificar Turno</h2>
 
 					<Form.Group className='mb-3' controlId='turnoEditarTurno'>
-						<Form.Label className='labeledittur'>Turno</Form.Label>
+						<Form.Label className='labeledit'>Turno</Form.Label>
 						<Form.Control
-							className='inputedittur'
+							className='inputedit'
 							type='text'
 							name='turnoEditarTurno'
 							value={formValues.turnoEditarTurno}
@@ -99,9 +94,9 @@ export const EditarTurnos = ({}) => {
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='motivoEditarTurno'>
-						<Form.Label className='labeledittur'>Motivo</Form.Label>
+						<Form.Label className='labeledit'>Motivo</Form.Label>
 						<Form.Control
-							className='inputedittur'
+							className='inputedit'
 							as='textarea'
 							rows={7}
 							cols={70}
@@ -111,11 +106,11 @@ export const EditarTurnos = ({}) => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='botonesedittur'>
+					<Form.Group className='botonesedit'>
 						<Button
-							className='botonedittur'
+							className='botonedit'
 							onClick={(e) => setShowConfirmationModal(true)}>
-							<i className='me-2 fs-6 bi bi-check2-square'></i>
+							<i className='iconavbar bi bi-check2-square'></i>
 							Guardar cambios
 						</Button>
 						<Button
@@ -126,8 +121,8 @@ export const EditarTurnos = ({}) => {
 									navigate('/agendausu');
 								}
 							}}
-							className='botoncanctur'>
-							<i className='me-2 fs-6 bi bi-x-circle-fill'></i>
+							className='botoncancedit'>
+							<i className='iconavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Button>
 					</Form.Group>
@@ -146,7 +141,7 @@ export const EditarTurnos = ({}) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnacept'
+						className='btnconfmodal'
 						onClick={(e) => {
 							editarTurno(e);
 							if (email === 'admin@gmail.com') {
@@ -158,7 +153,7 @@ export const EditarTurnos = ({}) => {
 						Confirmar
 					</button>
 					<button
-						className='btncanc'
+						className='btncancmodal'
 						onClick={() => {
 							handleCancel();
 						}}>

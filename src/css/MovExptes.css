@@ -1,9 +1,9 @@
-.bodymovexped {
+.bodymov {
    display: flex;
    flex-wrap: wrap;
    align-items: center;
    justify-content: center;
-   flex-direction: row;
+   flex-direction: column;
    background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
    url(../public/01.jpg);
    background-size: cover;
@@ -11,53 +11,43 @@
    object-fit: cover;
    padding-bottom: 10vw;
 }
-.btngestexpad {
-   font-weight: 700;
-   font-size: 1.2vw;
-   background-color: rgb(27, 27, 27);
-   color: rgb(143, 142, 139);
-   width: 20%;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   padding: 0.5vw;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   cursor: pointer;
-   text-align: center;
-   margin-top: 1vw;
-   text-decoration: none;
-}
-.btnadexped:hover{
-    opacity:0.8;
-    background-color: rgb(27, 27, 27);
-}
-.titlemovexp{
-    color: rgb(143, 142, 139);
-    font-size: 2vw;
-    margin-top: 2vw;
-    font-weight: 700;
-}
-.btngestexp {
+.btnpanelmov {
 	font-weight: 700;
-	font-size: 1vw;
-	background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
-    width: 15vw;
+	font-size: 1.2vw!important;
+	background-color: rgb(27, 27, 27)!important;
+    color: rgb(143, 142, 139)!important;
+    width: 18vw;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
+    display: flex!important;
+    justify-content: center;
+    align-items: center;
     padding: 0.5vw;
     cursor: pointer;
 	text-align: center;
     margin-top: 1vw;
     text-decoration: none;
 }
-.btnusu:hover{
+.btnpanelmov:hover{
     opacity:0.8;
-	background-color: rgb(27, 27, 27);
+    background-color: rgb(27, 27, 27);
 }
-.tablamovexpte{
-    font-size: 1.5vw!important;
+.titlemov{
+    color: rgb(143, 142, 139);
+    font-size: 2vw;
+    margin-top: 2vw;
+    font-weight: 700;
+}
+.subtitlemov{
+    text-align: center;
+    font-size: 1.8vw;
+    margin-top:2vw;
+    margin-bottom: 2vw;
+    font-weight: 700;
+    color: rgb(143, 142, 139);
+}
+.tablamov{
+    font-size: 1.3vw!important;
     text-align: center;
     color: rgb(143, 142, 139)!important;
 }
@@ -65,31 +55,40 @@
     color: rgb(143, 142, 139);
     font-size: 1.2vw;
     margin-top: 2vw;
+    margin-left: 6vw;
     font-weight: 700;
 }
-.btnaccgestexp{
+.botonescciongestion{
+    width: 10%;
+}
+.btneditmov{
     color: rgb(143, 142, 139);
     background-color:rgb(10, 61, 4);
-    padding:1vw;
+    padding:0.5vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
     cursor: pointer;
     margin-right: 1vw;
 }
-.btnborrargestexp{
+.btnborramov{
     color: rgb(143, 142, 139);
     background-color: rgb(111, 8, 10);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
-    padding:1vw;
+    padding:0.5vw!important;
     cursor: pointer;
     margin-right: 1vw;
 }
-.btnvergestexp{
+.btnvermov{
     color: rgb(143, 142, 139);
     background-color: rgb(21, 100, 160);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
-    padding:1vw;
+    padding:0.5vw!important;
     cursor: pointer;
+}
+.acciconomov{
+    font-size: 100%;
+    color: rgb(143, 142, 139)!important;
+    padding:0.5vw!important;
 }

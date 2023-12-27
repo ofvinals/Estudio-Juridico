@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import '../css/GestionAgenda.css';
+import '../css/Gestion.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import dayjs from 'dayjs';
@@ -58,13 +58,13 @@ export const GestionAgenda = () => {
 				<td className='align-middle '>{turno.motivo}</td>
 				<td>
 					<div className='d-flex flex-row justify-content-around'>
-						<Link className='btnaccag' to={`/editarturnos/${turno.id}`}>
-							<i className='bi bi-pen  accicoag'></i>
+						<Link className='btneditgestion' to={`/editarturnos/${turno.id}`}>
+							<i className='bi bi-pen acciconogestion'></i>
 						</Link>
 						<button
-							className='btnborrarag '
+							className='btnborragestion'
 							onClick={() => borrarTurno(turno.id)}>
-							<i className='bi bi-trash-fill  accicoag'></i>
+							<i className='bi bi-trash-fill acciconogestion'></i>
 						</button>
 					</div>
 				</td>
@@ -85,13 +85,13 @@ export const GestionAgenda = () => {
 				<td className='align-middle '>{turno.email}</td>
 				<td className='align-middle '>{turno.motivo}</td>
 				<td className='d-flex flex-row justify-content-around'>
-					<Link className='btnaccag' to={`/editarturnos/${turno.id}`}>
-						<i className='bi bi-pen  accicoag'></i>
+					<Link className='btneditgestion' to={`/editarturnos/${turno.id}`}>
+						<i className='bi bi-pen  acciconogestion'></i>
 					</Link>
 					<button
-						className='btnborrarag '
+						className='btnborragestion'
 						onClick={() => borrarTurno(turno.id)}>
-						<i className='bi bi-trash-fill  accicoag'></i>
+						<i className='bi bi-trash-fill  acciconogestion'></i>
 					</button>
 				</td>
 			</tr>
@@ -133,10 +133,10 @@ export const GestionAgenda = () => {
 
 	return (
 		<>
-			<div className='bodygestionag container-fluid bg-dark'>
+			<div className='bodygestion container-fluid bg-dark'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
-					<p className='subtitleadusu'>
+					<h4 className='titlegestion'>Bienvenido de nuevo, {email}</h4>
+					<p className='subtitlegestion'>
 						Panel de Administracion de Turnos
 					</p>
 				</div>
@@ -144,13 +144,13 @@ export const GestionAgenda = () => {
 
 			<div className='bg-dark'>
 				<div className='d-flex justify-content-around'>
-					<Link to='/Admin' className='btnag'>
-						<i className='me-2 fs-6 bi bi-file-earmark-plus'></i>
+					<Link to='/Admin' className='btnpanelgestion'>
+						<i className='iconavbar bi bi-file-earmark-plus'></i>
 						Volver al Panel
 					</Link>
 				</div>
 				<div>
-					<p className='mt-3 subtitleadusu text-center'>
+					<p className='mt-3 titlegestion'>
 						Turnos registrados
 					</p>
 				</div>
@@ -159,13 +159,13 @@ export const GestionAgenda = () => {
 						striped
 						hover
 						variant='dark'
-						className='tablaagenda table border border-secondary-subtle'>
+						className='tablagestion table border border-secondary-subtle'>
 						<thead>
 							<tr>
 								<th>Turno</th>
 								<th>Usuario</th>
 								<th>Motivo</th>
-								<th className='accag'>Acciones</th>
+								<th className='botonescciongestion'>Acciones</th>
 							</tr>
 						</thead>
 						<tbody id='tablaTurnos' className='table-group-divider'>
@@ -174,20 +174,20 @@ export const GestionAgenda = () => {
 					</Table>
 				</div>
 				<div>
-					<p className='mt-3 subtitleadusu text-center'>Turnos vencidos</p>
+					<p className='mt-3 titlegestion'>Turnos vencidos</p>
 				</div>
 				<div className='container table-responsive'>
 					<Table
 						striped
 						hover
 						variant='dark'
-						className='tablaagenda table border border-secondary-subtle'>
+						className='tablagestion table border border-secondary-subtle'>
 						<thead>
 							<tr>
 								<th>Turno</th>
 								<th>Usuario</th>
 								<th>Motivo</th>
-								<th className='accag'>Acciones</th>
+								<th className='botonescciongestion'>Acciones</th>
 							</tr>
 						</thead>
 						<tbody id='tablaTurnos' className='table-group-divider'>

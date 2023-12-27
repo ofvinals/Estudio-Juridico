@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
-import '../css/CargaExpte.css';
+import '../css/Carga.css';
 import { Button } from 'react-bootstrap';
 
 export const CargaExptes = () => {
@@ -24,14 +24,9 @@ export const CargaExptes = () => {
 		estado: '',
 	};
 	const [form, setForm] = useState(initialForm);
-	const [show, setShow] = useState(false);
 	const [exptes, setExptes] = useState([]);
 	const [usuarios, setUsuarios] = useState([]);
 	const [tablaExpte, setTablaExpte] = useState();
-	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 
 	// Cargar expedientes desde el localStorage al montar el componente
 	useEffect(() => {
@@ -122,16 +117,15 @@ export const CargaExptes = () => {
 
 	return (
 		<>
-			<section className='cargaexpe'>
-				<Form className='Formcargexp container fluid bg-dark'>
-					<h2 className='titlecargaexp'>Agregar Nuevo Expediente</h2>
+			<section className='bodycarga'>
+				<Form className='Formcarga container fluid bg-dark'>
+					<h2 className='titlecarga'>Agregar Nuevo Expediente</h2>
 
-					<Form.Group className='formcargaexp' controlId='inputname'>
-						<Form.Label className='labelcargaexp'>Cliente</Form.Label>
+					<Form.Group className='formcargagroup' controlId='inputname'>
+						<Form.Label className='labelcarga'>Cliente</Form.Label>
 						<select
-							size='sm'
-							className='inputcargaexp'
-							aria-label='Default select example'
+							className='inputcarga'
+							aria-label='Default select'
 							name='cliente'
 							value={form.cliente}
 							onChange={handleChange}
@@ -145,12 +139,12 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='formcargaexp' controlId='inputname'>
-						<Form.Label className='labelcargaexp'>
+					<Form.Group className='formcargagroup' controlId='inputname'>
+						<Form.Label className='labelcarga'>
 							Nro Expediente
 						</Form.Label>
 						<Form.Control
-							className='inputcargaexp'
+							className='inputcarga'
 							type='text'
 							name='nroexpte'
 							value={form.nroexpte}
@@ -159,14 +153,13 @@ export const CargaExptes = () => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='formcargaexp' controlId='inputsubname'>
-						<Form.Label className='labelcargaexp'>
+					<Form.Group className='formcargagroup' controlId='inputsubname'>
+						<Form.Label className='labelcarga'>
 							Fuero de Radicacion
 						</Form.Label>
 						<select
-							size='sm'
-							className='inputcargaexp'
-							aria-label='Default select example'
+							className='inputcarga'
+							aria-label='Default select'
 							name='radicacion'
 							value={form.radicacion}
 							onChange={handleChange}
@@ -188,15 +181,14 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='formcargaexp' controlId='inputsubname'>
-						<Form.Label className='labelcargaexp'>
+					<Form.Group className='formcargagroup' controlId='inputsubname'>
+						<Form.Label className='labelcarga'>
 							{' '}
 							Juzgado de Radicacion
 						</Form.Label>
 						<select
-							size='sm'
-							className='inputcargaexp'
-							aria-label='Default select example'
+							className='inputcarga'
+							aria-label='Default select'
 							name='juzgado'
 							value={form.juzgado}
 							onChange={handleChange}
@@ -218,11 +210,11 @@ export const CargaExptes = () => {
 					</Form.Group>
 
 					<Form.Group
-						className='formcargaexp'
+						className='formcargagroup'
 						controlId='inputdomic'>
-						<Form.Label className='labelcargaexp'>Actor</Form.Label>
+						<Form.Label className='labelcarga'>Actor</Form.Label>
 						<Form.Control
-							className='inputcargaexp'
+							className='inputcarga'
 							type='text'
 							name='actor'
 							value={form.actor}
@@ -231,10 +223,10 @@ export const CargaExptes = () => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='formcargaexp' controlId='inputcel'>
-						<Form.Label className='labelcargaexp'>Demandado</Form.Label>
+					<Form.Group className='formcargagroup' controlId='inputcel'>
+						<Form.Label className='labelcarga'>Demandado</Form.Label>
 						<Form.Control
-							className='inputcargaexp'
+							className='inputcarga'
 							type='text'
 							name='demandado'
 							value={form.demandado}
@@ -243,14 +235,13 @@ export const CargaExptes = () => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='formcargaexp' controlId='inputemail'>
-						<Form.Label className='labelcargaexp'>
+					<Form.Group className='formcargagroup' controlId='inputemail'>
+						<Form.Label className='labelcarga'>
 							Tipo de Proceso
 						</Form.Label>
 						<select
-							size='sm'
-							className='inputcargaexp'
-							aria-label='Default select example'
+							className='inputcarga'
+							aria-label='Default select'
 							name='proceso'
 							value={form.proceso}
 							onChange={(e) => {
@@ -272,12 +263,11 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='formcargaexp' controlId='inputsubname'>
-						<Form.Label className='labelcargaexp'>Estado</Form.Label>
+					<Form.Group className='formcargagroup' controlId='inputsubname'>
+						<Form.Label className='labelcarga'>Estado</Form.Label>
 						<select
-							size='sm'
-							className='inputcargaexp'
-							aria-label='Default select example'
+							className='inputcarga'
+							aria-label='Default select'
 							name='estado'
 							value={form.estado}
 							onChange={handleChange}
@@ -292,24 +282,24 @@ export const CargaExptes = () => {
 					</Form.Group>
 
 					<Form.Group className='w-100 text-center' controlId='inputcel'>
-						<Form.Label className='labelcargaexp'>
+						<Form.Label className='labelcarga'>
 							Caratula
 						</Form.Label>
 						<Form.Label
-							className='labelcargaexp'
+							className='labelcarga'
 							type='text'
 							name='caratula'>
 							{`${form.actor} C/ ${form.demandado} S/ ${form.proceso}`}
 						</Form.Label>
 					</Form.Group>
 
-					<Form.Group className='botonescarexp'>
-						<Button className='botoncargaexp ' onClick={handleSubmit}>
-							<i className='me-2 fs-6 bi bi-check2-square'></i>
+					<Form.Group className='botonescarga'>
+						<Button className='botoneditcarga' onClick={handleSubmit}>
+							<i className='iconavbar bi bi-check2-square'></i>
 							Agregar Expediente
 						</Button>
-						<Link to='/gestionexpedientes' className='btncancexp'>
-							<i className='me-2 fs-6 bi bi-x-circle-fill'></i>
+						<Link to='/gestionexpedientes' className='btncanccarga'>
+							<i className='iconavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Link>
 					</Form.Group>

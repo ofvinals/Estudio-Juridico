@@ -1,4 +1,4 @@
-.cargaexpe{
+.bodycarga{
    display: flex;
    flex-wrap: nowrap;
    align-items: center;
@@ -10,7 +10,7 @@
    object-fit:cover;
    background-position:center;
 }
-.titlecargaexp{
+.titlecarga{
    text-align: center;
    width: 100%;
    margin-top: 2vw;
@@ -18,7 +18,7 @@
    font-size: 3vw;
    color: rgb(143, 142, 139);
 }
-.Formcargexp{
+.Formcarga{
    display: flex!important;
    flex-wrap: wrap;
    justify-content: space-around!important;
@@ -32,7 +32,7 @@
    border: 0.2vw outset rgb(143, 142, 139);
    opacity: 0.85;
 }
-.labelcargaexp{
+.labelcarga{
    font-weight: 700;
    width: 100%!important;
    margin-left:1vw!important;
@@ -41,7 +41,7 @@
    color:rgb(143, 142, 139);
    font-size: 1vw!important;
 }
-.inputcargaexp{
+.inputcarga{
    color: rgb(36, 36, 36);
    width: 100%!important;
    margin-left:1vw!important;
@@ -52,17 +52,35 @@
    font-size: 1vw!important;
    padding:0.4vw!important;
 }
-.formcargaexp{
+.grupocaratula{
+   display: flex;
+   flex-direction: column;
+   width: 100%;
+   margin-left:3vw;
+   margin-right: 3vw;
+}
+.labelcarcaratula{
+   font-weight: 700;
+   width: 100%!important;
+   margin-left:1vw;
+   margin-right: 1vw;
+   margin-bottom: 1vw;
+   background-color: rgb(36, 36, 36)!important;
+   color:rgb(143, 142, 139)!important;
+   font-size: 1vw;
+}
+
+.formcargagroup{
    margin-left: 1vw;
 }
-.botonescarexp{
-   display: flex;
+.botonescarga{
+   display: flex!important;
    justify-content: center;
    flex-direction: row;
    align-items: center;
    width: 100%;
 }
-.botoncargaexp{
+.botoneditcarga{
    font-size: 1vw!important;
    font-weight: 700;
    margin-top: 1vw;
@@ -80,12 +98,12 @@
    cursor: pointer;
    padding:0.2vw!important;
 }
-.botoncargaexp:hover{
+.botoneditcarga:hover{
    opacity:0.8;
    color: white;
    background-color: transparent;
 }
-.btncancexp{
+.btncanccarga{
    font-size: 1vw!important;
    font-weight: 700;
    margin-top: 1vw;
@@ -103,7 +121,7 @@
    text-align: center;
    text-decoration: none;
 }
-.btncancexp:hover{
+.btncanccarga:hover{
    opacity:0.8;
    color: white;
    background-color: transparent;

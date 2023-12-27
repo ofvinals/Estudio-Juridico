@@ -120,17 +120,17 @@ export const AgendaUsu = () => {
 		if (turnosFiltrados.length > 0) {
 			const tabla = turnosFiltrados.map((turnos) => (
 				<tr key={turnos.id}>
-					<td className='align-middle w-50'>{turnos.turno}</td>
+					<td className='align-middle w-25'>{turnos.turno}</td>
 					<td className='align-middle '>{turnos.email}</td>
 					<td className='align-middle '>{turnos.motivo}</td>
-					<td className='d-flex flex-row align-content-center justify-content-around w-100'>
-						<Link className='btnaccag' to={`/editarturnos/${turnos.id}`}>
-							<i className='bi bi-pen accicoag'></i>
+					<td className='align-middle d-flex flex-row'>
+						<Link className='btneditagusu' to={`/editarturnos/${turnos.id}`}>
+							<i className='bi bi-pen acciconoagusu'></i>
 						</Link>
 						<button
-							className='btnborrarag '
+							className='btnborraagusu'
 							onClick={() => borrarTurno(turnos.id)}>
-							<i className='bi bi-trash-fill accicoag'></i>
+							<i className='bi bi-trash-fill acciconoagusu'></i>
 						</button>
 					</td>
 				</tr>
@@ -182,17 +182,17 @@ export const AgendaUsu = () => {
 	return (
 		<>
 			<div className='container-fluid'>
-				<div className='main px-3 bodycontact'>
-					<h4 className='titlead'>Bienvenido, {email}</h4>
-					<p className='titleagusu'>Panel de Turnos </p>
+				<div className='main px-3 bodyagusu'>
+					<h4 className='titleagusu'>Bienvenido, {email}</h4>
+					<p className='subtitleagusu'>Panel de Turnos </p>
 				</div>
 				<div className='d-flex justify-content-center'>
-					<Link to='/AdminUsu' className='btnagusuvolver'>
+					<Link to='/AdminUsu' className='btnpanelagusu'>
 						<i className='iconavbar bi bi-box-arrow-left'></i>
 						Volver al Panel
 					</Link>
 				</div>
-				<div className='bodyagusu'>
+				<div className='formagusu'>
 					<div>
 						<h1 className='titleagusu'>Turnos Online</h1>
 						<p className='subtitleagusu'>
@@ -252,7 +252,7 @@ export const AgendaUsu = () => {
 								striped
 								hover
 								variant='dark'
-								className='tablaagenda table border border-secondary-subtle'>
+								className='tablaagusu table border border-secondary-subtle'>
 								<thead>
 									<tr>
 										<th>Turno</th>

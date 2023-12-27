@@ -77,7 +77,12 @@ export const MovExptes = () => {
 
 	// Funcion para cargar tabla de movimientos traida de Local Storage
 	function cargarTablaMov() {
-		const nroExpteFiltrado = exptes.find((expte) => expte.id === Number(id));
+		console.log(exptes, id);
+		const nroExpteFiltrado = exptes.find((expte) => String(expte.id) === id);
+		if (!nroExpteFiltrado) {
+			console.error("No se encontró ningún expediente con el ID proporcionado.");
+			return;
+		 }
 		const movimientosFiltrados = movimientos
 			.filter(
 				(movimiento) => movimiento.nroexpte === nroExpteFiltrado.nroexpte
@@ -98,26 +103,26 @@ export const MovExptes = () => {
 						{/* Edit solo visible para admin */}
 						{email === 'admin@gmail.com' && (
 							<Link
-								className='btnaccgestexp'
+								className='btneditmov'
 								to={`/editarmov/${movimiento.id}`}>
-								<i className='bi bi-pen  accico'></i>
+								<i className='bi bi-pen acciconomov'></i>
 							</Link>
 						)}
 						{/* Borrar solo visible para admin */}
 						{email === 'admin@gmail.com' && (
 							<button
-								className='btnborrargestexp'
+								className='btnborramov'
 								onClick={() => borrarMov(movimiento.id)}>
-								<i className='bi bi-trash-fill  accico'></i>
+								<i className='bi bi-trash-fill acciconomov'></i>
 							</button>
 						)}
 						<button
-							className='btnvergestexp'
+							className='btnvermov'
 							onClick={(e) => {
 								setShowVerMovModal(true);
 								verMovExpte(movimiento.id);
 							}}>
-							<i className='bi bi-search accico'></i>
+							<i className='bi bi-search acciconomov'></i>
 						</button>
 					</div>
 				</td>
@@ -200,9 +205,9 @@ export const MovExptes = () => {
 	return (
 		<>
 			<div className='container-fluid bg-dark'>
-				<div className='main px-3 bodyadexped '>
-					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
-					<p className='subtitleadusu'>
+				<div className='main px-3 bodymov'>
+					<h4 className='titlemov'>Bienvenido de nuevo, {email}</h4>
+					<p className='subtitlemov'>
 						Panel de Movimientos de Expedientes
 					</p>
 				</div>
@@ -210,7 +215,7 @@ export const MovExptes = () => {
 					<div className='d-flex justify-content-around'>
 						{email === 'admin@gmail.com' && (
 							<Button
-								className='btngestexpad'
+								className='btnpanelmov'
 								onClick={(e) => setShowCreaMovModal(true)}>
 								<i className='iconavbar bi bi-file-earmark-plus'></i>
 								Agregar movimiento
@@ -218,13 +223,9 @@ export const MovExptes = () => {
 						)}
 						<Button
 							onClick={() => {
-								if (email === 'admin@gmail.com') {
-									navigate('/gestionexpedientes');
-								} else {
-									navigate('/gestionexpteusu');
-								}
+								navigate('/gestionexpedientes');
 							}}
-							className='btngestexpad'>
+							className='btnpanelmov'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Button>
@@ -232,25 +233,23 @@ export const MovExptes = () => {
 
 					<div>
 						<div>
-							<h2 className='subtitleadusu'>Datos del Expediente</h2>
+							<h2 className='subtitlemov'>Datos del Expediente</h2>
 							{datosExpte}
 						</div>
 					</div>
-					<h2 className='subtitleadusu text-center'>
-						Movimientos del Expediente
-					</h2>
+					<h2 className='subtitlemov'>Movimientos del Expediente</h2>
 					<div className='container table-responsive'>
 						<Table
 							striped
 							hover
 							variant='dark'
-							className='tablamovexpte text-center table border border-secondary-subtle'>
+							className='tablamov table border border-secondary-subtle'>
 							<thead>
 								<tr>
 									<th>Fecha</th>
 									<th>Descripcion</th>
 									<th>Adjunto</th>
-									<th className='acciones'>Acciones</th>
+									<th className='botonescciongestion'>Acciones</th>
 								</tr>
 							</thead>
 							<tbody id='tablaTurnos' className='table-group-divider'>
@@ -299,11 +298,11 @@ export const MovExptes = () => {
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
-					<button className='btnaccag' onClick={handleSubmit}>
+					<button className='btneditmov' onClick={handleSubmit}>
 						Confirmar
 					</button>
 					<button
-						className='btnborrarag '
+						className='btnborramov'
 						onClick={() => {
 							handleCancel();
 						}}>
@@ -334,7 +333,7 @@ export const MovExptes = () => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnaccag '
+						className='btneditmov'
 						onClick={() => {
 							handleCancel();
 						}}>

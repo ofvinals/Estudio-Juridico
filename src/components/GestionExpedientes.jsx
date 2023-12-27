@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
-import '../css/GestionExpedientes.css';
+import '../css/Gestion.css';
 
 export const GestionExpedientes = () => {
 	const auth = useAuth();
@@ -36,22 +36,22 @@ export const GestionExpedientes = () => {
 							<div className='d-flex flex-row justify-content-around'>
 								{email === 'admin@gmail.com' && (
 									<Link
-										className='btnaccgestexp'
+										className='btneditgestion'
 										to={`/editarexptes/${expte.id}`}>
-										<i className='bi bi-pen accico'></i>
+										<i className='bi bi-pen acciconogestion'></i>
 									</Link>
 								)}
 								{email === 'admin@gmail.com' && (
 									<button
-										className='btnborrargestexp'
+										className='btnborragestion'
 										onClick={() => borrarExpte(expte.id)}>
-										<i className='bi bi-trash-fill  accico'></i>
+										<i className='bi bi-trash-fill  acciconogestion'></i>
 									</button>
 								)}
 								<Link
-									className='btnvergestexp'
+									className='btnvergestion'
 									to={`/movexptes/${expte.id}`}>
-									<i className='bi bi-search accico'></i>
+									<i className='bi bi-search acciconogestion'></i>
 								</Link>
 							</div>
 						</td>
@@ -95,9 +95,9 @@ export const GestionExpedientes = () => {
 	return (
 		<>
 			<div className='container-fluid bg-dark'>
-				<div className='main px-3 bodyadexped '>
-					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
-					<p className='subtitleadusu'>
+				<div className='main px-3 bodygestion '>
+					<h4 className='titlegestion'>Bienvenido de nuevo, {email}</h4>
+					<p className='subtitlegestion'>
 						Panel de Administracion de Expedientes
 					</p>
 				</div>
@@ -106,7 +106,7 @@ export const GestionExpedientes = () => {
 						{email === 'admin@gmail.com' && (
 							<Link
 								type='button'
-								className='btngestexpad'
+								className='btnpanelgestion'
 								to='/CargaExptes'
 								data-bs-toggle='modal'
 								data-bs-target='#Modal'>
@@ -115,23 +115,25 @@ export const GestionExpedientes = () => {
 							</Link>
 						)}
 						{email === 'admin@gmail.com' && (
-							<Link to='/exptesarchivados' className='btngestexpad'>
+							<Link to='/exptesarchivados' className='btnpanelgestion'>
 								<i className='iconavbar bi bi-search'></i>
 								Expedientes Archivados
 							</Link>
 						)}
-						<Link to='' className='btngestexpad'>
+						<Link to='' className='btnpanelgestion'>
 							<i className='iconavbar bi bi-search'></i>
 							Buscar Expediente
 						</Link>
-						<Link to='/Admin' className='btngestexpad'>
+						<Link
+							to={email === 'admin@gmail.com' ? '/Admin' : '/AdminUsu'}
+							className='btnpanelgestion'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
 					</div>
 
 					<div>
-						<p className='titleagexp text-center'>
+						<p className='titlegestion'>
 							Expedientes en tramite
 						</p>
 					</div>
@@ -141,14 +143,14 @@ export const GestionExpedientes = () => {
 							striped
 							hover
 							variant='dark'
-							className='tablaexpte text-center table border border-secondary-subtle'>
+							className='tablagestion table border border-secondary-subtle'>
 							<thead>
 								<tr>
 									<th>Expte</th>
 									<th>Fuero</th>
 									<th>Juzgado</th>
 									<th className='w-50'>Caratula</th>
-									<th className='acciones'>Acciones</th>
+									<th className='botonescciongestion'>Acciones</th>
 								</tr>
 							</thead>
 							<tbody id='tablaTurnos' className='table-group-divider'>

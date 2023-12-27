@@ -3,20 +3,15 @@ import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import '../components/UsuariosaValidar';
-import '../css/GestionUsuarios.css';
+import '../css/Gestion.css';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
 export const GestionUsuarios = () => {
 	const auth = useAuth();
 	const { email } = auth.user;
-
-	const [show, setShow] = useState(false);
 	const [usuarios, setUsuarios] = useState([]);
 	const [tablaUsuario, setTablaUsuario] = useState();
-
-	const handleClose = () => setShow(false);
-	const handleShow = () => setShow(true);
 
 	// Cargar usuarios desde el localStorage al montar el componente
 	useEffect(() => {
@@ -41,15 +36,15 @@ export const GestionUsuarios = () => {
 					<div className='d-flex flex-row justify-content-around'>
 						<Link
 							hidden={usuario.email === 'admin@gmail.com'}
-							className='btnaccusu '
+							className='btneditgestion'
 							to={`/editarusu/${usuario.id}`}>
-							<i className='bi bi-pen  accico'></i>
+							<i className='bi bi-pen acciconogestion'></i>
 						</Link>
 						<button
-							className='btnborrarusu'
+							className='btnborragestion'
 							onClick={() => borrarUsuario(usuario.id)}
 							hidden={usuario.email === 'admin@gmail.com'}>
-							<i className='bi bi-trash-fill  accico'></i>
+							<i className='bi bi-trash-fill acciconogestion'></i>
 						</button>
 					</div>
 				</td>
@@ -91,8 +86,8 @@ export const GestionUsuarios = () => {
 		<>
 			<div className='bodygestion container-fluid bg-dark'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
-					<p className='subtitleadusu'>Panel de Administracion de Usuarios</p>
+					<h4 className='titlegestion'>Bienvenido de nuevo, {email}</h4>
+					<p className='subtitlegestion'>Panel de Administracion de Usuarios</p>
 				</div>
 			</div>
 
@@ -101,21 +96,20 @@ export const GestionUsuarios = () => {
 					<Link
 						to='/cargausu'
 						type='button'
-						className='btnusu align-self-center '
-						data-bs-toggle='modal'
-						data-bs-target='#Modal'>
+						className='btnpanelgestion'>
 						<i className='iconavbar bi bi-file-earmark-plus'></i>
 						Agregar usuario
 					</Link>
-					<Link to='/Admin' className='btnusu align-self-center '>
-						<i className='iconavbar bi bi-box-arrow-left'></i>
-						Volver al Panel
-					</Link>
+					<Link
+							to={email === 'admin@gmail.com' ? '/Admin' : '/AdminUsu'}
+							className='btnpanelgestion'>
+							<i className='iconavbar bi bi-box-arrow-left'></i>
+							Volver al Panel
+						</Link>
 				</div>
 
-				{/* <!-- Tabla de usuarios --> */}
 				<div>
-					<p className='mt-3 subtitleadusu text-center'>Usuarios registrados</p>
+					<p className='mt-3 titlegestion'>Usuarios registrados</p>
 				</div>
 
 				<div className='container table-responsive'>
@@ -123,7 +117,7 @@ export const GestionUsuarios = () => {
 						striped
 						hover
 						variant='dark'
-						className='tablausuarios text-center table  border border-secondary-subtle'>
+						className='tablagestion table border border-secondary-subtle'>
 						<thead>
 							<tr>
 								<th>Nombre</th>
@@ -131,7 +125,7 @@ export const GestionUsuarios = () => {
 								<th>Celular</th>
 								<th>Email</th>
 								<th>DNI</th>
-								<th className='acciones'>Acciones</th>
+								<th className='botonescciongestion'>Acciones</th>
 							</tr>
 						</thead>
 						<tbody id='tablaUsuario' className='table-group-divider'>

@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
-import '../css/CargaUsu.css';
+import '../css/Carga.css';
 import { useAuth } from '../context/AuthContext';
 
 export const CargaUsu = () => {
@@ -170,14 +170,14 @@ export const CargaUsu = () => {
 
 	return (
 		<>
-			<section className='registerusu'>
-				<Form className='FormcargaUsu container fluid bg-dark'>
-					<h2 className='titulocargausu'>Crear Nuevo Usuario</h2>
+			<section className='bodycarga'>
+				<Form className='Formcarga container fluid bg-dark'>
+					<h2 className='titlecarga'>Crear Nuevo Usuario</h2>
 
 					<Form.Group className='mb-3' controlId='inputname'>
-						<Form.Label className='labelcarusu'>Nombre/s</Form.Label>
+						<Form.Label className='labelcarga'>Nombre/s</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='text'
 							name='nombre'
 							value={form.nombre}
@@ -190,9 +190,9 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='inputsubname'>
-						<Form.Label className='labelcarusu'>Apellido/s</Form.Label>
+						<Form.Label className='labelcarga'>Apellido/s</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='text'
 							name='apellido'
 							value={form.apellido}
@@ -202,9 +202,9 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='inputdni'>
-						<Form.Label className='labelcarusu'>DNI/CUIT/CUIL</Form.Label>
+						<Form.Label className='labelcarga'>DNI/CUIT/CUIL</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='number'
 							name='dni'
 							value={form.dni}
@@ -214,9 +214,9 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='inputdomic'>
-						<Form.Label className='labelcarusu'>Domicilio</Form.Label>
+						<Form.Label className='labelcarga'>Domicilio</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='text'
 							name='domicilio'
 							value={form.domicilio}
@@ -226,9 +226,9 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='inputcel'>
-						<Form.Label className='labelcarusu'>Celular</Form.Label>
+						<Form.Label className='labelcarga'>Celular</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='number'
 							name='celular'
 							value={form.celular}
@@ -238,9 +238,9 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3' controlId='inputemail'>
-						<Form.Label className='labelcarusu'>Email</Form.Label>
+						<Form.Label className='labelcarga'>Email</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='email'
 							name='email'
 							value={form.email}
@@ -253,9 +253,9 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3'>
-						<Form.Label className='labelcarusu'>Contraseña</Form.Label>
+						<Form.Label className='labelcarga'>Contraseña</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='password'
 							name='password'
 							value={form.password}
@@ -268,11 +268,11 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group className='mb-3'>
-						<Form.Label className='labelcarusu' controlid='inputconfirm'>
+						<Form.Label className='labelcarga' controlid='inputconfirm'>
 							Confirmar Contraseña
 						</Form.Label>
 						<Form.Control
-							className='inputcarusu'
+							className='inputcarga'
 							type='password'
 							name='confpassword'
 							value={form.confpassword}
@@ -282,14 +282,14 @@ export const CargaUsu = () => {
 					</Form.Group>
 
 					<Form.Group
-						className='mb-3 botonescarusu'
+						className='mb-3 botonescarga'
 						controlId='inputpassword'>
-						<Button className='btncarusu' onClick={handleSubmit}>
-							<i className='me-2 fs-6 bi bi-check2-square'></i>
+						<Button className='botoneditcarga' onClick={handleSubmit}>
+							<i className='iconavbar bi bi-check2-square'></i>
 							Guardar Usuario
 						</Button>
-						<Link to='/gestionusuarios' className='btncancusu'>
-							<i className='me-2 fs-6 bi bi-x-circle-fill'></i>
+						<Link to='/gestionusuarios' className='btncanccarga'>
+							<i className='iconavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Link>
 					</Form.Group>

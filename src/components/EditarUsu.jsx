@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import '../css/EditaUsu.css';
+import '../css/Editar.css';
 import { Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 
@@ -83,31 +83,11 @@ export const EditarUsu = () => {
 				: { ...user }
 		);
 
-		//expresion regular para validar email
-		const validarEmail = /^[\w+.-]+@\w+([.-]?\w+)*(\.\w{2,})+$/;
-		const resultadoValidacionEmail = validarEmail.test(emailEditarUsuario);
-		//expresion regular para validar nombre
-		const validarNombre = /^[a-zA-Z]+$/;
-		const resultadoValidacionNombre = validarNombre.test(nombreEditarUsuario);
-
-		if (nombreEditarUsuario === '' || emailEditarUsuario === '') {
-			mostrarError('*Todos los campos son obligatorios*');
-			return;
-		} else if (!resultadoValidacionEmail) {
-			mostrarError('*Ingrese un Email valido*');
-			return;
-		} else if (!resultadoValidacionNombre) {
-			mostrarError(
-				'*Ingrese un nombre que no contenga signos, numeros ni caracteres especiales*'
-			);
-			return;
-		} else {
 			Swal.fire({
 				icon: 'success',
 				text: 'Editado exitosamente!',
 				timer: 1500,
 			});
-		}
 
 		// Actualizar el estado de usuarios, luego de editar
 		setUsuarios(nuevosUsuarios);
@@ -122,13 +102,13 @@ export const EditarUsu = () => {
 
 	return (
 		<>
-			<section className='editusu'>
-				<Form className='editusuForm container-fluid bg-dark'>
-					<h2 className='titleeditusu'>Modificar Datos de Usuario</h2>
+			<section className='bodyedit'>
+				<Form className='formedit container-fluid bg-dark'>
+					<h2 className='titleedit'>Modificar Datos de Usuario</h2>
 					<Form.Group className='mb-3' controlId='nombreEditarUsuario'>
-						<Form.Label className='labeleditusu'>Nombre</Form.Label>
+						<Form.Label className='labeledit'>Nombre</Form.Label>
 						<Form.Control
-							className='inputeditusu'
+							className='inputedit'
 							type='text'
 							placeholder='Nombre'
 							value={formValues.nombreEditarUsuario}
@@ -142,9 +122,9 @@ export const EditarUsu = () => {
 						/>
 					</Form.Group>
 					<Form.Group className='mb-3' controlId='apellidoEditarUsuario'>
-						<Form.Label className='labeleditusu'>Apellido</Form.Label>
+						<Form.Label className='labeledit'>Apellido</Form.Label>
 						<Form.Control
-							className='inputeditusu'
+							className='inputedit'
 							type='text'
 							placeholder='Apellido'
 							value={formValues.apellidoEditarUsuario}
@@ -158,9 +138,9 @@ export const EditarUsu = () => {
 						/>
 					</Form.Group>
 					<Form.Group className='mb-3' controlId='dniEditarUsuario'>
-						<Form.Label className='labeleditusu'>DNI/CUIT</Form.Label>
+						<Form.Label className='labeledit'>DNI/CUIT</Form.Label>
 						<Form.Control
-							className='inputeditusu'
+							className='inputedit'
 							type='text'
 							placeholder='DNI/CUIT'
 							value={formValues.dniEditarUsuario}
@@ -174,9 +154,9 @@ export const EditarUsu = () => {
 						/>
 					</Form.Group>
 					<Form.Group className='mb-3' controlId='domicilioEditarUsuario'>
-						<Form.Label className='labeleditusu'>Domicilio</Form.Label>
+						<Form.Label className='labeledit'>Domicilio</Form.Label>
 						<Form.Control
-							className='inputeditusu'
+							className='inputedit'
 							type='text'
 							placeholder='Domicilio'
 							value={formValues.domicilioEditarUsuario}
@@ -190,9 +170,9 @@ export const EditarUsu = () => {
 						/>
 					</Form.Group>
 					<Form.Group className='mb-3' controlId='celularEditarUsuario'>
-						<Form.Label className='labeleditusu'>Celular</Form.Label>
+						<Form.Label className='labeledit'>Celular</Form.Label>
 						<Form.Control
-							className='inputeditusu'
+							className='inputedit'
 							type='text'
 							placeholder='Celular'
 							value={formValues.celularEditarUsuario}
@@ -206,9 +186,9 @@ export const EditarUsu = () => {
 						/>
 					</Form.Group>
 					<Form.Group className='mb-3' controlId='emailEditarUsuario'>
-						<Form.Label className='labeleditusu'>Email</Form.Label>
+						<Form.Label className='labeledit'>Email</Form.Label>
 						<Form.Control
-							className='inputeditusu'
+							className='inputedit'
 							type='email'
 							placeholder='name@example.com'
 							value={formValues.emailEditarUsuario}
@@ -220,15 +200,15 @@ export const EditarUsu = () => {
 							}
 						/>
 					</Form.Group>
-					<Form.Group className='mb-3 botoneseditusu'>
+					<Form.Group className='mb-3 botonesedit'>
 						<Button
-							className='botoneditusu'
+							className='botonedit'
 							onClick={(e) => setShowConfirmationModal(true)}>
-							<i className='me-2 fs-6 bi bi-check2-square'></i>
+							<i className='iconavbar bi bi-check2-square'></i>
 							Guardar cambios
 						</Button>
-						<Link to='/gestionusuarios' className='botoncanceditusu'>
-							<i className='me-2 fs-6 bi bi-x-circle-fill'></i>
+						<Link to='/gestionusuarios' className='botoncancedit'>
+							<i className='iconnavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Link>
 					</Form.Group>
@@ -247,14 +227,14 @@ export const EditarUsu = () => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnacept'
+						className='btnconfmodal'
 						onClick={(e) => {
 							editarUsuarios(e);
 						}}>
 						Confirmar
 					</button>
 					<button
-						className='btncanc'
+						className='btncancmodal'
 						onClick={() => {
 							setShowConfirmationModal(false);
 						}}>

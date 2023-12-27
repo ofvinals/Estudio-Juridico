@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import '../css/EditarExptes.css';
+import '../css/Editar.css';
 import { Button, Modal } from 'react-bootstrap';
 
 export const EditarMov = () => {
@@ -61,7 +61,7 @@ export const EditarMov = () => {
 				console.log('Antes de la actualización:', movimiento);
 				return {
 					...movimiento,
-					nroexpte: movimiento.nroexpte,
+					nroexpte: form.nroexpte,
 					fecha: form.fecha,
 					movimiento: form.movimiento,
 					archivo: form.archivo,
@@ -80,13 +80,13 @@ export const EditarMov = () => {
 
 	return (
 		<>
-			<section className='editexpe'>
-				<Form className='editexpForm container fluid bg-dark'>
-					<h2 className='titleeditexp'>Editar Datos de Movimientos</h2>
+			<section className='bodyedit'>
+				<Form className='formedit container fluid bg-dark'>
+					<h2 className='titleedit'>Editar Datos de Movimientos</h2>
 					<Form.Group className='' controlId='inputname'>
-						<Form.Label className='labeleditexp'>Fecha</Form.Label>
+						<Form.Label className='labeledit'>Fecha</Form.Label>
 						<Form.Control
-							className='inputeditexp'
+							className='inputedit'
 							type='text'
 							name='fecha'
 							value={form.fecha}
@@ -95,9 +95,9 @@ export const EditarMov = () => {
 					</Form.Group>
 
 					<Form.Group className='' controlId='inputdomic'>
-						<Form.Label className='labeleditexp'>Movimiento</Form.Label>
+						<Form.Label className='labeledit'>Movimiento</Form.Label>
 						<Form.Control
-							className='inputeditexp'
+							className='inputedit'
 							as='textarea'
 							rol={13}
 							col={50}
@@ -108,10 +108,10 @@ export const EditarMov = () => {
 					</Form.Group>
 
 					<Form.Group className='' controlId='inputcel'>
-						<Form.Label className='labeleditexp'>Archivo</Form.Label>
+						<Form.Label className='labeledit'>Archivo</Form.Label>
 						{form.archivo !== null && (
 							<Form.Control
-								className='inputeditexp'
+								className='inputedit'
 								type='file'
 								name='archivo'
 								value={form.archivo}
@@ -120,14 +120,14 @@ export const EditarMov = () => {
 						)}
 					</Form.Group>
 
-					<Form.Group className='botoneseditexp'>
+					<Form.Group className='botonesedit'>
 						<Button
-							className='btneditexp'
+							className='botonedit'
 							onClick={(e) => setShowConfirmationModal(true)}>
 							<i className='iconavbar bi bi-check2-square'></i>
 							Guardar Cambios
 						</Button>
-						<Link to='/movexptes' className='botoneditcancexp'>
+						<Link to='/movexptes' className='botoncancedit'>
 							<i className='iconavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Link>
@@ -147,14 +147,14 @@ export const EditarMov = () => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnacept'
+						className='btnconfmodal'
 						onClick={(e) => {
 							editarMov(e);
 						}}>
 						Confirmar
 					</button>
 					<button
-						className='btncanc'
+						className='btncancmodal'
 						onClick={() => {
 							handleCancel();
 							navigate(`/movexptes/${id}`);

@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
-import '../css/EditarExptes.css';
+import '../css/Editar.css';
 import { Button, Modal } from 'react-bootstrap';
 
 export const EditarExptes = ({}) => {
@@ -29,7 +29,6 @@ export const EditarExptes = ({}) => {
 
 	const handleCancel = () => {
 		setShowConfirmationModal(false);
-		handleClose();
 		navigate('/gestionexpedientes');
 	};
 
@@ -99,15 +98,15 @@ export const EditarExptes = ({}) => {
 
 	return (
 		<>
-			<section className='editexpe'>
-				<Form className='editexpForm container fluid bg-dark'>
-					<h2 className='titleeditexp'>Editar Datos de Expediente</h2>
+			<section className='bodyedit'>
+				<Form className='formedit container fluid bg-dark'>
+					<h2 className='titleedit'>Editar Datos de Expediente</h2>
 					<Form.Group className='formcargaexp' controlId='inputname'>
-						<Form.Label className='labeleditexp'>Cliente</Form.Label>
+						<Form.Label className='labeledit'>Cliente</Form.Label>
 						<select
 							size='sm'
-							className='inputeditexp'
-							aria-label='Default select example'
+							className='inputedit'
+							aria-label='Default select'
 							name='cliente'
 							value={formValues.clienteEditar}
 							onChange={handleChange}>
@@ -120,12 +119,12 @@ export const EditarExptes = ({}) => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputname'>
-						<Form.Label className='labeleditexp'>
+					<Form.Group controlId='inputname'>
+						<Form.Label className='labeledit'>
 							Nro Expediente
 						</Form.Label>
 						<Form.Control
-							className='inputeditexp'
+							className='inputedit'
 							type='text'
 							name='nroexpteEditar'
 							value={formValues.nroexpteEditar}
@@ -133,14 +132,14 @@ export const EditarExptes = ({}) => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputsubname'>
-						<Form.Label className='labeleditexp'>
+					<Form.Group controlId='inputsubname'>
+						<Form.Label className='labeledit'>
 							{' '}
 							Fuero de Radicacion
 						</Form.Label>
 						<select
-							className='inputeditexp'
-							aria-label='Default select example'
+							className='inputedit'
+							aria-label='Default select'
 							name='radicacionEditar'
 							value={formValues.radicacionEditar}
 							onChange={handleChange}>
@@ -161,14 +160,14 @@ export const EditarExptes = ({}) => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputsubname'>
-						<Form.Label className='labeleditexp'>
+					<Form.Group controlId='inputsubname'>
+						<Form.Label className='labeledit'>
 							{' '}
 							Juzgado de Radicacion
 						</Form.Label>
 						<select
-							className='inputeditexp'
-							aria-label='Default select example'
+							className='inputedit'
+							aria-label='Default select'
 							name='juzgadoEditar'
 							value={formValues.juzgadoEditar}
 							onChange={handleChange}>
@@ -188,10 +187,10 @@ export const EditarExptes = ({}) => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputdomic'>
-						<Form.Label className='labeleditexp'>Actor</Form.Label>
+					<Form.Group controlId='inputdomic'>
+						<Form.Label className='labeledit'>Actor</Form.Label>
 						<Form.Control
-							className='inputeditexp'
+							className='inputedit'
 							type='text'
 							name='actorEditar'
 							value={formValues.actorEditar}
@@ -199,10 +198,10 @@ export const EditarExptes = ({}) => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputcel'>
-						<Form.Label className='labeleditexp'>Demandado</Form.Label>
+					<Form.Group controlId='inputcel'>
+						<Form.Label className='labeledit'>Demandado</Form.Label>
 						<Form.Control
-							className='inputeditexp'
+							className='inputedit'
 							type='text'
 							name='demandadoEditar'
 							value={formValues.demandadoEditar}
@@ -210,13 +209,12 @@ export const EditarExptes = ({}) => {
 						/>
 					</Form.Group>
 
-					<Form.Group className='' controlId='inputemail'>
-						<Form.Label className='labeleditexp'>
+					<Form.Group controlId='inputemail'>
+						<Form.Label className='labeledit'>
 							Tipo de Proceso
 						</Form.Label>
 						<select
-							size='sm'
-							className='inputeditexp'
+							className='inputedit'
 							aria-label='Default select example'
 							name='procesoEditar'
 							value={formValues.procesoEditar}
@@ -237,12 +235,12 @@ export const EditarExptes = ({}) => {
 					</Form.Group>
 
 					<Form.Group
-						className='grupoinputeditexpte'
+						className=''
 						controlId='inputemail'>
-						<Form.Label className='labeleditexp'>Estado</Form.Label>
+						<Form.Label className='labeledit'>Estado</Form.Label>
 						<select
-							className='inputeditexp'
-							aria-label='Default select example'
+							className='inputedit'
+							aria-label='Default select'
 							name='estadoEditar'
 							value={formValues.estadoEditar}
 							onChange={(e) => {
@@ -257,14 +255,14 @@ export const EditarExptes = ({}) => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='botoneseditexp'>
+					<Form.Group className='botonesedit'>
 						<Button
-							className='btneditexp'
+							className='botonedit'
 							onClick={(e) => setShowConfirmationModal(true)}>
 							<i className='iconavbar bi bi-check2-square'></i>
 							Guardar Cambios
 						</Button>
-						<Link to='/gestionexpedientes' className='botoneditcancexp'>
+						<Link to='/gestionexpedientes' className='botoncancedit'>
 							<i className='iconavbar bi bi-x-circle-fill'></i>
 							Cancelar
 						</Link>
@@ -284,7 +282,7 @@ export const EditarExptes = ({}) => {
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnacept'
+						className='btnconfmodal'
 						onClick={(e) => {
 							editarExpte(e);
 							navigate('/gestionexpedientes');
@@ -292,7 +290,7 @@ export const EditarExptes = ({}) => {
 						Confirmar
 					</button>
 					<button
-						className='btncanc'
+						className='btncancmodal'
 						onClick={() => {
 							handleCancel();
 						}}>
