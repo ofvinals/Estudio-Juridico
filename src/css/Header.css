@@ -81,12 +81,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-	padding:1vw;
+	padding:0.5vw;
 	padding-left:1vw;
 	padding-right:1vw;
     cursor: pointer;
 	text-align: center;
-	text-decoration: none;
+	text-decoration: none!important;
 }
 .botona{
     margin-right:1vw;
@@ -94,7 +94,7 @@
 .botonnavlog:hover{
     opacity:0.8;
     color: white;
-    background-color: transparent;
+    background-color: transparent!important;
 }
 .botonnavlog:disabled{
     background-color: rgb(10, 61, 4);
@@ -115,12 +115,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-	padding:1vw;
+	padding:0.5vw;
 	padding-left:1vw;
 	padding-right:1vw;
     cursor: pointer;
 	text-align: center;
-	text-decoration: none;
+	text-decoration: none!important;
 }
 .botonnavreg:hover{
     opacity:0.8;

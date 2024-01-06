@@ -1,16 +1,13 @@
 import { useState, useEffect, createContext, useContext } from 'react';
-import { auth } from '../firebase';
-import React from 'react';
 import {
-	signInWithPopup,
-	GoogleAuthProvider,
-	signInWithEmailAndPassword,
-	createUserWithEmailAndPassword,
-	signOut,
-	onAuthStateChanged,
-} from 'firebase/auth';
-import { Navigate, useNavigate } from 'react-router-dom';
+	registerRequest,
+	loginRequest,
+	verifyTokenRequest,
+} from '../api/auth.js';
+import React from 'react';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 // crea contexto
 export const AuthContext = createContext();
@@ -19,64 +16,57 @@ export const AuthContext = createContext();
 export const useAuth = () => {
 	const context = useContext(AuthContext);
 	if (!context) {
-		console.log('Error, no creaste el contexto!');
+		throw new Error('Error, no creaste el contexto!');
 	}
 	return context;
 };
+
 // guarda el estado actual, si hay usuario logueado o no
-export function AuthProvider({ children }) {
-	const [user, setUser] = useState('');
-	// const navigate = useNavigate();
+export const AuthProvider = ({ children }) => {
+	const [user, setUser] = useState('null');
+	const [isAuthenticated, setIsAuthenticated] = useState(false);
+	const [errors, setErrors] = useState([]);
+	const [loading, setLoading] = useState(true);
+	const navigate = useNavigate();
 
-	useEffect(() => {
-		const subscribed = onAuthStateChanged(auth, (currentUser) => {
-			if (!currentUser) {
-				console.log('No hay usuario logueado');
-				setUser('');
-			} else {
-				setUser(currentUser);
+	const signup = async (user) => {
+		try {
+			const res = await registerRequest(user);
+			if (res.status === 200) {
+				setUser(res.data);
+				setIsAuthenticated(true);
+				Swal.fire({
+					icon: 'success',
+					title: 'Registro de usuario exitoso!',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			}
-		});
-		return () => subscribed();
-	}, []);
-
-	useEffect(() => {
-		console.log('Estado del usuario después del inicio de sesión:', user);
-	}, [user]);
-
-	const register = async (email, password, nombre) => {
-		const response = await createUserWithEmailAndPassword(
-			auth,
-			email,
-			password,
-			nombre
-		);
-		console.log(response);
+		} catch (error) {
+			console.log(error.response.data);
+			setErrors(error.response.data);
+		}
 	};
 
-	const login = async (email, password, navigate) => {
+	const signin = async (user) => {
 		try {
-			const response = await signInWithEmailAndPassword(
-				auth,
-				email,
-				password
-			);
+			const res = await loginRequest(user);
+			console.log(res);
+			setIsAuthenticated(true);
+			setUser(res.data);
 			Swal.fire({
 				icon: 'success',
 				title: 'Inicio de sesión exitoso!',
 				showConfirmButton: false,
-				timer: 2000,
+				timer: 1500,
 			});
-			if (email === 'admin@gmail.com') {
-				navigate('/admin');
-				// navigate('/admin', { replace: true });
+			if (res.data.email === 'admin@gmail.com') {
+				navigate('/admin', { replace: true });
 			} else {
-				navigate('/adminusu');
+				navigate('/adminusu', { replace: true });
 			}
-			// navigate('/adminusu', { replace: true });
-			console.log(response);
 		} catch (error) {
-			console.error('Error al iniciar sesión:', error.message);
+			console.error(error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Ingreso rechazado',
@@ -86,24 +76,64 @@ export function AuthProvider({ children }) {
 		}
 	};
 
-	const loginWithGoogle = async () => {
-		const responseGoogle = new GoogleAuthProvider();
-		return await signInWithPopup(auth, responseGoogle);
+	const logout = () => {
+		Cookies.remove('token');
+		setUser(null);
+		setIsAuthenticated(false);
 	};
 
-	const logout = async () => {
-		try {
-			const response = await signOut(auth);
-			console.log(response);
-		} catch (error) {
-			console.error('Error al iniciar sesión:', error.message);
+	// temporizador de mensajes de error
+	useEffect(() => {
+		if (errors.length > 0) {
+			const timer = setTimeout(() => {
+				setErrors([]);
+			}, 2000);
+			return () => clearTimeout(timer);
 		}
-	};
+	}, [errors]);
+
+	useEffect(() => {
+		async function checkLogin() {
+			const cookies = Cookies.get();
+
+			if (!cookies.token) {
+				setIsAuthenticated(false);
+				setLoading(false);
+				return setUser(null);
+			}
+			try {
+				const res = await verifyTokenRequest(cookies.token);
+				if (!res.data) {
+					setIsAuthenticated(false);
+					setLoading(false);
+					return;
+				}
+
+				setIsAuthenticated(true);
+				setUser(res.data);
+				setLoading(false);
+			} catch (error) {
+				setIsAuthenticated(false);
+				setLoading(false);
+				setUser(null);
+			}
+		}
+		checkLogin();
+	}, []);
 
 	return (
 		<AuthContext.Provider
-			value={{ register, login, loginWithGoogle, logout, user }}>
+			value={{
+				user,
+				signup,
+				signin,
+				logout,
+				isAuthenticated,
+				errors,
+				loading,
+			}}>
 			{children}
 		</AuthContext.Provider>
 	);
-}
+};
+export default AuthContext;

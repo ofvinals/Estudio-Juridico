@@ -1,155 +1,86 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
-import { Button } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useExptes } from '../context/ExptesContext';
+import { useUsers } from '../context/UsersContext';
 
 export const CargaExptes = () => {
-	const auth = useAuth();
-	const { email } = auth.user;
-
+	const { user } = useAuth();
+	const { register, handleSubmit } = useForm();
+	const { exptes, createExpte } = useExptes();
+	const { getUsers } = useUsers();
+	const [users, setUsers] = useState([]);
 	const navigate = useNavigate();
-	const initialForm = {
-		cliente: '',
-		nroexpte: '',
-		radicacion: '',
-		juzgado: '',
-		caratula: '',
-		actor: '',
-		demandado: '',
-		proceso: '',
-		estado: '',
-	};
-	const [form, setForm] = useState(initialForm);
-	const [exptes, setExptes] = useState([]);
-	const [usuarios, setUsuarios] = useState([]);
-	const [tablaExpte, setTablaExpte] = useState();
+	const [showModal, setShowModal] = useState(true);
 
-	// Cargar expedientes desde el localStorage al montar el componente
-	useEffect(() => {
-		const ListaExpte = JSON.parse(localStorage.getItem('exptes')) || [];
-		setExptes(ListaExpte);
-	}, []);
+		// Función para abrir el modal
+		const handleOpenModal = () => setShowModal(true);
 
-	// Cargar usuarios desde el localStorage al montar el componente
-	useEffect(() => {
-		const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-		setUsuarios(usuarios);
-	}, []);
-
-	//funcion para agregar expedientes
-	const agregarExpte = (newExpte) => {
-		const ListaExptes = [...exptes, newExpte];
-		setExptes(ListaExptes);
-		localStorage.setItem('exptes', JSON.stringify(ListaExptes));
-	};
-
-	const handleChange = (e) => {
-		setForm({ ...form, [e.target.name]: e.target.value });
-	};
-
-	// Verifica que todos los campos contengan datos
-	const handleBlur = (e) => {
-		if (e.target.value === '' || +e.target.value === 0) {
-			Swal.fire({
-				icon: 'warning',
-				title: 'Oops...',
-				text: 'Todos los campos son obligatorios!',
-				confirmButtonColor: '#8f8e8b',
-			});
-			return;
-		}
-	};
-	function handleSubmit(e) {
-		const {
-			cliente,
-			nroexpte,
-			radicacion,
-			juzgado,
-			caratula,
-			actor,
-			demandado,
-			proceso,
-			estado,
-		} = form;
-
-		// Verifica si el expediente ya se encuentran registrados en el Local Storage
-		const existeExpte = exptes.find((expte) => expte.nroexpte === expte);
-
-		if (existeExpte !== undefined) {
-			Swal.fire({
-				icon: 'error',
-				title: 'Expediente Existente',
-				text: 'Lo siento, el expediente ingresado ya esta registrado!',
-				confirmButtonColor: '#8f8e8b',
-			});
-			return;
-		}
-		const id = Date.now();
-		const newExpte = {
-			id,
-			cliente,
-			nroexpte,
-			radicacion,
-			juzgado,
-			caratula: `${actor} C/ ${demandado} S/ ${proceso}`,
-			actor,
-			demandado,
-			proceso,
-			estado,
+		// Función para cerrar el modal
+		const handleCloseModal = () => {
+			setShowModal(false);
+			handleCloseModal();
+			navigate('/gestionexpedientes');
 		};
 
-		agregarExpte(newExpte);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const fetchedUsers = await getUsers();
+				setUsers(fetchedUsers);
+			} catch (error) {
+				console.error('Error al obtener usuarios:', error);
+			}
+		};
 
-		Swal.fire({
-			icon: 'success',
-			title: 'Expediente registrado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		// Restablecer el formulario después de la redirección
-		setForm(initialForm);
+		fetchData();
+	}, []);
+
+	const onSubmit = handleSubmit(async (values) => {
+		createExpte(values);
 		navigate('/gestionexpedientes');
-	}
+	});
 
 	return (
 		<>
-			<section className='bodycarga'>
-				<Form className='Formcarga container fluid bg-dark'>
-					<h2 className='titlecarga'>Agregar Nuevo Expediente</h2>
+			<div className='bodyedit'>
+				<Modal show={showModal} onHide={handleCloseModal}>
+					<Modal.Header closeButton>
+						<Modal.Title className='titlemodal'>
+							Cargar Nuevo Expediente
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+				<Form
+					className='Formcarga '
+					onSubmit={onSubmit}>
 
 					<Form.Group className='formcargagroup' controlId='inputname'>
 						<Form.Label className='labelcarga'>Cliente</Form.Label>
 						<select
 							className='inputcarga'
 							aria-label='Default select'
-							name='cliente'
-							value={form.cliente}
-							onChange={handleChange}
-							onBlur={handleBlur}>
+							{...register('cliente')}>
 							<option>Selecciona..</option>
-							{usuarios.map((usuario) => (
-								<option key={usuario.id} value={usuario.email}>
-									{usuario.email}
+							{users.map((user) => (
+								<option key={user._id} value={user.email}>
+									{user.email}
 								</option>
 							))}
 						</select>
 					</Form.Group>
 
 					<Form.Group className='formcargagroup' controlId='inputname'>
-						<Form.Label className='labelcarga'>
-							Nro Expediente
-						</Form.Label>
+						<Form.Label className='labelcarga'>Nro Expediente</Form.Label>
 						<Form.Control
 							className='inputcarga'
 							type='text'
-							name='nroexpte'
-							value={form.nroexpte}
-							onChange={handleChange}
-							onBlur={handleBlur}
+							{...register('nroexpte')}
 						/>
 					</Form.Group>
 
@@ -160,13 +91,10 @@ export const CargaExptes = () => {
 						<select
 							className='inputcarga'
 							aria-label='Default select'
-							name='radicacion'
-							value={form.radicacion}
-							onChange={handleChange}
-							onBlur={handleBlur}>
+							{...register('radicacion')}>
 							<option>Selecciona..</option>
 							<option value='Civil y Comercial'>
-								Civil y Comercial
+								Civil y Comercial Comun
 							</option>
 							<option value='Contensioso Admnistrativo'>
 								Contensioso Admnistrativo
@@ -183,16 +111,12 @@ export const CargaExptes = () => {
 
 					<Form.Group className='formcargagroup' controlId='inputsubname'>
 						<Form.Label className='labelcarga'>
-							{' '}
 							Juzgado de Radicacion
 						</Form.Label>
 						<select
 							className='inputcarga'
 							aria-label='Default select'
-							name='juzgado'
-							value={form.juzgado}
-							onChange={handleChange}
-							onBlur={handleBlur}>
+							{...register('juzgado')}>
 							<option>Selecciona..</option>
 							<option value='I NOM'>I NOM</option>
 							<option value='II NOM'>II NOM</option>
@@ -209,17 +133,12 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group
-						className='formcargagroup'
-						controlId='inputdomic'>
+					<Form.Group className='formcargagroup' controlId='inputdomic'>
 						<Form.Label className='labelcarga'>Actor</Form.Label>
 						<Form.Control
 							className='inputcarga'
 							type='text'
-							name='actor'
-							value={form.actor}
-							onChange={handleChange}
-							onBlur={handleBlur}
+							{...register('actor')}
 						/>
 					</Form.Group>
 
@@ -228,10 +147,7 @@ export const CargaExptes = () => {
 						<Form.Control
 							className='inputcarga'
 							type='text'
-							name='demandado'
-							value={form.demandado}
-							onChange={handleChange}
-							onBlur={handleBlur}
+							{...register('demandado')}
 						/>
 					</Form.Group>
 
@@ -242,12 +158,7 @@ export const CargaExptes = () => {
 						<select
 							className='inputcarga'
 							aria-label='Default select'
-							name='proceso'
-							value={form.proceso}
-							onChange={(e) => {
-								handleChange(e);
-							}}
-							onBlur={handleBlur}>
+							{...register('proceso')}>
 							<option>Selecciona..</option>
 							<option value='Cobro de Pesos'>Cobro de Pesos</option>
 							<option value='Daños y Perjuicios'>
@@ -268,10 +179,7 @@ export const CargaExptes = () => {
 						<select
 							className='inputcarga'
 							aria-label='Default select'
-							name='estado'
-							value={form.estado}
-							onChange={handleChange}
-							onBlur={handleBlur}>
+							{...register('estado')}>
 							<option>Selecciona..</option>
 							<option value='En tramite'>En tramite</option>
 							<option value='Mediacion'>Mediacion</option>
@@ -281,20 +189,8 @@ export const CargaExptes = () => {
 						</select>
 					</Form.Group>
 
-					<Form.Group className='w-100 text-center' controlId='inputcel'>
-						<Form.Label className='labelcarga'>
-							Caratula
-						</Form.Label>
-						<Form.Label
-							className='labelcarga'
-							type='text'
-							name='caratula'>
-							{`${form.actor} C/ ${form.demandado} S/ ${form.proceso}`}
-						</Form.Label>
-					</Form.Group>
-
 					<Form.Group className='botonescarga'>
-						<Button className='botoneditcarga' onClick={handleSubmit}>
+						<Button className='botoneditcarga' type='submit'>
 							<i className='iconavbar bi bi-check2-square'></i>
 							Agregar Expediente
 						</Button>
@@ -304,7 +200,9 @@ export const CargaExptes = () => {
 						</Link>
 					</Form.Group>
 				</Form>
-			</section>
+				</Modal.Body>
+				</Modal>
+			</div>
 		</>
 	);
 };

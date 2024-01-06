@@ -1,303 +1,273 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
-import { Button, Modal } from 'react-bootstrap';
+import { useExptes } from '../context/ExptesContext';
+import { useForm } from 'react-hook-form';
+import { useUsers } from '../context/UsersContext';
+import { Modal } from 'react-bootstrap';
 
 export const EditarExptes = ({}) => {
-	const auth = useAuth();
-	const { id } = useParams();
-	const { email } = auth.user;
+	const { user } = useAuth();
+	const params = useParams();
+	const { getExpte, updateExpte } = useExptes();
+	const { getUsers } = useUsers();
+	const [users, setUsers] = useState([]);
+	const [showModal, setShowModal] = useState(false);
+	const { register, handleSubmit, setValue, watch, unregister } = useForm();
 	const navigate = useNavigate();
-	const [exptes, setExptes] = useState([]);
-	const [usuarios, setUsuarios] = useState([]);
-	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-	const [formValues, setFormValues] = useState({
-		cliente: '',
-		nroexpteEditar: '',
-		radicacionEditar: '',
-		juzgadoEditar: '',
-		caratulaEditar: '',
-		actorEditar: '',
-		demandadoEditar: '',
-		procesoEditar: '',
-		estadoEditar: '',
-		expteIndex: '',
-	});
 
-	const handleCancel = () => {
-		setShowConfirmationModal(false);
+	// Función para abrir el modal
+	const handleOpenModal = () => setShowModal(true);
+
+	// Función para cerrar el modal
+	const handleCloseModal = () => {
+		setShowModal(false);
 		navigate('/gestionexpedientes');
 	};
 
-	// Cargar expedientes desde el localStorage al montar el componente
+	// Función para cargar los datos del expediente al abrir la página
 	useEffect(() => {
-		const ListaExpte = JSON.parse(localStorage.getItem('exptes')) || [];
-		setExptes(ListaExpte);
-	}, []);
+		async function loadExpte() {
+			try {
+				if (params.id) {
+					const expte = await getExpte(params.id);
 
-	// Cargar usuarios desde el localStorage al montar el componente
-	useEffect(() => {
-		const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-		setUsuarios(usuarios);
-	}, []);
+					setValue('cliente', expte.cliente);
+					setValue('nroexpte', expte.nroexpte);
+					setValue('radicacion', expte.radicacion);
+					setValue('juzgado', expte.juzgado);
+					setValue('caratula', expte.caratula);
+					setValue('actor', expte.actor);
+					setValue('demandado', expte.demandado);
+					setValue('proceso', expte.proceso);
+					setValue('estado', expte.estado);
 
-	useEffect(() => {
-		const expte = exptes.find((expte) => expte.id === parseInt(id, 10));
-		// Establecer los valores en el estado
-		if (expte) {
-			setFormValues({
-				...formValues,
-				clienteEditar: expte.cliente,
-				nroexpteEditar: expte.nroexpte,
-				radicacionEditar: expte.radicacion,
-				juzgadoEditar: expte.juzgado,
-				caratulaEditar: expte.caratula,
-				actorEditar: expte.actor,
-				demandadoEditar: expte.demandado,
-				procesoEditar: expte.proceso,
-				estadoEditar: expte.estado,
-				expteIndex: id,
-			});
+					const caratulaValue = `${expte.actor} c/ ${expte.demandado} s/ ${expte.proceso}`;
+					setValue('caratula', caratulaValue);
+					// Abre automáticamente el modal cuando se cargan los datos del turno
+					handleOpenModal();
+				}
+			} catch (error) {
+				console.error('Error al cargar el expediente', error);
+			}
 		}
-	}, [id, exptes]);
+		loadExpte();
+	}, []);
 
-	// Funcion para editar datos de expedientes
-	function editarExpte() {
-		const expteIndexInt = parseInt(formValues.expteIndex, 10);
-		const nuevosExptes = exptes.map((expte) =>
-			expte.id === expteIndexInt
-				? {
-						...expte,
-						cliente: formValues.clienteEditar,
-						nroexpte: formValues.nroexpteEditar,
-						radicacion: formValues.radicacionEditar,
-						juzgado: formValues.juzgadoEditar,
-						caratula: `${formValues.actorEditar} C/ ${formValues.demandadoEditar} S/ ${formValues.procesoEditar}`,
-						actor: formValues.actorEditar,
-						demandado: formValues.demandadoEditar,
-						proceso: formValues.procesoEditar,
-						estado: formValues.estadoEditar,
-				  }
-				: { ...expte }
-		);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const fetchedUsers = await getUsers();
+				setUsers(fetchedUsers);
+			} catch (error) {
+				console.error('Error al obtener usuarios:', error);
+			}
+		};
 
-		// Actualizar el estado de expedientes, luego de editar
-		setExptes(nuevosExptes);
+		fetchData();
+	}, []);
 
-		localStorage.setItem('exptes', JSON.stringify(nuevosExptes));
-		setShowConfirmationModal(false);
-	}
+	useEffect(() => {
+		const updateCaratula = () => {
+			const actor = watch('actor');
+			const demandado = watch('demandado');
+			const proceso = watch('proceso');
+			const caratulaValue = `${actor} c/ ${demandado} s/ ${proceso}`;
+			setValue('caratula', caratulaValue);
+		};
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setFormValues({ ...formValues, [name]: value });
-	};
+		watch(['actor', 'demandado', 'proceso'], updateCaratula);
+
+		return () => {
+			unregister(['actor', 'demandado', 'proceso']);
+		};
+	}, [watch, setValue, unregister]);
+
+	const onSubmit = handleSubmit(async (data) => {
+		await updateExpte(params.id, data);
+		navigate('/gestionexpedientes');
+		// Cierra el modal después de guardar los cambios
+		handleCloseModal();
+	});
 
 	return (
 		<>
-			<section className='bodyedit'>
-				<Form className='formedit container fluid bg-dark'>
-					<h2 className='titleedit'>Editar Datos de Expediente</h2>
-					<Form.Group className='formcargaexp' controlId='inputname'>
-						<Form.Label className='labeledit'>Cliente</Form.Label>
-						<select
-							size='sm'
-							className='inputedit'
-							aria-label='Default select'
-							name='cliente'
-							value={formValues.clienteEditar}
-							onChange={handleChange}>
-							<option>Selecciona..</option>
-							{usuarios.map((usuario) => (
-								<option key={usuario.id} value={usuario.email}>
-									{usuario.email}
-								</option>
-							))}
-						</select>
-					</Form.Group>
+			<div className='bodyedit'>
+				<Modal show={showModal} onHide={handleCloseModal}>
+					<Modal.Header closeButton>
+						<Modal.Title className='titlemodal'>
+							Modificar Datos de Expediente
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Form
+							className='formedit'
+							onSubmit={onSubmit}>
 
-					<Form.Group controlId='inputname'>
-						<Form.Label className='labeledit'>
-							Nro Expediente
-						</Form.Label>
-						<Form.Control
-							className='inputedit'
-							type='text'
-							name='nroexpteEditar'
-							value={formValues.nroexpteEditar}
-							onChange={handleChange}
-						/>
-					</Form.Group>
+							<Form.Group className='formcargaexp' controlId='inputname'>
+								<Form.Label className='labeledit'>Cliente</Form.Label>
+								<select
+									className='inputedit'
+									aria-label='Default select'
+									{...register('cliente')}>
+									<option>Selecciona..</option>
+									{users.map((user) => (
+										<option key={user._id} value={user.email}>
+											{user.email}
+										</option>
+									))}
+								</select>
+							</Form.Group>
 
-					<Form.Group controlId='inputsubname'>
-						<Form.Label className='labeledit'>
-							{' '}
-							Fuero de Radicacion
-						</Form.Label>
-						<select
-							className='inputedit'
-							aria-label='Default select'
-							name='radicacionEditar'
-							value={formValues.radicacionEditar}
-							onChange={handleChange}>
-							<option>Selecciona..</option>
-							<option value='Civil y Comercial'>
-								Civil y Comercial
-							</option>
-							<option value='Contensioso Admnistrativo'>
-								Contensioso Admnistrativo
-							</option>
-							<option value='Documentos y Locaciones'>
-								Documentos y Locaciones
-							</option>
-							<option value='Familia y Sucesiones'>
-								Familia y Sucesiones
-							</option>
-							<option value='Trabajo'>Trabajo</option>
-						</select>
-					</Form.Group>
+							<Form.Group controlId='inputname'>
+								<Form.Label className='labeledit'>
+									Nro Expediente
+								</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='text'
+									{...register('nroexpte')}
+								/>
+							</Form.Group>
 
-					<Form.Group controlId='inputsubname'>
-						<Form.Label className='labeledit'>
-							{' '}
-							Juzgado de Radicacion
-						</Form.Label>
-						<select
-							className='inputedit'
-							aria-label='Default select'
-							name='juzgadoEditar'
-							value={formValues.juzgadoEditar}
-							onChange={handleChange}>
-							<option>Selecciona..</option>
-							<option value='I NOM'>I NOM</option>
-							<option value='II NOM'>II NOM</option>
-							<option value='III NOM'>III NOM</option>
-							<option value='IV NOM'>IV NOM</option>
-							<option value='V NOM'>V NOM</option>
-							<option value='VI NOM'>VI NOM</option>
-							<option value='VII NOM'>VII NOM</option>
-							<option value='VIII NOM'>VIII NOM</option>
-							<option value='IX NOM'>IX NOM</option>
-							<option value='X NOM'>X NOM</option>
-							<option value='XI NOM'>XI NOM</option>
-							<option value='XII NOM'>XII NOM</option>
-						</select>
-					</Form.Group>
+							<Form.Group controlId='inputsubname'>
+								<Form.Label className='labeledit'>
+									Fuero de Radicacion
+								</Form.Label>
+								<select
+									className='inputedit'
+									aria-label='Default select'
+									{...register('radicacion')}>
+									<option>Selecciona..</option>
+									<option value='Civil y Comercial'>
+										Civil y Comercial
+									</option>
+									<option value='Contensioso Admnistrativo'>
+										Contensioso Admnistrativo
+									</option>
+									<option value='Documentos y Locaciones'>
+										Documentos y Locaciones
+									</option>
+									<option value='Familia y Sucesiones'>
+										Familia y Sucesiones
+									</option>
+									<option value='Trabajo'>Trabajo</option>
+								</select>
+							</Form.Group>
 
-					<Form.Group controlId='inputdomic'>
-						<Form.Label className='labeledit'>Actor</Form.Label>
-						<Form.Control
-							className='inputedit'
-							type='text'
-							name='actorEditar'
-							value={formValues.actorEditar}
-							onChange={handleChange}
-						/>
-					</Form.Group>
+							<Form.Group controlId='inputsubname'>
+								<Form.Label className='labeledit'>
+									Juzgado de Radicacion
+								</Form.Label>
+								<select
+									className='inputedit'
+									aria-label='Default select'
+									{...register('juzgado')}>
+									<option>Selecciona..</option>
+									<option value='I NOM'>I NOM</option>
+									<option value='II NOM'>II NOM</option>
+									<option value='III NOM'>III NOM</option>
+									<option value='IV NOM'>IV NOM</option>
+									<option value='V NOM'>V NOM</option>
+									<option value='VI NOM'>VI NOM</option>
+									<option value='VII NOM'>VII NOM</option>
+									<option value='VIII NOM'>VIII NOM</option>
+									<option value='IX NOM'>IX NOM</option>
+									<option value='X NOM'>X NOM</option>
+									<option value='XI NOM'>XI NOM</option>
+									<option value='XII NOM'>XII NOM</option>
+								</select>
+							</Form.Group>
 
-					<Form.Group controlId='inputcel'>
-						<Form.Label className='labeledit'>Demandado</Form.Label>
-						<Form.Control
-							className='inputedit'
-							type='text'
-							name='demandadoEditar'
-							value={formValues.demandadoEditar}
-							onChange={handleChange}
-						/>
-					</Form.Group>
+							<Form.Group controlId='inputdomic'>
+								<Form.Label className='labeledit'>Actor</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='text'
+									{...register('actor')}
+								/>
+							</Form.Group>
 
-					<Form.Group controlId='inputemail'>
-						<Form.Label className='labeledit'>
-							Tipo de Proceso
-						</Form.Label>
-						<select
-							className='inputedit'
-							aria-label='Default select example'
-							name='procesoEditar'
-							value={formValues.procesoEditar}
-							onChange={(e) => {
-								handleChange(e);
-							}}>
-							<option>Selecciona..</option>
-							<option value='Cobro de Pesos'>Cobro de Pesos</option>
-							<option value='Daños y Perjuicios'>
-								Daños y Perjuicios
-							</option>
-							<option value='Desalojo'>Desalojo</option>
-							<option value='Cobro Ejecutivo'>Cobro Ejecutivo</option>
-							<option value='Reivindicacion'>Reivindicacion</option>
-							<option value='Sucesion'>Sucesion</option>
-							<option value='Sucesion'>Sucesion</option>
-						</select>
-					</Form.Group>
+							<Form.Group controlId='inputcel'>
+								<Form.Label className='labeledit'>Demandado</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='text'
+									{...register('demandado')}
+								/>
+							</Form.Group>
 
-					<Form.Group
-						className=''
-						controlId='inputemail'>
-						<Form.Label className='labeledit'>Estado</Form.Label>
-						<select
-							className='inputedit'
-							aria-label='Default select'
-							name='estadoEditar'
-							value={formValues.estadoEditar}
-							onChange={(e) => {
-								handleChange(e);
-							}}>
-							<option>Selecciona..</option>
-							<option value='En tramite'>En tramite</option>
-							<option value='Mediacion'>Mediacion</option>
-							<option value='Extrajudicial'>Extrajudicial</option>
-							<option value='Terminado'>Terminado</option>
-							<option value='Caduco'>Caduco</option>
-						</select>
-					</Form.Group>
+							<Form.Group controlId='inputemail'>
+								<Form.Label className='labeledit'>
+									Tipo de Proceso
+								</Form.Label>
+								<select
+									className='inputedit'
+									aria-label='Default select example'
+									{...register('proceso')}>
+									<option>Selecciona..</option>
+									<option value='Cobro de Pesos'>
+										Cobro de Pesos
+									</option>
+									<option value='Daños y Perjuicios'>
+										Daños y Perjuicios
+									</option>
+									<option value='Desalojo'>Desalojo</option>
+									<option value='Cobro Ejecutivo'>
+										Cobro Ejecutivo
+									</option>
+									<option value='Reivindicacion'>
+										Reivindicacion
+									</option>
+									<option value='Sucesion'>Sucesion</option>
+									<option value='Sucesion'>Sucesion</option>
+								</select>
+							</Form.Group>
 
-					<Form.Group className='botonesedit'>
-						<Button
-							className='botonedit'
-							onClick={(e) => setShowConfirmationModal(true)}>
-							<i className='iconavbar bi bi-check2-square'></i>
-							Guardar Cambios
-						</Button>
-						<Link to='/gestionexpedientes' className='botoncancedit'>
-							<i className='iconavbar bi bi-x-circle-fill'></i>
-							Cancelar
-						</Link>
-					</Form.Group>
-				</Form>
-			</section>
+							<Form.Group className='' controlId='inputemail'>
+								<Form.Label className='labeledit'>Estado</Form.Label>
+								<select
+									className='inputedit'
+									aria-label='Default select'
+									{...register('estado')}>
+									<option>Selecciona..</option>
+									<option value='En tramite'>En tramite</option>
+									<option value='Mediacion'>Mediacion</option>
+									<option value='Extrajudicial'>Extrajudicial</option>
+									<option value='Terminado'>Terminado</option>
+									<option value='Caduco'>Caduco</option>
+								</select>
+							</Form.Group>
 
-			{/* Modal para confirmar edicion */}
-			<Modal
-				show={showConfirmationModal}
-				onHide={() => setShowConfirmationModal(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title>Confirmar cambios</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					¿Estás seguro de que deseas guardar los cambios?
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btnconfmodal'
-						onClick={(e) => {
-							editarExpte(e);
-							navigate('/gestionexpedientes');
-						}}>
-						Confirmar
-					</button>
-					<button
-						className='btncancmodal'
-						onClick={() => {
-							handleCancel();
-						}}>
-						Cancelar
-					</button>
-				</Modal.Footer>
-			</Modal>
+							<Form.Group controlId='inputcaratula'>
+								<Form.Label className='labeledit'>Caratula</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='text'
+									{...register('caratula')}
+									readOnly
+								/>
+							</Form.Group>
+
+							<Form.Group className='botonesedit'>
+								<button className='botonedit' type='submit'>
+									<i className='iconavbar bi bi-check2-square'></i>
+									Guardar Cambios
+								</button>
+								<Link
+									to='/gestionexpedientes'
+									className='botoncancedit'>
+									<i className='iconavbar bi bi-x-circle-fill'></i>
+									Cancelar
+								</Link>
+							</Form.Group>
+						</Form>
+					</Modal.Body>
+				</Modal>
+			</div>
 		</>
 	);
 };

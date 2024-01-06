@@ -1,6 +1,5 @@
 :root{
     --font-family: 'Poppins', sans-serif;
-    --transition: all 0.1s cubic-bezier (0.645, 0.045, 0.355, 1);
 }
 .login{
     display: flex;
@@ -9,7 +8,7 @@
     justify-content: center;
     flex-direction: column;
     background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-    url(../public/01.jpg);
+    url(../01.jpg);
     background-size: cover;
     object-fit: cover;
     background-position: center;    
@@ -65,9 +64,8 @@
     margin-top: 1vw;
     padding: 1vw;
     text-decoration: none;
-    transition: var(--transition);
-	background-color: rgb(10, 61, 4);
-    color: rgb(143, 142, 139);
+	background-color: rgb(10, 61, 4)!important;
+    color: rgb(143, 142, 139)!important;
     width: 50%;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139)!important;
@@ -85,7 +83,6 @@
     margin-top: 1vw;
     padding: 1vw;
     text-decoration: none;
-    transition: var(--transition);
 	background-color: rgb(9, 19, 92);
     color: rgb(143, 142, 139);
     width: 100%;
@@ -100,7 +97,6 @@
 }
 .parrafolog{
     font-size: 1vw;
-    font-family:'Poppins', sans-serif;
     color: rgb(143, 142, 139);
     margin-top: 1vw;
     font-weight: bold;

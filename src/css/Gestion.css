@@ -5,11 +5,11 @@
     justify-content: center;
     flex-direction: column;
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
-		url(../public/01.jpg);
+		url(../01.jpg);
 	background-size: cover;
-	background-position: center;
+	background-position:center;
 	object-fit: cover;
-    padding-bottom: 10vw;
+    padding-bottom: 4vw;
 }
 .btnpanelgestion {
 	font-weight: 700;
@@ -25,7 +25,7 @@
     padding: 0.5vw;
     cursor: pointer;
 	text-align: center;
-    margin-top: 1vw;
+    margin-top: 2vw;
     text-decoration: none;
 }
 .btnpanelgestion:hover{
@@ -35,16 +35,22 @@
 .titlegestion{
     text-align: center;
     font-size: 2.5vw;
-    margin-top:2vw;
-    margin-bottom: 2vw;
+    margin-top: 3vw;
+    padding-top: 4vw;
     font-weight: 700;
     color: rgb(143, 142, 139);
 }
 .subtitlegestion{
     text-align: center;
     font-size: 1.8vw;
-    margin-top:2vw;
-    margin-bottom: 2vw;
+    margin-top: 1vw;
+    font-weight: 700;
+    color: rgb(143, 142, 139);
+}
+.titletabla{
+    text-align: center;
+    font-size: 2.5vw;
+    margin-top: 1vw;
     font-weight: 700;
     color: rgb(143, 142, 139);
 }
@@ -52,6 +58,23 @@
     font-size: 1.3vw!important;
     text-align: center;
     color: rgb(143, 142, 139)!important;
+}
+.search{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vw;
+    padding-left: 2vw
+}
+.searchinput{
+    align-items: center;
+    font-size: 1.5vw;
+    align-self: center;
+    margin-bottom: 1vw;
+    margin-top:1vw;
+    margin-left: 2vw;
+    border-radius: 5px;
+    outline-color: rgb(143, 142, 139);
 }
 .botonescciongestion{
     width: 10%;
@@ -87,6 +110,29 @@
     font-size: 100%;
     color: rgb(143, 142, 139)!important;
     padding:0.5vw!important;
+}
+.btnvpaginagestion{
+	font-weight: 700;
+	font-size: 1vw!important;
+	background-color: rgb(27, 27, 27);
+    color: rgb(143, 142, 139);
+    width: 10vw;
+    border: 0.2vw outset rgb(143, 142, 139)!important;
+	border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2vw;
+    cursor: pointer;
+	text-align: center;
+    margin-top: 1vw;
+    margin-right: 1vw;
+    text-decoration: none;
+}
+.btnvpaginagestion:hover{
+    opacity:0.8;
+	color: white;
+	background-color: transparent;
 }
 .modedittitle{
     font-size: 1vw!important;

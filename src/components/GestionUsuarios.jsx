@@ -2,116 +2,158 @@ import React, { useEffect } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
-import '../components/UsuariosaValidar';
 import '../css/Gestion.css';
-import { Link } from 'react-router-dom';
+import {
+	useReactTable,
+	getCoreRowModel,
+	flexRender,
+	getPaginationRowModel,
+	getSortedRowModel,
+	getFilteredRowModel,
+} from '@tanstack/react-table';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useUsers } from '../context/UsersContext';
 
 export const GestionUsuarios = () => {
-	const auth = useAuth();
-	const { email } = auth.user;
-	const [usuarios, setUsuarios] = useState([]);
-	const [tablaUsuario, setTablaUsuario] = useState();
+	const { user } = useAuth();
+	const { getUsers, deleteUser } = useUsers();
+	const [data, setData] = useState([]);
+	const [users, setUsers] = useState([]);
+	const [sorting, setSorting] = useState([]);
+	const [filtering, setFiltering] = useState('');
+	const [tablaUsers, setTablaUsers] = useState([]);
 
-	// Cargar usuarios desde el localStorage al montar el componente
+	const columns = React.useMemo(
+		() => [
+			{
+				header: 'Nombre',
+				accessorKey: 'username',
+			},
+			{
+				header: 'Apellido',
+				accessorKey: 'apellido',
+			},
+			{
+				header: 'Celular',
+				accessorKey: 'celular',
+			},
+			{
+				header: 'Email',
+				accessorKey: 'email',
+			},
+			{
+				header: 'DNI',
+				accessorKey: 'dni',
+			},
+		],
+		[]
+	);
+
 	useEffect(() => {
-		const ListaUsuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-		setUsuarios(ListaUsuarios);
+		const fetchData = async () => {
+			try {
+				const fetchedUsers = await getUsers();
+				setData(fetchedUsers);
+				setUsers(fetchedUsers);
+			} catch (error) {
+				console.error('Error al obtener usuarios:', error);
+			}
+		};
+
+		fetchData();
 	}, []);
 
-	useEffect(() => {
-		cargarTablaUsuario();
-	}, [usuarios]);
-
 	// Funcion para cargar tabla de Usuario traida de Local Storage
-	function cargarTablaUsuario() {
-		const tabla = usuarios.map((usuario) => (
-			<tr key={usuario.id}>
-				<td className='align-middle '>{usuario.nombre}</td>
-				<td className='align-middle '>{usuario.apellido}</td>
-				<td className='align-middle '>{usuario.celular}</td>
-				<td className='align-middle'>{usuario.email}</td>
-				<td className='align-middle'>{usuario.dni}</td>
-				<td>
-					<div className='d-flex flex-row justify-content-around'>
-						<Link
-							hidden={usuario.email === 'admin@gmail.com'}
-							className='btneditgestion'
-							to={`/editarusu/${usuario.id}`}>
-							<i className='bi bi-pen acciconogestion'></i>
-						</Link>
-						<button
-							className='btnborragestion'
-							onClick={() => borrarUsuario(usuario.id)}
-							hidden={usuario.email === 'admin@gmail.com'}>
-							<i className='bi bi-trash-fill acciconogestion'></i>
-						</button>
-					</div>
-				</td>
-			</tr>
-		));
-		setTablaUsuario(tabla);
-	}
+	const table = useReactTable({
+		data,
+		columns,
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		state: {
+			sorting,
+			globalFilter: filtering,
+		},
+		onSortingChange: setSorting,
+		onGlobalFilterChange: setFiltering,
+	});
 
 	// funcion para eliminar usuarios
-	function borrarUsuario(id) {
-		Swal.fire({
-			title: '¿Estás seguro?',
-			text: 'Confirmas la eliminacion de un usuario',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#8f8e8b',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar',
-		}).then((result) => {
+	async function borrarUsuario(id) {
+		try {
+			const result = await Swal.fire({
+				title: '¿Estás seguro?',
+				text: 'Confirmas la eliminacion del usuario',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#d33',
+				cancelButtonColor: '#8f8e8b',
+				confirmButtonText: 'Sí, eliminar',
+				cancelButtonText: 'Cancelar',
+			});
+
 			if (result.isConfirmed) {
-				// Filtrar
-				const nuevosUsuarios = usuarios.filter(function (usuario) {
-					return usuario.id !== id;
-				});
-				localStorage.setItem('usuarios', JSON.stringify(nuevosUsuarios));
-				setUsuarios(nuevosUsuarios);
-				cargarTablaUsuario();
+				await deleteUser(id);
+				window.location.reload();
 				Swal.fire(
 					'Eliminado',
-					'El usuario fue eliminado con exito',
+					'El expediente fue eliminado con éxito',
 					'success'
 				);
 			}
-		});
+		} catch (error) {
+			console.error('Error al eliminar el expediente:', error);
+			Swal.fire(
+				'Error',
+				'Hubo un problema al eliminar el expediente',
+				'error'
+			);
+		}
 	}
 
 	return (
 		<>
 			<div className='bodygestion container-fluid bg-dark'>
 				<div className='main px-3 '>
-					<h4 className='titlegestion'>Bienvenido de nuevo, {email}</h4>
-					<p className='subtitlegestion'>Panel de Administracion de Usuarios</p>
+					<h4 className='titlegestion'>
+						Bienvenido de nuevo, {user.email}
+					</h4>
+					<p className='subtitlegestion'>
+						Panel de Administracion de Usuarios
+					</p>
 				</div>
 			</div>
 
 			<div className='bg-dark'>
 				<div className='d-flex justify-content-around'>
-					<Link
-						to='/cargausu'
-						type='button'
-						className='btnpanelgestion'>
+					<Link to='/cargausu' type='button' className='btnpanelgestion'>
 						<i className='iconavbar bi bi-file-earmark-plus'></i>
 						Agregar usuario
 					</Link>
 					<Link
-							to={email === 'admin@gmail.com' ? '/Admin' : '/AdminUsu'}
-							className='btnpanelgestion'>
-							<i className='iconavbar bi bi-box-arrow-left'></i>
-							Volver al Panel
-						</Link>
+						to={user.email === 'admin@gmail.com' ? '/Admin' : '/AdminUsu'}
+						className='btnpanelgestion'>
+						<i className='iconavbar bi bi-box-arrow-left'></i>
+						Volver al Panel
+					</Link>
 				</div>
+				<hr className='linea mx-3' />
 
 				<div>
-					<p className='mt-3 titlegestion'>Usuarios registrados</p>
+					<p className='mt-3 titletabla'>Usuarios registrados</p>
 				</div>
 
+				<div className='search'>
+					<p className='subtitlegestion'>Buscar Usuario</p>
+					<input
+						className='searchinput'
+						type='text'
+						value={filtering}
+						onChange={(e) => setFiltering(e.target.value)}
+					/>
+				</div>
 				<div className='container table-responsive'>
 					<Table
 						striped
@@ -119,21 +161,100 @@ export const GestionUsuarios = () => {
 						variant='dark'
 						className='tablagestion table border border-secondary-subtle'>
 						<thead>
-							<tr>
-								<th>Nombre</th>
-								<th>Apellido</th>
-								<th>Celular</th>
-								<th>Email</th>
-								<th>DNI</th>
-								<th className='botonescciongestion'>Acciones</th>
-							</tr>
+							{table.getHeaderGroups().map((headerGroup) => (
+								<tr key={headerGroup.id}>
+									{headerGroup.headers.map((header) => (
+										<th
+											key={header.id}
+											onClick={header.column.getToggleSortingHandler()}>
+											{header.isPlaceholder ? null : (
+												<div>
+													{flexRender(
+														header.column.columnDef.header,
+														header.getContext()
+													)}
+
+													{
+														{ asc: '⬆️', desc: '⬇️' }[
+															header.column.getIsSorted() ?? null
+														]
+													}
+												</div>
+											)}
+										</th>
+									))}
+									<th className='botonescciongestion'>Acciones</th>
+								</tr>
+							))}
 						</thead>
-						<tbody id='tablaUsuario' className='table-group-divider'>
-							{tablaUsuario}
+						<tbody className='table-group-divider'>
+							{table.getRowModel().rows.map((row) => (
+								<tr key={row.original._id}>
+									{row.getVisibleCells().map((cell, index) => (
+										<td key={index}>
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext()
+											)}
+										</td>
+									))}
+
+									<td className='align-middle'>
+										<div className='d-flex flex-row justify-content-center'>
+											{user.email === 'admin@gmail.com' && (
+												<Link
+													hidden={
+														row.original.email ===
+														'admin@gmail.com'
+													}
+													className='btneditgestion'
+													to={`/editarusu/${row.original._id}`}>
+													<i className='bi bi-pen  acciconogestion'></i>
+												</Link>
+											)}
+											{user.email === 'admin@gmail.com' && (
+												<button
+													hidden={
+														row.original.email ===
+														'admin@gmail.com'
+													}
+													className='btnborragestion'
+													onClick={() =>
+														borrarUsuario(row.original._id)
+													}>
+													<i className='bi bi-trash-fill  acciconogestion'></i>
+												</button>
+											)}
+										</div>
+									</td>
+								</tr>
+							))}
 						</tbody>
 					</Table>
 				</div>
-			</div>			
+				<div className='d-flex flex-row justify-content-center'>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.setPageIndex(0)}>
+						Primer Pagina
+					</button>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.previousPage()}>
+						Pagina Anterior
+					</button>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.nextPage()}>
+						Pagina Siguiente
+					</button>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+						Ultima Pagina
+					</button>
+				</div>
+			</div>
 		</>
 	);
 };

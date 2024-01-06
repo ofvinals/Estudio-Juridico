@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
-import { esES } from '@mui/x-date-pickers/locales';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { useAuth } from '../context/AuthContext';
 import { Table } from 'react-bootstrap';
+import { useTurnos } from '../context/TurnosContext';
 
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
-import 'dayjs/locale';
+import 'dayjs/locale/es-mx';
 import '../css/AgendaUsu.css';
+dayjs.locale('es');
 
 export const AgendaUsu = () => {
-	const auth = useAuth();
-	const { email } = auth.user;
+	const { user } = useAuth();
+	const { getTurnos, createTurno, deleteTurno, turnos } = useTurnos();
 	const [tablaTurnos, setTablaTurnos] = useState();
 
 	// deshabilita seleccion de dias de fin de semana
@@ -39,19 +40,25 @@ export const AgendaUsu = () => {
 	const [turnoOcupado, setturnoOcupado] = useState([]);
 
 	useEffect(() => {
-		const turnosOcupados =
-			JSON.parse(localStorage.getItem('turnosOcupados')) || [];
-			turnosOcupados.sort((a, b) => a.turno.localeCompare(b.turno));
+		const fetchData = async () => {
+			try {
+				const fetchedTurnos = await getTurnos();
+				cargarTablaTurnos(fetchedTurnos);
+			} catch (error) {
+				console.error('Error al obtener turnos', error);
+			}
+		};
 
-		setturnoOcupado(turnosOcupados);
+		fetchData();
 	}, []);
 
 	// funcion para crear nuevo turno
 	const handleCrearCita = async () => {
 		// Convierte el turno seleccionado al formato
-		const formatoTurnoSeleccionado = dayjs(startDate).format('DD-MM-YYYY HH:mm')
-		console.log(formatoTurnoSeleccionado)
+		const formatoTurnoSeleccionado =
+			dayjs(startDate).format('DD/MM/YYYY HH:mm');
 		// Comprueba si el turno seleccionado ya está ocupado
+
 		const isTurnoOcupado = turnoOcupado.some(
 			(turno) => turno.turno === formatoTurnoSeleccionado
 		);
@@ -80,21 +87,13 @@ export const AgendaUsu = () => {
 				confirmButtonColor: '#8f8e8b',
 			});
 			if (isConfirmed) {
-				const id = Date.now();
-				const nuevosTurnosOcupados = [
-					...turnoOcupado,
-					{
-						id: id,
-						email: email,
-						turno: formatoTurnoSeleccionado,
-						motivo: motivoConsulta,
-					},
-				];
-				setturnoOcupado(nuevosTurnosOcupados);
-				localStorage.setItem(
-					'turnosOcupados',
-					JSON.stringify(nuevosTurnosOcupados)
-				);
+				const nuevoTurno = {
+					turno: formatoTurnoSeleccionado,
+					email: user.email,
+					motivo: motivoConsulta,
+				};
+				createTurno(nuevoTurno);
+				window.location.reload();
 				Swal.fire({
 					icon: 'success',
 					title: 'Su turno fue registrado!',
@@ -108,39 +107,48 @@ export const AgendaUsu = () => {
 		return;
 	};
 
-	useEffect(() => {
-		cargarTablaTurnos();
-	}, [turnoOcupado]);
-
 	// funcion para cargar turnos
-	function cargarTablaTurnos() {
-		const turnosFiltrados = turnoOcupado.filter(
-			(turno) => email === turno.email
-		);
-		if (turnosFiltrados.length > 0) {
-			const tabla = turnosFiltrados.map((turnos) => (
-				<tr key={turnos.id}>
-					<td className='align-middle w-25'>{turnos.turno}</td>
-					<td className='align-middle '>{turnos.email}</td>
-					<td className='align-middle '>{turnos.motivo}</td>
-					<td className='align-middle d-flex flex-row'>
-						<Link className='btneditagusu' to={`/editarturnos/${turnos.id}`}>
-							<i className='bi bi-pen acciconoagusu'></i>
-						</Link>
-						<button
-							className='btnborraagusu'
-							onClick={() => borrarTurno(turnos.id)}>
-							<i className='bi bi-trash-fill acciconoagusu'></i>
-						</button>
-					</td>
-				</tr>
-			));
-			setTablaTurnos(tabla);
+	function cargarTablaTurnos(datosTurnos) {
+		if (datosTurnos) {
+			const turnosFiltrados = datosTurnos.filter(
+				(turno) => user.email === turno.email
+			);
+			if (turnosFiltrados.length > 0) {
+				const tabla = turnosFiltrados.map((turnos) => (
+					<tr key={turnos._id}>
+						<td className='align-middle w-25'>{turnos.turno}</td>
+						<td className='align-middle '>{turnos.email}</td>
+						<td className='align-middle '>{turnos.motivo}</td>
+						<td className='align-middle d-flex flex-row'>
+							<Link
+								className='btneditagusu'
+								to={`/editarturnos/${turnos._id}`}>
+								<i className='bi bi-pen acciconoagusu'></i>
+							</Link>
+							<button
+								className='btnborraagusu'
+								onClick={() => borrarTurno(turnos._id)}>
+								<i className='bi bi-trash-fill acciconoagusu'></i>
+							</button>
+						</td>
+					</tr>
+				));
+				setTablaTurnos(tabla);
+			} else {
+				setTablaTurnos(
+					<tr key='no-turnos'>
+						<td colSpan='4'>
+							<p>Usted no tiene turno/s pendiente/s</p>
+						</td>
+					</tr>
+				);
+			}
 		} else {
+			// Manejar el caso en que datosTurnos es undefined
 			setTablaTurnos(
 				<tr key='no-turnos'>
 					<td colSpan='4'>
-						<p>Usted no tiene turnos pendientes</p>
+						<p>Usted no tiene turno/s pendiente/s</p>
 					</td>
 				</tr>
 			);
@@ -148,43 +156,43 @@ export const AgendaUsu = () => {
 	}
 
 	// funcion para borrar turnos
-	function borrarTurno(id) {
-		Swal.fire({
-			title: '¿Estás seguro?',
-			text: 'Confirmas la eliminacion del turno',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#8f8e8b',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar',
-		}).then((result) => {
+	async function borrarTurno(id) {
+		try {
+			const result = await Swal.fire({
+				title: '¿Estás seguro?',
+				text: 'Confirmas la eliminacion del turno',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#d33',
+				cancelButtonColor: '#8f8e8b',
+				confirmButtonText: 'Sí, eliminar',
+				cancelButtonText: 'Cancelar',
+			});
 			if (result.isConfirmed) {
-				// Filtrar
-				const eliminaTurno = turnoOcupado.filter(function (turno) {
-					return turno.id !== id;
-				});
-				localStorage.setItem(
-					'turnosOcupados',
-					JSON.stringify(eliminaTurno)
-				);
-				setturnoOcupado(eliminaTurno);
-				cargarTablaTurnos();
+				deleteTurno(id);
+				window.location.reload();
 				Swal.fire(
 					'Eliminado',
 					'El turno fue eliminado con exito',
 					'success'
 				);
 			}
-		});
+		} catch (error) {
+			console.error('Error al eliminar el expediente:', error);
+			Swal.fire(
+				'Error',
+				'Hubo un problema al eliminar el expediente',
+				'error'
+			);
+		}
 	}
 
 	return (
 		<>
 			<div className='container-fluid'>
 				<div className='main px-3 bodyagusu'>
-					<h4 className='titleagusu'>Bienvenido, {email}</h4>
-					<p className='subtitleagusu'>Panel de Turnos </p>
+					<h4 className='titleagusu'>Bienvenido, {user.email}</h4>
+					<p className='subtitleagusu'>Panel de Turnos Online</p>
 				</div>
 				<div className='d-flex justify-content-center'>
 					<Link to='/AdminUsu' className='btnpanelagusu'>
@@ -201,11 +209,7 @@ export const AgendaUsu = () => {
 
 						<LocalizationProvider
 							dateAdapter={AdapterDayjs}
-							adapterLocale='en-gb'
-							localeText={
-								esES.components.MuiLocalizationProvider.defaultProps
-									.localeText
-							}>
+							adapterLocale='es-mx'>
 							<DemoContainer components={['NobileDateTimePicker']}>
 								<DemoItem label=''>
 									<MobileDateTimePicker

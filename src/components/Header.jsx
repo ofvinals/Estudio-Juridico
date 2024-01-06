@@ -5,27 +5,21 @@ import Navbar from 'react-bootstrap/Navbar';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../css/Header.css';
-import { Button } from 'react-bootstrap';
 
 export const Header = () => {
 	const [estadoLogin, setEstadoLogin] = useState('');
-
-	const auth = useAuth();
-	const { email } = auth.user;
+	const [expanded, setExpanded] = useState(false);
+	const { user } = useAuth();
 
 	useEffect(() => {
-		if (!email) {
-			setEstadoLogin('"No hay usuario logueado"');
+		if (!user) {
+			setEstadoLogin('No hay usuario logueado');
 		} else {
-			setEstadoLogin((prevEstado) => {
-				return email;
-			});
+			setEstadoLogin(user.email);
 		}
-	}, [email]);
+	}, [user]);
 
 	const navigate = useNavigate();
-
-	const [expanded, setExpanded] = useState(false);
 
 	const handleNavCollapse = () => {
 		setExpanded(false);
@@ -34,6 +28,7 @@ export const Header = () => {
 	const handleNavLinkClick = () => {
 		handleNavCollapse();
 	};
+
 	return (
 		<div className='bg-dark'>
 			<Navbar
@@ -47,7 +42,7 @@ export const Header = () => {
 						<img src='/logo estudio.png' width='50px' alt='logoestudio' />
 					</Navbar.Brand>
 					<p className='fw-bold navtitle mx-2 mt-2 text-center'>
-						Estudio Juridico Integral
+						Estudio Juridico Online
 					</p>
 					<Navbar.Toggle
 						className='mb-3 menu'
@@ -107,17 +102,13 @@ export const Header = () => {
 									Estas logueado como: {estadoLogin}
 								</p>
 								<a className='botona' type='button' href='../login'>
-									<button
-										disabled={!!auth.user}
-										className='botonnavlog'>
+									<button disabled={!!user} className='botonnavlog'>
 										<i className='iconavbar bi bi-box-arrow-in-right'></i>
 										Inicia sesion
 									</button>
 								</a>
 								<a type='button' href='../registro'>
-									<button
-										disabled={!!auth.user}
-										className='botonnavreg'>
+									<button disabled={!!user} className='botonnavreg'>
 										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme
 									</button>

@@ -3,123 +3,128 @@ import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import { useState, useEffect } from 'react';
+import {
+	useReactTable,
+	getCoreRowModel,
+	flexRender,
+	getPaginationRowModel,
+	getSortedRowModel,
+	getFilteredRowModel,
+} from '@tanstack/react-table';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
 import { Button, Form, Modal } from 'react-bootstrap';
+import { useGastos } from '../context/GastosContext.jsx';
 
 export const GestionGastos = () => {
-	const auth = useAuth();
-	const { id } = useParams();
-	const { email } = auth.user;
+	const { user } = useAuth();
+	const params = useParams();
+	const { getGastos, deleteGasto, gastos, getGasto } = useGastos();
+	const [data, setData] = useState([]);
+	const [gasto, setGasto] = useState([]);
+	const [sorting, setSorting] = useState([]);
+	const [filtering, setFiltering] = useState('');
 	const navigate = useNavigate();
-	const [usuarios, setUsuarios] = useState([]);
-	const [gastos, setGastos] = useState([]);
-	const [tablaGastos, setTablaGastos] = useState();
-	const [showVerGasto, setShowVerGasto] = useState(false);
-	const [form, setForm] = useState({
-		expte: '',
-		caratula: '',
-		concepto: '',
-		monto: '',
-		comprobante: '',
-		estado: '',
-		id: '',
-	});
-	// Cierra modales
-	const handleCancel = () => {
-		setShowVerGasto(false);
-	};
+	const [showVerGasto, setShowVerGasto]= useState(false)
 
-	// Cargar usuarios desde el localStorage al montar el componente
+	
+		// Cierra modales
+		const handleCancel = () => {
+			setShowVerGasto(false);
+		};
+		
+	const columns = React.useMemo(
+		() => [
+			{
+				header: 'Nro Expte',
+				accessorKey: 'nroexpte',
+			},
+			{
+				header: 'Caratula',
+				accessorKey: 'caratula',
+			},
+			{
+				header: 'Concepto',
+				accessorKey: 'concepto',
+			},
+			{
+				header: 'Comprobante',
+				accessorKey: 'comprobante',
+			},
+			{
+				header: 'Monto',
+				accessorKey: 'monto',
+			},
+			{
+				header: 'Estado',
+				accessorKey: 'estado',
+			},
+		],
+		[]
+	);
+
 	useEffect(() => {
-		const ListaUsuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-		setUsuarios(ListaUsuarios);
+		const fetchData = async () => {
+			try {
+				const fetchedGastos = await getGastos();
+				setData(fetchedGastos);
+				setGasto(fetchedGastos);
+			} catch (error) {
+				console.error('Error al obtener gastos', error);
+			}
+		};
+
+		fetchData();
 	}, []);
-
-	// Cargar gastos desde el localStorage al montar el componente
-	useEffect(() => {
-		const ListaGastos = JSON.parse(localStorage.getItem('gastos')) || [];
-		setGastos(ListaGastos);
-	}, []);
-
-	useEffect(() => {
-		cargarTablaGastos();
-	}, [gastos]);
 
 	// Funcion para cargar tabla de Usuario traida de Local Storage
-	async function cargarTablaGastos() {
-		const tabla = gastos.map((gasto) => (
-			<tr key={gasto.id}>
-				<td className='align-middle '>{gasto.expte}</td>
-				<td className='align-middle '>{gasto.caratula}</td>
-				<td className='align-middle '>{gasto.concepto}</td>
-				<td className='align-middle '>{gasto.comprobante}</td>
-				<td className='align-middle'>$ {gasto.monto}</td>
-				<td className='align-middle'> {gasto.estado}</td>
-				<td className='align-middle'>
-					<div className='d-flex flex-row justify-content-center'>
-						{email === 'admin@gmail.com' && (
-							<Link
-								className='btneditgestion'
-								to={`/editargastos/${gasto.id}`}>
-								<i className='bi bi-pen  acciconogestion'></i>
-							</Link>
-						)}
-						{email === 'admin@gmail.com' && (
-							<button
-								className='btnborragestion'
-								onClick={() => borrarGasto(gasto.id)}>
-								<i className='bi bi-trash-fill  acciconogestion'></i>
-							</button>
-						)}
-						<button
-							className='btnvergestion'
-							onClick={(e) => {
-								setShowVerGasto(true);
-								verGasto(gasto.id);
-							}}>
-							<i className='bi bi-search acciconogestion'></i>
-						</button>
-					</div>
-				</td>
-			</tr>
-		));
-		setTablaGastos(tabla);
-	}
+	const table = useReactTable({
+		data,
+		columns,
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		getSortedRowModel: getSortedRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		state: {
+			sorting,
+			globalFilter: filtering,
+		},
+		onSortingChange: setSorting,
+		onGlobalFilterChange: setFiltering,
+	});
 
 	// funcion para eliminar gastos
-	function borrarGasto(id) {
-		Swal.fire({
-			title: '¿Estás seguro?',
-			text: 'Confirmas la eliminacion del gasto',
-			icon: 'warning',
-			showCancelButton: true,
-			confirmButtonColor: '#d33',
-			cancelButtonColor: '#8f8e8b',
-			confirmButtonText: 'Sí, eliminar',
-			cancelButtonText: 'Cancelar',
-		}).then((result) => {
+	async function borrarGasto(id) {
+		try {
+			const result = await Swal.fire({
+				title: '¿Estás seguro?',
+				text: 'Confirmas la eliminacion del gasto',
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#d33',
+				cancelButtonColor: '#8f8e8b',
+				confirmButtonText: 'Sí, eliminar',
+				cancelButtonText: 'Cancelar',
+			});
 			if (result.isConfirmed) {
-				// Filtrar
-				const nuevosGastos = gastos.filter(function (gasto) {
-					return gasto.id !== id;
-				});
-				localStorage.setItem('gastos', JSON.stringify(nuevosGastos));
-				setGastos(nuevosGastos);
-				cargarTablaGastos();
+				await deleteGasto(id);
+				window.location.reload();
 				Swal.fire(
 					'Eliminado',
-					'El gasto fue eliminado con exito',
+					'El gasto fue eliminado con éxito',
 					'success'
 				);
 			}
-		});
+		} catch (error) {
+			console.error('Error al eliminar el gasto:', error);
+			Swal.fire('Error', 'Hubo un problema al eliminar el gasto', 'error');
+		}
 	}
 
 	// funcion para ver movimientos en Modal
-	function verGasto(id) {
-		const gastoSeleccionado = gastos.find((gasto) => gasto.id === id);
-		setForm(gastoSeleccionado);
+	async function verGasto(id) {
+		const gasto = await getGasto(id);
+		setGasto(gasto);
 		setShowVerGasto(true);
 	}
 
@@ -127,14 +132,16 @@ export const GestionGastos = () => {
 		<>
 			<div className='container-fluid bg-dark'>
 				<div className='main px-3 bodygestion'>
-					<h4 className='titlegestion'>Bienvenido de nuevo, {email}</h4>
+					<h4 className='titlegestion'>
+						Bienvenido de nuevo, {user.email}
+					</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Gastos
 					</p>
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{email === 'admin@gmail.com' && (
+						{user.email === 'admin@gmail.com' && (
 							<Link
 								type='button'
 								className='btnpanelgestion'
@@ -143,28 +150,38 @@ export const GestionGastos = () => {
 								Agregar gastos
 							</Link>
 						)}
-						{email === 'admin@gmail.com' && (
+						{user.email === 'admin@gmail.com' && (
 							<Link to='' className='btnpanelgestion'>
 								<i className='iconavbar bi bi-search'></i>
 								Gastos Cancelados
 							</Link>
 						)}
-						<Link to='' className='btnpanelgestion'>
-							<i className='iconavbar bi bi-search'></i>
-							Buscar Gastos
-						</Link>
 						<Link
-							to={email === 'admin@gmail.com' ? '/Admin' : '/AdminUsu'}
+							to={
+								user.email === 'admin@gmail.com'
+									? '/Admin'
+									: '/AdminUsu'
+							}
 							className='btnpanelgestion'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
 					</div>
+					<hr className='linea mx-3' />
 
 					<div>
-						<p className='titlegestion'>Gastos pendientes</p>
+						<p className='titletabla'>Gastos Pendientes de Cobro</p>
 					</div>
 
+					<div className='search'>
+						<p className='subtitlegestion'>Buscar Gastos</p>
+						<input
+							className='searchinput'
+							type='text'
+							value={filtering}
+							onChange={(e) => setFiltering(e.target.value)}
+						/>
+					</div>
 					<div className='container table-responsive'>
 						<Table
 							striped
@@ -172,20 +189,102 @@ export const GestionGastos = () => {
 							variant='dark'
 							className='tablagestion table border border-secondary-subtle'>
 							<thead>
-								<tr>
-									<th>Expte</th>
-									<th className='w-50'>Caratula</th>
-									<th>Concepto</th>
-									<th>Comprobante</th>
-									<th>Monto</th>
-									<th>Estado</th>
-									<th className='botonescciongestion'>Acciones</th>
-								</tr>
+								{table.getHeaderGroups().map((headerGroup) => (
+									<tr key={headerGroup.id}>
+										{headerGroup.headers.map((header) => (
+											<th
+												key={header.id}
+												onClick={header.column.getToggleSortingHandler()}>
+												{header.isPlaceholder ? null : (
+													<div>
+														{flexRender(
+															header.column.columnDef.header,
+															header.getContext()
+														)}
+
+														{
+															{ asc: '⬆️', desc: '⬇️' }[
+																header.column.getIsSorted() ??
+																	null
+															]
+														}
+													</div>
+												)}
+											</th>
+										))}
+										<th className='botonescciongestion'>Acciones</th>
+									</tr>
+								))}
 							</thead>
-							<tbody id='tablaTurnos' className='table-group-divider'>
-								{tablaGastos}
+							<tbody className='table-group-divider'>
+								{table.getRowModel().rows.map((row) => (
+									<tr key={row.original._id}>
+										{row.getVisibleCells().map((cell, index) => (
+											<td key={index}>
+												{flexRender(
+													cell.column.columnDef.cell,
+													cell.getContext()
+												)}
+											</td>
+											
+										))}
+
+										<td className='align-middle'>
+											
+											<div className='d-flex flex-row justify-content-center'>
+												{user.email === 'admin@gmail.com' && (
+													<Link
+														className='btneditgestion'
+														to={`/editargastos/${row.original._id}`}
+														>
+														<i className='bi bi-pen  acciconogestion'></i>
+													</Link>
+												)}
+												{user.email === 'admin@gmail.com' && (
+													<button
+														className='btnborragestion'
+														onClick={() => borrarGasto(row.original._id)}>
+														<i className='bi bi-trash-fill  acciconogestion'></i>
+													</button>
+												)}
+												<button
+													className='btnvergestion'
+													onClick={(e) => {
+														setShowVerGasto(true);
+														verGasto(row.original._id);
+													}}>
+													<i className='bi bi-search acciconogestion'></i>
+												</button>
+											</div>
+										</td>
+									</tr>
+								))}
 							</tbody>
 						</Table>
+					</div>
+					<div className='d-flex flex-row justify-content-center'>
+						<button
+							className='btnvpaginagestion'
+							onClick={() => table.setPageIndex(0)}>
+							Primer Pagina
+						</button>
+						<button
+							className='btnvpaginagestion'
+							onClick={() => table.previousPage()}>
+							Pagina Anterior
+						</button>
+						<button
+							className='btnvpaginagestion'
+							onClick={() => table.nextPage()}>
+							Pagina Siguiente
+						</button>
+						<button
+							className='btnvpaginagestion'
+							onClick={() =>
+								table.setPageIndex(table.getPageCount() - 1)
+							}>
+							Ultima Pagina
+						</button>
 					</div>
 				</div>
 			</div>
@@ -198,24 +297,24 @@ export const GestionGastos = () => {
 				<Modal.Body>
 					<Form>
 						<Form.Group className='mb-3' controlId=''>
-							<Form.Label>Nro Expte: {form.expte}</Form.Label>
+							<Form.Label>Nro Expte: {gasto.nroexpte}</Form.Label>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId=''>
-							<Form.Label>Concepto: {form.concepto}</Form.Label>
+							<Form.Label>Concepto: {gasto.concepto}</Form.Label>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId=''>
-							<Form.Label>Monto: $ {form.monto}</Form.Label>
+							<Form.Label>Monto: $ {gasto.monto}</Form.Label>
 						</Form.Group>
 						<Form.Group className='mb-3' controlId=''>
 							<Form.Label>
-								Comprobante Adjuntos: {form.comprobante}
+								Comprobante Adjuntos: {gasto.comprobante}
 							</Form.Label>
 						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
 					<button
-						className='btnaccag '
+						className='btneditgestion px-2'
 						onClick={() => {
 							handleCancel();
 						}}>

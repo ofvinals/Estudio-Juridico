@@ -9,7 +9,7 @@
     justify-content: center;
     flex-direction: column;
     background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-    url(../public/01.jpg);
+    url(../01.jpg);
     background-size: cover;
     object-fit: cover;
     background-position: center;  

@@ -1,18 +1,15 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 import '../css/Admin.css'
 
 export const AdminUsu = () => {
-	const auth = useAuth();
-	const { email } = auth.user;
+	const {user, logout} = useAuth();
 	const navigate = useNavigate();
 
 	const handleLogOut = () => {
-		auth.logout();
-		// localStorage.removeItem('token');
+		logout();
 		navigate('/home');
 		console.log('Deslogueado');
 		Swal.fire({
@@ -26,7 +23,7 @@ export const AdminUsu = () => {
 		<>
 			<div className='bodycontact container-fluid'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, {email}</h4>
+					<h4 className='titlead'>Bienvenido de nuevo, {user.email}</h4>
 					<p className='subtitleadusu'>Panel de Usuario</p>
 				</div>
 
