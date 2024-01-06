@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Registro.css';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../src/context/AuthContext';
 
 export const Registro = () => {
 	const auth = useAuth();

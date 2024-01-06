@@ -1,12 +1,12 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../src/context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import { Modal, Button } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useTurnos } from '../context/TurnosContext';
+import { useTurnos } from '../src/context/TurnosContext';
 
 export const EditarTurnos = ({}) => {
 	const { user } = useAuth();
