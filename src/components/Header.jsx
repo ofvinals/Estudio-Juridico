@@ -52,7 +52,7 @@ export const Header = () => {
 					<Navbar.Collapse
 						className='colapse'
 						id='responsive-navbar-nav'
-						placement='end'
+						placement='left'
 						onClick={handleNavLinkClick}>
 						<Nav className='menu bg-dark allnav'>
 							<NavLink
@@ -101,13 +101,13 @@ export const Header = () => {
 								<p className='estadolog'>
 									Estas logueado como: {estadoLogin}
 								</p>
-								<a className='botona' type='button' href='../login'>
+								<a className='me-4 text-decoration-none' type='button' href='/login'>
 									<button disabled={!!user} className='botonnavlog'>
 										<i className='iconavbar bi bi-box-arrow-in-right'></i>
 										Inicia sesion
 									</button>
 								</a>
-								<a type='button' href='../registro'>
+								<a className='text-decoration-none' type='button' href='/registro'>
 									<button disabled={!!user} className='botonnavreg'>
 										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme

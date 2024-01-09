@@ -6,6 +6,8 @@ import {
 	createExpte,
 	deleteExpte,
 	updateExpte,
+	createMov,
+	deleteMov,
 } from '../controllers/expte.controller.js';
 import { validateSchema } from '../middlewares/validator.Middleware.js';
 import { createExpteSchema } from '../schemas/expte.Schema.js';
@@ -23,5 +25,9 @@ router.post(
 );
 router.delete('/exptes/:id', authRequired, deleteExpte);
 router.put('/exptes/:id', authRequired, updateExpte);
+
+router.post('/exptes/:id/movimientos', authRequired, createMov);
+
+router.delete('/exptes/:expedienteId/movimientos/:movimientoId', authRequired, deleteMov);
 
 export default router;

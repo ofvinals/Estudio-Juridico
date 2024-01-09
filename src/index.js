@@ -5,6 +5,7 @@ import exptesRoutes from '../src/routes/exptes.routes.js';
 import usersRoutes from '../src/routes/users.routes.js'
 import turnosRoutes from '../src/routes/turnos.routes.js'
 import gastosRoutes from '../src/routes/gastos.routes.js'
+import cajasRoutes from '../src/routes/cajas.routes.js'
 import { connectDB } from './db.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
@@ -13,7 +14,7 @@ const app = express();
 
 app.use(
 	cors({
-		origin: [`http://localhost:5173`, 'https://flourishing-tanuki-55bdc2.netlify.app'],
+		origin: [`http://localhost:5173`, `http://localhost:5174`, 'https://flourishing-tanuki-55bdc2.netlify.app'],
 		credentials: true,
 		optionsSuccessStatus: 200, 
 	})
@@ -36,6 +37,8 @@ app.use('/api', turnosRoutes);
 app.use('/api', authRoutes);
 
 app.use('/api', exptesRoutes);
+
+app.use('/api', cajasRoutes);
 
 async function main() {
 	try {

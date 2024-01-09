@@ -6,8 +6,7 @@ const gastoSchema = new mongoose.Schema(
 		nroexpte: {
 			type: String,
 			required: true,
-			unique:true,
-		},
+					},
 		// caratula: {
 		// 	type: String,
 		// 	required: true,

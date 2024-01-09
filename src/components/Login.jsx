@@ -8,7 +8,7 @@ import { Button } from 'react-bootstrap';
 
 export const Login = () => {
 	const navigate = useNavigate();
-	const { register, handleSubmit, formState: errors } = useForm();
+	const { register, handleSubmit } = useForm();
 	const { signin, errors: SigninErrors, isAuthenticated } = useAuth();
 
 	const onSubmit = handleSubmit((data) => {
@@ -27,24 +27,24 @@ export const Login = () => {
 			))}
 			<Form id='loginForm' className='logform bg-dark' onSubmit={onSubmit}>
 				<h2 className='titulolog'>Ingreso a Mi cuenta</h2>
-				<Form.Group className='' controlId='inputemail'>
+				<Form.Group className='d-flex flex-column' controlId='inputemail'>
 					<Form.Label className='labellog'>Email</Form.Label>
 					<input
 						className='inputlog'
 						type='email'
-						{...register('email', { required: true })}
+						id='email'
+						{...register('email')}
 					/>
-					{errors.email && <p>El Email es requerido</p>}
 				</Form.Group>
 
-				<Form.Group className='' controlId='inputpassword'>
+				<Form.Group className='d-flex flex-column' controlId='inputpassword'>
 					<Form.Label className='labellog'>Contraseña</Form.Label>
 					<input
 						className='inputlog'
 						type='password'
-						{...register('password', { required: true })}
+						id='password'
+						{...register('password')}
 					/>
-					{errors.password && <p>La contraseña es requerida</p>}
 				</Form.Group>
 
 				<Form.Group>
@@ -59,9 +59,9 @@ export const Login = () => {
 					<Button className='input-submitlog' type='submit'>
 						Ingresar
 					</Button>
-					<Link className='input-googlelog'>
+					{/* <Link className='input-googlelog'>
 						Ingresa con tu cuenta de Google
-					</Link>
+					</Link> */}
 				</Form.Group>
 
 				<p className='parrafolog text-center'>

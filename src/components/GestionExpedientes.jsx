@@ -46,6 +46,7 @@ export const GestionExpedientes = () => {
 		[]
 	);
 
+// Trae exptes de getExptes y guarda en data y exptes
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -89,23 +90,18 @@ export const GestionExpedientes = () => {
 				confirmButtonText: 'Sí, eliminar',
 				cancelButtonText: 'Cancelar',
 			});
-
 			if (result.isConfirmed) {
 				await deleteExpte(id);
-				window.location.reload();
-				Swal.fire(
-					'Eliminado',
-					'El expediente fue eliminado con éxito',
-					'success'
-				);
+				Swal.fire({
+					icon: 'success',
+					title: 'Expediente eliminado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				setData((prevData) => prevData.filter((expte) => expte._id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el expediente:', error);
-			Swal.fire(
-				'Error',
-				'Hubo un problema al eliminar el expediente',
-				'error'
-			);
 		}
 	}
 
@@ -153,7 +149,7 @@ export const GestionExpedientes = () => {
 					<hr className='linea mx-3' />
 
 					<div>
-						<p className='titletabla'>Expedientes en tramite</p>
+						<p className='titletabla'>Expedientes en Tramite</p>
 					</div>
 
 					<div className='search'>
@@ -231,7 +227,7 @@ export const GestionExpedientes = () => {
 												)}
 												<Link
 													className='btnvergestion'
-													to={`/movexptes/${expte._id}`}>
+													to={`/gestionmovimientos/${row.original._id}`}>
 													<i className='bi bi-search acciconogestion'></i>
 												</Link>
 											</div>

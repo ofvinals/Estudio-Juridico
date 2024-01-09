@@ -67,8 +67,44 @@ export const Home = () => {
 						</Carousel.Caption>
 					</div>
 				</Carousel.Item>
+
+				<Carousel.Item>
+					<div className='imagencar2'>
+						<Carousel.Caption>
+							<h3 className='titlecar2'>Estudio Juridico 2.0</h3>
+							<p className='listacar2'>
+								Ponemos a tu disposicion el mejor servicio es nuestro
+								objetivo, por ello evolucionamos hacia el concepto
+								asesoría legal online para brindarte respuestas con
+								agilidad y eficiencia.
+							</p>
+						</Carousel.Caption>
+					</div>
+				</Carousel.Item>
+				<Carousel.Item>
+					<div className='imagencar2'>
+						<Carousel.Caption>
+							<h3 className='titlecar2'>Asesoramiento para empresas</h3>
+							<ul className='listacar3'>
+								<li>
+									Asesoramiento empresario, laboral, civil,
+									administrativo
+								</li>
+								<li>Gestión de cobranzas</li>
+								<li>
+									Revisión y redacción de contratos en general,
+									comercial, laboral y de confidencialidad
+								</li>
+								<li>
+									Creación, transformacion y liquidacion de todo tipo
+									de sociedades y/o sucursales
+								</li>
+							</ul>
+						</Carousel.Caption>
+					</div>
+				</Carousel.Item>
 			</Carousel>
-			
+
 			<div className='imagensection4'>
 				<h1 className='titlecontac'>Contactanos!</h1>
 				<div className='conttel'>
@@ -81,7 +117,7 @@ export const Home = () => {
 				</div>
 				<div className='contdir'>
 					<i className='icosec4 bi bi-geo-alt-fill me-2'></i>
-					<p className='textosec4'>Buenos Aires 555 - SMT</p>
+					<p className='textosec4'>9 de Julio 620 Planta Baja C - SMT</p>
 				</div>
 				<Link className='botonturnoabajo' to='/login'>
 					<i className='icosec4 bi bi-calendar-check me-1'></i>

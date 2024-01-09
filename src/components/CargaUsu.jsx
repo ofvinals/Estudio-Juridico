@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button, Modal } from 'react-bootstrap';
+import {  useNavigate } from 'react-router-dom';
+import {  Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
 import { useAuth } from '../context/AuthContext';
@@ -26,6 +26,12 @@ export const CargaUsu = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		createUser(values);
+		Swal.fire({
+			icon: 'success',
+			title: 'Usuario registrado correctamente',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		handleCloseModal();
 		navigate('/gestionusuarios');
 	});

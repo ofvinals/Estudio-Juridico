@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
+import Swal from 'sweetalert2';
 import { useExptes } from '../context/ExptesContext';
 import { useForm } from 'react-hook-form';
 import { useUsers } from '../context/UsersContext';
@@ -88,6 +89,12 @@ export const EditarExptes = ({}) => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		await updateExpte(params.id, data);
+		Swal.fire({
+			icon: 'success',
+			title: 'Expediente editado correctamente',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		navigate('/gestionexpedientes');
 		// Cierra el modal después de guardar los cambios
 		handleCloseModal();

@@ -9,7 +9,7 @@ import { useAuth } from '../context/AuthContext';
 export const Registro = () => {
 	const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
 	const navigate = useNavigate();
-	const { register, handleSubmit, formState: errors } = useForm();
+	const { register, handleSubmit } = useForm();
 
 	useEffect(() => {
 		if (isAuthenticated) navigate('/adminusu');
@@ -30,7 +30,7 @@ export const Registro = () => {
 			}
 			<Form
 				id='loginFormreg'
-				className='container fluid bg-dark'
+				className='loginFormreg container fluid bg-dark'
 				onSubmit={onSubmit}>
 				<h2 className='login-tituloreg'>Crear Nueva Cuenta</h2>
 
@@ -39,9 +39,9 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='text'
+						id='name'
 						{...register('username', { required: true })}
 					/>
-					{errors.username && <p>Nombre es requerido</p>}
 				</Form.Group>
 
 				<Form.Group className='mb-3' controlId='inputsubname'>
@@ -49,6 +49,7 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='text'
+						id='subname'
 						{...register('apellido', { required: true })}
 					/>
 				</Form.Group>
@@ -58,6 +59,7 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='number'
+						id='dni'
 						{...register('dni', { required: true })}
 					/>
 				</Form.Group>
@@ -67,6 +69,7 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='text'
+						id='domic'
 						{...register('domicilio', { required: true })}
 					/>
 				</Form.Group>
@@ -76,6 +79,7 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='number'
+						id='cel'
 						{...register('celular', { required: true })}
 					/>
 				</Form.Group>
@@ -85,6 +89,7 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='email'
+						id='email'
 						{...register('email', { required: true })}
 					/>
 				</Form.Group>
@@ -94,6 +99,7 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='password'
+						id='password'
 						{...register('password', { required: true })}
 					/>
 				</Form.Group>
@@ -102,7 +108,7 @@ export const Registro = () => {
 					<Form.Label className='labelreg' controlid='inputconfirm'>
 						Confirmar Contraseña
 					</Form.Label>
-					<Form.Control className='inputreg' type='password' />
+					<Form.Control className='inputreg' type='password' controlId='confirm'/>
 				</Form.Group>
 
 				<Form.Group className='mb-3 botonesreg'>

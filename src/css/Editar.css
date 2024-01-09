@@ -15,7 +15,7 @@
    width: 100%;
    margin-top: 2vw;
    margin-bottom: 2vw;
-   font-size: 2.5vw;
+   font-size: 3%;
    color: rgb(143, 142, 139);
 }
 .formedit{
@@ -24,9 +24,6 @@
    flex-direction: row ;
    align-items: center;
    justify-content: space-around!important;
-   margin-top: 2vw;
-   width: 100%!important;
-   margin-bottom: 2vw;
    opacity: 0.85;
 }
 .labeledit{
@@ -36,7 +33,7 @@
    margin-bottom: 1vw;
    background-color:transparent!important;
    color:rgb(143, 142, 139);
-   font-size: 1vw!important;
+   font-size: 3vw!important;
 }
 .labeleditturno{
    font-weight: 700;
@@ -58,15 +55,14 @@
    margin-left: 1vw;
 }
 .inputedit{
-   color: rgb(143, 142, 139);
-   width: 100%;
+   color: rgb(36, 36, 36);
+   width: 100%!important;
+   margin-right: 2vw!important;
    margin-bottom: 1vw;
-   margin-right: 2vw;
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
-   font-size: 1vw!important;
+   font-size: 3vw!important;
    padding:0.4vw!important;
-   margin-left: 1vw;
 }
 .botonesedit{
    display: flex;
@@ -76,38 +72,41 @@
    width: 100%;
 }
 .botonedit{
-   font-size: 1vw!important;
+   font-size: 3vw!important;
    font-weight: 700;
-   margin-top: 1vw;
-   margin-bottom: 1vw;
-   margin-right:1vw!important;
+   margin-top: 3vw;
+   margin-bottom: 3vw;
+   margin-right: 3vw;
+   margin-left: 3vw;
    background-color: rgb(10, 61, 4)!important;
    color: rgb(143, 142, 139);
-   width: 20%!important;
+   width: 40%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    cursor: pointer;
-   padding:0.3vw!important;
+   padding:1.5vw!important;
 
 }
 .botoncancedit{
-   font-size: 1vw!important;
+   font-size: 3vw!important;
    font-weight: 700;
-   margin-top: 1vw;
-   margin-bottom: 1vw;
+   margin-top: 3vw;
+   margin-bottom: 3vw;
+   margin-right: 3vw;
+   margin-left: 3vw;
    background-color: rgb(111, 8, 10)!important;
    color: rgb(143, 142, 139);
-   width: 15%!important;
+   width: 25%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    cursor: pointer;
-   padding:0.3vw!important;
+   padding:1.5vw!important;
    text-decoration: none;
    text-align: center;
 }
@@ -142,7 +141,7 @@
    padding:0.3vw!important;
 }
 .btncancmodal{
-   font-size: 1vw!important;
+   font-size: 2vw!important;
    font-weight: 700;
    margin-top: 1vw;
    margin-bottom: 1vw;

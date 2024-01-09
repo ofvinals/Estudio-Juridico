@@ -19,7 +19,7 @@ export const Especialidad = () => {
 	const handleClickLab = (e) => {
 		Swal.fire({
 			title: 'Derecho Laboral',
-			text: 'lorem',
+			text: 'Contamos con la idoneidad y experiencia para asesorar a trabajadores que han sufrido despidos sin justa causa, despido indirecto, despido discriminatorio o han sido víctimas de violencia laboral, mobbing o acoso laboral. Te representamos en litigios por enfermedades profesionales o accidentes laborales',
 			confirmButtonColor: '#8f8e8b',
 		});
 	};
@@ -27,7 +27,7 @@ export const Especialidad = () => {
 	const handleClickSus = (e) => {
 		Swal.fire({
 			title: 'Derecho Sucesorio',
-			text: 'lorem',
+			text: 'Gestión integral en procesos de sucesión de bienes, agilidad en declaratorias de herederos. Anticipación mediante planificación sucesoria, testamentos y fideicomisos',
 			confirmButtonColor: '#8f8e8b',
 		});
 	};
@@ -35,7 +35,7 @@ export const Especialidad = () => {
 	const handleClickConc = (e) => {
 		Swal.fire({
 			title: 'Derecho Concursal',
-			text: 'lorem',
+			text: 'Asesoramiento integral de acuerdo a la ley de concurso y quiebras procesos preventivos buscando la optimización de costos para nuestro cliente.',
 			confirmButtonColor: '#8f8e8b',
 		});
 	};
@@ -43,7 +43,7 @@ export const Especialidad = () => {
 	const handleClickSoc = (e) => {
 		Swal.fire({
 			title: 'Derecho Societario',
-			text: 'lorem',
+			text: 'Asesoramiento sobre cómo se constituye una sociedad, nuestros abogados cuentan con experiencia en constitución de distintos tipos de sociedades, tales como sociedades comerciales, estatutos, resolvemos conflictos societarios',
 			confirmButtonColor: '#8f8e8b',
 		});
 	};
@@ -51,7 +51,7 @@ export const Especialidad = () => {
 	const handleClickCom = (e) => {
 		Swal.fire({
 			title: 'Derecho Comercial',
-			text: 'lorem',
+			text: 'Confeccionamos contratos de alquiler, compraventa, arrendamientos, entre otros. También realizamos escrituración de propiedades y asesoramiento en todo el marco legal de operaciones inmobiliarias. Estudio de titulos',
 			confirmButtonColor: '#8f8e8b',
 		});
 	};
@@ -61,16 +61,15 @@ export const Especialidad = () => {
 			<h2 className='titlees'>Areas de Actuacion</h2>
 			<Container>
 				<Row>
-					<CardGroup className='d-flex flex-wrap flex-row justify-content-center'>
-						
-						<Col xs={4} md={3}>
+					<CardGroup className='d-flex flex-wrap flex-row justify-content-around'>
+						<Col xs={5} md={3}>
 							<Card className='cardbody'>
-								<div className=' '>
+								<div className=''>
 									<Card.Title className='titlecard'>
 										Derecho Civil
 									</Card.Title>
-									<div className='listado '>
-										<ul className='ps-0 text-start'>
+									<div className='listado'>
+										<ul className='ps-4 text-start'>
 											<li>Contratos</li>
 											<li>Prescripcion Adquisitiva</li>
 											<li>Accidentes de transito</li>
@@ -78,20 +77,20 @@ export const Especialidad = () => {
 										</ul>
 									</div>
 								</div>
-								<button to='#' className='cardlink1' onClick={handleClickCiv}>
+								<button className='cardlink1' onClick={handleClickCiv}>
 									Ver mas
 								</button>
 							</Card>
 						</Col>
 
-						<Col xs={4} md={3}>
+						<Col xs={5} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
 										Derecho Laboral
 									</Card.Title>
 									<div className='listado'>
-										<ul className='ps-0 text-start'>
+										<ul className='ps-4 text-start'>
 											<li>Despidos</li>
 											<li>Accidentes laborales</li>
 											<li>Sanciones disciplinarias</li>
@@ -99,60 +98,60 @@ export const Especialidad = () => {
 										</ul>
 									</div>
 								</div>
-								<button to='#' className='cardlink1' onClick={handleClickLab}>
+								<button className='cardlink1' onClick={handleClickLab}>
 									Ver mas
 								</button>
 							</Card>
 						</Col>
 
-						<Col xs={4} md={3}>
+						<Col xs={5} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
 										Derecho Sucesorio
 									</Card.Title>
 									<div className='listado'>
-										<ul className='ps-0 text-start'>
+										<ul className='ps-4 text-start'>
 											<li>Declaratoria de herederos</li>
 											<li>Adjudicacion de bienes</li>
 											<li>Acciones de recupero de herencia</li>
 										</ul>
 									</div>
 								</div>
-								<button to='#' className='cardlink1' onClick={handleClickSus}>
+								<button className='cardlink1' onClick={handleClickSus}>
 									Ver mas
 								</button>
 							</Card>
 						</Col>
 
-						<Col xs={4} md={3}>
+						<Col xs={5} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
 										Derecho Comercial
 									</Card.Title>
 									<div className='listado'>
-										<ul className=' ps-0 text-start'>
+										<ul className=' ps-4 text-start'>
 											<li>Ejecucion de pagare</li>
 											<li>Incumplimiento contractual</li>
 											<li>Desalojos</li>
 										</ul>
 									</div>
 								</div>
-								<button to='#' className='cardlink1' onClick={handleClickCom}>
+								<button className='cardlink1' onClick={handleClickCom}>
 									Ver mas
 								</button>
 							</Card>
 						</Col>
 
-						<Col xs={4} md={3}>
+						<Col xs={5} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
 										Derecho Societario
 									</Card.Title>
 									<div className='listado'>
-										<ul className='ps-0 text-start'>
+										<ul className='ps-4 text-start'>
 											<li>Constitucion de sociedades</li>
 											<li>Acuerdo de accionistas</li>
 											<li>Conflictos societarios</li>
@@ -160,20 +159,20 @@ export const Especialidad = () => {
 										</ul>
 									</div>
 								</div>
-								<button to='#' className='cardlink1' onClick={handleClickSoc}>
+								<button className='cardlink1' onClick={handleClickSoc}>
 									Ver mas
 								</button>
 							</Card>
 						</Col>
 
-						<Col xs={4} md={3}>
+						<Col xs={5} md={3}>
 							<Card className='cardbody'>
 								<div className='y'>
 									<Card.Title className='titlecard'>
 										Derecho Concursal
 									</Card.Title>
 									<div className='listado'>
-										<ul className='ps-0 text-start'>
+										<ul className='ps-4 text-start'>
 											<li>Reestructuracion de deudas</li>
 											<li>Acuerdos preventivos</li>
 											<li>Verificacion de creditos</li>
@@ -182,10 +181,7 @@ export const Especialidad = () => {
 									</div>
 								</div>
 
-								<button
-									to='#'
-									className='cardlink1'
-									onClick={handleClickConc}>
+								<button className='cardlink1' onClick={handleClickConc}>
 									Ver mas
 								</button>
 							</Card>

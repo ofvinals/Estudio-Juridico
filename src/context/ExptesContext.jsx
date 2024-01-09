@@ -5,6 +5,8 @@ import {
 	getExptesRequest,
 	getExpteRequest,
 	updateExpteRequest,
+	createMovRequest,
+	deleteMovRequest,
 } from '../api/exptes';
 
 const ExpteContext = createContext();
@@ -53,7 +55,7 @@ export function ExpteProvider({ children }) {
 			setExptes(res.data);
 		} catch (error) {
 			console.log(error);
-		} 
+		}
 	};
 
 	const getExpte = async (id) => {
@@ -74,6 +76,27 @@ export function ExpteProvider({ children }) {
 		}
 	};
 
+	const createMov = async (id, expte) => {
+		try {
+			await createMovRequest(id, expte);
+		} catch (error) {
+			console.error(error);
+		}
+	};
+
+	const deleteMov = async (expedienteId, movimientoId) => {
+		try {
+			const res = await deleteMovRequest(expedienteId, movimientoId);
+			if (res.status === 204) console.log(res);
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setTimeout(async () => {
+				await getExptes();
+			}, 100);
+		}
+	};
+
 	return (
 		<ExpteContext.Provider
 			value={{
@@ -83,6 +106,8 @@ export function ExpteProvider({ children }) {
 				createExpte,
 				getExpte,
 				updateExpte,
+				createMov,
+				deleteMov,
 			}}>
 			{children}
 		</ExpteContext.Provider>

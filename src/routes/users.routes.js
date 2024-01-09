@@ -16,7 +16,7 @@ router.get('/users/:id', authRequired, getUser);
 router.post(
 	'/users',
 	authRequired,
-	
+	validateSchema(),
 	createUser
 );
 router.delete('/users/:id', authRequired, deleteUser);

@@ -2,13 +2,12 @@
 	background-color: rgb(175, 175, 173);
    height: 2px;
 }
-
 .nav-link a:hover {
 	opacity: 0.5;
 }
 .social-item a {
 	display: block;
-	font-size: 2.5vw;
+	font-size: 5vw;
 	color: #fff;
 }
 .social-item a:hover {
@@ -16,17 +15,18 @@
 }
 .social-icon{
    color: #8f8e8b!important;
-	margin:2vw;
+	margin:3.5vw;
 	text-align: center;
 }
 .derechos{
 	text-align: center;
-   font-size: 1vw;
+   font-size: 1.5vw;
+	color: rgb(143, 142, 139)!important;
 }
 .text-deg {
 	text-align: center;
 	color: rgb(143, 142, 139)!important;
-	font-size: 1vw;
+	font-size: 2.5vw;
    font-weight: 800;
 }
 .text-deg a:hover {
@@ -34,5 +34,5 @@
 	opacity: 0.9;
 }
 .logofooter{
-	margin-top: 2vw;
+	margin-top: 1vw!important;
 }

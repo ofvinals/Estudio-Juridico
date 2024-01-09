@@ -25,14 +25,13 @@ export const GestionGastos = () => {
 	const [sorting, setSorting] = useState([]);
 	const [filtering, setFiltering] = useState('');
 	const navigate = useNavigate();
-	const [showVerGasto, setShowVerGasto]= useState(false)
+	const [showVerGasto, setShowVerGasto] = useState(false);
 
-	
-		// Cierra modales
-		const handleCancel = () => {
-			setShowVerGasto(false);
-		};
-		
+	// Cierra modales
+	const handleCancel = () => {
+		setShowVerGasto(false);
+	};
+
 	const columns = React.useMemo(
 		() => [
 			{
@@ -53,7 +52,7 @@ export const GestionGastos = () => {
 			},
 			{
 				header: 'Monto',
-				accessorKey: 'monto',
+				accessorKey:'monto',
 			},
 			{
 				header: 'Estado',
@@ -63,6 +62,7 @@ export const GestionGastos = () => {
 		[]
 	);
 
+// Carga gastos y guarda en data y gasto
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -73,7 +73,6 @@ export const GestionGastos = () => {
 				console.error('Error al obtener gastos', error);
 			}
 		};
-
 		fetchData();
 	}, []);
 
@@ -108,16 +107,16 @@ export const GestionGastos = () => {
 			});
 			if (result.isConfirmed) {
 				await deleteGasto(id);
-				window.location.reload();
-				Swal.fire(
-					'Eliminado',
-					'El gasto fue eliminado con éxito',
-					'success'
-				);
-			}
+				Swal.fire({
+					icon: 'success',
+					title: 'Gasto eliminado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				setData((prevData) => prevData.filter((caja) => caja._id !== id));
+				}
 		} catch (error) {
 			console.error('Error al eliminar el gasto:', error);
-			Swal.fire('Error', 'Hubo un problema al eliminar el gasto', 'error');
 		}
 	}
 
@@ -226,31 +225,29 @@ export const GestionGastos = () => {
 													cell.getContext()
 												)}
 											</td>
-											
 										))}
 
 										<td className='align-middle'>
-											
 											<div className='d-flex flex-row justify-content-center'>
 												{user.email === 'admin@gmail.com' && (
 													<Link
 														className='btneditgestion'
-														to={`/editargastos/${row.original._id}`}
-														>
+														to={`/editargastos/${row.original._id}`}>
 														<i className='bi bi-pen  acciconogestion'></i>
 													</Link>
 												)}
 												{user.email === 'admin@gmail.com' && (
 													<button
 														className='btnborragestion'
-														onClick={() => borrarGasto(row.original._id)}>
+														onClick={() =>
+															borrarGasto(row.original._id)
+														}>
 														<i className='bi bi-trash-fill  acciconogestion'></i>
 													</button>
 												)}
 												<button
 													className='btnvergestion'
 													onClick={(e) => {
-														setShowVerGasto(true);
 														verGasto(row.original._id);
 													}}>
 													<i className='bi bi-search acciconogestion'></i>

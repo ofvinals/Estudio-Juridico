@@ -3,24 +3,24 @@
 }
 .menu{
     display: flex;
-    flex-direction: column;
+    flex-direction: row!important;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    margin-right: 1vw;
     background-color: rgb(143, 142, 139)!important;
     color:rgb(27,27,27);
     font-size: 1.5vw;
-    margin-top:1vw;
+    margin-top:4vw;
 }
 .colapse{
     display: flex;
     flex-direction: column;
 }
 .navbar-toggler-icon{
-    font-size: 2vw;
+    font-size: 4.5vw;
 }
 .navtitle{
-    font-size: 1.8vw;
+    font-size: 4vw;
     color:rgb(143, 142, 139)
 }
 .botones{
@@ -30,25 +30,27 @@
     align-items: center;
 }
 .estadolog{
-    font-size: 1vw;
+    font-size: 2.2vw;
     text-align: center;
     align-items: center;
+    margin-top:2vw;
     width: 100%;
     color:rgb(143, 142, 139)
 
 }
 .btnnav {
 	font-weight: 700;
-	font-size: 1vw;
+	font-size: 3vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
+    margin-right: 3vw;
 	background-color: rgb(28, 28, 28);
     color: rgb(143, 142, 139);
-    width: 15vw!important;
+    width: 40vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
-    padding-left: 1vw!important;
-    padding-right: 1vw!important;
+    padding-top: 1vw!important;
+    padding-bottom: 1vw!important;
     display: flex!important;
     justify-content: center!important;
     align-items: center;
@@ -62,17 +64,17 @@
 	background-color: transparent;
 }
 .iconavbar{
-    font-size: 2vw;
-    padding-right: 1.5vw;
-;
+    font-size: 3vw!important;
+    padding-right: 2vw;
+    padding-left: 2vw;
+
 }
 .botonnavlog {
-	font-weight: 700;
-	font-size: 1vw;
+	font-weight: 600;
+	font-size: 3vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	margin-right: 1vw;
-	transition: var(--transition);
 	background-color: rgb(10, 61, 4)!important;
     color: rgb(143, 142, 139);
     width: 100%;
@@ -81,15 +83,12 @@
     display: flex;
     justify-content: center;
     align-items: center;
-	padding:0.5vw;
+	padding:1vw;
 	padding-left:1vw;
 	padding-right:1vw;
     cursor: pointer;
 	text-align: center;
 	text-decoration: none!important;
-}
-.botona{
-    margin-right:1vw;
 }
 .botonnavlog:hover{
     opacity:0.8;
@@ -104,7 +103,7 @@
 }
 .botonnavreg {
 	font-weight: 700;
-	font-size: 1vw;
+	font-size: 3vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	background-color: rgb(81, 74, 7);
@@ -115,7 +114,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-	padding:0.5vw;
+	padding:1vw;
 	padding-left:1vw;
 	padding-right:1vw;
     cursor: pointer;

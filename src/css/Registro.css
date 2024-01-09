@@ -13,19 +13,20 @@
 .login-tituloreg{
     text-align: center;
     width: 100%;
-    margin-top: 2vw;
-    margin-bottom: 2vw;
-    font-size: 3vw;
+    margin-top: 6vw;
+    margin-bottom: 6vw;
+    font-size: 5vw;
     color: rgb(143, 142, 139);
 }
-#loginFormreg{
-    display: flex;
+.loginFormreg{
+    display: flex!important;
     flex-wrap: wrap;
+    flex-direction: row;
     justify-content: space-around;
     align-items: center;
     align-content: center;
     margin-top: 5vw;
-    width: 70%;
+    width: 90%!important;
     margin-bottom: 5vw;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139);
@@ -34,12 +35,12 @@
 .labelreg{
     font-weight: 700;
     width: 100%;
-    margin-left:1vw;
-    margin-right: 1vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
     margin-bottom: 1vw;
     background-color: rgb(36, 36, 36)!important;
     color:rgb(143, 142, 139);
-    font-size: 1vw;
+    font-size: 3vw;
 }
 .botonesreg{
     display: flex;
@@ -51,18 +52,17 @@
 .inputreg{
     color: rgb(143, 142, 139);
     width: 100%!important;
-    margin-left:1vw;
-    margin-bottom: 1vw;
+    margin-left: 2vw;
+    margin-right: 2vw;
     border-radius: 5px;
     outline-color: rgb(143, 142, 139);
-    font-size: 1vw!important;
+    font-size: 3vw!important;
     padding: 0.5vw!important;
 }
 .input-submitreg{
-    font-size: 1vw!important;
+    font-size: 3vw!important;
     font-weight: 700;
     margin-top: 1vw;
-    transition: var(--transition);
 	background-color: rgb(10, 61, 4)!important;
     color: rgb(143, 142, 139);
     width: 20%;
@@ -81,10 +81,10 @@
     background-color: transparent;
 }
 .parraforeg{
-    font-size: 1vw;
+    font-size: 2.5vw;
     font-family:'Poppins', sans-serif;
     color: rgb(143, 142, 139);
-    margin-top: 1vw;
+    margin-top: 2vw;
     font-weight: 700;
 }
 .parraforeg a{
@@ -96,10 +96,6 @@
     opacity:0.8;
     background-color: transparent;
 }
-.swal2-html-container {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1.5vw !important;
-    color: rgb(143, 142, 139) !important;
-}
+
 
 

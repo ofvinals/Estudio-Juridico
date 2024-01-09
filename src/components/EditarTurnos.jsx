@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import '../css/Editar.css';
+import Swal from 'sweetalert2';
 import { useTurnos } from '../context/TurnosContext';
 
 export const EditarTurnos = ({}) => {
@@ -67,6 +68,12 @@ export const EditarTurnos = ({}) => {
 	// Función para manejar el envío del formulario
 	const onSubmit = handleSubmit(async (data) => {
 		await updateTurno(params.id, data);
+		Swal.fire({
+			icon: 'success',
+			title: 'Turno editado correctamente',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		// Cierra el modal después de guardar los cambios
 		handleCloseModal();
 	});

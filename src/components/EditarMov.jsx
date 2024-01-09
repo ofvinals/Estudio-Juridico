@@ -4,165 +4,118 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
-import { Button, Modal } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import { Modal } from 'react-bootstrap';
+import { useForm } from 'react-hook-form';
+import { useUsers } from '../context/UsersContext';
+import { useExptes } from '../context/ExptesContext';
 
 export const EditarMov = () => {
-	const auth = useAuth();
-	const { id } = useParams();
-	const { email } = auth.user;
+	const { user } = useAuth();
+	const params = useParams();
 	const navigate = useNavigate();
-	const [movimientos, setMovimientos] = useState([]);
-	const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-	const [form, setForm] = useState({
-		fecha: '',
-		movimiento: '',
-		archivo: null,
-		id: '',
-	});
+	const { getUsers } = useUsers();
+	const [users, setUsers] = useState([]);
+	const [showModal, setShowModal] = useState(false);
+	const { register, handleSubmit, setValue} = useForm();
+	const { getMov, updateMov } = useExptes();
 
-	const handleCancel = () => {
-		setShowConfirmationModal(false);
-		handleClose();
-		navigate(`/movexptes/${id}`);
-	};
+	// Función para abrir el modal
+	const handleOpenModal = () => setShowModal(true);
 
-	const handleShow = () => setShowConfirmationModal(true);
+	// Función para cerrar el modal
+	const handleCloseModal = (movId) => {
+		console.log(movId); 
+		setShowModal(false);
+		navigate(`/gestionmovimientos/${movId}`, { replace: true });	};
 
+	// Función para cargar los datos del expediente al abrir la página
 	useEffect(() => {
-		const ListaMov = JSON.parse(localStorage.getItem('movimientos')) || [];
-		setMovimientos(ListaMov);
+		async function loadMov() {
+			try {
+				if (params.id) {
+					const mov = await getMov(params.id);
+					const formattedDate = new Date(mov.fecha).toISOString().split('T')[0];
+
+					setValue('nroexpte', mov.nroexpte);
+					setValue('fecha', formattedDate);
+					setValue('descripcion', mov.descripcion);
+					setValue('adjunto', mov.adjunto);
+					// Abre automáticamente el modal cuando se cargan los datos del turno
+					handleOpenModal();
+				}
+			} catch (error) {
+				console.error('Error al cargar el movimiento', error);
+			}
+		}
+		loadMov();
 	}, []);
 
-	const handleChange = (e) => {
-		const { name, value } = e.target;
-		setForm({ ...form, [name]: value });
-	};
-
-	useEffect(() => {
-		const movimiento = movimientos.find(
-			(movimiento) => movimiento.id === parseInt(id)
-		);
-		if (movimiento) {
-			setForm({
-				...form,
-				nroexpte:movimiento.nroexpte,
-				fecha: movimiento.fecha,
-				movimiento: movimiento.movimiento,
-				archivo: movimiento.archivo,
-				id: id,
-			});
-		}
-	}, [id, movimientos]);
-
-	// Funcion para editar datos de expedientes
-	function editarMov() {
-		const nuevosMovs = movimientos.map((movimiento) => {
-			if (movimiento.id === parseInt(id, 10)) {
-				console.log('Antes de la actualización:', movimiento);
-				return {
-					...movimiento,
-					nroexpte: form.nroexpte,
-					fecha: form.fecha,
-					movimiento: form.movimiento,
-					archivo: form.archivo,
-				};
-			} else {
-				return movimiento;
-			}
-		});
-		console.log('Nuevos movimientos:', nuevosMovs);
-		// Actualizar el estado de expedientes, luego de editar
-		setMovimientos(nuevosMovs);
-		localStorage.setItem('movimientos', JSON.stringify(nuevosMovs));
-		setShowConfirmationModal(false);
-		navigate(`/movexptes/${id}`);
-	}
+	const onSubmit = handleSubmit(async (data) => {
+		await updateMov(params.id, data);
+		
+		// Cierra el modal después de guardar los cambios
+		handleCloseModal();
+	});
 
 	return (
 		<>
-			<section className='bodyedit'>
-				<Form className='formedit container fluid bg-dark'>
-					<h2 className='titleedit'>Editar Datos de Movimientos</h2>
-					<Form.Group className='' controlId='inputname'>
-						<Form.Label className='labeledit'>Fecha</Form.Label>
-						<Form.Control
-							className='inputedit'
-							type='text'
-							name='fecha'
-							value={form.fecha}
-							onChange={handleChange}
-						/>
-					</Form.Group>
+			<div className='bodyedit'>
+				<Modal show={showModal} onHide={handleCloseModal}>
+					<Modal.Header closeButton>
+						<Modal.Title className='titlemodal'>
+							Modificar Datos de Movimiento
+						</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						<Form
+							className='formedit container fluid bg-dark'
+							onSubmit={onSubmit}>
+							<Form.Group className='' controlId='inputname'>
+								<Form.Label className='labeledit'>Fecha</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='date'
 
-					<Form.Group className='' controlId='inputdomic'>
-						<Form.Label className='labeledit'>Movimiento</Form.Label>
-						<Form.Control
-							className='inputedit'
-							as='textarea'
-							rol={13}
-							col={50}
-							name='movimiento'
-							value={form.movimiento}
-							onChange={handleChange}
-						/>
-					</Form.Group>
+									{...register('fecha')}
+								/>
+							</Form.Group>
 
-					<Form.Group className='' controlId='inputcel'>
-						<Form.Label className='labeledit'>Archivo</Form.Label>
-						{form.archivo !== null && (
-							<Form.Control
-								className='inputedit'
-								type='file'
-								name='archivo'
-								value={form.archivo}
-								onChange={handleChange}
-							/>
-						)}
-					</Form.Group>
+							<Form.Group className='' controlId='inputdomic'>
+								<Form.Label className='labeledit'>
+									Descripcion
+								</Form.Label>
+								<Form.Control
+									className='inputedit'
+									{...register('descripcion')}
+								/>
+							</Form.Group>
 
-					<Form.Group className='botonesedit'>
-						<Button
-							className='botonedit'
-							onClick={(e) => setShowConfirmationModal(true)}>
-							<i className='iconavbar bi bi-check2-square'></i>
-							Guardar Cambios
-						</Button>
-						<Link to='/movexptes' className='botoncancedit'>
-							<i className='iconavbar bi bi-x-circle-fill'></i>
-							Cancelar
-						</Link>
-					</Form.Group>
-				</Form>
-			</section>
+							<Form.Group className='' controlId='inputcel'>
+								<Form.Label className='labeledit'>Adjunto</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='text'
+									{...register('adjunto')}
+								/>
+							</Form.Group>
 
-			{/* Modal para confirmar edicion */}
-			<Modal
-				show={showConfirmationModal}
-				onHide={() => setShowConfirmationModal(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title>Confirmar cambios</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					¿Estás seguro de que deseas guardar los cambios?
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btnconfmodal'
-						onClick={(e) => {
-							editarMov(e);
-						}}>
-						Confirmar
-					</button>
-					<button
-						className='btncancmodal'
-						onClick={() => {
-							handleCancel();
-							navigate(`/movexptes/${id}`);
-						}}>
-						Cancelar
-					</button>
-				</Modal.Footer>
-			</Modal>
+							<Form.Group className='botonesedit'>
+								<button className='botonedit' type='submit'>
+									<i className='iconavbar bi bi-check2-square'></i>
+									Guardar Cambios
+								</button>
+								<Link
+									to='/gestionmovimientos'
+									className='botoncancedit'>
+									<i className='iconavbar bi bi-x-circle-fill'></i>
+									Cancelar
+								</Link>
+							</Form.Group>
+						</Form>
+					</Modal.Body>
+				</Modal>
+			</div>
 		</>
 	);
 };

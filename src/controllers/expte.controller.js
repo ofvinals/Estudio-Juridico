@@ -65,12 +65,24 @@ export const updateExpte = async (req, res) => {
 			actor,
 			demandado,
 			proceso,
-			caratula,
 			estado,
 		} = req.body;
+
+		const caratula = `${actor} C/ ${demandado} S/ ${proceso}`;
+
 		const updateExpte = await Expte.findByIdAndUpdate(
 			req.params.id,
-			req.body,
+			{
+				cliente,
+				nroexpte,
+				radicacion,
+				juzgado,
+				actor,
+				demandado,
+				proceso,
+				caratula,
+				estado,
+			},
 			{ new: true }
 		);
 		res.json(updateExpte);
@@ -89,4 +101,49 @@ export const deleteExpte = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
+};
+
+export const createMov = async (req, res) => {
+	const { fecha, descripcion, adjunto } = req.body;
+
+	try {
+		const expteId = req.params.id; // Asegúrate de ajustar esto según tu ruta de API
+
+		// Buscar el expediente por ID
+		const expte = await Expte.findById(expteId);
+		if (!expte) {
+			return res.status(404).json({ message: 'Expediente no encontrado' });
+		}
+		// Crear una nueva instancia del modelo Expte utilizando los datos de la solicitud
+		const newMovimiento = {
+			fecha,
+			descripcion,
+			adjunto,
+		};
+		expte.movimientos.push(newMovimiento);
+
+		// Guardar el expediente actualizado en la base de datos
+		const savedExpte = await expte.save();
+		res.json(savedExpte.movimientos);
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+export const deleteMov = async (req, res) => {
+   try {
+      const { expedienteId, movimientoId } = req.params; // Obtén los parámetros desde la URL
+		const deletedMov = await Expte.findByIdAndUpdate(
+         expedienteId,
+         { $pull: { movimientos: { _id: movimientoId } } },
+         { new: true }
+      );
+      if (!deletedMov) {
+         return res.status(404).json({ message: 'Expediente no encontrado' });
+      }
+      res.json(deletedMov);
+   } catch (error) {
+      console.error('Error al eliminar movimiento:', error);
+      return res.status(500).json({ message: error.message });
+   }
 };

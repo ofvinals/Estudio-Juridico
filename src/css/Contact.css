@@ -1,6 +1,10 @@
 .bodycontact {
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
 		url(../01.jpg);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
 	background-size: cover;
 	object-fit: cover;
 	background-position: center;
@@ -8,54 +12,51 @@
 }
 .titulocont {
 	color:rgb(143, 142, 139);
-   font-size: 4vw;
+   font-size: 6vw;
 	font-weight: 800;
 	padding-top: 5vw;
 }
 .Parrafo2 {
 	color: rgb(143, 142, 139);
-   font-size: 1.5vw;
+   font-size: 3vw;
 	font-weight: 700;
 	padding: 2vw;
 }
 .cajaForm{
-   display: flex;
+   display: flex!important;
    flex-wrap: wrap;
 	flex-direction: column;
-   justify-content: start;
+   justify-content: center;
 	align-items: center;
-	width: auto;
+	width: 80%;
    margin-top: 5vw;
-	margin-left: 20vw;
-	margin-right: 20vw;
 	padding-top: 2vw;
    border-radius: 5px;
    border: 0.2vw outset rgb(143, 142, 139);
    opacity: 0.85;
 }
 .labelcontact{
-   font-weight: 700;
+   font-weight: 600;
 	text-align: center;
    color:rgb(143, 142, 139);
-   font-size: 1vw;
+   font-size: 3vw;
 	margin-left:1vw!important;
 	margin-right: 30vw;
 }
 .inputcontactcoment{
-	font-size: 1vw!important;
+	font-size: 3vw!important;
 	margin-bottom: 1vw;
 
 }
 .inputcontactemail{
-	font-size: 1vw!important;
+	font-size: 3vw!important;
 	margin-bottom: 1vw;
 }
 .btncont {
 	font-weight: 700;
-	font-size: 1vw;
-	margin-top: 1vw;
-	margin-bottom: 1vw;
-	transition: var(--transition);
+	font-size: 3vw;
+	margin-top: 3vw!important;
+	margin-bottom: 2vw!important;
 	background-color: rgb(28, 28, 28);
    color: rgb(143, 142, 139);
    width: 100%;

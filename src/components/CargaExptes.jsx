@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
-import Swal from 'sweetalert2';
 import '../css/Carga.css';
+import Swal from 'sweetalert2';
 import { Button, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useExptes } from '../context/ExptesContext';
@@ -43,6 +43,12 @@ export const CargaExptes = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		createExpte(values);
+		Swal.fire({
+			icon: 'success',
+			title: 'Expediente registrado correctamente',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		navigate('/gestionexpedientes');
 	});
 

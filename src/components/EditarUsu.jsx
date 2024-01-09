@@ -1,10 +1,11 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import {  useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
-import { Button, Modal } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import {  Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { useUsers } from '../context/UsersContext';
 
@@ -49,6 +50,12 @@ export const EditarUsu = () => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		await updateUser(params.id, data);
+		Swal.fire({
+			icon: 'success',
+			title: 'Usuario editado correctamente',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		handleCloseModal();
 	});
 

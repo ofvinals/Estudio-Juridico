@@ -4,11 +4,12 @@ const expteSchema = new mongoose.Schema(
 	{
 		cliente: {
 			type: String,
-			// require: true,
+			require: true,
 		},
 		nroexpte: {
 			type: String,
 			require: true,
+			unique: true
 		},
 		radicacion: {
 			type: String,
@@ -42,9 +43,28 @@ const expteSchema = new mongoose.Schema(
 			ref: 'User',
 			require: true,
 		},
+
+		movimientos: [
+			{
+				fecha: {
+					type: Date,
+					require: true,
+				},
+				descripcion: {
+					type: String,
+					require: true,
+				},
+				adjunto: {
+					type: String,
+				},
+			},
+		], 
 	},
+
 	{
 		timestamps: true,
 	}
 );
+
 export default mongoose.model('Expte', expteSchema);
+

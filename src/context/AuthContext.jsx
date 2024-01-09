@@ -21,7 +21,6 @@ export const useAuth = () => {
 	return context;
 };
 
-// guarda el estado actual, si hay usuario logueado o no
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState('null');
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -71,7 +70,8 @@ export const AuthProvider = ({ children }) => {
 				icon: 'error',
 				title: 'Ingreso rechazado',
 				text: 'El usuario y/o contraseña no son correctos!',
-				confirmButtonColor: '#8f8e8b',
+				showConfirmButton: false,
+				timer: 111500,
 			});
 		}
 	};
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
 		if (errors.length > 0) {
 			const timer = setTimeout(() => {
 				setErrors([]);
-			}, 2000);
+			}, 1500);
 			return () => clearTimeout(timer);
 		}
 	}, [errors]);

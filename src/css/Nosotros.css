@@ -13,44 +13,45 @@
 }
 .tituloabout{
 	color:rgb(143, 142, 139);
-    font-size: 3vw;
-    margin-top: 3vw;
+    font-size: 6vw;
+    margin-top: 8vw;
     font-weight: 800;
 }
 .subtituloabout {
 	color:rgb(143, 142, 139);
-    font-size: 2vw;
+    font-size: 3.5vw;
     margin-top: 5vw;
     margin-bottom: 1vw;
     font-weight: 700;
 }
 .parrafoabout{
-    font-size: 1vw;
+    font-size: 2.5vw;
     color:rgb(143, 142, 139);
     font-weight: 600;
     text-align: justify;
-    margin-left: 15vw;
-    margin-right: 15vw;
+    margin-left: 12vw;
+    margin-top: 3vw;
+    margin-right: 12vw;
 }
 .cardabout{
     color:rgb(143, 142, 139);
     border: 0.2vw outset rgb(143, 142, 139);
     text-align: center;
-    margin-right:  20vw;
-    padding-top: 2vw;
-    margin-left: 20vw;
-    margin-bottom:1vw;
+    margin-right:  10vw;
+    padding-top:4vw;
+    margin-left: 10vw;
+    margin-bottom:4vw;
 }
 .cardtitleabout{
     color:rgb(143, 142, 139)!important;
-    font-size: 2vw!important;
+    font-size: 3vw!important;
     font-weight: 700!important;
-    margin-top: 1vw!important;
-    margin-bottom:1vw!important;
+    margin-top: 4vw!important;
+    margin-bottom: 2vw!important;
 }
 .contcard{
     color:rgb(143, 142, 139)!important;
-    font-size: 1vw;
+    font-size: 2vw;
     font-weight: 600;
     margin-left: 10vw;
     margin-right:10vw;
@@ -63,13 +64,12 @@
     flex-direction: row;
     align-items: center;
     align-content: center;
-
 }
 .tituloaboutteam{
     color:rgb(143, 142, 139);
-    font-size: 3vw;
+    font-size: 3.5vw;
     margin-top: 4vw;
-    margin-bottom:2vw ;
+    margin-bottom:4vw ;
     font-weight: 700;
     width: 100%;
     text-align: center;
@@ -78,16 +78,16 @@
     align-content: center;
     border: 0.2vw outset rgb(143, 142, 139);
     margin-top: 1vw;
-    
 }
 .our-team .team-image {
     position: relative;
     text-align: center;
     align-content: center;
 }
-.our-team-title {
-    font-size: 2vw;
-    padding-bottom: 5px;
+.titlenosotros {
+    font-size: 3vw;
+    color: rgb(143, 142, 139);
+    text-align: center;
 }
 .our-team img {
     background-size: contain;
@@ -95,7 +95,7 @@
 }
 .cardnosotros{
     margin-left:2vw;
-    height: 20vw!important;
+    width: 40%;
 }
 .our-team .description {
     width: 100%;

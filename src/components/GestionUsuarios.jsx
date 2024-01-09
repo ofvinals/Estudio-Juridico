@@ -22,7 +22,6 @@ export const GestionUsuarios = () => {
 	const [users, setUsers] = useState([]);
 	const [sorting, setSorting] = useState([]);
 	const [filtering, setFiltering] = useState('');
-	const [tablaUsers, setTablaUsers] = useState([]);
 
 	const columns = React.useMemo(
 		() => [
@@ -49,7 +48,7 @@ export const GestionUsuarios = () => {
 		],
 		[]
 	);
-
+// Trae usuarios de getUsers y guarda en data y users
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -93,23 +92,18 @@ export const GestionUsuarios = () => {
 				confirmButtonText: 'Sí, eliminar',
 				cancelButtonText: 'Cancelar',
 			});
-
 			if (result.isConfirmed) {
 				await deleteUser(id);
-				window.location.reload();
-				Swal.fire(
-					'Eliminado',
-					'El expediente fue eliminado con éxito',
-					'success'
-				);
+				Swal.fire({
+					icon: 'success',
+					title: 'Usuario eliminado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				setData((prevData) => prevData.filter((users) => users._id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el expediente:', error);
-			Swal.fire(
-				'Error',
-				'Hubo un problema al eliminar el expediente',
-				'error'
-			);
 		}
 	}
 

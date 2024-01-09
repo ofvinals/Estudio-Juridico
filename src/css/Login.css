@@ -16,18 +16,20 @@
 .titulolog{
     text-align: center;
     width: 100%;
-    font-size: 3vw;
-    margin-top:2vw;
-    margin-bottom: 2vw;
+    font-size: 5vw;
+    margin-top:5vw;
+    margin-bottom: 6vw;
     color: rgb(143, 142, 139);
     font-weight: 800;
 }
 .logform{
-    display: flex;
+    display: flex!important;
     flex-direction: column;
-    justify-content: center;
+    justify-content: center!important;
+    align-self: center;
+    align-content: center;
     align-items: center;
-    width: 45%;
+    width: 75%;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139);
     opacity: 0.85;
@@ -37,36 +39,36 @@
 .labellog{
     font-weight: 700;
     text-align: center;
+    width: 100%;
     background-color: rgb(36, 36, 36)!important;
     color:rgb(143, 142, 139);
-    font-size: 1.5vw;
+    font-size: 3vw;
 }
 .inputlog{
     align-items: center;
-    font-size: 1.5vw;
+    font-size: 3vw;
     align-self: center;
     width: 100%;
     margin-bottom: 1vw;
-    margin-top:1vw;
     border-radius: 5px;
     outline-color: rgb(143, 142, 139);
 }
-.botoneslogin{
+/* .botoneslogin{
     margin-bottom: 1vw;
     display: flex;
     flex-direction: column;
     align-items: center;
-}
+} */
 .input-submitlog{
     text-align: center;
-    font-size: 1vw!important;
+    font-size: 3vw!important;
     font-weight: 700;
-    margin-top: 1vw;
-    padding: 1vw;
+    margin-bottom: 3vw;
+    margin-top: 3vw;
     text-decoration: none;
 	background-color: rgb(10, 61, 4)!important;
     color: rgb(143, 142, 139)!important;
-    width: 50%;
+    width: 100%;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     cursor: pointer;
@@ -78,14 +80,12 @@
 }
 .input-googlelog{
     text-align: center;
-    font-size: 1vw!important;
-    font-weight: 700;
-    margin-top: 1vw;
-    padding: 1vw;
+    font-size: 2.5vw!important;
+    font-weight: 600;
     text-decoration: none;
 	background-color: rgb(9, 19, 92);
     color: rgb(143, 142, 139);
-    width: 100%;
+    width: 120%;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     cursor: pointer;
@@ -96,10 +96,10 @@
     background-color: transparent;
 }
 .parrafolog{
-    font-size: 1vw;
+    font-size: 2.5vw;
     color: rgb(143, 142, 139);
-    margin-top: 1vw;
-    font-weight: bold;
+    margin-top: 2vw;
+    font-weight: 700;
 }
 .parrafolog:hover{
     opacity:0.8;
@@ -116,8 +116,8 @@
     background-color: transparent;
 }
 .swal2-html-container {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1vw !important;
+    font-family: 'Poppins', sans-serif!important;
+    font-size: 3vw!important;
     color: rgb(143, 142, 139) !important;
 }
 .swal2-styled.swal2-confirm{
@@ -125,4 +125,7 @@
 }
 .swal2-styled.swal2-cancel{
     font-size: 1.5vw!important;
+}
+.swal2-title{
+    font-size: 5vw!important;
 }

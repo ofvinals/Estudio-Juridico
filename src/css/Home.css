@@ -1,6 +1,6 @@
 .imagennav {
 	position: relative;
-	height: 40vw;
+	height: 60vw;
 	background-image: linear-gradient(
 			120deg,
 			rgba(255, 255, 240, 0.02) 0.5%,
@@ -15,26 +15,27 @@
 	position: absolute;
 	top: 3vw;
 	left: 50vw;
-	font-size: 3vw;
+	font-size: 4vw;
 	color: var(--main-color) !important;
+
 }
 .parrafo2 {
 	position: absolute;
-	top: 16vw;
-	left: 8vw;
+	top: 30vw;
+	left: 5vw;
 	right: 0;
 	bottom: 0;
-	font-size: 4vw;
-	font-weight: 800;
+	font-size: 5vw;
+	font-weight: 700;
 	color: var(--main-color) !important;
 }
 .botonturno {
 	position: absolute;
-	top: 30vw;
-	left: 35vw;
-	right: 35vw;
+	top: 50vw;
+	left: 25vw;
+	right: 25vw;
 	padding: 1vw;
-	font-size: 1.5vw;
+	font-size: 2vw;
 	color: var(--main-color) !important;
 	border: 0.2vw outset var(--main-color) !important;
 	border-radius: 5px;
@@ -51,7 +52,7 @@
 /* Section 2 Carrousel */
 .imagencar1 {
 	position: relative;
-	height: 40vw;
+	height: 60vw;
 	margin-top:1vw;
 	background-image: linear-gradient(
 			60deg,
@@ -76,24 +77,24 @@
 .titlecar1 {
 	position:absolute;
 	color: var(--main-color) !important;
-	font-size: 4vw!important;
+	font-size: 6vw!important;
 	font-weight: 700;
-	top: -27vw;
+	top: -35vw;
 	left: 10vw;
-right:10vw
+   right:10vw
 }
 .listacar1 {
 	position:absolute;
-		color: var(--main-color) !important;
-	font-weight:700;
+	color: var(--main-color) !important;
 	font-size: 2vw;
-	top: -17vw;
+	font-weight:700;
+	top: -20vw;
 	right:10vw;
-	left:10vw
+	left:5vw
 }
 .imagencar2 {
 	position: relative;
-	height: 40vw;
+	height: 60vw;
 	margin-top:1vw;
 	filter: brightness(75%);
 	background-image: linear-gradient(
@@ -109,9 +110,9 @@ right:10vw
 .titlecar2 {
 	position:absolute;
 	color: var(--main-color) !important;
-	font-size: 4vw!important;
+	font-size: 5vw!important;
 	font-weight: 700;
-	top: -27vw;
+	top: -37vw;
 	left: 10vw;
 	right:10vw
 }
@@ -120,14 +121,14 @@ right:10vw
 	color: var(--main-color) !important;
 	font-size: 2vw;
 	font-weight:700;
-	top: -17vw;
+	top: -20vw;
 	right:10vw;
-	left:10vw
+	left:5vw
 }
 .imagencar3 {
 	position: relative;
 	color: var(--main-color) !important;
-	height: 40vw;
+	height: 60vw;
 	margin-top:1vw;
 	background-image: linear-gradient(
 			160deg,
@@ -142,26 +143,26 @@ right:10vw
 .titlecar3 {
 	position:absolute;
 	color: var(--main-color) !important;
-	font-size: 4vw!important;
+	font-size: 6vw!important;
 	font-weight: 700;
-	top: -27vw;
+	top: -40vw;
 	left: 10vw;
-right:10vw
+   right:10vw
 }
 .listacar3 {
 	position:absolute;
 	color: var(--main-color) !important;
 	font-size: 2vw;
 	font-weight:700;
-	top: -17vw;
+	top: -20vw;
 	right:10vw;
-	left:10vw
+	left:5vw
 }
 /* Section 4 Contactanos */
 .imagensection4 {
 	position: relative;
 	margin-top:1vw;
-	height: 40vw;
+	height: 60vw;
 	background-image: linear-gradient(
 			120deg,
 			rgba(255, 255, 240, 0.02) 0.5%,
@@ -175,19 +176,19 @@ right:10vw
 }
 .titlecontac {
 	position: absolute;
-	font-size: 4vw;
+	font-size: 6vw;
 	color: var(--main-color);
 	font-weight: 700;
-	top: 3vw;
-   left: 35vw;
-	right:35vw;
+	top: 5vw;
+   left: 25vw;
+	right:25vw;
 }
 .conttel{
 	position:absolute;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	top:12vw;
+	top:20vw;
 	left: 20vw;
 	right:20vw;
 }
@@ -196,7 +197,7 @@ right:10vw
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	top:17vw;
+	top:25vw;
 	left: 20vw;
 	right:20vw;
 }
@@ -205,12 +206,12 @@ right:10vw
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	top:22vw;
+	top:30vw;
 	left: 20vw;
 	right:20vw;
 }
 .textosec4{
-	font-size: 1.3vw;
+	font-size: 2vw;
 	color: var(--main-color)!important;
 }
 .icosec4 {
@@ -219,12 +220,12 @@ right:10vw
 }
 .botonturnoabajo {
 	position: absolute;
-	left: 35vw;
-	right: 35vw;
-	top: 30vw;
+	left: 20vw;
+	right: 20vw;
+	top: 50vw;
 	padding: 1vw;
 	text-decoration: none;
-	font-size: 1.5vw;
+	font-size: 2vw;
 	color: var(--main-color) !important;
 	text-align: center;
 	border: 0.2vw outset var(--main-color) !important;

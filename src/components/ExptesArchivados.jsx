@@ -17,9 +17,8 @@ import { useExptes } from '../context/ExptesContext';
 
 export const ExptesArchivados = () => {
 	const { user } = useAuth();
-	const { getExptes, deleteExpte, exptes } = useExptes();
+	const { getExptes, deleteExpte } = useExptes();
 	const navigate = useNavigate();
-	const [tablaExpte, setTablaExpte] = useState();
 	const [data, setData] = useState([]);
 	const [expte, setExpte] = useState([]);
 	const [sorting, setSorting] = useState([]);
@@ -95,20 +94,16 @@ export const ExptesArchivados = () => {
 
 			if (result.isConfirmed) {
 				await deleteExpte(id);
-				cargarTablaExpte(exptes);
-				Swal.fire(
-					'Eliminado',
-					'El expediente fue eliminado con éxito',
-					'success'
-				);
+				Swal.fire({
+					icon: 'success',
+					title: 'Expediente eliminado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
+				setData((prevData) => prevData.filter((expte) => expte._id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el expediente:', error);
-			Swal.fire(
-				'Error',
-				'Hubo un problema al eliminar el expediente',
-				'error'
-			);
 		}
 	}
 
@@ -213,7 +208,7 @@ export const ExptesArchivados = () => {
 												)}
 												<Link
 													className='btnvergestion'
-													to={`/movexptes/${expte._id}`}>
+													to={`/gestionmovimientos/${row.original._id}`}>
 													<i className='bi bi-search acciconogestion'></i>
 												</Link>
 											</div>

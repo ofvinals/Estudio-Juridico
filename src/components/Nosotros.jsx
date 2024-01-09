@@ -80,7 +80,7 @@ export const Nosotros = () => {
 							</p>
 						</div>
 						<div className='team-info'>
-							<h3 className='title'>Oscar Frias Viñals</h3>
+							<h3 className='titlenosotros'>Oscar Frias Viñals</h3>
 							<span className='post'>Abogado</span>
 						</div>
 					</div>
@@ -96,7 +96,7 @@ export const Nosotros = () => {
 							</p>
 						</div>
 						<div className='team-info'>
-							<h3 className='title'>Lucas Rodriguez</h3>
+							<h3 className='titlenosotros'>Jorge Posse Ponessa (h)</h3>
 							<span className='post'>Abogado</span>
 						</div>
 					</div>
@@ -113,7 +113,7 @@ export const Nosotros = () => {
 						</div>
 
 						<div className='team-info'>
-							<h3 className='title'>M. Soledad Lizarraga</h3>
+							<h3 className='titlenosotros'>M. Soledad Lizarraga</h3>
 							<span className='post'>Abogado Junior</span>
 						</div>
 					</div>
@@ -129,7 +129,7 @@ export const Nosotros = () => {
 						</div>
 
 						<div className='team-info'>
-							<h3 className='title'>Martin A. Soto </h3>
+							<h3 className='titlenosotros'>Martin A. Soto </h3>
 							<span className='post'>Abogado Junior</span>
 						</div>
 					</div>

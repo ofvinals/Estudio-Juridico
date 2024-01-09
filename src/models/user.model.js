@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 			unique: true,
+			lowercase: true,
 		},
 		password: {
 			type: String,
@@ -23,6 +24,7 @@ const userSchema = new mongoose.Schema(
 		dni: {
 			type: String,
 			required: true,
+			maxlength:  [10, 'El DNI/CUIT debe contener hasta 11 caracteres numericos (sin espacios ni guiones)']
 		},
 		domicilio: {
 			type: String,
@@ -31,6 +33,7 @@ const userSchema = new mongoose.Schema(
 		celular: {
 			type: String,
 			required: true,
+			maxlength:10
 		},
 	},
 	{

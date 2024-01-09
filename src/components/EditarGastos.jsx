@@ -1,10 +1,11 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
-import { Button, Modal } from 'react-bootstrap';
+import Swal from 'sweetalert2';
+import {  Modal } from 'react-bootstrap';
 import { useGastos } from '../context/GastosContext';
 import { useForm } from 'react-hook-form';
 import { useExptes } from '../context/ExptesContext';
@@ -64,6 +65,12 @@ export const EditarGastos = ({}) => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		await updateGasto(params.id, data);
+		Swal.fire({
+			icon: 'success',
+			title: 'Gasto editado correctamente',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		// Cierra el modal después de guardar los cambios
 		handleCloseModal();
 		navigate('/gestiongastos');
