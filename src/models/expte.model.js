@@ -47,7 +47,7 @@ const expteSchema = new mongoose.Schema(
 		movimientos: [
 			{
 				fecha: {
-					type: Date,
+					type: String,
 					require: true,
 				},
 				descripcion: {

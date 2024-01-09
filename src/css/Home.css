@@ -16,7 +16,7 @@
 	top: 3vw;
 	left: 50vw;
 	font-size: 4vw;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207);
 
 }
 .parrafo2 {
@@ -27,7 +27,7 @@
 	bottom: 0;
 	font-size: 5vw;
 	font-weight: 700;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 }
 .botonturno {
 	position: absolute;
@@ -36,7 +36,7 @@
 	right: 25vw;
 	padding: 1vw;
 	font-size: 2vw;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	border: 0.2vw outset var(--main-color) !important;
 	border-radius: 5px;
 	font-weight: 700;
@@ -76,7 +76,7 @@
 }
 .titlecar1 {
 	position:absolute;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	font-size: 6vw!important;
 	font-weight: 700;
 	top: -35vw;
@@ -85,7 +85,7 @@
 }
 .listacar1 {
 	position:absolute;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	font-size: 2vw;
 	font-weight:700;
 	top: -20vw;
@@ -109,7 +109,7 @@
 }
 .titlecar2 {
 	position:absolute;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	font-size: 5vw!important;
 	font-weight: 700;
 	top: -37vw;
@@ -118,7 +118,7 @@
 }
 .listacar2 {
 	position:absolute;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	font-size: 2vw;
 	font-weight:700;
 	top: -20vw;
@@ -127,7 +127,7 @@
 }
 .imagencar3 {
 	position: relative;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	height: 60vw;
 	margin-top:1vw;
 	background-image: linear-gradient(
@@ -142,7 +142,7 @@
 }
 .titlecar3 {
 	position:absolute;
-	color: var(--main-color) !important;
+	color:rgb(207,207,207) !important;
 	font-size: 6vw!important;
 	font-weight: 700;
 	top: -40vw;
@@ -151,7 +151,7 @@
 }
 .listacar3 {
 	position:absolute;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	font-size: 2vw;
 	font-weight:700;
 	top: -20vw;
@@ -177,7 +177,7 @@
 .titlecontac {
 	position: absolute;
 	font-size: 6vw;
-	color: var(--main-color);
+	color: rgb(207,207,207);
 	font-weight: 700;
 	top: 5vw;
    left: 25vw;
@@ -212,11 +212,11 @@
 }
 .textosec4{
 	font-size: 2vw;
-	color: var(--main-color)!important;
+	color: rgb(207,207,207)!important;
 }
 .icosec4 {
 	font-size: 1.5vw;
-	color: var(--main-color)!important;
+	color: rgb(207,207,207)!important;
 }
 .botonturnoabajo {
 	position: absolute;
@@ -226,7 +226,7 @@
 	padding: 1vw;
 	text-decoration: none;
 	font-size: 2vw;
-	color: var(--main-color) !important;
+	color: rgb(207,207,207) !important;
 	text-align: center;
 	border: 0.2vw outset var(--main-color) !important;
 	border-radius: 5px;

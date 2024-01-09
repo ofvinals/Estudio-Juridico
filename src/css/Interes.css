@@ -6,7 +6,7 @@
     justify-content: center;
     flex-direction: column;
     background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-    url(../01.jpg);
+    url(/01.jpg);
     background-size: cover;
     object-fit:cover;
     background-position: center;
@@ -15,14 +15,14 @@
 .titleint{
     font-size: 6vw;
     font-weight: 800;
-    color: rgb(143, 142, 139);
+    color: rgb(207,207,207);
     margin-top: 3vw;
     margin-bottom: 5vw;
 }
 .subtitleint{
     font-size: 3vw!important;
     font-weight: 700;
-    color: rgb(143, 142, 139)!important;
+    color: rgb(207,207,207)!important;
     text-align: center;
 }
 .articleint{
@@ -50,7 +50,7 @@
 .cardlink{
     font-weight: 600;
     text-decoration: none;
-    color: rgb(143, 142, 139);
+    color: rgb(207,207,207);
     font-size: 100%;
     border: 0.4vw outset rgb(143, 142, 139);
     padding: 1vw;

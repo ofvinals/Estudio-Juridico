@@ -15,8 +15,8 @@
 	font-weight: 700;
 	font-size: 2vw!important;
 	background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
-    width: 24vw;
+    color: rgb(207, 207, 207);
+    width: 30%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     display: flex;
@@ -38,30 +38,31 @@
     margin-top: 3vw;
     padding-top: 4vw;
     font-weight: 700;
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
 }
 .subtitlegestion{
     text-align: center;
     font-size: 3vw;
-    margin-top: 1vw;
+    margin-top: 3vw;
     font-weight: 700;
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
 }
 .datosexptes{
     text-align: start;
-    font-size: 2.5vw;
+    font-size: 2vw;
     margin-top: 3vw;
-    margin-left: 10vw;
+    margin-left: 15vw;
     margin-bottom: 2vw;
     font-weight: 600;
-    color: rgb(143, 142, 139);
+    width: 100%;
+    color: rgb(207, 207, 207);
 }
 .titletabla{
     text-align: center;
     font-size: 5vw;
     margin-top: 1vw;
     font-weight: 700;
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
 }
 .tablagestion{
     font-size: 2vw!important;
@@ -70,16 +71,17 @@
 }
 .search{
     display: flex!important;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
-    margin-bottom: 2vw;
-    padding-left: 2vw
+    margin-bottom: 3vw;
+    padding-left: 2vw;
+    font-size: 2vw;
 }
 .searchinput{
     align-items: center;
     font-size: 2vw;
     align-self: center;
-    margin-bottom: 3vw;
+    margin-bottom: 1vw;
     margin-left: 2vw;
     border-radius: 5px;
     outline-color: rgb(143, 142, 139);
@@ -88,7 +90,7 @@
     width: 20%!important;
 }
 .btneditgestion{
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     background-color:rgb(10, 61, 4);
     padding:1vw!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
@@ -97,7 +99,7 @@
     margin-right: 1vw;
 }
 .btnborragestion{
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     background-color: rgb(111, 8, 10);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
@@ -107,7 +109,7 @@
 
 }
 .btnvergestion{
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     background-color: rgb(21, 100, 160);
     border: 0.2vw outset rgb(143, 142, 139)!important;
     border-radius: 5px;
@@ -116,14 +118,14 @@
 }
 .acciconogestion{
     font-size: 100%;
-    color: rgb(143, 142, 139)!important;
+    color: rgb(207, 207, 207)!important;
     padding:0.5vw!important;
 }
 .btnvpaginagestion{
 	font-weight: 700;
 	font-size: 2vw!important;
 	background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     width: 20vw;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
@@ -153,27 +155,27 @@
 }
 .modal-header{
     background-color: rgb(27, 27, 27)!important;
-    color:rgb(143, 142, 139);
+    color:rgb(207, 207, 207);
 }
 .btn-close{
-    background-color: rgb(143, 142, 139)!important;
-    color:rgb(143, 142, 139);
+    background-color: rgb(207, 207, 207)!important;
+    color:rgb(207, 207, 207);
 }
 .modal-body{
     background-color: rgb(27, 27, 27)!important;
-    color:rgb(143, 142, 139);
+    color:rgb(207, 207, 207);
 }
 .modal-footer{
     background-color: rgb(27, 27, 27)!important;
-    color:rgb(143, 142, 139);
+    color:rgb(207, 207, 207);
 }
 .btnusumodal {
-	background-color:rgb(143, 142, 139) ;
+	background-color:rgb(207, 207, 207) ;
 	font-weight: 700;
 	font-size: 3vw;
 	margin-top: 1vw;
 	background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     width: 30%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
@@ -186,6 +188,6 @@
 	background-color: rgb(27, 27, 27);
 }
 .errors{
-    color:rgb(143, 142, 139)!important;
-    font-size: 1.5vw;
+    color:rgb(207, 207, 207)!important;
+    font-size: 2vw;
 }

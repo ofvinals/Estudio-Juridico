@@ -129,7 +129,7 @@ color: rgb(143, 142, 139)!important;
     justify-content: center;
     flex-direction: column;
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
-		url(../public/01.jpg);
+		url(/01.jpg);
 	background-size: cover;
 	background-position: center;
 	object-fit: cover;

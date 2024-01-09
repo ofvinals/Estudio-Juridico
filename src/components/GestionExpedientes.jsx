@@ -166,7 +166,7 @@ export const GestionExpedientes = () => {
 							striped
 							hover
 							variant='dark'
-							className='tablagestion table border border-secondary-subtle'>
+							className='tablagestion table table-responsive border border-secondary-subtle'>
 							<thead>
 								{table.getHeaderGroups().map((headerGroup) => (
 									<tr key={headerGroup.id}>

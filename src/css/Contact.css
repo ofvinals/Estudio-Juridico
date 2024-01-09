@@ -1,6 +1,6 @@
 .bodycontact {
 	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
-		url(../01.jpg);
+		url(/01.jpg);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -11,13 +11,13 @@
    padding-bottom: 8vw;
 }
 .titulocont {
-	color:rgb(143, 142, 139);
+	color:rgb(207,207,207);
    font-size: 6vw;
 	font-weight: 800;
 	padding-top: 5vw;
 }
 .Parrafo2 {
-	color: rgb(143, 142, 139);
+	color: rgb(207,207,207);
    font-size: 3vw;
 	font-weight: 700;
 	padding: 2vw;
@@ -38,7 +38,7 @@
 .labelcontact{
    font-weight: 600;
 	text-align: center;
-   color:rgb(143, 142, 139);
+   color:rgb(207,207,207);
    font-size: 3vw;
 	margin-left:1vw!important;
 	margin-right: 30vw;
@@ -58,7 +58,7 @@
 	margin-top: 3vw!important;
 	margin-bottom: 2vw!important;
 	background-color: rgb(28, 28, 28);
-   color: rgb(143, 142, 139);
+   color: rgb(207,207,207);
    width: 100%;
    border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;

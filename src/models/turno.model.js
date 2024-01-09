@@ -4,7 +4,7 @@ import { date } from 'zod';
 const turnoSchema = new mongoose.Schema(
 	{
 		turno: {
-			type: Date,
+			type: String,
 			required: true,
 			unique:true,
 		},

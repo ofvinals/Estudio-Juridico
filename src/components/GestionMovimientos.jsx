@@ -181,8 +181,9 @@ export const GestionMovimientos = () => {
 					<hr className='linea mx-3' />
 
 					<div>
-						<div>
-							<h2 className='titletabla'>Datos del Expediente</h2>
+					<h2 className='titletabla'>Datos del Expediente</h2>
+
+						<div className=''>
 							<p className='datosexptes'>Nro Expte: {expte.nroexpte}</p>
 							<p className='datosexptes'>Caratula: {expte.caratula}</p>
 							<p className='datosexptes'>Fuero: {expte.radicacion}</p>

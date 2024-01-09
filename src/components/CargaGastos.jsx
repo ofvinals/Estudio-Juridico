@@ -96,6 +96,17 @@ export const CargaGastos = () => {
 								</select>
 							</Form.Group>
 
+							<Form.Group
+								className='mb-3 grupocaratula'
+								controlId='inputcaratula'>
+								<Form.Label className='labelcarga'>Caratula</Form.Label>
+								<Form.Control
+									className='labelcarcaratula'
+									type='text'
+									{...register('caratula')}
+								/>
+							</Form.Group>
+
 							<Form.Group className='mb-3' controlId='inputconcepto'>
 								<Form.Label className='labelcarga'>Concepto</Form.Label>
 								<select
@@ -124,7 +135,7 @@ export const CargaGastos = () => {
 								</select>
 							</Form.Group>
 
-							<Form.Group className='mb-3' controlId='inputmonto'>
+							<Form.Group className='' controlId='inputmonto'>
 								<Form.Label className='labelcarga'>Monto</Form.Label>
 								<Form.Control
 									className='inputcarga'
@@ -158,20 +169,6 @@ export const CargaGastos = () => {
 									<option value='Cancelado'>Cancelado</option>
 								</select>
 							</Form.Group>
-
-							{/* <Form.Group
-						className='mb-3 grupocaratula'
-						controlId='inputcaratula'>
-						<Form.Label className='labelcarga'>Caratula</Form.Label>
-						<Form.Control
-							className='labelcarcaratula'
-							type='text'
-							name='caratula'
-							defaultValue={exptes.caratula}
-							{...register('caratula')}
-							readOnly
-						/>
-					</Form.Group> */}
 
 							<Form.Group
 								className='mb-3 botonescarga'

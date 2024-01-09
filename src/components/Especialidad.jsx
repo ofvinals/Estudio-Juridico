@@ -62,7 +62,7 @@ export const Especialidad = () => {
 			<Container>
 				<Row>
 					<CardGroup className='d-flex flex-wrap flex-row justify-content-around'>
-						<Col xs={5} md={3}>
+						<Col xs={8} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -83,7 +83,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={5} md={3}>
+						<Col xs={8} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -104,7 +104,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={5} md={3}>
+						<Col xs={8} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -124,7 +124,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={5} md={3}>
+						<Col xs={8} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -144,7 +144,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={5} md={3}>
+						<Col xs={8} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -165,7 +165,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={5} md={3}>
+						<Col xs={7} md={3}>
 							<Card className='cardbody'>
 								<div className='y'>
 									<Card.Title className='titlecard'>

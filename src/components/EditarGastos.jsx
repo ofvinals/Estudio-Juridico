@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
-import {  Modal } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import { useGastos } from '../context/GastosContext';
 import { useForm } from 'react-hook-form';
 import { useExptes } from '../context/ExptesContext';
@@ -105,6 +105,17 @@ export const EditarGastos = ({}) => {
 								</select>
 							</Form.Group>
 
+							<Form.Group
+								className='mb-3 grupocaratula'
+								controlId='inputcaratula'>
+								<Form.Label className='labelcarga'>Caratula</Form.Label>
+								<Form.Control
+									className='labelcarcaratula'
+									type='text'
+									{...register('caratula')}
+								/>
+							</Form.Group>
+
 							<Form.Group className='mb-3' controlId='inputconcepto'>
 								<Form.Label className='labeledit'>Concepto</Form.Label>
 								<select
@@ -133,23 +144,12 @@ export const EditarGastos = ({}) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group className='mb-3' controlId='inputmonto'>
+							<Form.Group className='' controlId='inputmonto'>
 								<Form.Label className='labeledit'>Monto</Form.Label>
 								<Form.Control
 									className='inputedit'
 									type='number'
 									{...register('monto')}
-								/>
-							</Form.Group>
-
-							<Form.Group className='' controlId='inputcel'>
-								<Form.Label className='labeledit'>
-									Comprobante de gasto
-								</Form.Label>
-								<Form.Control
-									className='inputedit'
-									type='text'
-									{...register('comprobante')}
 								/>
 							</Form.Group>
 
@@ -168,16 +168,16 @@ export const EditarGastos = ({}) => {
 								</select>
 							</Form.Group>
 
-							{/* <Form.Group
-						className='mb-3 grupocaratula'
-						controlId='inputcaratula'>
-						<Form.Label className='labelcarga'>Caratula</Form.Label>
-						<Form.Control
-							className='labelcarcaratula'
-							type='text'
-							{...register('caratula')}
-						/>
-					</Form.Group> */}
+							<Form.Group className='' controlId='inputcel'>
+								<Form.Label className='labeledit'>
+									Comprobante de gasto
+								</Form.Label>
+								<Form.Control
+									className='inputedit'
+									type='text'
+									{...register('comprobante')}
+								/>
+							</Form.Group>
 
 							<Form.Group className='botonesedit'>
 								<button className='btnconfmodal' type='submit'>

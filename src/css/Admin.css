@@ -3,12 +3,12 @@
     margin-bottom: 5vw;
     font-size: 5vw;
     font-weight: 800;
-    color:var(--main-color)
+    color:rgb(207,207,207)
 }
 .subtitleadusu{ 
     font-size: 3vw;
     font-weight: 600;
-    color: rgb(143, 142, 139);
+    color: rgb(207,207,207);
 }
 .main {
 	display: flex;
@@ -24,13 +24,15 @@ justify-content: space-around;
 
 }
 .botonadm{
-    margin-right: 3vw;
+    margin-right: 3vw!important;
+    margin-left: 3vw!important;
     margin-bottom: 3vw;
+    margin-top: 3vw;
     font-weight: 700;
-    padding: 0.5vw!important;
+    padding: 1vw!important;
 	background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
-    width: 35%;
+    color: rgb(207,207,207);
+    width: 40%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     display: flex;
@@ -40,7 +42,7 @@ justify-content: space-around;
 	text-align: center;
     text-decoration: none;
     align-self: center;
-    font-size:2vw;
+    font-size:2.5vw;
 }
 .botonadm:hover{
     opacity:0.8;
@@ -49,12 +51,14 @@ justify-content: space-around;
 }
 .botonlogout{
     margin-right: 3vw;
+    margin-left: 3vw;
     margin-bottom: 3vw;
+    margin-top: 3vw;
     font-weight: 700;
-    padding: 0.5vw!important;
+    padding: 1vw!important;
 	background-color: rgb(60, 5, 5)!important;
-    color: rgb(143, 142, 139);
-    width: 25%;
+    color: rgb(207,207,207);
+    width: 30%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     display: flex;
@@ -64,7 +68,7 @@ justify-content: space-around;
 	text-align: center;
     text-decoration: none;
     align-self: center;
-    font-size:1.2vw;
+    font-size:2.5vw;
 }
 .botonlogout:hover{
     opacity:0.8;

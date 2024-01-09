@@ -31,7 +31,7 @@
    width: 100%!important;
    margin-right: 2vw!important;
    background-color:transparent!important;
-   color:rgb(143, 142, 139);
+   color:rgb(207, 207, 207);
    font-size: 3vw!important;
 }
 .inputcarga{
@@ -56,9 +56,10 @@
    width: 100%!important;
    margin-left:1vw;
    margin-right: 1vw;
-   margin-bottom: 1vw;
+
+
    background-color: rgb(36, 36, 36)!important;
-   color:rgb(143, 142, 139)!important;
+   color:rgb(207, 207, 207)!important;
    font-size: 2vw;
 }
 
@@ -74,7 +75,7 @@
 }
 .botoneditcarga{
    font-size: 3vw!important;
-   font-weight: 700;
+   font-weight: 600;
    margin-top: 3vw;
    margin-right: 3vw;
    margin-left: 3vw;
@@ -82,7 +83,7 @@
    align-items: center;
    justify-content: center;
    background-color: rgb(10, 61, 4)!important;
-   color: rgb(143, 142, 139);
+   color: rgb(207, 207, 207);
    width: 47%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
@@ -96,13 +97,13 @@
 }
 .btncanccarga{
    font-size: 3vw!important;
-   font-weight: 700;
+   font-weight: 600;
    margin-top: 3vw;
    margin-right: 3vw;
    margin-left: 3vw;
    background-color: rgb(111, 8, 10)!important;
-   color: rgb(143, 142, 139);
-   width: 25%!important;
+   color: rgb(207, 207, 207);
+   width: 35%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    display: flex;

@@ -34,7 +34,7 @@ export const Registro = () => {
 				onSubmit={onSubmit}>
 				<h2 className='login-tituloreg'>Crear Nueva Cuenta</h2>
 
-				<Form.Group className='mb-3' controlId='inputname'>
+				<Form.Group className='mb-3' id='inputname'>
 					<Form.Label className='labelreg'>Nombre/s</Form.Label>
 					<Form.Control
 						className='inputreg'
@@ -44,7 +44,7 @@ export const Registro = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='mb-3' controlId='inputsubname'>
+				<Form.Group className='mb-3' id='inputsubname'>
 					<Form.Label className='labelreg'>Apellido/s</Form.Label>
 					<Form.Control
 						className='inputreg'
@@ -54,7 +54,7 @@ export const Registro = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='mb-3' controlId='inputdni'>
+				<Form.Group className='mb-3' id='inputdni'>
 					<Form.Label className='labelreg'>DNI/CUIT/CUIL</Form.Label>
 					<Form.Control
 						className='inputreg'
@@ -64,7 +64,7 @@ export const Registro = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='mb-3' controlId='inputdomic'>
+				<Form.Group className='mb-3' id='inputdomic'>
 					<Form.Label className='labelreg'>Domicilio</Form.Label>
 					<Form.Control
 						className='inputreg'
@@ -74,7 +74,7 @@ export const Registro = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='mb-3' controlId='inputcel'>
+				<Form.Group className='mb-3' id='inputcel'>
 					<Form.Label className='labelreg'>Celular</Form.Label>
 					<Form.Control
 						className='inputreg'
@@ -84,7 +84,7 @@ export const Registro = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='mb-3' controlId='inputemail'>
+				<Form.Group className='mb-3' id='inputemail'>
 					<Form.Label className='labelreg'>Email</Form.Label>
 					<Form.Control
 						className='inputreg'
@@ -105,10 +105,10 @@ export const Registro = () => {
 				</Form.Group>
 
 				<Form.Group className='mb-3'>
-					<Form.Label className='labelreg' controlid='inputconfirm'>
+					<Form.Label className='labelreg' id='inputconfirm'>
 						Confirmar Contraseña
 					</Form.Label>
-					<Form.Control className='inputreg' type='password' controlId='confirm'/>
+					<Form.Control className='inputreg' type='password' id='confirm'/>
 				</Form.Group>
 
 				<Form.Group className='mb-3 botonesreg'>

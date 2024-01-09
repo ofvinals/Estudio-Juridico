@@ -289,20 +289,20 @@ export const GestionGastos = () => {
 			{/* Modal para ver gasto seleccionado */}
 			<Modal show={showVerGasto} onHide={() => setShowVerGasto(false)}>
 				<Modal.Header closeButton>
-					<Modal.Title>Ver Gasto seleccionado</Modal.Title>
+					<Modal.Title className='text-white'>Ver Gasto seleccionado</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3 text-white' controlId=''>
 							<Form.Label>Nro Expte: {gasto.nroexpte}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3 text-white' controlId=''>
 							<Form.Label>Concepto: {gasto.concepto}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3 text-white' controlId=''>
 							<Form.Label>Monto: $ {gasto.monto}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3 text-white' controlId=''>
 							<Form.Label>
 								Comprobante Adjuntos: {gasto.comprobante}
 							</Form.Label>

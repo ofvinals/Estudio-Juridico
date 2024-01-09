@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const cajaSchema = new mongoose.Schema(
 	{
 		fecha: {
-			type: Date,
+			type: String,
 			require: true,
 		},
 		concepto: {

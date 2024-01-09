@@ -101,18 +101,14 @@ export const Header = () => {
 								<p className='estadolog'>
 									Estas logueado como: {estadoLogin}
 								</p>
-								<a className='me-4 text-decoration-none' type='button' href='/login'>
-									<button disabled={!!user} className='botonnavlog'>
+									<Link to='/login' disabled={!!user} className='botonnavlog'>
 										<i className='iconavbar bi bi-box-arrow-in-right'></i>
 										Inicia sesion
-									</button>
-								</a>
-								<a className='text-decoration-none' type='button' href='/registro'>
-									<button disabled={!!user} className='botonnavreg'>
+									</Link>
+								<Link to='/registro' disabled={!!user} className='botonnavreg'>
 										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme
-									</button>
-								</a>
+									</Link>
 							</div>
 						</Nav>
 					</Navbar.Collapse>

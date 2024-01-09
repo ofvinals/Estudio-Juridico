@@ -20,31 +20,30 @@
     align-items: center;
     text-align: center;
     margin-bottom: 2.5vw;
-
     border: 0.2vw outset rgb(143, 142, 139)!important;    
     box-shadow: 5px 5px 5px rgb(143, 142, 139);
-    color:rgb(143, 142, 139)!important;
+    color:rgb(207,207,207)!important;
     background-color: black!important;
     opacity: 0.7;
 }
 .titlees{
     font-size: 6vw!important;
     font-weight: 800;
-    color: rgb(143, 142, 139);
+    color: rgb(207,207,207);
     text-align: center;
     margin-top: 3vw!important;
     margin-bottom: 5vw!important;
 }
 .titlecard{
-    font-size: 3vw!important;
-    font-weight: 600;
-    color: rgb(143, 142, 139);
+    font-size: 3.2vw!important;
+    font-weight: 700!important;
+    color: rgb(207,207,207);
     text-align: center;
     margin-top:3vw!important;
-    margin-bottom:4vw!important;    
+    margin-bottom:2vw!important;    
 }
 .listado{
-    font-size: 2vw!important;
+    font-size: 2.2vw!important;
     margin-left: 2vw!important;
     margin-right: 2vw!important;
 }
@@ -52,7 +51,7 @@
     font-weight: 600;   
     text-decoration: none;
     background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
+    color: rgb(207,207,207);
     font-size: 2vw;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139)!important;

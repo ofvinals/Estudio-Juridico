@@ -16,7 +16,7 @@
    margin-top: 2vw;
    margin-bottom: 2vw;
    font-size: 3%;
-   color: rgb(143, 142, 139);
+   color: rgb(207, 207, 207);
 }
 .formedit{
    display: flex!important;
@@ -25,14 +25,16 @@
    align-items: center;
    justify-content: space-around!important;
    opacity: 0.85;
+   color:rgb(207, 207, 207);
 }
 .labeledit{
    font-weight: 700;
    width: 100%;
    text-align: center;
+   margin-top: 3vw;
    margin-bottom: 1vw;
    background-color:transparent!important;
-   color:rgb(143, 142, 139);
+   color:rgb(207, 207, 207);
    font-size: 3vw!important;
 }
 .labeleditturno{
@@ -41,11 +43,11 @@
    text-align: center;
    margin-bottom: 1vw;
    background-color: rgb(36, 36, 36)!important;
-   color:rgb(143, 142, 139);
+   color:rgb(207, 207, 207);
    font-size: 1vw!important;
 }
 .inputeditturno{
-   color: rgb(143, 142, 139);
+   color: rgb(207, 207, 207);
    width: 100%!important;
    margin-bottom: 1vw;
    border-radius: 5px;
@@ -60,7 +62,7 @@
    margin-right: 2vw!important;
    margin-bottom: 1vw;
    border-radius: 5px;
-   outline-color: rgb(143, 142, 139);
+   outline-color: rgb(207, 207, 207);
    font-size: 3vw!important;
    padding:0.4vw!important;
 }
@@ -79,8 +81,8 @@
    margin-right: 3vw;
    margin-left: 3vw;
    background-color: rgb(10, 61, 4)!important;
-   color: rgb(143, 142, 139);
-   width: 40%!important;
+   color: rgb(207, 207, 207);
+   width: 45%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
@@ -98,8 +100,8 @@
    margin-right: 3vw;
    margin-left: 3vw;
    background-color: rgb(111, 8, 10)!important;
-   color: rgb(143, 142, 139);
-   width: 25%!important;
+   color: rgb(207, 207, 207);
+   width: 35%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
@@ -124,37 +126,37 @@
    text-align: center;
 }
 .btnconfmodal{
-   font-size: 1vw!important;
+   font-size: 2.5vw!important;
    font-weight: 700;
-   margin-top: 1vw;
+   margin-top: 3vw;
    margin-bottom: 1vw;
    margin-right:2vw!important;
    background-color: rgb(10, 61, 4)!important;
-   color: rgb(143, 142, 139);
-   width: 22%!important;
+   color: rgb(207, 207, 207);
+   width: 40%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    cursor: pointer;
-   padding:0.3vw!important;
+   padding:1vw!important;
 }
 .btncancmodal{
-   font-size: 2vw!important;
+   font-size: 2.5vw!important;
    font-weight: 700;
-   margin-top: 1vw;
+   margin-top: 3vw;
    margin-bottom: 1vw;
    background-color: rgb(111, 8, 10)!important;
-   color: rgb(143, 142, 139);
-   width: 17%!important;
+   color: rgb(207, 207, 207);
+   width: 35%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    cursor: pointer;
-   padding:0.3vw!important;
+   padding:1vw!important;
    text-decoration: none;
    text-align: center;
 }

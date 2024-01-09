@@ -114,7 +114,7 @@ export const EditarExptes = ({}) => {
 							className='formedit'
 							onSubmit={onSubmit}>
 
-							<Form.Group className='formcargaexp' controlId='inputname'>
+							<Form.Group className='formcargaexp' Id='inputname'>
 								<Form.Label className='labeledit'>Cliente</Form.Label>
 								<select
 									className='inputedit'
@@ -129,7 +129,7 @@ export const EditarExptes = ({}) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group controlId='inputname'>
+							<Form.Group Id='inputname'>
 								<Form.Label className='labeledit'>
 									Nro Expediente
 								</Form.Label>
@@ -140,7 +140,18 @@ export const EditarExptes = ({}) => {
 								/>
 							</Form.Group>
 
-							<Form.Group controlId='inputsubname'>
+							<Form.Group
+								className='mb-3 grupocaratula'
+								Id='inputcaratula'>
+								<Form.Label className='labeledit'>Caratula</Form.Label>
+								<Form.Control
+									className='labelcarcaratula'
+									type='text'
+									{...register('caratula')}
+								/>
+							</Form.Group>
+
+							<Form.Group Id='inputsubname'>
 								<Form.Label className='labeledit'>
 									Fuero de Radicacion
 								</Form.Label>

@@ -13,9 +13,9 @@ export const Nosotros = () => {
 				<p className='parrafoabout lh-lg'>
 					Fundado en ..... por ....., desde entonces nos hemos consolidado
 					como un destacado estudio jurídico en Tucumán y todo el Noroeste
-					Argentino. Con más de 50 años de experiencia y una trayectoria
+					Argentino. Con más de 35 años de experiencia y una trayectoria
 					sólida, nos hemos dedicado a brindar servicios legales de calidad
-					y a establecer relaciones duraderas con nuestros clientes.-{' '}
+					y a establecer relaciones solidas y duraderas con nuestros clientes.-{' '}
 					<br /> Nuestro compromiso es brindar un servicio legal confiable,
 					ético y orientado a obtener resultados positivos. Basados en la
 					excelencia, la integridad y la atención personalizada. Trabajamos

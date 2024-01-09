@@ -12,21 +12,21 @@
     background-position: center;
 }
 .tituloabout{
-	color:rgb(143, 142, 139);
+	color:rgb(207,207,207);
     font-size: 6vw;
     margin-top: 8vw;
     font-weight: 800;
 }
 .subtituloabout {
-	color:rgb(143, 142, 139);
-    font-size: 3.5vw;
+	color:rgb(207,207,207);
+    font-size: 5vw;
     margin-top: 5vw;
     margin-bottom: 1vw;
     font-weight: 700;
 }
 .parrafoabout{
     font-size: 2.5vw;
-    color:rgb(143, 142, 139);
+    color:rgb(207,207,207);
     font-weight: 600;
     text-align: justify;
     margin-left: 12vw;
@@ -34,7 +34,7 @@
     margin-right: 12vw;
 }
 .cardabout{
-    color:rgb(143, 142, 139);
+    color:rgb(207,207,207);
     border: 0.2vw outset rgb(143, 142, 139);
     text-align: center;
     margin-right:  10vw;
@@ -43,15 +43,15 @@
     margin-bottom:4vw;
 }
 .cardtitleabout{
-    color:rgb(143, 142, 139)!important;
-    font-size: 3vw!important;
+    color:rgb(207,207,207)!important;
+    font-size: 4vw!important;
     font-weight: 700!important;
     margin-top: 4vw!important;
     margin-bottom: 2vw!important;
 }
 .contcard{
-    color:rgb(143, 142, 139)!important;
-    font-size: 2vw;
+    color:rgb(207,207,207)!important;
+    font-size: 2.5vw;
     font-weight: 600;
     margin-left: 10vw;
     margin-right:10vw;
@@ -66,8 +66,8 @@
     align-content: center;
 }
 .tituloaboutteam{
-    color:rgb(143, 142, 139);
-    font-size: 3.5vw;
+    color:rgb(207,207,207);
+    font-size: 6vw;
     margin-top: 4vw;
     margin-bottom:4vw ;
     font-weight: 700;
@@ -86,7 +86,7 @@
 }
 .titlenosotros {
     font-size: 3vw;
-    color: rgb(143, 142, 139);
+    color: rgb(207,207,207);
     text-align: center;
 }
 .our-team img {
@@ -104,7 +104,7 @@
     top: 0;
     left: 0;
     font-size: 1vw;
-    color: #fff;
+    color: rgb(207,207,207);
     line-height: 30px;
     padding: 30px 30px;
     opacity: 0;
@@ -119,7 +119,7 @@
 }
 .our-team .title {
     font-size: 2vw;
-    color:  rgb(143, 142, 139);
+    color:  rgb(207,207,207);
     letter-spacing: 4px;
     margin: 0 0 15px 0;
     transition: all 0.5s ease 0s;
@@ -129,7 +129,7 @@
 .our-team .post {
     display: block;
     font-size: 1vw;
-    color:  rgb(143, 142, 139);
+    color:  rgb(207,207,207);
     text-transform: capitalize;
     text-align: center;
 }
