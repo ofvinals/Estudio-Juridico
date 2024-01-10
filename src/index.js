@@ -35,7 +35,7 @@ app.use(
 		origin: [
 			`http://localhost:5173`,
 			`http://localhost:5174`,
-			'https://flourishing-tanuki-55bdc2.netlify.app',
+			'https://main--venerable-bienenstitch-79d388.netlify.app',
 		],
 		credentials: true,
 		optionsSuccessStatus: 200,
