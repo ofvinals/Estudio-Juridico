@@ -5,7 +5,7 @@
     display: flex!important;
     flex-direction: row!important;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     background-color: rgb(207, 207, 207)!important;
     color:rgb(27,27,27);
@@ -40,13 +40,13 @@
 }
 .btnnav {
 	font-weight: 700;
-	font-size: 3.5vw;
+	font-size: 4.5vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
     margin-right: 3vw;
 	background-color: rgb(28, 28, 28);
     color:rgb(207,207,207);
-    width: 40%!important;
+    width: 65%!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     padding-top: 1vw!important;
@@ -64,20 +64,20 @@
 	background-color: transparent;
 }
 .iconavbar{
-    font-size: 3.5vw!important;
+    font-size: 4.5vw!important;
     padding-right: 2vw;
     padding-left: 2vw;
-
+    color:rgb(207,207,207)
 }
 .botonnavlog {
 	font-weight: 600;
-	font-size: 3.5vw;
+	font-size: 4.5vw;
 	margin-top: 1vw;
 	margin-bottom: 1vw;
 	margin-right: 3vw!important;
 	background-color: rgb(10, 61, 4)!important;
     color: rgb(207,207,207);
-    width: 35%;
+    width: 50%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     display: flex;
@@ -97,7 +97,7 @@
 }
 .botonnavlog:disabled{
     background-color: rgb(10, 61, 4);
-    opacity:0.3;
+    opacity:4.3;
     background-color: transparent;
     text-decoration: none;
 }
@@ -108,7 +108,7 @@
 	margin-bottom: 1vw;
 	background-color: rgb(81, 74, 7);
     color: rgb(207,207,207);
-    width: 35%!important;
+    width: 45%!important;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     display: flex;

@@ -19,6 +19,7 @@ export const CargaGastos = () => {
 	const [exptes, setExptes] = useState([]);
 	const [gastos, setGastos] = useState([]);
 	const [showModal, setShowModal] = useState(true);
+	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
 
 	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
@@ -54,16 +55,49 @@ export const CargaGastos = () => {
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
-		createGasto(values);
-		Swal.fire({
-			icon: 'success',
-			title: 'Gasto registrado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		handleCloseModal();
-		navigate('/gestiongastos');
+		console.log(values);
+		try {
+			const caratulaToSend = selectedExpteCaratula;
+
+			// Actualiza el gasto de manera asíncrona
+			await createGasto({ ...values, caratula: caratulaToSend });
+
+			// Muestra un mensaje de éxito
+			Swal.fire({
+				icon: 'success',
+				title: 'Gasto registrado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+
+			// Cierra el modal y navega a la página de gestión de gastos
+			handleCloseModal();
+			navigate('/gestiongastos');
+		} catch (error) {
+			console.error('Error al crear el gasto', error);
+			// Puedes agregar manejo de errores aquí si es necesario
+		}
 	});
+
+	// Función para manejar el cambio en el select de número de expediente
+	const handleExpteSelectChange = async (e) => {
+		const selectedExpteNro = e.target.value;
+		console.log(selectedExpteNro);
+
+		const selectedExpte = exptes.find(
+			(expte) => expte.nroexpte === selectedExpteNro
+		);
+		console.log(selectedExpte);
+
+		// Obtén la carátula del expediente seleccionado
+		const caratulaToUpdate = selectedExpte ? selectedExpte.caratula : '';
+
+		// Actualiza la carátula de manera asíncrona
+		await setSelectedExpteCaratula(caratulaToUpdate);
+
+		// Continúa con otras operaciones después de asegurarte de que la carátula está actualizada
+		console.log(selectedExpteCaratula);
+	};
 
 	return (
 		<>
@@ -75,10 +109,7 @@ export const CargaGastos = () => {
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<Form
-							className='Formcarga'
-							onSubmit={onSubmit}>
-
+						<Form className='Formcarga' onSubmit={onSubmit}>
 							<Form.Group className='mb-3' controlId='inputname'>
 								<Form.Label className='labelcarga'>
 									Expediente
@@ -86,7 +117,8 @@ export const CargaGastos = () => {
 								<select
 									className='inputcarga'
 									aria-label='Default select'
-									{...register('nroexpte')}>
+									{...register('nroexpte')}
+									onChange={handleExpteSelectChange}>
 									<option>Selecciona..</option>
 									{exptes.map((expte) => (
 										<option key={expte._id} value={expte.nroexpte}>
@@ -103,6 +135,7 @@ export const CargaGastos = () => {
 								<Form.Control
 									className='labelcarcaratula'
 									type='text'
+									value={selectedExpteCaratula}
 									{...register('caratula')}
 								/>
 							</Form.Group>
@@ -150,7 +183,7 @@ export const CargaGastos = () => {
 								</Form.Label>
 								<Form.Control
 									className='inputcarga'
-									type='text'
+									type='file'
 									{...register('comprobante')}
 								/>
 							</Form.Group>

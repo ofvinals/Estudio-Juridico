@@ -6,12 +6,18 @@ import '../css/Home.css';
 export const Home = () => {
 	return (
 		<div className='bg-dark container-fluid'>
+			<a
+				href='https://api.whatsapp.com/send?phone=+543814581382&text=Hola!%20Quiero%20consultar%20por%20servicios%20de%20asesoramiento%20legal.%20'
+				className='float'
+				target='_blank'>
+				<i className='fa fa-whatsapp my-float'></i>
+			</a>
 			<div className='imagennav'>
 				<p className='parrafo1'>
 					Evolucionamos el concepto de estudio juridico
 				</p>
 				<p className='parrafo2'>
-					SOMOS EL PRIMER ESTUDIO JURIDICO ONLINE DE TUCUMAN
+					PRIMER ESTUDIO JURIDICO ONLINE DE TUCUMAN
 				</p>
 				<Link className=' botonturno' to='/login'>
 					<i className='icosec4 bi bi-calendar-check me-2'></i>
@@ -81,11 +87,12 @@ export const Home = () => {
 						</Carousel.Caption>
 					</div>
 				</Carousel.Item>
+
 				<Carousel.Item>
 					<div className='imagencar2'>
 						<Carousel.Caption>
 							<h3 className='titlecar2'>Asesoramiento para empresas</h3>
-							<ul className='listacar3'>
+							<ul className='listacar2'>
 								<li>
 									Asesoramiento empresario, laboral, civil,
 									administrativo

@@ -19,6 +19,7 @@ export const EditarGastos = ({}) => {
 	const { getGasto, updateGasto } = useGastos();
 	const { getExptes } = useExptes();
 	const [showModal, setShowModal] = useState(false);
+	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
 
 	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
@@ -35,7 +36,15 @@ export const EditarGastos = ({}) => {
 			try {
 				if (params.id) {
 					const gasto = await getGasto(params.id);
+					const selectedExpte = exptes.find(
+						(expte) => expte.nroexpte === gasto.nroexpte
+					);
+
+					setSelectedExpteCaratula(
+						selectedExpte ? selectedExpte.caratula : ''
+					);
 					setValue('nroexpte', gasto.nroexpte);
+					setValue('caratula', selectedExpteCaratula);
 					setValue('concepto', gasto.concepto);
 					setValue('comprobante', gasto.comprobante);
 					setValue('monto', gasto.monto);
@@ -48,7 +57,7 @@ export const EditarGastos = ({}) => {
 			}
 		}
 		loadGasto();
-	}, []);
+	}, [selectedExpteCaratula]);
 
 	useEffect(() => {
 		const fetchData = async () => {
@@ -64,6 +73,7 @@ export const EditarGastos = ({}) => {
 	}, []);
 
 	const onSubmit = handleSubmit(async (data) => {
+		console.log(data)
 		await updateGasto(params.id, data);
 		Swal.fire({
 			icon: 'success',
@@ -75,6 +85,19 @@ export const EditarGastos = ({}) => {
 		handleCloseModal();
 		navigate('/gestiongastos');
 	});
+
+	// Función para manejar el cambio en el select de número de expediente
+	const handleExpteSelectChange = (event) => {
+		const selectedExpteNro = event.target.value;
+
+		// Buscar el expediente seleccionado y obtener su carátula
+		const selectedExpte = exptes.find(
+			(expte) => expte.nroexpte === selectedExpteNro
+		);
+
+		// Actualizar el estado con la carátula del expediente seleccionado
+		setSelectedExpteCaratula(selectedExpte ? selectedExpte.caratula : '');
+	};
 
 	return (
 		<>
@@ -95,7 +118,8 @@ export const EditarGastos = ({}) => {
 									className='inputedit'
 									aria-label='Default select'
 									name='expte'
-									{...register('nroexpte')}>
+									{...register('nroexpte')}
+									onChange={handleExpteSelectChange}>
 									<option>Selecciona..</option>
 									{exptes.map((expte) => (
 										<option key={expte._id} value={expte.nroexpte}>
@@ -112,6 +136,8 @@ export const EditarGastos = ({}) => {
 								<Form.Control
 									className='labelcarcaratula'
 									type='text'
+									name='caratula'
+									value={selectedExpteCaratula}
 									{...register('caratula')}
 								/>
 							</Form.Group>

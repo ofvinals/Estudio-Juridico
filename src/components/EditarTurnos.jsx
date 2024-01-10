@@ -89,9 +89,9 @@ export const EditarTurnos = ({}) => {
 					</Modal.Header>
 					<Modal.Body>
 						<Form onSubmit={onSubmit}>
-							<div className='d-flex justify-content-around'>
+							<div className='d-flex flex-column align-items-center'>
 								<Form.Group
-									className='mb-3'
+									className=''
 									controlId='turnoEditarTurno'>
 									<Form.Label className='labeleditturno '>
 										Cliente
@@ -106,7 +106,7 @@ export const EditarTurnos = ({}) => {
 								</Form.Group>
 
 								<Form.Group
-									className='mb-3'
+									className=''
 									controlId='turnoEditarTurno'>
 									<Form.Label className='labeleditturno'>
 										Turno

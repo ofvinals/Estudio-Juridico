@@ -8,7 +8,7 @@
     justify-content: center;
     flex-direction: column;
     background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-    url(../01.jpg);
+    url(/01.jpg);
     background-size: cover;
     object-fit: cover;
     background-position: center;    
@@ -19,7 +19,7 @@
     font-size: 5vw;
     margin-top:5vw;
     margin-bottom: 6vw;
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     font-weight: 800;
 }
 .logform{
@@ -41,7 +41,7 @@
     text-align: center;
     width: 100%;
     background-color: rgb(36, 36, 36)!important;
-    color:rgb(143, 142, 139);
+    color:rgb(207, 207, 207);
     font-size: 3vw;
 }
 .inputlog{
@@ -67,11 +67,12 @@
     margin-top: 3vw;
     text-decoration: none;
 	background-color: rgb(10, 61, 4)!important;
-    color: rgb(143, 142, 139)!important;
+    color: rgb(207, 207, 207)!important;
     width: 100%;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139)!important;
     cursor: pointer;
+    padding:1vw;
 }
 .input-submitlog:hover{
     opacity:0.8;
@@ -84,7 +85,7 @@
     font-weight: 600;
     text-decoration: none;
 	background-color: rgb(9, 19, 92);
-    color: rgb(143, 142, 139);
+    color: rgbrgb(207, 207, 207);
     width: 120%;
     border-radius: 5px;
     border: 0.2vw outset rgb(143, 142, 139)!important;
@@ -97,7 +98,7 @@
 }
 .parrafolog{
     font-size: 2.5vw;
-    color: rgb(143, 142, 139);
+    color: rgb(207, 207, 207);
     margin-top: 2vw;
     font-weight: 700;
 }
@@ -118,7 +119,7 @@
 .swal2-html-container {
     font-family: 'Poppins', sans-serif!important;
     font-size: 3vw!important;
-    color: rgb(143, 142, 139) !important;
+    color: rgb(207, 207, 207) !important;
 }
 .swal2-styled.swal2-confirm{
     font-size: 1.5vw!important;

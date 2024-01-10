@@ -200,6 +200,8 @@ export const AgendaUsu = () => {
 						Volver al Panel
 					</Link>
 				</div>
+				<hr className='linea mx-3' />
+
 				<div className='formagusu'>
 					<div>
 						<h1 className='titleagusu'>Turnos Online</h1>
@@ -250,6 +252,8 @@ export const AgendaUsu = () => {
 								Verificar turno
 							</button>
 						</div>
+						<hr className='linea mx-3' />
+
 						<h2 className='titleagusu'>Turnos pendientes</h2>
 						<div className='container table-responsive'>
 							<Table

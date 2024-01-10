@@ -16,7 +16,7 @@ export const Interes = () => {
 				<Row>
 					<CardGroup className='d-flex flex-wrap justify-content-center'>
 						
-						<Col xs={6} md={4}>
+						<Col xs={10} md={4} className='mb-3'>
 							<Card className='articleint'>
 								<Card.Body className='d-flex flex-column align-items-center'>
 									<Card.Title className='subtitleint '>
@@ -35,7 +35,7 @@ export const Interes = () => {
 							</Card>
 						</Col>
 						
-						<Col xs={6} md={4}>
+						<Col xs={10} md={4}className='mb-3'>
 							<Card className='articleint'>
 								<Card.Body className='d-flex flex-column align-items-center'>
 									<Card.Title className='subtitleint'>
@@ -54,7 +54,7 @@ export const Interes = () => {
 							</Card>
 						</Col>
 						
-						<Col xs={6} md={4}>
+						<Col xs={10} md={4}className='mb-3'>
 							<Card className='articleint'>
 								<Card.Body className='d-flex flex-column align-items-center'>
 									<Card.Title className='subtitleint'>
@@ -73,7 +73,7 @@ export const Interes = () => {
 							</Card>
 						</Col>
 						
-						<Col xs={6} md={4}>
+						<Col xs={10} md={4}className='mb-3'>
 							<Card className='articleint'>
 								<Card.Body className='d-flex flex-column align-items-center'>
 									<Card.Title className='subtitleint'>
@@ -92,7 +92,7 @@ export const Interes = () => {
 							</Card>
 						</Col>
 						
-						<Col xs={6} md={4}>
+						<Col xs={10} md={4}className='mb-3'>
 							<Card className='articleint'>
 								<Card.Body className='d-flex flex-column align-items-center'>
 									<Card.Title className='subtitleint'>
@@ -111,7 +111,7 @@ export const Interes = () => {
 							</Card>
 						</Col>
 						
-						<Col xs={6} md={4}>
+						<Col xs={10} md={4}className='mb-3'>
 							<Card className='articleint'>
 								<Card.Body className='d-flex flex-column align-items-center'>
 									<Card.Title className='subtitleint'>

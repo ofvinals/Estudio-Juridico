@@ -13,13 +13,13 @@ import {
 } from '@tanstack/react-table';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
-import { Button, Form, Modal } from 'react-bootstrap';
+import { Form, Modal } from 'react-bootstrap';
 import { useGastos } from '../context/GastosContext.jsx';
 
 export const GestionGastos = () => {
 	const { user } = useAuth();
 	const params = useParams();
-	const { getGastos, deleteGasto, gastos, getGasto } = useGastos();
+	const { getGastos, deleteGasto, getGasto } = useGastos();
 	const [data, setData] = useState([]);
 	const [gasto, setGasto] = useState([]);
 	const [sorting, setSorting] = useState([]);
@@ -41,7 +41,9 @@ export const GestionGastos = () => {
 			{
 				header: 'Caratula',
 				accessorKey: 'caratula',
-			},
+				size: 500,
+				enableResizing: true
+			},			
 			{
 				header: 'Concepto',
 				accessorKey: 'concepto',
@@ -52,7 +54,7 @@ export const GestionGastos = () => {
 			},
 			{
 				header: 'Monto',
-				accessorKey:'monto',
+				accessorKey: 'monto',
 			},
 			{
 				header: 'Estado',
@@ -62,7 +64,7 @@ export const GestionGastos = () => {
 		[]
 	);
 
-// Carga gastos y guarda en data y gasto
+	// Carga gastos y guarda en data y gasto
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -80,6 +82,12 @@ export const GestionGastos = () => {
 	const table = useReactTable({
 		data,
 		columns,
+		columnResizeMode: 'onChange',
+		defaultColumn: {
+			size: 200, //starting column size
+			minSize: 50, //enforced during column resizing
+			maxSize: 500, //enforced during column resizing
+		 },
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -114,7 +122,7 @@ export const GestionGastos = () => {
 					timer: 1500,
 				});
 				setData((prevData) => prevData.filter((caja) => caja._id !== id));
-				}
+			}
 		} catch (error) {
 			console.error('Error al eliminar el gasto:', error);
 		}
@@ -151,7 +159,7 @@ export const GestionGastos = () => {
 						)}
 						{user.email === 'admin@gmail.com' && (
 							<Link to='' className='btnpanelgestion'>
-								<i className='iconavbar bi bi-search'></i>
+								<i className='iconavbar bi bi-archive'></i>
 								Gastos Cancelados
 							</Link>
 						)}
@@ -174,6 +182,7 @@ export const GestionGastos = () => {
 
 					<div className='search'>
 						<p className='subtitlegestion'>Buscar Gastos</p>
+						<i className='iconavbar bi bi-search'></i>
 						<input
 							className='searchinput'
 							type='text'
@@ -247,7 +256,7 @@ export const GestionGastos = () => {
 												)}
 												<button
 													className='btnvergestion'
-													onClick={(e) => {
+													onClick={() => {
 														verGasto(row.original._id);
 													}}>
 													<i className='bi bi-search acciconogestion'></i>
@@ -263,24 +272,25 @@ export const GestionGastos = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							Primer Pagina
+							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.previousPage()}>
+							<i className=' me-2 bi bi-chevron-left'></i>
 							Pagina Anterior
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente
+							Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina
+							Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>
@@ -289,7 +299,9 @@ export const GestionGastos = () => {
 			{/* Modal para ver gasto seleccionado */}
 			<Modal show={showVerGasto} onHide={() => setShowVerGasto(false)}>
 				<Modal.Header closeButton>
-					<Modal.Title className='text-white'>Ver Gasto seleccionado</Modal.Title>
+					<Modal.Title className='text-white'>
+						Ver Gasto seleccionado
+					</Modal.Title>
 				</Modal.Header>
 				<Modal.Body>
 					<Form>

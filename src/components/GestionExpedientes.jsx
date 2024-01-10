@@ -46,13 +46,20 @@ export const GestionExpedientes = () => {
 		[]
 	);
 
-// Trae exptes de getExptes y guarda en data y exptes
+	// Trae exptes de getExptes y guarda en data y exptes
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
 				const fetchedExptes = await getExptes();
-				setData(fetchedExptes);
-				setExpte(fetchedExptes);
+				// Si el usuario no es administrador, filtra los expedientes por cliente
+				const filteredExptes =
+					user.email === 'admin@gmail.com'
+						? fetchedExptes
+						: fetchedExptes.filter(
+								(expte) => expte.cliente === user.email
+						  );
+				setData(filteredExptes);
+				setExpte(filteredExptes);
 			} catch (error) {
 				console.error('Error al obtener expedientes', error);
 			}
@@ -131,7 +138,7 @@ export const GestionExpedientes = () => {
 						)}
 						{user.email === 'admin@gmail.com' && (
 							<Link to='/exptesarchivados' className='btnpanelgestion'>
-								<i className='iconavbar bi bi-search'></i>
+								<i className='iconavbar bi bi-archive'></i>
 								Expedientes Archivados
 							</Link>
 						)}
@@ -154,6 +161,7 @@ export const GestionExpedientes = () => {
 
 					<div className='search'>
 						<p className='subtitlegestion'>Buscar Expediente</p>
+						<i className='iconavbar bi bi-search'></i>
 						<input
 							className='searchinput'
 							type='text'
@@ -241,24 +249,25 @@ export const GestionExpedientes = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							Primer Pagina
+							<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.previousPage()}>
+							<i classname=' me-2 bi bi-chevron-left'></i>
 							Pagina Anterior
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente
+							Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina
+							Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>

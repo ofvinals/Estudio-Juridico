@@ -13,19 +13,19 @@
 }
 .tituloabout{
 	color:rgb(207,207,207);
-    font-size: 6vw;
-    margin-top: 8vw;
+    font-size: 10vw;
+    margin-top: 10vw;
     font-weight: 800;
 }
 .subtituloabout {
 	color:rgb(207,207,207);
-    font-size: 5vw;
+    font-size: 7vw;
     margin-top: 5vw;
     margin-bottom: 1vw;
     font-weight: 700;
 }
 .parrafoabout{
-    font-size: 2.5vw;
+    font-size: 4.5vw;
     color:rgb(207,207,207);
     font-weight: 600;
     text-align: justify;
@@ -44,15 +44,15 @@
 }
 .cardtitleabout{
     color:rgb(207,207,207)!important;
-    font-size: 4vw!important;
+    font-size: 7vw!important;
     font-weight: 700!important;
     margin-top: 4vw!important;
     margin-bottom: 2vw!important;
 }
 .contcard{
     color:rgb(207,207,207)!important;
-    font-size: 2.5vw;
-    font-weight: 600;
+    font-size: 4.5vw;
+    font-weight: 400;
     margin-left: 10vw;
     margin-right:10vw;
     padding-bottom: 2vw;
@@ -67,7 +67,7 @@
 }
 .tituloaboutteam{
     color:rgb(207,207,207);
-    font-size: 6vw;
+    font-size: 7vw;
     margin-top: 4vw;
     margin-bottom:4vw ;
     font-weight: 700;
@@ -85,7 +85,7 @@
     align-content: center;
 }
 .titlenosotros {
-    font-size: 3vw;
+    font-size: 5vw;
     color: rgb(207,207,207);
     text-align: center;
 }
@@ -95,7 +95,7 @@
 }
 .cardnosotros{
     margin-left:2vw;
-    width: 40%;
+    width: 45%;
 }
 .our-team .description {
     width: 100%;
@@ -103,7 +103,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 1vw;
+    font-size: 2.5vw;
     color: rgb(207,207,207);
     line-height: 30px;
     padding: 30px 30px;
@@ -118,7 +118,7 @@
     padding: 20px;
 }
 .our-team .title {
-    font-size: 2vw;
+    font-size: 2.5vw;
     color:  rgb(207,207,207);
     letter-spacing: 4px;
     margin: 0 0 15px 0;
@@ -128,7 +128,7 @@
 }
 .our-team .post {
     display: block;
-    font-size: 1vw;
+    font-size: 2.5vw;
     color:  rgb(207,207,207);
     text-transform: capitalize;
     text-align: center;

@@ -5,6 +5,7 @@ import Col from 'react-bootstrap/Col';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Container from 'react-bootstrap/Container';
 import Swal from 'sweetalert2';
+
 import '../css/Especialidad.css';
 
 export const Especialidad = () => {
@@ -62,7 +63,7 @@ export const Especialidad = () => {
 			<Container>
 				<Row>
 					<CardGroup className='d-flex flex-wrap flex-row justify-content-around'>
-						<Col xs={8} md={3}>
+						<Col xs={10} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -83,7 +84,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={8} md={3}>
+						<Col xs={10} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -104,7 +105,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={8} md={3}>
+						<Col xs={10} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -124,7 +125,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={8} md={3}>
+						<Col xs={10} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
 									<Card.Title className='titlecard'>
@@ -144,9 +145,10 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={8} md={3}>
+						<Col xs={10} md={3}>
 							<Card className='cardbody'>
 								<div className=''>
+								<i className="iconnavbar fa-solid fa-briefcase"></i>
 									<Card.Title className='titlecard'>
 										Derecho Societario
 									</Card.Title>
@@ -165,7 +167,7 @@ export const Especialidad = () => {
 							</Card>
 						</Col>
 
-						<Col xs={7} md={3}>
+						<Col xs={10} md={3}>
 							<Card className='cardbody'>
 								<div className='y'>
 									<Card.Title className='titlecard'>

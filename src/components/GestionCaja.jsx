@@ -143,13 +143,13 @@ export const GestionCaja = () => {
 								className='btnpanelgestion'
 								to='/cargacajas'>
 								<i className='iconavbar bi bi-file-earmark-plus'></i>
-								Agregar Movimientos
+								Agregar Movimiento
 							</Link>
 						)}
 						{user.email === 'admin@gmail.com' && (
 							<Link to='' className='btnpanelgestion'>
-								<i className='iconavbar bi bi-search'></i>
-								Movimientos Cancelados
+								<i className='iconavbar bi bi-archive'></i>
+								Movimientos Archivados
 							</Link>
 						)}
 						<Link
@@ -167,11 +167,12 @@ export const GestionCaja = () => {
 					<hr className='linea mx-3' />
 
 					<div>
-						<p className='titletabla'> Egresos e Ingresos Pendientes</p>
+						<p className='titletabla'> Movimientos de Caja</p>
 					</div>
 
 					<div className='search'>
 						<p className='subtitlegestion'>Buscar Movimiento</p>
+						<i className='iconavbar bi bi-search'></i>
 						<input
 							className='searchinput'
 							type='text'
@@ -261,24 +262,25 @@ export const GestionCaja = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							Primer Pagina
+							<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.previousPage()}>
+							<i classname=' me-2 bi bi-chevron-left'></i>
 							Pagina Anterior
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente
+							Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina
+							Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>

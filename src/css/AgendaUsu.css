@@ -1,8 +1,8 @@
 .css-a643pv-MuiStack-root{
   width: 45vw;
-  font-size: 1.3vw!important;
-  margin-left: 20vw;
-  margin-right: 20vw;
+  font-size: 3vw!important;
+  margin-left: 25vw;
+  margin-right: 25vw;
   margin-bottom:3vw;
 }
 .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
@@ -128,28 +128,28 @@ color: rgb(143, 142, 139)!important;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+	  background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
 		url(/01.jpg);
-	background-size: cover;
-	background-position: center;
-	object-fit: cover;
+	  background-size: cover;
+	  background-position: center;
+	  object-fit: cover;
     padding-bottom: 10vw;
 }
 .titleagusu{
   text-align: center;
-  font-size: 2.5vw;
+  font-size: 6vw;
   margin-top:2vw;
   margin-bottom: 2vw;
   font-weight: 700;
-  color: rgb(143, 142, 139);
+  color: rgb(207, 207, 207);
 }
 .subtitleagusu{
   text-align: center;
-  font-size: 1.8vw;
+  font-size: 4vw;
   margin-top:2vw;
   margin-bottom: 2vw;
   font-weight: 700;
-  color: rgb(143, 142, 139);
+  color: rgb(207, 207, 207);
 }
 .formagusu{
   display: flex;
@@ -161,38 +161,39 @@ color: rgb(143, 142, 139)!important;
   justify-content: center;
 }
 .btneditagusu{
-  color: rgb(143, 142, 139);
+  color: rgb(207, 207, 207);
   background-color:rgb(10, 61, 4);
-  padding:0.5vw!important;
+  padding:1vw!important;
   border: 0.2vw outset rgb(143, 142, 139)!important;
   border-radius: 5px;
   cursor: pointer;
   margin-right: 1vw;
+  
 }
 .btnborraagusu{
-  color: rgb(143, 142, 139);
+  color: rgb(207, 207, 207);
   background-color: rgb(111, 8, 10);
   border: 0.2vw outset rgb(143, 142, 139)!important;
   border-radius: 5px;
-  padding:0.5vw!important;
+  padding:1vw!important;
   cursor: pointer;
 }
 .btnveragusu{
-  color: rgb(143, 142, 139);
+  color: rgb(207, 207, 207);
   background-color: rgb(21, 100, 160);
   border: 0.2vw outset rgb(143, 142, 139)!important;
   border-radius: 5px;
-  padding:0.5vw!important;
+  padding:1vw!important;
   cursor: pointer;
 }
 .btnagusuverif{
-  font-weight: 700;
-	font-size: 1.2vw;
+  font-weight: 600;
+	font-size: 3vw;
   margin-left: 1vw;
 	margin-top: 1vw;
 	background-color: rgb(10, 61, 4);
-  color: rgb(143, 142, 139);
-  width: 30%;
+  color: rgb(207, 207, 207);
+  width: 50%;
   border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
   padding: 0.5vw;
@@ -210,20 +211,20 @@ color: rgb(143, 142, 139)!important;
 }
 .acciconoagusu{
   font-size: 100%;
-  color: rgb(143, 142, 139)!important;
+  color: rgb(207, 207, 207)!important;
   padding:0.5vw!important;
 }
 .tablaagusu{
-  font-size: 1.3vw!important;
+  font-size: 3vw!important;
   text-align: center;
   color: rgb(143, 142, 139)!important;
 }
 .btnpanelagusu{
 	font-weight: 700;
-	font-size: 1.2vw!important;
+	font-size: 3vw!important;
 	background-color: rgb(27, 27, 27);
     color: rgb(143, 142, 139);
-    width: 18vw;
+    width: 40%;
     border: 0.2vw outset rgb(143, 142, 139)!important;
 	border-radius: 5px;
     display: flex;

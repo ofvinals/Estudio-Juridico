@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
-import { date } from 'zod';
 
 const gastoSchema = new mongoose.Schema(
 	{
 		nroexpte: {
 			type: String,
 			required: true,
+			index: false,
 					},
-		// caratula: {
-		// 	type: String,
-		// 	required: true,
-		// },
+		caratula: {
+			type: String,
+			required: true
+		},
 		concepto: {
 			type: String,
 			required: true,

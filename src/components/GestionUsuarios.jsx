@@ -48,7 +48,7 @@ export const GestionUsuarios = () => {
 		],
 		[]
 	);
-// Trae usuarios de getUsers y guarda en data y users
+	// Trae usuarios de getUsers y guarda en data y users
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
@@ -141,6 +141,7 @@ export const GestionUsuarios = () => {
 
 				<div className='search'>
 					<p className='subtitlegestion'>Buscar Usuario</p>
+					<i className='iconavbar bi bi-search'></i>
 					<input
 						className='searchinput'
 						type='text'
@@ -230,22 +231,23 @@ export const GestionUsuarios = () => {
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.setPageIndex(0)}>
-						Primer Pagina
+						<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
 					</button>
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.previousPage()}>
+						<i classname=' me-2 bi bi-chevron-left'></i>
 						Pagina Anterior
 					</button>
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.nextPage()}>
-						Pagina Siguiente
+						Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
 					</button>
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-						Ultima Pagina
+						Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
 					</button>
 				</div>
 			</div>

@@ -39,22 +39,21 @@
 }
 .labeleditturno{
    font-weight: 700;
-   width: 40%;
+   width: 100%;
    text-align: center;
-   margin-bottom: 1vw;
-   background-color: rgb(36, 36, 36)!important;
+   margin-bottom: 3vw!important;
+   background-color: transparent!important;
    color:rgb(207, 207, 207);
-   font-size: 1vw!important;
+   font-size: 3vw!important;
 }
 .inputeditturno{
    color: rgb(207, 207, 207);
    width: 100%!important;
-   margin-bottom: 1vw;
+   margin-bottom: 3vw;
    border-radius: 5px;
    outline-color: rgb(143, 142, 139);
-   font-size: 1vw!important;
-   padding:0.4vw!important;
-   margin-left: 1vw;
+   font-size: 3vw!important;
+
 }
 .inputedit{
    color: rgb(36, 36, 36);
@@ -64,7 +63,6 @@
    border-radius: 5px;
    outline-color: rgb(207, 207, 207);
    font-size: 3vw!important;
-   padding:0.4vw!important;
 }
 .botonesedit{
    display: flex;
@@ -133,7 +131,7 @@
    margin-right:2vw!important;
    background-color: rgb(10, 61, 4)!important;
    color: rgb(207, 207, 207);
-   width: 40%!important;
+   width: 45%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;
@@ -149,7 +147,7 @@
    margin-bottom: 1vw;
    background-color: rgb(111, 8, 10)!important;
    color: rgb(207, 207, 207);
-   width: 35%!important;
+   width: 45%!important;
    display: flex!important;
    align-items: center;
    justify-content: center;

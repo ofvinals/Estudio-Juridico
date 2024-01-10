@@ -30,6 +30,7 @@
    font-weight: 700;
    width: 100%!important;
    margin-right: 2vw!important;
+   margin-top: 0.5vw;
    background-color:transparent!important;
    color:rgb(207, 207, 207);
    font-size: 3vw!important;
@@ -74,7 +75,7 @@
    width: 100%;
 }
 .botoneditcarga{
-   font-size: 3vw!important;
+   font-size: 2.5vw!important;
    font-weight: 600;
    margin-top: 3vw;
    margin-right: 3vw;
@@ -88,7 +89,7 @@
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    cursor: pointer;
-   padding:1.5vw!important;
+   padding:1vw!important;
 }
 .botoneditcarga:hover{
    opacity:0.8;
@@ -96,21 +97,21 @@
    background-color: transparent;
 }
 .btncanccarga{
-   font-size: 3vw!important;
+   font-size: 2.5vw!important;
    font-weight: 600;
    margin-top: 3vw;
    margin-right: 3vw;
    margin-left: 3vw;
    background-color: rgb(111, 8, 10)!important;
    color: rgb(207, 207, 207);
-   width: 35%!important;
+   width: 40%!important;
    border: 0.2vw outset rgb(143, 142, 139)!important;
    border-radius: 5px;
    display: flex;
    align-items: center;
    justify-content: center;
    cursor: pointer;
-   padding:1.5vw!important;
+   padding:1vw!important;
    text-align: center;
    text-decoration: none;
 }

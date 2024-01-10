@@ -44,14 +44,13 @@
     text-align: center;
     font-size: 3vw;
     margin-top: 3vw;
-    font-weight: 700;
+    font-weight: 500;
     color: rgb(207, 207, 207);
 }
 .datosexptes{
-    text-align: start;
+    text-align: center;
     font-size: 2vw;
     margin-top: 3vw;
-    margin-left: 15vw;
     margin-bottom: 2vw;
     font-weight: 600;
     width: 100%;

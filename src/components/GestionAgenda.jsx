@@ -3,6 +3,7 @@ import Table from 'react-bootstrap/Table';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
+import { Form, Modal } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -18,13 +19,19 @@ import { useTurnos } from '../context/TurnosContext';
 
 export const GestionAgenda = () => {
 	const { user } = useAuth();
-	const { getTurnos, deleteTurno, turnos } = useTurnos();
+	const { getTurnos, deleteTurno, getTurno } = useTurnos();
 	const [turno, setTurno] = useState([]);
 	const [turnosVencidos, setTurnosVencidos] = useState([]);
 	const [data, setData] = useState([]);
 	const [expte, setExpte] = useState([]);
 	const [sorting, setSorting] = useState([]);
 	const [filtering, setFiltering] = useState('');
+	const [showVerTurno, setShowVerTurno] = useState(false);
+
+	// Cierra modales
+	const handleCancel = () => {
+		setShowVerTurno(false);
+	};
 
 	const columns = React.useMemo(
 		() => [
@@ -39,6 +46,7 @@ export const GestionAgenda = () => {
 			{
 				header: 'Motivo',
 				accessorKey: 'motivo',
+				enableResizing: true,
 			},
 		],
 		[]
@@ -66,10 +74,9 @@ export const GestionAgenda = () => {
 				turnosPendientes.sort((a, b) => a.turno.localeCompare(b.turno));
 				turnosVencidos.sort((a, b) => a.turno.localeCompare(b.turno));
 				setTurno(turnosPendientes);
-				setData(turnosPendientes)
+				setData(turnosPendientes);
 
 				setTurnosVencidos(turnosVencidos);
-
 			} catch (error) {
 				console.error('Error al obtener turnos', error);
 			}
@@ -89,6 +96,7 @@ export const GestionAgenda = () => {
 		state: {
 			sorting,
 			globalFilter: filtering,
+			columnResizeMode: 'onChange',
 		},
 		onSortingChange: setSorting,
 		onGlobalFilterChange: setFiltering,
@@ -145,6 +153,13 @@ export const GestionAgenda = () => {
 		}
 	}
 
+	// funcion para ver turnos en Modal
+	async function verTurno(id) {
+		const turno = await getTurno(id);
+		setTurno(turno);
+		setShowVerTurno(true);
+	}
+
 	return (
 		<>
 			<div className='bodygestion container-fluid bg-dark'>
@@ -168,120 +183,122 @@ export const GestionAgenda = () => {
 				<hr className='linea mx-3' />
 
 				<div>
-					<p className='titletabla'>Turno/s pendiente/s registrado/s</p>
+					<p className='titletabla'>Turnos Registrados</p>
 				</div>
 				<div className='search'>
-						<p className='subtitlegestion'>Buscar Turno</p>
-						<input
-							className='searchinput'
-							type='text'
-							value={filtering}
-							onChange={(e) => setFiltering(e.target.value)}
-						/>
-					</div>
-					<div className='container table-responsive'>
-						<Table
-							striped
-							hover
-							variant='dark'
-							className='tablagestion table border border-secondary-subtle'>
-							<thead>
-								{table.getHeaderGroups().map((headerGroup) => (
-									<tr key={headerGroup.id}>
-										{headerGroup.headers.map((header) => (
-											<th
-												key={header.id}
-												onClick={header.column.getToggleSortingHandler()}>
-												{header.isPlaceholder ? null : (
-													<div>
-														{flexRender(
-															header.column.columnDef.header,
-															header.getContext()
-														)}
+					<p className='subtitlegestion'>Buscar Turno</p>
+					<i className='iconavbar bi bi-search'></i>
 
-														{
-															{ asc: '⬆️', desc: '⬇️' }[
-																header.column.getIsSorted() ??
-																	null
-															]
-														}
-													</div>
-												)}
-											</th>
-										))}
-										<th className='botonescciongestion'>Acciones</th>
-									</tr>
-								))}
-							</thead>
-							<tbody className='table-group-divider'>
-								{table.getRowModel().rows.map((row) => (
-									<tr key={row.original._id}>
-										{row.getVisibleCells().map((cell, index) => (
-											<td key={index}>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext()
-												)}
-											</td>
-										))}
-
-										<td className='align-middle'>
-											<div className='d-flex flex-row justify-content-center'>
-												{user.email === 'admin@gmail.com' && (
-													<Link
-														className='btneditgestion'
-														to={`/editarturnos/${row.original._id}`}>
-														<i className='bi bi-pen  acciconogestion'></i>
-													</Link>
-												)}
-												{user.email === 'admin@gmail.com' && (
-													<button
-														className='btnborragestion'
-														onClick={() =>
-															borrarTurno(row.original._id)
-														}>
-														<i className='bi bi-trash-fill  acciconogestion'></i>
-													</button>
-												)}
-												<Link
-													className='btnvergestion'
-													to={`/movexptes/${expte._id}`}>
-													<i className='bi bi-search acciconogestion'></i>
-												</Link>
-											</div>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</Table>
-					</div>
-					<div className='d-flex flex-row justify-content-center'>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.setPageIndex(0)}>
-							Primer Pagina
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.previousPage()}>
-							Pagina Anterior
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.nextPage()}>
-							Pagina Siguiente
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() =>
-								table.setPageIndex(table.getPageCount() - 1)
-							}>
-							Ultima Pagina
-						</button>
-					</div>
+					<input
+						className='searchinput'
+						type='text'
+						value={filtering}
+						onChange={(e) => setFiltering(e.target.value)}
+					/>
 				</div>
-		
-				{/* <div>
+				<div className='container table-responsive'>
+					<Table
+						striped
+						hover
+						variant='dark'
+						className='tablagestion table border border-secondary-subtle'>
+						<thead>
+							{table.getHeaderGroups().map((headerGroup) => (
+								<tr key={headerGroup.id}>
+									{headerGroup.headers.map((header) => (
+										<th
+											key={header.id}
+											onClick={header.column.getToggleSortingHandler()}>
+											{header.isPlaceholder ? null : (
+												<div>
+													{flexRender(
+														header.column.columnDef.header,
+														header.getContext()
+													)}
+
+													{
+														{ asc: '⬆️', desc: '⬇️' }[
+															header.column.getIsSorted() ?? null
+														]
+													}
+												</div>
+											)}
+										</th>
+									))}
+									<th className='botonescciongestion'>Acciones</th>
+								</tr>
+							))}
+						</thead>
+						<tbody className='table-group-divider'>
+							{table.getRowModel().rows.map((row) => (
+								<tr key={row.original._id}>
+									{row.getVisibleCells().map((cell, index) => (
+										<td key={index}>
+											{flexRender(
+												cell.column.columnDef.cell,
+												cell.getContext()
+											)}
+										</td>
+									))}
+
+									<td className='align-middle'>
+										<div className='d-flex flex-row justify-content-center'>
+											{user.email === 'admin@gmail.com' && (
+												<Link
+													className='btneditgestion'
+													to={`/editarturnos/${row.original._id}`}>
+													<i className='bi bi-pen  acciconogestion'></i>
+												</Link>
+											)}
+											{user.email === 'admin@gmail.com' && (
+												<button
+													className='btnborragestion'
+													onClick={() =>
+														borrarTurno(row.original._id)
+													}>
+													<i className='bi bi-trash-fill  acciconogestion'></i>
+												</button>
+											)}
+											<button
+												className='btnvergestion'
+												onClick={(e) => {
+													verTurno(row.original._id);
+												}}>
+												<i className='bi bi-search acciconogestion'></i>
+											</button>
+										</div>
+									</td>
+								</tr>
+							))}
+						</tbody>
+					</Table>
+				</div>
+				<div className='d-flex flex-row justify-content-center'>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.setPageIndex(0)}>
+						<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
+					</button>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.previousPage()}>
+						<i className=' me-2 bi bi-chevron-left'></i>
+						Pagina Anterior
+					</button>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.nextPage()}>
+						Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
+					</button>
+					<button
+						className='btnvpaginagestion'
+						onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
+						Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
+					</button>
+				</div>
+			</div>
+
+			{/* <div>
 					<p className='mt-3 titlegestion'>Turnos vencidos</p>
 				</div>
 				<div className='container table-responsive'>
@@ -303,8 +320,37 @@ export const GestionAgenda = () => {
 						</tbody>
 					</Table>
 				</div> */}
-		
-			
+
+			{/* Modal para ver gasto seleccionado */}
+			<Modal show={showVerTurno} onHide={() => setShowVerTurno(false)}>
+				<Modal.Header closeButton>
+					<Modal.Title className='text-white'>
+						Ver Turno seleccionado
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className='mb-3 text-white' controlId=''>
+							<Form.Label>Turno: {turno.turno}</Form.Label>
+						</Form.Group>
+						<Form.Group className='mb-3 text-white' controlId=''>
+							<Form.Label>Cliente: {turno.email}</Form.Label>
+						</Form.Group>
+						<Form.Group className='mb-3 text-white' controlId=''>
+							<Form.Label>Motivo: $ {turno.motivo}</Form.Label>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<button
+						className='btneditgestion px-2'
+						onClick={() => {
+							handleCancel();
+						}}>
+						Volver
+					</button>
+				</Modal.Footer>
+			</Modal>
 		</>
 	);
 };

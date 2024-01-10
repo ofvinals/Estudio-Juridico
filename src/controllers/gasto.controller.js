@@ -11,12 +11,13 @@ export const getGastos = async (req, res) => {
 
 export const createGasto = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { nroexpte, concepto, comprobante, monto, estado } = req.body;
+	const { nroexpte, caratula, concepto, comprobante, monto, estado } = req.body;
 
 	try {
 		// Crear una nueva instancia del modelo Gasto utilizando los datos de la solicitud
 		const newGasto = new Gasto({
 			nroexpte,
+			caratula,
 			concepto,
 			comprobante,
 			monto,
@@ -48,17 +49,36 @@ export const getGasto = async (req, res) => {
 
 export const updateGasto = async (req, res) => {
 	try {
-		const { nroexpte, concepto, comprobante, monto, estado } = req.body;
+		console.log('ID del gasto a actualizar:', req.params.id);
+
+		const { nroexpte, caratula, concepto, comprobante, monto, estado } = req.body;
+		console.log('Datos del cuerpo de la solicitud:', req.body);
+
 		const updateGasto = await Gasto.findByIdAndUpdate(
 			req.params.id,
-			req.body,
+			{
+				nroexpte,
+				caratula,
+				concepto,
+				comprobante,
+				monto,
+				estado,
+			},
 			{
 				new: true,
 			}
 		);
+		console.log('Gasto actualizado:', updateGasto);
 		res.json(updateGasto);
 	} catch (error) {
-		return res.status(500).json({ message: error.message });
+		console.error('Error al actualizar el gasto:', error);
+	 
+		if (error.name === 'MongoError' && error.code === 11000) {
+		  // Manejar el error de clave duplicada (E11000)
+		  return res.status(400).json({ message: 'Error: Clave duplicada', error });
+		}
+	 
+		return res.status(500).json({ message: 'Error interno del servidor', error });
 	}
 };
 

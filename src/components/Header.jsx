@@ -52,7 +52,7 @@ export const Header = () => {
 					<Navbar.Collapse
 						className='colapse'
 						id='responsive-navbar-nav'
-						placement='left'
+						placement='right'
 						onClick={handleNavLinkClick}>
 						<Nav className='menu bg-dark allnav'>
 							<NavLink
