@@ -15,6 +15,7 @@ import Swal from 'sweetalert2';
 import '../css/Gestion.css';
 import { useCajas } from '../context/CajasContext.jsx';
 import { Modal, Form } from 'react-bootstrap';
+import { esES } from '@mui/material/locale';
 
 export const GestionCaja = () => {
 	const { user } = useAuth();
@@ -26,6 +27,7 @@ export const GestionCaja = () => {
 	const [sorting, setSorting] = useState([]);
 	const [filtering, setFiltering] = useState('');
 	const [showVerCaja, setShowVerCaja] = useState(false);
+	const [gastosPorMes, setGastosPorMes] = useState([]);
 
 	// Cierra modales
 	const handleCancel = () => {
@@ -36,14 +38,32 @@ export const GestionCaja = () => {
 		const fetchData = async () => {
 			try {
 				const fetchedCajas = await getCajas();
+				// Agrupa los gastos por mes
+				const gastosAgrupados = {};
+				fetchedCajas.forEach((caja) => {
+					const fecha = new Date(caja.fecha);
+					const mesKey = `${fecha.getFullYear()}-${String(
+						fecha.getMonth() + 1
+					).padStart(2, '0')}`;
+
+					if (!gastosAgrupados[mesKey]) {
+						gastosAgrupados[mesKey] = [];
+					}
+					// Agregar la propiedad fechaFormatted
+					caja.fechaFormatted = fecha.toLocaleDateString();
+					gastosAgrupados[mesKey].push(caja);
+				});
+
+				setGastosPorMes(gastosAgrupados);
 				setData(fetchedCajas);
-				setCaja(fetchedCajas);
 			} catch (error) {
 				console.error('Error al obtener caja', error);
 			}
 		};
+
 		fetchData();
 	}, []);
+
 	// Carga info de columnas
 	const columns = React.useMemo(
 		() => [
@@ -124,9 +144,29 @@ export const GestionCaja = () => {
 		setCaja(caja);
 	}
 
+	const getMonthName = (mesKey) => {
+		const [year, month] = mesKey.split('-');
+		const monthIndex = parseInt(month) - 1;
+		const monthNames = [
+			'Enero',
+			'Febrero',
+			'Marzo',
+			'Abril',
+			'Mayo',
+			'Junio',
+			'Julio',
+			'Agosto',
+			'Septiembre',
+			'Octubre',
+			'Noviembre',
+			'Diciembre',
+		];
+		return `${monthNames[monthIndex]} ${year}`;
+	};
+
 	return (
 		<>
-			<div className='container-fluid bg-dark'>
+			<div className='bg-dark'>
 				<div className='main px-3 bodygestion'>
 					<h4 className='titlegestion'>
 						Bienvenido de nuevo, {user.email}
@@ -180,7 +220,7 @@ export const GestionCaja = () => {
 							onChange={(e) => setFiltering(e.target.value)}
 						/>
 					</div>
-					<div className='container table-responsive'>
+					<div className='table-responsive'>
 						<Table
 							striped
 							hover
@@ -215,45 +255,77 @@ export const GestionCaja = () => {
 								))}
 							</thead>
 							<tbody className='table-group-divider'>
-								{table.getRowModel().rows.map((row) => (
-									<tr key={row.original._id}>
-										{row.getVisibleCells().map((cell, index) => (
-											<td key={index}>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext()
-												)}
+								{Object.entries(gastosPorMes).map(([mes, gastos]) => (
+									<React.Fragment key={mes}>
+										<tr>
+											<td colSpan='8' className='mes-header'>
+												{getMonthName(mes)}
 											</td>
-										))}
-										<td className='align-middle'>
-											<div className='d-flex flex-row justify-content-center'>
-												{user.email === 'admin@gmail.com' && (
-													<Link
-														className='btneditgestion'
-														to={`/editarcajas/${row.original._id}`}>
-														<i className='bi bi-pen  acciconogestion'></i>
-													</Link>
-												)}
-												{user.email === 'admin@gmail.com' && (
-													<button
-														className='btnborragestion'
-														onClick={() =>
-															borrarCaja(row.original._id)
-														}>
-														<i className='bi bi-trash-fill  acciconogestion'></i>
-													</button>
-												)}
-												<button
-													className='btnvergestion'
-													onClick={(e) => {
-														setShowVerCaja(true);
-														verCaja(row.original._id);
-													}}>
-													<i className='bi bi-search acciconogestion'></i>
-												</button>
-											</div>
-										</td>
-									</tr>
+										</tr>
+										{Array.isArray(gastos) &&
+											gastos.map((caja) => (
+												<tr key={caja._id}>
+													<td>{caja.fechaFormatted}</td>
+													<td>{caja.concepto}</td>
+													<td>{caja.tipo}</td>
+													<td>$ {caja.monto}</td>
+													<td>
+														{caja.adjunto ? (
+															<i className='bi bi-paperclip'></i> 
+														) : (
+															<span>{caja.adjunto}</span>
+														)}
+													</td>
+													<td>{caja.estado}</td>
+													<td className='align-middle'>
+														<div className='d-flex flex-row justify-content-center'>
+															{user.email ===
+																'admin@gmail.com' && (
+																<Link
+																	className='btneditgestion'
+																	to={`/editarcajas/${caja._id}`}>
+																	<i className='bi bi-pen acciconogestion'></i>
+																</Link>
+															)}
+															{user.email ===
+																'admin@gmail.com' && (
+																<button
+																	className='btnborragestion'
+																	onClick={() =>
+																		borrarCaja(caja._id)
+																	}>
+																	<i className='bi bi-trash-fill acciconogestion'></i>
+																</button>
+															)}
+															<button
+																className='btnvergestion'
+																onClick={(e) => {
+																	setShowVerCaja(true);
+																	verCaja(caja._id);
+																}}>
+																<i className='bi bi-search acciconogestion'></i>
+															</button>
+														</div>
+													</td>
+												</tr>
+											))}
+										{/* Suma total del mes */}
+										<tr>
+											<td colSpan='6' className='mes-header'></td>
+											<td>
+												<strong>
+													Total mes {getMonthName(mes)}: $
+													{gastos.reduce((total, caja) => {
+														const monto =
+															caja.tipo === 'INGRESO'
+																? caja.monto
+																: -caja.monto;
+														return total + monto;
+													}, 0)}
+												</strong>
+											</td>
+										</tr>
+									</React.Fragment>
 								))}
 							</tbody>
 						</Table>
@@ -262,25 +334,28 @@ export const GestionCaja = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
+							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer
+							Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.previousPage()}>
-							<i classname=' me-2 bi bi-chevron-left'></i>
+							<i className=' me-2 bi bi-chevron-left'></i>
 							Pagina Anterior
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
+							Pagina Siguiente
+							<i className=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
+							Ultima Pagina
+							<i className=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>
@@ -293,21 +368,21 @@ export const GestionCaja = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id='fecha'>
 							<Form.Label>Fecha: {caja.fecha}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id='concepto'>
 							<Form.Label>Concepto: {caja.concepto}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id='monto'>
 							<Form.Label>Monto: $ {caja.monto}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id='comprobante'>
 							<Form.Label>
 								Comprobante Adjunto: {caja.comprobante}
 							</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id='estado'>
 							<Form.Label>Estado: {caja.estado}</Form.Label>
 						</Form.Group>
 					</Form>

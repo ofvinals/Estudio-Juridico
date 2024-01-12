@@ -154,8 +154,8 @@ export const GestionMovimientos = () => {
 
 	return (
 		<>
-			<div className='container-fluid bg-dark'>
-				<div className='main px-3 bodygestion'>
+			<div className='bg-dark'>
+				<div className='main bodygestion'>
 					<h4 className='titlegestion'>
 						Bienvenido de nuevo, {user.email}
 					</h4>
@@ -184,10 +184,18 @@ export const GestionMovimientos = () => {
 						<h2 className='titletabla'>Datos del Expediente</h2>
 
 						<div className=''>
-							<p className='datosexptes'>Nro Expte: {expte.nroexpte}</p>
-							<p className='datosexptes'>Caratula: {expte.caratula}</p>
-							<p className='datosexptes'>Fuero: {expte.radicacion}</p>
-							<p className='datosexptes'>Juzgado: {expte.juzgado}</p>
+							<p className='datosexptes'>
+								<u>Nro Expte:</u> {expte.nroexpte}
+							</p>
+							<p className='datosexptes'>
+								<u>Caratula:</u> {expte.caratula}
+							</p>
+							<p className='datosexptes'>
+								<u>Fuero:</u> {expte.radicacion}
+							</p>
+							<p className='datosexptes'>
+								<u>Juzgado:</u> {expte.juzgado}
+							</p>
 
 							<p></p>
 						</div>
@@ -204,7 +212,7 @@ export const GestionMovimientos = () => {
 							onChange={(e) => setFiltering(e.target.value)}
 						/>
 					</div>
-					<div className='container table-responsive'>
+					<div className='table-responsive'>
 						<Table
 							striped
 							hover
@@ -243,9 +251,19 @@ export const GestionMovimientos = () => {
 									<tr key={row.original._id}>
 										{row.getVisibleCells().map((cell, index) => (
 											<td key={index}>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext()
+												{cell.column.id === 'adjunto' ? (
+													<span>
+														{row.original.adjunto ? (
+															<i className='bi bi-paperclip'></i>
+														) : (
+															<span>{row.original.adjunto}</span>
+														)}
+													</span>
+												) : (
+													flexRender(
+														cell.column.columnDef.cell,
+														cell.getContext()
+													)
 												)}
 											</td>
 										))}
@@ -287,25 +305,28 @@ export const GestionMovimientos = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
+							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer
+							Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.previousPage()}>
-							<i classname=' me-2 bi bi-chevron-left'></i>
+							<i className=' me-2 bi bi-chevron-left'></i>
 							Pagina Anterior
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
+							Pagina Siguiente
+							<i className=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
+							Ultima Pagina
+							<i className=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>
@@ -321,9 +342,7 @@ export const GestionMovimientos = () => {
 					</Modal.Header>
 					<Modal.Body>
 						<Form className='Formcarga ' onSubmit={onSubmit}>
-							<Form.Group
-								className='formcargagroup'
-								controlId='inputname'>
+							<Form.Group className='formcargagroup' id='inputname'>
 								<Form.Label className='labelcarga'>Fecha</Form.Label>
 								<Form.Control
 									type='date'
@@ -332,9 +351,7 @@ export const GestionMovimientos = () => {
 									{...register('fecha')}></Form.Control>
 							</Form.Group>
 
-							<Form.Group
-								className='formcargagroup'
-								controlId='inputname'>
+							<Form.Group className='formcargagroup' id='inputname'>
 								<Form.Label className='labelcarga'>
 									Descripcion
 								</Form.Label>
@@ -348,9 +365,7 @@ export const GestionMovimientos = () => {
 								/>
 							</Form.Group>
 
-							<Form.Group
-								className='formcargagroup'
-								controlId='inputsubname'>
+							<Form.Group className='formcargagroup' id='inputsubname'>
 								<Form.Label className='labelcarga'>Adjunto</Form.Label>
 								<Form.Control
 									type='text'
@@ -386,15 +401,15 @@ export const GestionMovimientos = () => {
 				</Modal.Header>
 				<Modal.Body>
 					<Form>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id=''>
 							<Form.Label>Fecha: {selectedMov.fecha}</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id=''>
 							<Form.Label>
 								Movimiento: {selectedMov.descripcion}
 							</Form.Label>
 						</Form.Group>
-						<Form.Group className='mb-3' controlId=''>
+						<Form.Group className='mb-3' id=''>
 							<Form.Label>
 								Archivos Adjuntos: {selectedMov.archivo}
 							</Form.Label>

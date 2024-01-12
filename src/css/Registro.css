@@ -1,101 +1,100 @@
-.register{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content:space-between;
-    flex-direction: row;
-    background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-    url(/01.jpg);
-    background-size:cover;
-    object-fit:cover;
-    background-position:center;
+.register {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	background-image: linear-gradient(rgba(5, 7, 12, 0.5), rgba(5, 12, 7, 0.5)),
+		url(/01.jpg);
+	background-size: cover;
+	object-fit: cover;
+	background-position: center;
 }
-.login-tituloreg{
-    text-align: center;
-    width: 100%;
-    margin-top: 6vw;
-    margin-bottom: 6vw;
-    font-size: 5vw;
-    color: rgb(207, 207, 207);
+.login-tituloreg {
+	text-align: center;
+	width: 100%;
+	margin-top: 6vw;
+	margin-bottom: 6vw;
+	font-size: 5vw;
+	color: rgb(207, 207, 207);
 }
-.loginFormreg{
-    display: flex!important;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    align-content: center;
-    margin-top: 5vw;
-    width: 90%!important;
-    margin-bottom: 5vw;
-    border-radius: 5px;
-    border: 0.2vw outset rgb(143, 142, 139);
-    opacity: 0.85;
+.loginFormreg {
+	display: flex !important;
+	flex-wrap: wrap;
+	flex-direction: row;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+	margin: 4vw;
+	width: auto !important;
+	margin-bottom: 5vw;
+	border-radius: 5px;
+	border: 0.2vw outset rgb(143, 142, 139);
+	opacity: 0.85;
+	padding-right: 4vw !important;
 }
-.labelreg{
-    font-weight: 700;
-    width: 100%;
-    margin-left: 2vw;
-    margin-right: 2vw;
-    margin-bottom: 1vw;
-    background-color: rgb(36, 36, 36)!important;
-    color:rgb(207, 207, 207);
-    font-size: 3vw;
+.labelreg {
+	font-weight: 700;
+	width: 100%;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	margin-bottom: 1vw;
+	background-color: rgb(36, 36, 36) !important;
+	color: rgb(207, 207, 207);
+	font-size: 100%;
 }
-.botonesreg{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
+.botonesreg {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+	width: 100%;
 }
-.inputreg{
-    color: rgb(207, 207, 207);
-    width: 100%!important;
-    margin-left: 2vw;
-    margin-right: 2vw;
-    border-radius: 5px;
-    outline-color: rgb(143, 142, 139);
-    font-size: 3vw!important;
-    padding: 0.5vw!important;
+.inputreg {
+	color: rgb(207, 207, 207);
+	width: 100% !important;
+	margin-left: 2vw;
+	margin-right: 2vw;
+	border-radius: 5px;
+	outline-color: rgb(143, 142, 139);
+	font-size: 100% !important;
+	padding: 0.5vw !important;
 }
-.input-submitreg{
-    font-size: 3vw!important;
-    font-weight: 700;
-    margin-top: 1vw;
-	background-color: rgb(10, 61, 4)!important;
-    color: rgb(207, 207, 207);
-    width: 25%;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
-    border-radius: 5px;
-    cursor: pointer;
+.input-submitreg {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin-top: 1vw;
+	background-color: rgb(10, 61, 4) !important;
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 2vw;
 }
-.input-submitreg:hover{
-    opacity:0.8;
-    color: white;
-    background-color: transparent;
+.input-submitreg:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
 }
-.input-submitreg:disabled{
-    background-color: rgb(10, 61, 4);
-    opacity:0.3;
-    background-color: transparent;
+.input-submitreg:disabled {
+	background-color: rgb(10, 61, 4);
+	opacity: 0.3;
+	background-color: transparent;
 }
-.parraforeg{
-    font-size: 2.5vw;
-    font-family:'Poppins', sans-serif;
-    color: rgb(207, 207, 207);
-    margin-top: 2vw;
-    font-weight: 700;
+.parraforeg {
+	font-size: 80%;
+	font-family: 'Poppins', sans-serif;
+	color: rgb(207, 207, 207);
+	margin-top: 2vw;
+	font-weight: 600;
 }
-.parraforeg a{
-    text-decoration: underline;
-    color: rgb(255, 255, 255);
-    font-weight: bold;
+.parraforeg a {
+	text-decoration: underline;
+	color: rgb(255, 255, 255);
+	font-weight: bold;
 }
-.parraforeg a:hover{
-    opacity:0.8;
-    background-color: transparent;
+.parraforeg a:hover {
+	opacity: 0.8;
+	background-color: transparent;
 }
-
-
-

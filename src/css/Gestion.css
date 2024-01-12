@@ -1,192 +1,208 @@
 .bodygestion {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-	background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-image: linear-gradient(
+			100deg,
+			rgba(255, 255, 240, 0.02),
+			rgba(0, 0, 0, 1) 85%
+		),
 		url(/01.jpg);
 	background-size: cover;
-	background-position:center;
+	background-position: center;
 	object-fit: cover;
-    padding-bottom: 4vw;
+	padding-bottom: 4vw;
 }
 .btnpanelgestion {
-	font-weight: 700;
-	font-size: 2vw!important;
+	font-weight: 500;
+	font-size: 100% !important;
 	background-color: rgb(27, 27, 27);
-    color: rgb(207, 207, 207);
-    width: 30%;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5vw;
-    cursor: pointer;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	padding: 1vw !important;
+	cursor: pointer;
 	text-align: center;
-    margin-top: 4vw;
-    text-decoration: none;
+	margin: 1vw;
+	text-decoration: none;
+	text-wrap: wrap;
 }
-.btnpanelgestion:hover{
-    opacity:0.8;
+.btnpanelgestion:hover {
+	opacity: 0.8;
 	background-color: rgb(27, 27, 27);
 }
-.titlegestion{
-    text-align: center;
-    font-size: 5vw;
-    margin-top: 3vw;
-    padding-top: 4vw;
-    font-weight: 700;
-    color: rgb(207, 207, 207);
+.titlegestion {
+	text-align: center;
+	font-size: 150%;
+	margin: 3vw;
+	padding-top: 4vw;
+	font-weight: 700;
+	color: rgb(207, 207, 207);
 }
-.subtitlegestion{
-    text-align: center;
-    font-size: 3vw;
-    margin-top: 3vw;
-    font-weight: 500;
-    color: rgb(207, 207, 207);
+.subtitlegestion {
+	text-align: center;
+	font-size: 120%;
+	margin-top: 1vw;
+	font-weight: 400;
+	color: rgb(207, 207, 207);
 }
-.datosexptes{
-    text-align: center;
-    font-size: 2vw;
-    margin-top: 3vw;
-    margin-bottom: 2vw;
-    font-weight: 600;
-    width: 100%;
-    color: rgb(207, 207, 207);
+.datosexptes {
+	text-align: center;
+	font-size: 80%;
+	margin-top: 3vw;
+	margin-bottom: 2vw;
+	font-weight: 400;
+	color: rgb(207, 207, 207);
 }
-.titletabla{
-    text-align: center;
-    font-size: 5vw;
-    margin-top: 1vw;
-    font-weight: 700;
-    color: rgb(207, 207, 207);
+.titletabla {
+	text-align: center;
+	font-size: 150%;
+	margin-top: 1vw;
+	font-weight: 700;
+	color: rgb(207, 207, 207);
 }
-.tablagestion{
-    font-size: 2vw!important;
-    text-align: center;
-    color: rgb(143, 142, 139)!important;
+.tablagestion {
+	font-size: 100% !important;
+	text-align: center;
+	color: rgb(143, 142, 139) !important;
+	width: 100%!important;
 }
-.search{
-    display: flex!important;
-    justify-content: start;
-    align-items: center;
-    margin-bottom: 3vw;
-    padding-left: 2vw;
-    font-size: 2vw;
-}
-.searchinput{
-    align-items: center;
-    font-size: 2vw;
-    align-self: center;
-    margin-bottom: 1vw;
-    margin-left: 2vw;
-    border-radius: 5px;
-    outline-color: rgb(143, 142, 139);
-}
-.botonescciongestion{
-    width: 20%!important;
-}
-.btneditgestion{
-    color: rgb(207, 207, 207);
-    background-color:rgb(10, 61, 4);
-    padding:1vw!important;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-right: 1vw;
-}
-.btnborragestion{
-    color: rgb(207, 207, 207);
-    background-color: rgb(111, 8, 10);
-    border: 0.2vw outset rgb(143, 142, 139)!important;
-    border-radius: 5px;
-    padding:1vw!important;
-    cursor: pointer;
-    margin-right: 1vw;
 
+.search {
+	display: flex !important;
+	align-items: center;
+	flex-direction: row;
+	flex-wrap: wrap;
+	margin: 1vw;
+	padding: 1vw;
+	font-size: 100%;
 }
-.btnvergestion{
-    color: rgb(207, 207, 207);
-    background-color: rgb(21, 100, 160);
-    border: 0.2vw outset rgb(143, 142, 139)!important;
-    border-radius: 5px;
-    padding:1vw!important;
-    cursor: pointer;
-}
-.acciconogestion{
-    font-size: 100%;
-    color: rgb(207, 207, 207)!important;
-    padding:0.5vw!important;
-}
-.btnvpaginagestion{
-	font-weight: 700;
-	font-size: 2vw!important;
-	background-color: rgb(27, 27, 27);
-    color: rgb(207, 207, 207);
-    width: 20vw;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
+.searchinput {
+	align-items: center;
+	width: auto;
+	font-size: 100%;
+	align-self: center;
+	margin: 1vw;
 	border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.2vw;
-    cursor: pointer;
-	text-align: center;
-    margin-top: 1vw;
-    margin-right: 1vw;
-    text-decoration: none;
+	outline-color: rgb(143, 142, 139);
 }
-.btnvpaginagestion:hover{
-    opacity:0.8;
+.mes-header{
+	font-size: 120%;
+	font-weight: 500;
+}
+.botonescciongestion {
+	width: 20% !important;
+}
+.btneditgestion {
+	color: rgb(207, 207, 207);
+	background-color: rgb(10, 61, 4);
+	padding: 1vw !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 1vw;
+}
+.btnborragestion {
+	color: rgb(207, 207, 207);
+	background-color: rgb(111, 8, 10);
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 1vw !important;
+	cursor: pointer;
+	margin: 1vw;
+}
+.btnvergestion {
+	color: rgb(207, 207, 207);
+	background-color: rgb(21, 100, 160);
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 1vw !important;
+	cursor: pointer;
+	margin: 1vw;
+}
+.acciconogestion {
+	font-size: 100%!important;
+	color: rgb(207, 207, 207) !important;
+	padding-left: 1vw;
+	padding-right: 1vw;
+	padding-top: 0vw !important;
+	padding-bottom: 0vw !important;
+}
+.btnvpaginagestion {
+	font-weight: 500;
+	font-size: 80% !important;
+	background-color: rgb(27, 27, 27);
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	padding-right: 1vw;
+	cursor: pointer;
+	text-align: center;
+	margin: 1vw;
+	text-decoration: none;
+}
+.btnvpaginagestion:hover {
+	opacity: 0.8;
 	color: white;
 	background-color: transparent;
 }
-.modedittitle{
-    font-size: 2vw!important;
+.modedittitle {
+	font-size: 120% !important;
 }
-.modeditinput{
-    font-size: 2vw!important;
+.modeditinput {
+	font-size: 100% !important;
 }
-.modeditlabel{
-    font-size: 2vw!important;
+.modeditlabel {
+	font-size: 100% !important;
 }
-.modal-header{
-    background-color: rgb(27, 27, 27)!important;
-    color:rgb(207, 207, 207);
+.modal-header {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(207, 207, 207);
 }
-.btn-close{
-    background-color: rgb(207, 207, 207)!important;
-    color:rgb(207, 207, 207);
+.btn-close {
+	background-color: rgb(207, 207, 207) !important;
+	color: rgb(207, 207, 207);
 }
-.modal-body{
-    background-color: rgb(27, 27, 27)!important;
-    color:rgb(207, 207, 207);
+.modal-body {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(207, 207, 207);
 }
-.modal-footer{
-    background-color: rgb(27, 27, 27)!important;
-    color:rgb(207, 207, 207);
+.modal-footer {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(207, 207, 207);
 }
 .btnusumodal {
-	background-color:rgb(207, 207, 207) ;
-	font-weight: 700;
-	font-size: 3vw;
-	margin-top: 1vw;
+	background-color: rgb(207, 207, 207);
+	font-weight: 500;
+	font-size: 100%;
+	margin: 1vw;
+	padding: 2vw;
 	background-color: rgb(27, 27, 27);
-    color: rgb(207, 207, 207);
-    width: 30%;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-    cursor: pointer;
+	cursor: pointer;
 	text-align: center;
-    text-decoration: none;
+	text-decoration: none;
 }
-.btnusumodal:hover{
-    opacity:0.8;
+.btnusumodal:hover {
+	opacity: 0.8;
 	background-color: rgb(27, 27, 27);
 }
-.errors{
-    color:rgb(207, 207, 207)!important;
-    font-size: 2vw;
+.errors {
+	color: rgb(207, 207, 207) !important;
+	font-size: 2vw;
 }

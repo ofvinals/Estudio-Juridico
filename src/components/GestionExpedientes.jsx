@@ -82,6 +82,11 @@ export const GestionExpedientes = () => {
 		},
 		onSortingChange: setSorting,
 		onGlobalFilterChange: setFiltering,
+		defaultColumn: {
+			size: 400, //starting column size
+			minSize: 50, //enforced during column resizing
+			maxSize: 500, //enforced during column resizing
+		 },
 	});
 
 	// funcion para eliminar expedientes
@@ -114,8 +119,8 @@ export const GestionExpedientes = () => {
 
 	return (
 		<>
-			<div className='container-fluid bg-dark'>
-				<div className='main px-3 bodygestion '>
+			<div className='bg-dark'>
+				<div className='main bodygestion '>
 					<h4 className='titlegestion'>
 						Bienvenido de nuevo, {user.email}
 					</h4>
@@ -169,12 +174,12 @@ export const GestionExpedientes = () => {
 							onChange={(e) => setFiltering(e.target.value)}
 						/>
 					</div>
-					<div className='container table-responsive'>
+					<div className='table-responsive'>
 						<Table
 							striped
 							hover
 							variant='dark'
-							className='tablagestion table table-responsive border border-secondary-subtle'>
+							className='tablagestion align-middle table border border-secondary-subtle'>
 							<thead>
 								{table.getHeaderGroups().map((headerGroup) => (
 									<tr key={headerGroup.id}>
@@ -207,7 +212,7 @@ export const GestionExpedientes = () => {
 								{table.getRowModel().rows.map((row) => (
 									<tr key={row.original._id}>
 										{row.getVisibleCells().map((cell, index) => (
-											<td key={index}>
+											<td key={index} style={cell.column.id === 'caratula' ? { width: '50%!important' } : {}}>
 												{flexRender(
 													cell.column.columnDef.cell,
 													cell.getContext()
@@ -216,7 +221,7 @@ export const GestionExpedientes = () => {
 										))}
 
 										<td className='align-middle'>
-											<div className='d-flex flex-row justify-content-center'>
+											<div className='d-flex flex-row justify-content-between'>
 												{user.email === 'admin@gmail.com' && (
 													<Link
 														className='btneditgestion'
@@ -249,25 +254,25 @@ export const GestionExpedientes = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
+							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.previousPage()}>
-							<i classname=' me-2 bi bi-chevron-left'></i>
+							<i className=' me-2 bi bi-chevron-left'></i>
 							Pagina Anterior
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
+							Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
+							Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>

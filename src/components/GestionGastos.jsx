@@ -42,8 +42,8 @@ export const GestionGastos = () => {
 				header: 'Caratula',
 				accessorKey: 'caratula',
 				size: 500,
-				enableResizing: true
-			},			
+				enableResizing: true,
+			},
 			{
 				header: 'Concepto',
 				accessorKey: 'concepto',
@@ -87,7 +87,7 @@ export const GestionGastos = () => {
 			size: 200, //starting column size
 			minSize: 50, //enforced during column resizing
 			maxSize: 500, //enforced during column resizing
-		 },
+		},
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		getSortedRowModel: getSortedRowModel(),
@@ -137,8 +137,8 @@ export const GestionGastos = () => {
 
 	return (
 		<>
-			<div className='container-fluid bg-dark'>
-				<div className='main px-3 bodygestion'>
+			<div className='bg-dark'>
+				<div className='main bodygestion'>
 					<h4 className='titlegestion'>
 						Bienvenido de nuevo, {user.email}
 					</h4>
@@ -190,7 +190,7 @@ export const GestionGastos = () => {
 							onChange={(e) => setFiltering(e.target.value)}
 						/>
 					</div>
-					<div className='container table-responsive'>
+					<div className='table-responsive'>
 						<Table
 							striped
 							hover
@@ -229,9 +229,19 @@ export const GestionGastos = () => {
 									<tr key={row.original._id}>
 										{row.getVisibleCells().map((cell, index) => (
 											<td key={index}>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext()
+												{cell.column.id === 'adjunto' ? (
+													<span>
+														{row.original.adjunto ? (
+															<i className='bi bi-paperclip'></i>
+														) : (
+															<span>{row.original.adjunto}</span>
+														)}
+													</span>
+												) : (
+													flexRender(
+														cell.column.columnDef.cell,
+														cell.getContext()
+													)
 												)}
 											</td>
 										))}
@@ -272,7 +282,8 @@ export const GestionGastos = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.setPageIndex(0)}>
-							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
+							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer
+							Pagina
 						</button>
 						<button
 							className='btnvpaginagestion'
@@ -283,14 +294,16 @@ export const GestionGastos = () => {
 						<button
 							className='btnvpaginagestion'
 							onClick={() => table.nextPage()}>
-							Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
+							Pagina Siguiente
+							<i className=' ms-2 bi bi-chevron-right'></i>
 						</button>
 						<button
 							className='btnvpaginagestion'
 							onClick={() =>
 								table.setPageIndex(table.getPageCount() - 1)
 							}>
-							Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
+							Ultima Pagina
+							<i className=' ms-2 bi bi-chevron-bar-right'></i>
 						</button>
 					</div>
 				</div>

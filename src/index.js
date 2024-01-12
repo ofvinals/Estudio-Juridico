@@ -10,6 +10,8 @@ import { connectDB } from './db.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import multer from 'multer';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 
@@ -32,21 +34,15 @@ const app = express();
 
 app.use(
 	cors({
-		origin: [
-			`http://localhost:5173`,
-			`http://localhost:5174`,
-			'https://main--venerable-bienenstitch-79d388.netlify.app',
-		],
+		origin: 'http://localhost:5173',
 		credentials: true,
 		optionsSuccessStatus: 200,
 	})
 );
 
-connectDB();
-
 app.use(cookieParser());
 
-app.use(morgan('start'));
+app.use(morgan('combined'));
 
 app.use(express.json());
 

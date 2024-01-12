@@ -61,10 +61,12 @@ export const ExptesArchivados = () => {
 	}, []);
 
 	// Funcion para filtrar y cargar datos en la tabla
-	const expedientesTerminados = data.filter((expte) => expte.estado === 'Terminado');
+	const expedientesTerminados = data.filter(
+		(expte) => expte.estado === 'Terminado'
+	);
 
 	const table = useReactTable({
-		data:expedientesTerminados,
+		data: expedientesTerminados,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
@@ -135,6 +137,8 @@ export const ExptesArchivados = () => {
 
 					<div className='search'>
 						<p className='subtitlegestion'>Buscar Expediente</p>
+						<i className='iconavbar bi bi-search'></i>
+
 						<input
 							className='searchinput'
 							type='text'
@@ -147,7 +151,7 @@ export const ExptesArchivados = () => {
 							striped
 							hover
 							variant='dark'
-							className='tablagestion table border border-secondary-subtle'>
+							className='tablagestion align-middle table border border-secondary-subtle'>
 							<thead>
 								{table.getHeaderGroups().map((headerGroup) => (
 									<tr key={headerGroup.id}>

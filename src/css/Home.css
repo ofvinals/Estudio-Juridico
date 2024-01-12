@@ -1,6 +1,6 @@
 .imagennav {
 	position: relative;
-	height: 90vw;
+	height: 500px;
 	background-image: linear-gradient(
 			120deg,
 			rgba(255, 255, 240, 0.02) 0.5%,
@@ -13,33 +13,34 @@
 }
 .parrafo1 {
 	position: absolute;
-	top: 3vw;
-	left: 40vw;
-	font-size: 5vw;
-	color: rgb(207,207,207);
-
+	top: 15px;
+	right: 25px;
+	font-size: 24px;
+	color: rgb(207, 207, 207);
+	padding-left: 5%;
 }
 .parrafo2 {
 	position: absolute;
-	top: 35vw;
-	left: 5vw;
+	top: 200px;
 	right: 0;
+	left:0;
 	bottom: 0;
-	font-size: 7vw;
+	padding-left: 15px;
+	font-size: 200%;
 	font-weight: 700;
-	color: rgb(207,207,207) !important;
+	color: rgb(207, 207, 207) !important;
 }
 .botonturno {
 	position: absolute;
-	top: 75vw;
-	left: 15vw;
-	right: 15vw;
+	bottom: 5%;
+	left: 15%;
+	right: 15%;
 	padding: 1vw;
-	font-size: 3.5vw;
-	color: rgb(207,207,207) !important;
-	border: 0.5vw outset rgb(143, 142, 139) !important;
+	font-size: 100%;
+	color: rgb(207, 207, 207) !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-	font-weight: 700;
+	font-weight: 600;
 	text-decoration: none;
 	text-align: center;
 }
@@ -53,7 +54,7 @@
 .imagencar1 {
 	position: relative;
 	height: 90vw;
-	margin-top:1vw;
+	margin-top: 1vw;
 	background-image: linear-gradient(
 			60deg,
 			rgba(255, 255, 240, 0.02) 0.5%,
@@ -71,31 +72,30 @@
 .carousel-control-next {
 	width: 5vw;
 }
-.carousel-indicators{
-	display:none;
+.carousel-indicators {
+	display: none;
 }
 .titlecar1 {
-	position:absolute;
-	color: rgb(207,207,207) !important;
-	font-size: 7.5vw!important;
+	position: absolute;
+	color: rgb(207, 207, 207) !important;
+	font-size: 200% !important;
 	font-weight: 700;
 	top: -65vw;
-	left:2vw;
-	right:2vw;
+	left: 2vw;
+	right: 2vw;
 }
 .listacar1 {
-	position:absolute;
-	color: rgb(207,207,207) !important;
-	font-size: 3.5vw;
-	font-weight:700;
+	position: absolute;
+	color: rgb(207, 207, 207) !important;
+	font-size: 100%;
+	font-weight: 700;
 	top: -43vw;
-
 }
 .imagencar2 {
 	position: relative;
-	color: rgb(207,207,207);
+	color: rgb(207, 207, 207);
 	height: 90vw;
-	margin-top:1vw;
+	margin-top: 1vw;
 	filter: brightness(75%);
 	background-image: linear-gradient(
 			60deg,
@@ -108,26 +108,24 @@
 	background-position: 100%;
 }
 .titlecar2 {
-	position:absolute;
-	color: rgb(207,207,207) !important;
-	font-size: 7.5vw!important;
+	position: absolute;
+	color: rgb(207, 207, 207) !important;
+	font-size: 200% !important;
 	font-weight: 700;
 	top: -67vw;
-
 }
 .listacar2 {
-	position:absolute;
-	color: rgb(207,207,207) !important;
-	font-size: 3.5vw;
-	font-weight:700;
+	position: absolute;
+	color: rgb(207, 207, 207) !important;
+	font-size: 100%;
+	font-weight: 700;
 	top: -45vw;
-
 }
 .imagencar3 {
 	position: relative;
-	color: rgb(207,207,207) !important;
+	color: rgb(207, 207, 207) !important;
 	height: 90vw;
-	margin-top:1vw;
+	margin-top: 1vw;
 	background-image: linear-gradient(
 			160deg,
 			rgba(255, 255, 240, 0.02) 0.5%,
@@ -139,28 +137,27 @@
 	background-position: 100%;
 }
 .titlecar3 {
-	position:absolute;
-	color:rgb(207,207,207) !important;
-	font-size: 7.5vw!important;
+	position: absolute;
+	color: rgb(207, 207, 207) !important;
+	font-size: 200% !important;
 	font-weight: 700;
 	top: -70vw;
-	left:2vw;
-	right:2vw;
-
+	left: 1vw;
+	right: 1vw;
 }
 .listacar3 {
-	position:absolute;
-	color: rgb(207,207,207) !important;
-	font-size: 3.5vw;
-	font-weight:700;
+	position: absolute;
+	color: rgb(207, 207, 207) !important;
+	font-size: 100%;
+	font-weight: 700;
 	top: -55vw;
-
 }
+
 /* Section 4 Contactanos */
 .imagensection4 {
 	position: relative;
-	margin-top:1vw;
-	height: 80vw;
+	margin-top: 1vw;
+	height: 82vw;
 	background-image: linear-gradient(
 			120deg,
 			rgba(255, 255, 240, 0.02) 0.5%,
@@ -168,93 +165,101 @@
 		),
 		url(/414635-PD6SLS-602-1a.jpg);
 	background-size: cover;
-	background-position: 100%;
+	background-position: center;
 	object-fit: cover;
 	background-position: center;
+	
 }
 .titlecontac {
 	position: absolute;
-	font-size: 8vw!important;
-	color: rgb(207,207,207);
+	font-size: 200% !important;
+	color: rgb(207, 207, 207);
 	font-weight: 700;
 	top: 5vw;
-   left: 20vw;
-	right:20vw;
+	left: 20vw;
+	right: 20vw;
 }
-.conttel{
-	position:absolute;
+.conttel {
+	position: absolute;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	top:25vw;
-	left: 15vw;
-	right:15vw;
+	top: 25%;
+	left: 15%;
+	right: 15%;
+	font-size: 100%;
 }
-.contmail{
-	position:absolute;
+.contmail {
+	position: absolute;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	top:35vw;
-	left: 15vw;
-	right:15vw;
+	top: 37%;
+	left: 15%;
+	right: 15%;
+	font-size: 100%;
 }
-.contdir{
-	position:absolute;
+.contdir {
+	position: absolute;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	top:45vw;
-	left: 5vw;
-	right:5vw;
+	top: 50%;
+	left: 5%;
+	right: 5%;
+	font-size: 100%;
 }
-.textosec4{
-	font-size: 4vw;
-	color: rgb(207,207,207)!important;
+.textosec4 {
+	font-size: 150%;
+	color: rgb(207, 207, 207) !important;
 }
 .icosec4 {
-	font-size: 4vw;
-	color: rgb(207,207,207)!important;
+	font-size: 150%;
+	color: rgb(207, 207, 207) !important;
+	padding-right: 1%;
 }
 .botonturnoabajo {
 	position: absolute;
-	left: 20vw;
-	right: 20vw;
-	top: 65vw;
+	left: 10%;
+	right: 10%;
+	bottom: 5%;
 	padding: 1vw;
 	text-decoration: none;
-	font-size: 2vw;
-	color: rgb(207,207,207) !important;
+	font-size: 100%;
+	color: rgb(207, 207, 207) !important;
 	text-align: center;
 	border: 0.2vw outset var(--main-color) !important;
 	border-radius: 5px;
-	font-weight: 700;
+	font-weight: 600;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .botonturnoabajo:hover {
 	opacity: 0.7;
 	background-color: transparent;
 	color: white;
 }
-.float{
-	position:fixed;
-	width:60px;
-	height:60px;
-	bottom:40px;
-	right:40px;
-	background-color:#25d366;
-	color:#FFF;
-	border-radius:50px;
-	text-align:center;
-   font-size:30px;
+.float {
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 80px;
+	right: 40px;
+	background-color: #25d366;
+	color: #fff;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 30px;
 	box-shadow: 2px 2px 3px #999;
-   z-index:100;
+	z-index: 100;
 }
 .float:hover {
 	text-decoration: none;
 	color: #25d366;
-   background-color:#fff;
+	background-color: #fff;
 }
 
-.my-float{
-	margin-top:16px;
+.my-float {
+	margin-top: 16px;
 }

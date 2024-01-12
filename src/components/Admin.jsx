@@ -21,10 +21,10 @@ export const Admin = () => {
 
 	return (
 		<>
-			<div className='bodycontact container-fluid'>
+			<div className='bodyadmin'>
 				<div className='main px-3 '>
 					<h4 className='titlead'>Bienvenido de nuevo, {user.email}</h4>
-					<p className='subtitleadusu'>Panel de Administracion</p>
+					<h3 className='subtitleadusu'>Panel de Administracion</h3>
 				</div>
 
 				<div className='botonesadm'>

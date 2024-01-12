@@ -1,122 +1,115 @@
-.bodycarga{
-   display: flex;
-   flex-wrap: nowrap;
-   align-items: center;
-   justify-content:space-between;
-   flex-direction: row;
-   background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-   url(/01.jpg);
-   background-size:cover;
-   object-fit:cover;
-   background-position:center;
+.bodycarga {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	background-image: linear-gradient(rgba(5, 7, 12, 0.5), rgba(5, 12, 7, 0.5)),
+		url(/01.jpg);
+	background-size: cover;
+	object-fit: cover;
+	background-position: center;
 }
-.titlecarga{
-   text-align: center;
-   width: 100%;
-   margin-top: 2vw;
-   margin-bottom: 2vw;
-   font-size: 3vw;
-   color: rgb(143, 142, 139);
+.titlecarga {
+	text-align: center;
+	width: 100%;
+	margin-top: 2vw;
+	margin-bottom: 2vw;
+	font-size: 3vw;
+	color: rgb(143, 142, 139);
 }
-.Formcarga{
-   display: flex!important;
-   flex-wrap: wrap;
-   justify-content: space-around!important;
-   align-items: center;
-   align-content: center;
-   opacity: 0.85;
+.Formcarga {
+	display: flex !important;
+	flex-wrap: wrap;
+	justify-content: space-around !important;
+	align-items: center;
+	align-content: center;
+	opacity: 0.85;
 }
-.labelcarga{
-   font-weight: 700;
-   width: 100%!important;
-   margin-right: 2vw!important;
-   margin-top: 0.5vw;
-   background-color:transparent!important;
-   color:rgb(207, 207, 207);
-   font-size: 3vw!important;
+.labelcarga {
+	font-weight: 700;
+	width: 100% !important;
+	margin: 1vw !important;
+	background-color: transparent !important;
+	color: rgb(207, 207, 207);
+	font-size: 100% !important;
 }
-.inputcarga{
-   color: rgb(36, 36, 36);
-   width: 100%!important;
-   margin-right: 2vw!important;
-   margin-bottom: 1vw;
-   border-radius: 5px;
-   outline-color: rgb(143, 142, 139);
-   font-size: 3vw!important;
-   padding:0.4vw!important;
+.inputcarga {
+	color: rgb(36, 36, 36);
+	width: 100% !important;
+	margin: 1vw !important;
+	border-radius: 5px;
+	outline-color: rgb(143, 142, 139);
+	font-size: 100% !important;
+	padding: 1vw !important;
 }
-.grupocaratula{
-   display: flex;
-   flex-direction: column;
-   width: 100%;
-   margin-left:3vw;
-   margin-right: 3vw;
+.grupocaratula {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin: 1vw;
+	padding: 1vw;
 }
-.labelcarcaratula{
-   font-weight: 700;
-   width: 100%!important;
-   margin-left:1vw;
-   margin-right: 1vw;
-
-
-   background-color: rgb(36, 36, 36)!important;
-   color:rgb(207, 207, 207)!important;
-   font-size: 2vw;
+.labelcarcaratula {
+	font-weight: 600;
+	width: 100% !important;
+	margin: 1vw;
+	background-color: rgb(36, 36, 36) !important;
+	color: rgb(207, 207, 207) !important;
+	font-size: 100%;
 }
 
-.formcargagroup{
-   margin-left: 1vw;
+.formcargagroup {
+	margin-left: 1vw;
 }
-.botonescarga{
-   display: flex!important;
-   justify-content: center;
-   flex-direction: row;
-   align-items: center;
-   width: 100%;
+.botonescarga {
+	display: flex !important;
+	justify-content: center;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
 }
-.botoneditcarga{
-   font-size: 2.5vw!important;
-   font-weight: 600;
-   margin-top: 3vw;
-   margin-right: 3vw;
-   margin-left: 3vw;
-   display: flex!important;
-   align-items: center;
-   justify-content: center;
-   background-color: rgb(10, 61, 4)!important;
-   color: rgb(207, 207, 207);
-   width: 47%!important;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   cursor: pointer;
-   padding:1vw!important;
+.botoneditcarga {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin: 1vw;
+   margin-top:4vw !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	background-color: rgb(10, 61, 4) !important;
+	color: rgb(207, 207, 207);
+	width: auto !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 1vw !important;
 }
-.botoneditcarga:hover{
-   opacity:0.8;
-   color: white;
-   background-color: transparent;
+.botoneditcarga:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
 }
-.btncanccarga{
-   font-size: 2.5vw!important;
-   font-weight: 600;
-   margin-top: 3vw;
-   margin-right: 3vw;
-   margin-left: 3vw;
-   background-color: rgb(111, 8, 10)!important;
-   color: rgb(207, 207, 207);
-   width: 40%!important;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   display: flex;
-   align-items: center;
-   justify-content: center;
-   cursor: pointer;
-   padding:1vw!important;
-   text-align: center;
-   text-decoration: none;
+.btncanccarga {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin: 1vw;
+   margin-top:4vw !important;
+	background-color: rgb(111, 8, 10) !important;
+	color: rgb(207, 207, 207);
+	width: auto !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+	padding: 1vw !important;
+	text-align: center;
+	text-decoration: none;
 }
-.btncanccarga:hover{
-   opacity:0.8;
-   color: white;
-   background-color: transparent;
+.btncanccarga:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
 }

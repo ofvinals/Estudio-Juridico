@@ -189,7 +189,7 @@ export const AgendaUsu = () => {
 
 	return (
 		<>
-			<div className='container-fluid'>
+			<div>
 				<div className='main px-3 bodyagusu'>
 					<h4 className='titleagusu'>Bienvenido, {user.email}</h4>
 					<p className='subtitleagusu'>Panel de Turnos Online</p>
@@ -255,7 +255,7 @@ export const AgendaUsu = () => {
 						<hr className='linea mx-3' />
 
 						<h2 className='titleagusu'>Turnos pendientes</h2>
-						<div className='container table-responsive'>
+						<div className='table-responsive'>
 							<Table
 								striped
 								hover

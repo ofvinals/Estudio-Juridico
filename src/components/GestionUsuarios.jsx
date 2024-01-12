@@ -109,8 +109,8 @@ export const GestionUsuarios = () => {
 
 	return (
 		<>
-			<div className='bodygestion container-fluid bg-dark'>
-				<div className='main px-3 '>
+			<div className='bodygestion bg-dark'>
+				<div className='main'>
 					<h4 className='titlegestion'>
 						Bienvenido de nuevo, {user.email}
 					</h4>
@@ -149,7 +149,7 @@ export const GestionUsuarios = () => {
 						onChange={(e) => setFiltering(e.target.value)}
 					/>
 				</div>
-				<div className='container table-responsive'>
+				<div className='table-responsive'>
 					<Table
 						striped
 						hover
@@ -231,23 +231,23 @@ export const GestionUsuarios = () => {
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.setPageIndex(0)}>
-						<i classname=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
+						<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
 					</button>
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.previousPage()}>
-						<i classname=' me-2 bi bi-chevron-left'></i>
+						<i className=' me-2 bi bi-chevron-left'></i>
 						Pagina Anterior
 					</button>
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.nextPage()}>
-						Pagina Siguiente<i classname=' ms-2 bi bi-chevron-right'></i>
+						Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
 					</button>
 					<button
 						className='btnvpaginagestion'
 						onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-						Ultima Pagina<i classname=' ms-2 bi bi-chevron-bar-right'></i>
+						Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
 					</button>
 				</div>
 			</div>

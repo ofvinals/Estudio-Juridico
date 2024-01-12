@@ -39,9 +39,9 @@ export const Header = () => {
 				onSelect={() => setExpanded(false)}>
 				<Container className='allnav'>
 					<Navbar.Brand as={Link} to='/home'>
-						<img src='/logo estudio.png' width='50px' alt='logoestudio' />
+						<img src='/logo estudio.png' width='25px' alt='logoestudio' />
 					</Navbar.Brand>
-					<p className='fw-bold navtitle mx-2 mt-2 text-center'>
+					<p className='navtitle'>
 						Estudio Juridico Online
 					</p>
 					<Navbar.Toggle
@@ -101,11 +101,11 @@ export const Header = () => {
 								<p className='estadolog'>
 									Estas logueado como: {estadoLogin}
 								</p>
-									<Link to='/login' disabled={!!user} className='botonnavlog'>
+									<Link to='/login' className={`botonnavlog ${user ? 'logdisable' : ''}`} onClick={user ? (e) => e.preventDefault() : null}>
 										<i className='iconavbar bi bi-box-arrow-in-right'></i>
 										Inicia sesion
 									</Link>
-								<Link to='/registro' disabled={!!user} className='botonnavreg'>
+								<Link to='/registro' className={`botonnavreg ${user ? 'regdisable' : ''}`} onClick={user ? (e) => e.preventDefault() : null}>
 										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme
 									</Link>

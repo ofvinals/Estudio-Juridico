@@ -1,77 +1,89 @@
-.titlead{
-    margin-top: 3vw;
-    margin-bottom: 5vw;
-    font-size: 5vw;
-    font-weight: 800;
-    color:rgb(207,207,207)
+.bodyadmin{
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-image: linear-gradient(
+			100deg,
+			rgba(255, 255, 240, 0.02),
+			rgba(0, 0, 0, 1) 85%
+		),
+		url(/01.jpg);
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	padding-bottom: 4vw;
 }
-.subtitleadusu{ 
-    font-size: 3vw;
-    font-weight: 600;
-    color: rgb(207,207,207);
+.titlead {
+	margin-top: 3vw;
+	margin-bottom: 5vw;
+	font-size: 150%;
+	font-weight: 800;
+	color: rgb(207, 207, 207);
+}
+.subtitleadusu {
+	font-size: 120%;
+	font-weight: 600;
+   margin-bottom: 5vw;
+	color: rgb(207, 207, 207);
 }
 .main {
 	display: flex;
 	flex-direction: column;
-    text-align: center;
+	text-align: center;
 }
-.botonesadm{
-display: flex;
-flex-wrap: wrap ;
-align-items: center;
-align-content: center;
-justify-content: space-around;
-
+.botonesadm {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+	justify-content: space-around;
 }
-.botonadm{
-    margin-right: 3vw!important;
-    margin-left: 3vw!important;
-    margin-bottom: 3vw;
-    margin-top: 3vw;
-    font-weight: 700;
-    padding: 1vw!important;
+.botonadm {
+	padding: 2vw;
+	margin: 1vw;
+	font-weight: 600;
 	background-color: rgb(27, 27, 27);
-    color: rgb(207,207,207);
-    width: 40%;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
 	text-align: center;
-    text-decoration: none;
-    align-self: center;
-    font-size:2.5vw;
+	text-decoration: none;
+	align-self: center;
+	font-size: 100%;
+	text-wrap: nowrap;
 }
-.botonadm:hover{
-    opacity:0.8;
-    color: white;
-    background-color: transparent;
+.botonadm:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
 }
-.botonlogout{
-    margin-right: 3vw;
-    margin-left: 3vw;
-    margin-bottom: 3vw;
-    margin-top: 3vw;
-    font-weight: 700;
-    padding: 1vw!important;
-	background-color: rgb(60, 5, 5)!important;
-    color: rgb(207,207,207);
-    width: 40%;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
+.botonlogout {
+	margin: 1vw;
+	font-weight: 700;
+	padding: 2vw;
+	background-color: rgb(60, 5, 5) !important;
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
 	text-align: center;
-    text-decoration: none;
-    align-self: center;
-    font-size:2.5vw;
+	text-decoration: none;
+	align-self: center;
+	font-size: 100%;
 }
-.botonlogout:hover{
-    opacity:0.8;
-    color: white;
-    background-color: transparent;
+.botonlogout:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
 }

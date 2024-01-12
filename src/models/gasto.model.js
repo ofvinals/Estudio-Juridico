@@ -20,7 +20,7 @@ const gastoSchema = new mongoose.Schema(
 
 		},		
 		monto: {
-			type: String,
+			type: Number,
 			required: true,
 		},
 		estado: {

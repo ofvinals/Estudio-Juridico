@@ -5,7 +5,7 @@ import '../css/Home.css';
 
 export const Home = () => {
 	return (
-		<div className='bg-dark container-fluid'>
+		<div className='bg-dark'>
 			<a
 				href='https://api.whatsapp.com/send?phone=+543814581382&text=Hola!%20Quiero%20consultar%20por%20servicios%20de%20asesoramiento%20legal.%20'
 				className='float'
@@ -99,8 +99,7 @@ export const Home = () => {
 								</li>
 								<li>Gestión de cobranzas</li>
 								<li>
-									Revisión y redacción de contratos en general,
-									comercial, laboral y de confidencialidad
+									Revisión y redacción de contratos en general
 								</li>
 								<li>
 									Creación, transformacion y liquidacion de todo tipo

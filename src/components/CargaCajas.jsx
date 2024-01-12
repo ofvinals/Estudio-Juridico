@@ -40,8 +40,7 @@ export const CargaCajas = () => {
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
-		const fechaFormateada = format(new Date(values.fecha), 'dd/MM/yyyy');
-		createCaja({ ...values, fecha: fechaFormateada });
+		createCaja(values);
 		Swal.fire({
 			icon: 'success',
 			title: 'Caja registrada correctamente',
@@ -63,7 +62,7 @@ export const CargaCajas = () => {
 					</Modal.Header>
 					<Modal.Body>
 						<Form className='Formcarga' onSubmit={onSubmit}>
-							<Form.Group className='mb-3' controlId='inputname'>
+							<Form.Group className='mb-3' id='inputname'>
 								<Form.Label className='labelcarga'>Fecha</Form.Label>
 								<Form.Control
 									type='date'
@@ -73,7 +72,7 @@ export const CargaCajas = () => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='mb-3' controlId='inputconcepto'>
+							<Form.Group className='mb-3' id='inputconcepto'>
 								<Form.Label className='labelcarga'>Concepto</Form.Label>
 								<Form.Control
 									type='text'
@@ -82,16 +81,19 @@ export const CargaCajas = () => {
 									{...register('concepto')}></Form.Control>
 							</Form.Group>
 
-							<Form.Group className='mb-3' controlId='inputmonto'>
+							<Form.Group className='mb-3' id='inputtipo'>
 								<Form.Label className='labelcarga'>Tipo</Form.Label>
-								<Form.Control
+								<select
 									className='inputcarga'
-									type='text'
-									{...register('tipo')}
-								/>
+									aria-label='Default select'
+									{...register('tipo')}>
+									<option>Selecciona..</option>
+									<option value='INGRESO'>Ingreso</option>
+									<option value='EGRESO'>Egreso</option>
+								</select>
 							</Form.Group>
 
-							<Form.Group className='mb-3' controlId='inputmonto'>
+							<Form.Group className='mb-3' id='inputmonto'>
 								<Form.Label className='labelcarga'>Monto</Form.Label>
 								<Form.Control
 									className='inputcarga'
@@ -100,20 +102,18 @@ export const CargaCajas = () => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='' controlId='inputcel'>
+							<Form.Group className='' id='inputcel'>
 								<Form.Label className='labelcarga'>
 									Comprobante de caja
 								</Form.Label>
 								<Form.Control
 									className='inputcarga'
 									type='text'
-									{...register('comprobante')}
+									{...register('adjunto')}
 								/>
 							</Form.Group>
 
-							<Form.Group
-								className='formcargagroup'
-								controlId='inputsubname'>
+							<Form.Group className='formcargagroup' id='inputsubname'>
 								<Form.Label className='labelcarga'>Estado</Form.Label>
 								<select
 									className='inputcarga'
@@ -122,13 +122,14 @@ export const CargaCajas = () => {
 									<option>Selecciona..</option>
 									<option value='Pendiente'>Pendiente</option>
 									<option value='Pagado'>Pagado</option>
+									<option value='Cobrado'>Cobrado</option>
 									<option value='Cancelado'>Cancelado</option>
 								</select>
 							</Form.Group>
 
 							<Form.Group
 								className='mb-3 botonescarga'
-								controlId='inputpassword'>
+								id='inputpassword'>
 								<Button className='botoneditcarga' type='submit'>
 									<i className='iconavbar bi bi-check2-square'></i>
 									Registrar Movimiento

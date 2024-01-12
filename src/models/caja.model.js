@@ -15,7 +15,7 @@ const cajaSchema = new mongoose.Schema(
 			require: true,
 		},
 		monto: {
-			type: String,
+			type: Number,
 			require: true,
 		},
 		adjunto: {

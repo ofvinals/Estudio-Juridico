@@ -21,13 +21,9 @@ export const Registro = () => {
 
 	return (
 		<section className='register'>
-			{
-				RegisterErrors.map((error, i)=>(
-					<div key={i}>
-						{error}
-					</div>
-				))
-			}
+			{RegisterErrors.map((error, i) => (
+				<div key={i}>{error}</div>
+			))}
 			<Form
 				id='loginFormreg'
 				className='loginFormreg container fluid bg-dark'
@@ -108,12 +104,17 @@ export const Registro = () => {
 					<Form.Label className='labelreg' id='inputconfirm'>
 						Confirmar Contraseña
 					</Form.Label>
-					<Form.Control className='inputreg' type='password' id='confirm'/>
+					<Form.Control
+						className='inputreg'
+						type='password'
+						id='confirm'
+					/>
 				</Form.Group>
 
 				<Form.Group className='mb-3 botonesreg'>
 					<Button className='input-submitreg' type='submit'>
-						Enviar
+						<i className='iconavbar bi bi-r-circle-fill'></i>
+						Registrar cuenta
 					</Button>
 
 					<p className='parraforeg text-center'>

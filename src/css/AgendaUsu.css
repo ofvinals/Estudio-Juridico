@@ -1,243 +1,246 @@
-.css-a643pv-MuiStack-root{
-  width: 45vw;
-  font-size: 3vw!important;
-  margin-left: 25vw;
-  margin-right: 25vw;
-  margin-bottom:3vw;
+.css-a643pv-MuiStack-root {
+	width: 60%;
+	font-size: 120% !important;
+	margin-left: 25%;
+	margin-right: 25%;
+	margin-bottom: 3vw;
 }
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
-  background-color: rgb(27, 27, 27);
-  color: rgb(143, 142, 139)!important;
-  border: 0.2vw outset rgb(143, 142, 139)!important;
-  border-radius: 5px!important;
-  text-align: center;
-  font-size: 2.5vw!important;
-  border-color: rgb(143, 142, 139)!important;
+.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+	background-color: rgb(27, 27, 27);
+	color: rgb(143, 142, 139) !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px !important;
+	text-align: center;
+	font-size: 100% !important;
+	border-color: rgb(143, 142, 139) !important;
 }
-.css-kzf2d7-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline{
-  border-color: rgb(143, 142, 139)!important;
+.css-kzf2d7-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
+	.MuiOutlinedInput-notchedOutline {
+	border-color: rgb(143, 142, 139) !important;
 }
-.css-1g7nc1s-MuiPickersLayout-root .MuiPickersLayout-toolbar{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1g7nc1s-MuiPickersLayout-root .MuiPickersLayout-toolbar {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
 .css-y0fr9s-MuiButtonBase-root-MuiTab-root {
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1b9e08i-MuiTypography-root-MuiPickersToolbarText-root {  
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1b9e08i-MuiTypography-root-MuiPickersToolbarText-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-mvmxd9-MuiTypography-root-MuiPickersToolbarText-root{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-mvmxd9-MuiTypography-root-MuiPickersToolbarText-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1e4tpwf-MuiTypography-root-MuiPickersToolbarText-root-MuiDateTimePickerToolbar-separator{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1e4tpwf-MuiTypography-root-MuiPickersToolbarText-root-MuiDateTimePickerToolbar-separator {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1hbyad5-MuiTypography-root{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1hbyad5-MuiTypography-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-13vtpvu-MuiTypography-root-MuiPickersToolbarText-root{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-13vtpvu-MuiTypography-root-MuiPickersToolbarText-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1q04gal-MuiDateCalendar-root{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1q04gal-MuiDateCalendar-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-rhmlg1-MuiTypography-root-MuiDayCalendar-weekDayLabel{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-rhmlg1-MuiTypography-root-MuiDayCalendar-weekDayLabel {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root:disabled{ 
-  color: rgb(71, 68, 68)!important;
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root:disabled {
+	color: rgb(71, 68, 68) !important;
 }
-.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root.Mui-selected{
-  color: rgb(33, 186, 19)!important;
+.css-1u23akw-MuiButtonBase-root-MuiPickersDay-root.Mui-selected {
+	color: rgb(33, 186, 19) !important;
 }
-.css-1g7nc1s-MuiPickersLayout-root .MuiPickersLayout-actionBar{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-1g7nc1s-MuiPickersLayout-root .MuiPickersLayout-actionBar {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1e6y48t-MuiButtonBase-root-MuiButton-root{
-  color: rgb(143, 142, 139)!important;
+.css-1e6y48t-MuiButtonBase-root-MuiButton-root {
+	color: rgb(143, 142, 139) !important;
 }
-.css-ku1d3k-MuiTimeClock-root{
-  background-color: rgb(27, 27, 27)!important;
-  color: rgb(143, 142, 139)!important;
+.css-ku1d3k-MuiTimeClock-root {
+	background-color: rgb(27, 27, 27) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-4f0ona-MuiClock-clock{
-  background-color: rgb(17, 16, 16)!important;
-  color: rgb(143, 142, 139)!important;
+.css-4f0ona-MuiClock-clock {
+	background-color: rgb(17, 16, 16) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1vooibu-MuiSvgIcon-root{
-  color: rgb(143, 142, 139)!important;
+.css-1vooibu-MuiSvgIcon-root {
+	color: rgb(143, 142, 139) !important;
 }
-.css-umzx0k-MuiClock-pin{
-  background-color: rgb(143, 142, 139)!important;
+.css-umzx0k-MuiClock-pin {
+	background-color: rgb(143, 142, 139) !important;
 }
-.css-rdq5h4-MuiClockPointer-root{
-  background-color: rgb(143, 142, 139)!important;
+.css-rdq5h4-MuiClockPointer-root {
+	background-color: rgb(143, 142, 139) !important;
 }
-.css-eg3pzz-MuiClockPointer-thumb{
-  background-color: rgb(143, 142, 139)!important;
-  color: rgb(143, 142, 139)!important;
+.css-eg3pzz-MuiClockPointer-thumb {
+	background-color: rgb(143, 142, 139) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-d0vs79-MuiClockPointer-root{
-background-color: rgb(143, 142, 139)!important;
-color: rgb(143, 142, 139)!important;
+.css-d0vs79-MuiClockPointer-root {
+	background-color: rgb(143, 142, 139) !important;
+	color: rgb(143, 142, 139) !important;
 }
-.css-1ys9rbi-MuiClock-wrapper{
-  background-color: rgb(143, 142, 139)!important;
+.css-1ys9rbi-MuiClock-wrapper {
+	background-color: rgb(143, 142, 139) !important;
 }
-.css-zddqwy-MuiClockNumber-root{
-  color: rgb(143, 142, 139)!important;
+.css-zddqwy-MuiClockNumber-root {
+	color: rgb(143, 142, 139) !important;
 }
-.css-zddqwy-MuiClockNumber-root.Mui-disabled{
-  color: rgb(68, 60, 60)!important;
+.css-zddqwy-MuiClockNumber-root.Mui-disabled {
+	color: rgb(68, 60, 60) !important;
 }
-.css-zddqwy-MuiClockNumber-root.Mui-selected{
-  color: rgb(27, 27, 27)!important;
-  background-color: rgb(143, 142, 139);
+.css-zddqwy-MuiClockNumber-root.Mui-selected {
+	color: rgb(27, 27, 27) !important;
+	background-color: rgb(143, 142, 139);
 }
-.css-53ccts-MuiClockNumber-root.Mui-disabled{
-  color: rgb(68, 60, 60)!important;
+.css-53ccts-MuiClockNumber-root.Mui-disabled {
+	color: rgb(68, 60, 60) !important;
 }
-.css-53ccts-MuiClockNumber-root{
-color: rgb(143, 142, 139)!important;
+.css-53ccts-MuiClockNumber-root {
+	color: rgb(143, 142, 139) !important;
 }
-.css-53ccts-MuiClockNumber-root.Mui-selected{
-  color: rgb(27, 27, 27)!important;
-  background-color: rgb(143, 142, 139);
+.css-53ccts-MuiClockNumber-root.Mui-selected {
+	color: rgb(27, 27, 27) !important;
+	background-color: rgb(143, 142, 139);
 }
-.css-rdq5h4-MuiClockPointer-root{
-  color: rgb(27, 27, 27)!important;
-  background-color: rgb(143, 142, 139);
+.css-rdq5h4-MuiClockPointer-root {
+	color: rgb(27, 27, 27) !important;
+	background-color: rgb(143, 142, 139);
 }
-.bodyagusu{
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-	  background-image: linear-gradient(100deg, rgba(255,255, 240, 0.02), rgba(0, 0, 0, 1)85%),
+.bodyagusu {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background-image: linear-gradient(
+			100deg,
+			rgba(255, 255, 240, 0.02),
+			rgba(0, 0, 0, 1) 85%
+		),
 		url(/01.jpg);
-	  background-size: cover;
-	  background-position: center;
-	  object-fit: cover;
-    padding-bottom: 10vw;
+	background-size: cover;
+	background-position: center;
+	object-fit: cover;
+	padding-bottom: 4vw;
 }
-.titleagusu{
-  text-align: center;
-  font-size: 6vw;
-  margin-top:2vw;
-  margin-bottom: 2vw;
-  font-weight: 700;
-  color: rgb(207, 207, 207);
-}
-.subtitleagusu{
-  text-align: center;
-  font-size: 4vw;
-  margin-top:2vw;
-  margin-bottom: 2vw;
-  font-weight: 700;
-  color: rgb(207, 207, 207);
-}
-.formagusu{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.btnesagusu{
-  display: flex;
-  justify-content: center;
-}
-.btneditagusu{
-  color: rgb(207, 207, 207);
-  background-color:rgb(10, 61, 4);
-  padding:1vw!important;
-  border: 0.2vw outset rgb(143, 142, 139)!important;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 1vw;
-  
-}
-.btnborraagusu{
-  color: rgb(207, 207, 207);
-  background-color: rgb(111, 8, 10);
-  border: 0.2vw outset rgb(143, 142, 139)!important;
-  border-radius: 5px;
-  padding:1vw!important;
-  cursor: pointer;
-}
-.btnveragusu{
-  color: rgb(207, 207, 207);
-  background-color: rgb(21, 100, 160);
-  border: 0.2vw outset rgb(143, 142, 139)!important;
-  border-radius: 5px;
-  padding:1vw!important;
-  cursor: pointer;
-}
-.btnagusuverif{
-  font-weight: 600;
-	font-size: 3vw;
-  margin-left: 1vw;
+.titleagusu {
+	text-align: center;
+	font-size: 150%;
 	margin-top: 1vw;
+	font-weight: 700;
+	color: rgb(207, 207, 207);
+}
+.subtitleagusu {
+	text-align: center;
+	font-size: 120%;
+	margin-top: 1vw;
+	font-weight: 400;
+	color: rgb(207, 207, 207);
+}
+.formagusu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.btnesagusu {
+	display: flex;
+	justify-content: center;
+}
+.btneditagusu {
+	color: rgb(207, 207, 207);
 	background-color: rgb(10, 61, 4);
-  color: rgb(207, 207, 207);
-  width: 50%;
-  border: 0.2vw outset rgb(143, 142, 139)!important;
+	padding: 1vw !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-  padding: 0.5vw;
-  display: flex!important;
-  justify-content: center!important;
-  align-items: center!important;
-  cursor: pointer;
+	cursor: pointer;
+	margin: 1vw;
+}
+.btnborraagusu {
+	color: rgb(207, 207, 207);
+	background-color: rgb(111, 8, 10);
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 1vw !important;
+	cursor: pointer;
+}
+.btnveragusu {
+	color: rgb(207, 207, 207);
+	background-color: rgb(21, 100, 160);
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 1vw !important;
+	cursor: pointer;
+}
+.btnagusuverif {
+	font-weight: 500;
+	font-size: 80%;
+  margin: 1vw;
+	background-color: rgb(10, 61, 4);
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding-right: 1vw !important;
+  display: flex !important;
+	justify-content: center !important;
+	align-items: center !important;
+	cursor: pointer;
 	text-align: center;
 	text-decoration: none;
 }
-.btnagusuverif:hover{
-    opacity:0.8;
+.btnagusuverif:hover {
+	opacity: 0.8;
 	color: white;
 	background-color: transparent;
 }
-.acciconoagusu{
-  font-size: 100%;
-  color: rgb(207, 207, 207)!important;
-  padding:0.5vw!important;
+.acciconoagusu {
+	font-size: 100%;
+	color: rgb(207, 207, 207) !important;
+	padding: 0.5vw !important;
 }
-.tablaagusu{
-  font-size: 3vw!important;
-  text-align: center;
-  color: rgb(143, 142, 139)!important;
-}
-.btnpanelagusu{
-	font-weight: 700;
-	font-size: 3vw!important;
-	background-color: rgb(27, 27, 27);
-    color: rgb(143, 142, 139);
-    width: 40%;
-    border: 0.2vw outset rgb(143, 142, 139)!important;
-	border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0.5vw;
-    cursor: pointer;
+.tablaagusu {
+	font-size: 100% !important;
 	text-align: center;
-    margin-top: 1vw;
-    text-decoration: none;
+	color: rgb(143, 142, 139) !important;
 }
-.btnpanelagusu:hover{
-    opacity:0.8;
+.btnpanelagusu {
+	font-weight: 500;
+	font-size: 80% !important;
+	background-color: rgb(27, 27, 27);
+	color: rgb(207, 207, 207);
+	width: auto;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	padding-right: 1vw !important;
+	cursor: pointer;
+	text-align: center;
+	margin: 1vw;
+	text-decoration: none;
+	text-wrap: wrap;
+}
+.btnpanelagusu:hover {
+	opacity: 0.8;
 	color: white;
 	background-color: transparent;
 }

@@ -37,7 +37,9 @@ export const Login = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='d-flex flex-column' controlId='inputpassword'>
+				<Form.Group
+					className='d-flex flex-column'
+					controlId='inputpassword'>
 					<Form.Label className='labellog'>Contraseña</Form.Label>
 					<input
 						className='inputlog'
@@ -57,6 +59,8 @@ export const Login = () => {
 
 				<Form.Group className='botoneslogin' controlId='inputpassword'>
 					<Button className='input-submitlog' type='submit'>
+						{' '}
+						<i className='iconavbar bi bi-box-arrow-in-right'></i>
 						Ingresar
 					</Button>
 					{/* <Link className='input-googlelog'>

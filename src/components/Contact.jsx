@@ -5,7 +5,7 @@ import '../css/Contact.css';
 
 export const Contact = () => {
 	return (
-		<div className='bodycontact container-fluid'>
+		<div className='bodycontact'>
 			<div className=''>
 				<h1 className='titulocont text-center'>¡Contactanos!</h1>
 				<p className='text-center Parrafo2'>

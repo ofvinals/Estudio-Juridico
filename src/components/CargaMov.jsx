@@ -14,7 +14,7 @@ export const CargaMov = () => {
 	const { user } = useAuth();
 	const { id } = useParams();
 	const { register, handleSubmit } = useForm();
-	const { createMov, getExpte } = useExptes([]);
+	const { createMov, getExpte,  } = useExptes([]);
 	const [expte, setExpte] = useState([]);
 	const [movs, setMovs] = useState([]);
 	const navigate = useNavigate();
@@ -31,19 +31,6 @@ export const CargaMov = () => {
 		console.log(movId);
 		setShowModal(false);
 	};
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const fetchedMovs = await getMovs();
-				setMovs(fetchedMovs);
-			} catch (error) {
-				console.error('Error al obtener movimientos:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
 
 	useEffect(() => {
 		const fetchExpte = async () => {

@@ -91,13 +91,16 @@ export const EditarCajas = ({}) => {
 									{...register('concepto')}></Form.Control>
 							</Form.Group>
 
-							<Form.Group className='mb-3' controlId='inputmonto'>
+							<Form.Group className='mb-3' id='inputtipo'>
 								<Form.Label className='labelcarga'>Tipo</Form.Label>
-								<Form.Control
+								<select
 									className='inputcarga'
-									type='text'
-									{...register('tipo')}
-								/>
+									aria-label='Default select'
+									{...register('tipo')}>
+									<option>Selecciona..</option>
+									<option value='Ingreso'>Ingreso</option>
+									<option value='Egreso'>Egreso</option>
+								</select>
 							</Form.Group>
 
 							<Form.Group className='mb-3' controlId='inputmonto'>
@@ -131,6 +134,7 @@ export const EditarCajas = ({}) => {
 									<option>Selecciona..</option>
 									<option value='Pendiente'>Pendiente</option>
 									<option value='Pagado'>Pagado</option>
+									<option value='Cobrado'>Cobrado</option>
 									<option value='Cancelado'>Cancelado</option>
 								</select>
 							</Form.Group>
