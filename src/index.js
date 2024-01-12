@@ -35,6 +35,8 @@ const app = express();
 app.use(
 	cors({
 		origin: 'http://localhost:5173',
+		origin: 'https://flourishing-tanuki-55bdc2.netlify.app',
+		
 		credentials: true,
 		optionsSuccessStatus: 200,
 	})
