@@ -1,17 +1,16 @@
-const multer = require('multer');
+import multer from 'multer';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'upload');
-	},
+	destination: join(__dirname, './uploads'),
+
 	filename: function (req, file, cb) {
-		cb(null, `${Date.now()}-${file.originalname}` );
+		cb(null, `${Date.now()}-${file.originalname}`);
 	},
 });
 
-const upload = multer({ storage: storage });
-exports.upload = upload.single('myFile');
-
-exports.uploadFile = (req, res) => {
-	res.send({ data: 'Enviar un archivo' });
-};
+export const upload = multer({ storage: storage });

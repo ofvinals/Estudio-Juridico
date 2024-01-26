@@ -1,65 +1,83 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
 import {
-	useReactTable,
-	getCoreRowModel,
-	flexRender,
-	getPaginationRowModel,
-	getSortedRowModel,
-	getFilteredRowModel,
-} from '@tanstack/react-table';
+	MaterialReactTable,
+	useMaterialReactTable,
+} from 'material-react-table';
+import { Box, IconButton } from '@mui/material';
+import {
+	Edit as EditIcon,
+	Delete as DeleteIcon,
+	Visibility as VisibilityIcon,
+} from '@mui/icons-material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
-import { useExptes } from '../context/ExptesContext';
+import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export const GestionExpedientes = () => {
-	const { getExptes, deleteExpte } = useExptes();
-	const { user } = useAuth();
+	const { id } = useParams();
+	const {displayName} = useAuth();
+	const user = useAuth();
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
-	const [expte, setExpte] = useState([]);
-	const [sorting, setSorting] = useState([]);
-	const [filtering, setFiltering] = useState('');
-
-	const columns = React.useMemo(
+	const columns = useMemo(
 		() => [
 			{
-				header: 'Nro Expte',
+				header: 'Expte',
 				accessorKey: 'nroexpte',
-			},
-			{
-				header: 'Fuero',
-				accessorKey: 'radicacion',
-			},
-			{
-				header: 'Juzgado',
-				accessorKey: 'juzgado',
+				enableColumnOrdering: false,
+				size: 50,
 			},
 			{
 				header: 'Caratula',
 				accessorKey: 'caratula',
+				enableColumnOrdering: false,
+				size: 300,
+			},
+			{
+				header: 'Fuero',
+				accessorKey: 'radicacion',
+				enableColumnOrdering: false,
+				size: 50,
+			},
+			{
+				header: 'Juzgado',
+				accessorKey: 'juzgado',
+				enableColumnOrdering: false,
+				size: 50,
 			},
 		],
 		[]
 	);
 
-	// Trae exptes de getExptes y guarda en data y exptes
+	// Trae exptes y guarda en data y exptes
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedExptes = await getExptes();
-				// Si el usuario no es administrador, filtra los expedientes por cliente
+				Swal.showLoading();
+				const exptesRef = collection(db, 'expedientes');
+				const snapshot = await getDocs(exptesRef);
+				const fetchedExptes = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
+
 				const filteredExptes =
-					user.email === 'admin@gmail.com'
+					user.user === 'ofvinals@gmail.com'
 						? fetchedExptes
 						: fetchedExptes.filter(
-								(expte) => expte.cliente === user.email
+								(expte) => expte.cliente === user.user
 						  );
-				setData(filteredExptes);
-				setExpte(filteredExptes);
+				setTimeout(() => {
+					Swal.close();
+					setData(filteredExptes);
+				}, 500);
+				return () => clearTimeout(timer)
 			} catch (error) {
 				console.error('Error al obtener expedientes', error);
 			}
@@ -68,30 +86,74 @@ export const GestionExpedientes = () => {
 		fetchData();
 	}, []);
 
-	// Funcion para cargar tabla de Usuario traida de Local Storage
-	const table = useReactTable({
-		data,
+		// Funcion para cargar tabla 
+	const table = useMaterialReactTable({
 		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		state: {
-			sorting,
-			globalFilter: filtering,
+		data,
+		enableColumnFilterModes: true,
+		enableColumnOrdering: true,
+		enableGlobalFilterModes: true,
+		enableColumnPinning: true,
+		enableRowActions: true,
+		enableGrouping: true,
+		paginationDisplayMode: 'pages',
+		positionToolbarAlertBanner: 'bottom',
+		localization: MRT_Localization_ES,
+		muiSearchTextFieldProps: {
+			size: 'medium',
+			variant: 'outlined',
 		},
-		onSortingChange: setSorting,
-		onGlobalFilterChange: setFiltering,
-		defaultColumn: {
-			size: 400, //starting column size
-			minSize: 50, //enforced during column resizing
-			maxSize: 500, //enforced during column resizing
-		 },
+		muiPaginationProps: {
+			color: 'primary',
+			rowsPerPageOptions: [5, 10, 20, 30],
+			shape: 'rounded',
+			variant: 'outlined',
+		},
+		renderRowActions: ({ row, table }) => (
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'nowrap',
+					gap: '3px',
+				}}>
+				<IconButton
+					color='primary'
+					onClick={() => {
+						navigate(`/gestionmovimientos/${row.original.id}`);
+					}}>
+					<VisibilityIcon />
+				</IconButton>
+				{user.user === 'ofvinals@gmail.com' && (
+					<IconButton
+						color='success'
+						onClick={() => {
+							navigate(`/editarexptes/${row.original.id}`);
+						}}>
+						<EditIcon />
+					</IconButton>
+				)}
+				{user.user === 'ofvinals@gmail.com' && (
+					<IconButton
+						color='error'
+						onClick={() => borrarExpte(row.original.id)}>
+						<DeleteIcon />
+					</IconButton>
+				)}
+			</Box>
+		),
+	});
+
+	const darkTheme = createTheme({
+		palette: {
+			mode: 'dark',
+		},
 	});
 
 	// funcion para eliminar expedientes
+	const deleteExpte = (id) => deleteDoc(doc(db, 'expedientes', id));
 	async function borrarExpte(id) {
 		try {
+			Swal.showLoading();
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
 				text: 'Confirmas la eliminación del expediente?',
@@ -110,7 +172,11 @@ export const GestionExpedientes = () => {
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				setData((prevData) => prevData.filter((expte) => expte._id !== id));
+				setTimeout(() => {
+					Swal.close();
+					setData((prevData) => prevData.filter((expte) => expte.id !== id));
+				}, 500);
+				return () => clearTimeout(timer);
 			}
 		} catch (error) {
 			console.error('Error al eliminar el expediente:', error);
@@ -119,10 +185,10 @@ export const GestionExpedientes = () => {
 
 	return (
 		<>
-			<div className='bg-dark'>
+			<div className='container-lg bg-dark'>
 				<div className='main bodygestion '>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {user.email}
+						Bienvenido de nuevo, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Expedientes
@@ -130,7 +196,7 @@ export const GestionExpedientes = () => {
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.email === 'admin@gmail.com' && (
+						{user.user === 'ofvinals@gmail.com' && (
 							<Link
 								type='button'
 								className='btnpanelgestion'
@@ -141,7 +207,7 @@ export const GestionExpedientes = () => {
 								Agregar expediente
 							</Link>
 						)}
-						{user.email === 'admin@gmail.com' && (
+						{user.user === 'ofvinals@gmail.com' && (
 							<Link to='/exptesarchivados' className='btnpanelgestion'>
 								<i className='iconavbar bi bi-archive'></i>
 								Expedientes Archivados
@@ -149,7 +215,7 @@ export const GestionExpedientes = () => {
 						)}
 						<Link
 							to={
-								user.email === 'admin@gmail.com'
+								user.user === 'ofvinals@gmail.com'
 									? '/Admin'
 									: '/AdminUsu'
 							}
@@ -163,117 +229,11 @@ export const GestionExpedientes = () => {
 					<div>
 						<p className='titletabla'>Expedientes en Tramite</p>
 					</div>
-
-					<div className='search'>
-						<p className='subtitlegestion'>Buscar Expediente</p>
-						<i className='iconavbar bi bi-search'></i>
-						<input
-							className='searchinput'
-							type='text'
-							value={filtering}
-							onChange={(e) => setFiltering(e.target.value)}
-						/>
-					</div>
-					<div className='table-responsive'>
-						<Table
-							striped
-							hover
-							variant='dark'
-							className='tablagestion align-middle table border border-secondary-subtle'>
-							<thead>
-								{table.getHeaderGroups().map((headerGroup) => (
-									<tr key={headerGroup.id}>
-										{headerGroup.headers.map((header) => (
-											<th
-												key={header.id}
-												onClick={header.column.getToggleSortingHandler()}>
-												{header.isPlaceholder ? null : (
-													<div>
-														{flexRender(
-															header.column.columnDef.header,
-															header.getContext()
-														)}
-
-														{
-															{ asc: '⬆️', desc: '⬇️' }[
-																header.column.getIsSorted() ??
-																	null
-															]
-														}
-													</div>
-												)}
-											</th>
-										))}
-										<th className='botonescciongestion'>Acciones</th>
-									</tr>
-								))}
-							</thead>
-							<tbody className='table-group-divider'>
-								{table.getRowModel().rows.map((row) => (
-									<tr key={row.original._id}>
-										{row.getVisibleCells().map((cell, index) => (
-											<td key={index} style={cell.column.id === 'caratula' ? { width: '50%!important' } : {}}>
-												{flexRender(
-													cell.column.columnDef.cell,
-													cell.getContext()
-												)}
-											</td>
-										))}
-
-										<td className='align-middle'>
-											<div className='d-flex flex-row justify-content-between'>
-												{user.email === 'admin@gmail.com' && (
-													<Link
-														className='btneditgestion'
-														to={`/editarexptes/${row.original._id}`}>
-														<i className='bi bi-pen  acciconogestion'></i>
-													</Link>
-												)}
-												{user.email === 'admin@gmail.com' && (
-													<button
-														className='btnborragestion'
-														onClick={() =>
-															borrarExpte(row.original._id)
-														}>
-														<i className='bi bi-trash-fill  acciconogestion'></i>
-													</button>
-												)}
-												<Link
-													className='btnvergestion'
-													to={`/gestionmovimientos/${row.original._id}`}>
-													<i className='bi bi-search acciconogestion'></i>
-												</Link>
-											</div>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</Table>
-					</div>
-					<div className='d-flex flex-row justify-content-center'>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.setPageIndex(0)}>
-							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.previousPage()}>
-							<i className=' me-2 bi bi-chevron-left'></i>
-							Pagina Anterior
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.nextPage()}>
-							Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() =>
-								table.setPageIndex(table.getPageCount() - 1)
-							}>
-							Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
-						</button>
+					<div>
+						<ThemeProvider theme={darkTheme}>
+							<CssBaseline />
+							<MaterialReactTable table={table} />
+						</ThemeProvider>
 					</div>
 				</div>
 			</div>

@@ -11,7 +11,7 @@ import {
 } from '../controllers/expte.controller.js';
 import { validateSchema } from '../middlewares/validator.Middleware.js';
 import { createExpteSchema } from '../schemas/expte.Schema.js';
-
+import {upload} from '../controllers/upload.controller.js'
 
 const router = Router();
 
@@ -19,6 +19,7 @@ router.get('/exptes', authRequired, getExptes);
 router.get('/exptes/:id', authRequired, getExpte);
 router.post(
 	'/exptes',
+	upload.single('file'),
 	authRequired,
 	validateSchema(createExpteSchema),
 	createExpte

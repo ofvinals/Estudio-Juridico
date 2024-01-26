@@ -6,18 +6,22 @@ import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
 import { Modal } from 'react-bootstrap';
-import { useGastos } from '../context/GastosContext';
 import { useForm } from 'react-hook-form';
-import { useExptes } from '../context/ExptesContext';
+import { db } from '../firebase/config';
+import {
+	doc,
+	getDoc,
+	getDocs,
+	updateDoc,
+	collection,
+} from 'firebase/firestore';
 
 export const EditarGastos = ({}) => {
-	const { user } = useAuth();
-	const params = useParams();
+	const user = useAuth();
+	const { id } = useParams();
 	const navigate = useNavigate();
 	const [exptes, setExptes] = useState([]);
-	const { register, handleSubmit, setValue } = useForm();
-	const { getGasto, updateGasto } = useGastos();
-	const { getExptes } = useExptes();
+	const { register, handleSubmit, setValue, watch, unregister } = useForm();
 	const [showModal, setShowModal] = useState(false);
 	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
 
@@ -30,74 +34,106 @@ export const EditarGastos = ({}) => {
 		navigate('/gestiongastos');
 	};
 
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const exptesRef = collection(db, 'expedientes');
+				const fetchedExptes = await getDocs(exptesRef);
+				const exptesArray = Object.values(
+					fetchedExptes.docs.map((doc) => doc.data())
+				);
+				setExptes(exptesArray);
+			} catch (error) {
+				console.error('Error al obtener expedientes:', error);
+			}
+		};
+		fetchData();
+	}, []);
+
 	// Función para cargar los datos de gastos al abrir la página
 	useEffect(() => {
 		async function loadGasto() {
 			try {
-				if (params.id) {
-					const gasto = await getGasto(params.id);
-					const selectedExpte = exptes.find(
-						(expte) => expte.nroexpte === gasto.nroexpte
-					);
-
-					setSelectedExpteCaratula(
-						selectedExpte ? selectedExpte.caratula : ''
-					);
-					setValue('nroexpte', gasto.nroexpte);
-					setValue('caratula', selectedExpteCaratula);
-					setValue('concepto', gasto.concepto);
-					setValue('comprobante', gasto.comprobante);
-					setValue('monto', gasto.monto);
-					setValue('estado', gasto.estado);
-					// Abre automáticamente el modal cuando se cargan los datos del turno
+				Swal.showLoading();
+				const gastoRef = doc(db, 'gastos', id);
+				const snapshot = await getDoc(gastoRef);
+				console.log('Datos del gasto cargado:', snapshot.data());
+				const gastoData = snapshot.data();
+				setValue('nroexpte', gastoData.expte);
+				setValue('caratula', gastoData.caratula);
+				setValue('concepto', gastoData.concepto);
+				setValue('comprobante', gastoData.comprobante);
+				setValue('monto', gastoData.monto);
+				setValue('estado', gastoData.estado);
+				setTimeout(() => {
+					Swal.close();
 					handleOpenModal();
-				}
+				}, 500);
+				return () => clearTimeout(timer);
 			} catch (error) {
 				console.error('Error al cargar el gasto', error);
 			}
 		}
 		loadGasto();
-	}, [selectedExpteCaratula]);
-
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const fetchedExptes = await getExptes();
-				setExptes(fetchedExptes);
-			} catch (error) {
-				console.error('Error al obtener expedientes:', error);
-			}
-		};
-
-		fetchData();
 	}, []);
 
-	const onSubmit = handleSubmit(async (data) => {
-		console.log(data)
-		await updateGasto(params.id, data);
-		Swal.fire({
-			icon: 'success',
-			title: 'Gasto editado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		// Cierra el modal después de guardar los cambios
-		handleCloseModal();
-		navigate('/gestiongastos');
-	});
-
-	// Función para manejar el cambio en el select de número de expediente
-	const handleExpteSelectChange = (event) => {
-		const selectedExpteNro = event.target.value;
-
-		// Buscar el expediente seleccionado y obtener su carátula
+	const handleExpteSelectChange = async (e) => {
+		const selectedExpteNro = e.target.value;
+		updateCaratula(selectedExpteNro);
+	};
+	const updateCaratula = (selectedExpteNro) => {
 		const selectedExpte = exptes.find(
 			(expte) => expte.nroexpte === selectedExpteNro
 		);
-
-		// Actualizar el estado con la carátula del expediente seleccionado
-		setSelectedExpteCaratula(selectedExpte ? selectedExpte.caratula : '');
+		const caratulaToUpdate = selectedExpte ? selectedExpte.caratula : '';
+		setSelectedExpteCaratula(caratulaToUpdate);
+		setValue('caratula', caratulaToUpdate);
 	};
+
+	useEffect(() => {
+		// Llamada inicial para establecer la carátula
+		updateCaratula(watch('nroexpte'));
+	}, []);
+
+	useEffect(() => {
+		// Llamada cada vez que cambie el valor de nroexpte
+		updateCaratula(watch('nroexpte'));
+	}, [watch('nroexpte')]);
+
+	const onSubmit = handleSubmit(async (values) => {
+		console.log(values);
+		try {
+			Swal.showLoading();
+			let fileDownloadUrl = null;
+			if (values.file && values.file[0]) {
+				const file = values.file[0];
+				fileDownloadUrl = await uploadFile(file);
+			}
+			const gastoData = {
+				expte: values.nroexpte,
+				caratula: selectedExpteCaratula,
+				concepto: values.concepto,
+				monto: parseInt(values.monto, 10),
+				fileUrl: fileDownloadUrl,
+				estado: values.estado,
+			};
+			const gastoRef = doc(db, 'gastos', id);
+			await updateDoc(gastoRef, gastoData);
+			Swal.fire({
+				icon: 'success',
+				title: 'Gasto editado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+				navigate('/gestiongastos');
+			}, 500);
+		} catch (error) {
+			console.error(error);
+		}
+	});
 
 	return (
 		<>
@@ -122,7 +158,9 @@ export const EditarGastos = ({}) => {
 									onChange={handleExpteSelectChange}>
 									<option>Selecciona..</option>
 									{exptes.map((expte) => (
-										<option key={expte._id} value={expte.nroexpte}>
+										<option
+											key={expte.nroexpte}
+											value={expte.nroexpte}>
 											{expte.nroexpte}
 										</option>
 									))}
@@ -136,9 +174,8 @@ export const EditarGastos = ({}) => {
 								<Form.Control
 									className='labelcarcaratula'
 									type='text'
-									name='caratula'
-									value={selectedExpteCaratula}
 									{...register('caratula')}
+									readOnly
 								/>
 							</Form.Group>
 
@@ -200,8 +237,8 @@ export const EditarGastos = ({}) => {
 								</Form.Label>
 								<Form.Control
 									className='inputedit'
-									type='text'
-									{...register('comprobante')}
+									type='file'
+									{...register('file')}
 								/>
 							</Form.Group>
 

@@ -7,17 +7,16 @@ import '../css/Editar.css';
 import Swal from 'sweetalert2';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useUsers } from '../context/UsersContext';
 import { useExptes } from '../context/ExptesContext';
+import { db } from '../firebase/config';
+import { doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
 
 export const EditarMov = () => {
-	const { user } = useAuth();
+	const user = useAuth();
 	const params = useParams();
 	const navigate = useNavigate();
-	const { getUsers } = useUsers();
-	const [users, setUsers] = useState([]);
 	const [showModal, setShowModal] = useState(false);
-	const { register, handleSubmit, setValue} = useForm();
+	const { register, handleSubmit, setValue } = useForm();
 	const { getMov, updateMov } = useExptes();
 
 	// Función para abrir el modal
@@ -25,25 +24,50 @@ export const EditarMov = () => {
 
 	// Función para cerrar el modal
 	const handleCloseModal = (movId) => {
-		console.log(movId); 
+		console.log(movId);
 		setShowModal(false);
-		navigate(`/gestionmovimientos/${movId}`, { replace: true });	};
+		navigate(`/gestionmovimientos/${movId}`, { replace: true });
+	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const exptesRef = collection(db, 'expedientes');
+				const fetchedExptes = await getDocs(exptesRef);
+				const exptesArray = Object.values(
+					fetchedExptes.docs.map((doc) => doc.data())
+				);
+				setExptes(exptesArray);
+			} catch (error) {
+				console.error('Error al obtener expedientes:', error);
+			}
+		};
+		fetchData();
+	}, []);
 
 	// Función para cargar los datos del expediente al abrir la página
 	useEffect(() => {
 		async function loadMov() {
 			try {
-				if (params.id) {
-					const mov = await getMov(params.id);
-					const formattedDate = new Date(mov.fecha).toISOString().split('T')[0];
-
-					setValue('nroexpte', mov.nroexpte);
-					setValue('fecha', formattedDate);
-					setValue('descripcion', mov.descripcion);
-					setValue('adjunto', mov.adjunto);
-					// Abre automáticamente el modal cuando se cargan los datos del turno
-					handleOpenModal();
+				Swal.showLoading();
+				const expteRef = doc(db, 'expedientes', expedienteId);
+				const snapshot = await getDoc(expteRef);
+				if (snapshot.exists()) {
+					const expedienteData = snapshot.data();
+					const selectedMovimiento = expedienteData.movimientos.find(
+						(mov) => mov.id === movimientoId
+					);
 				}
+				const movData = snapshot.data();
+				setValue('nroexpte', movData.nroexpte);
+				setValue('fecha', formattedDate);
+				setValue('descripcion', movData.descripcion);
+				setValue('adjunto', movData.adjunto);
+				setTimeout(() => {
+					Swal.close();
+					handleOpenModal();
+				}, 500);
+				return () => clearTimeout(timer);
 			} catch (error) {
 				console.error('Error al cargar el movimiento', error);
 			}
@@ -52,10 +76,23 @@ export const EditarMov = () => {
 	}, []);
 
 	const onSubmit = handleSubmit(async (data) => {
-		await updateMov(params.id, data);
-		
-		// Cierra el modal después de guardar los cambios
-		handleCloseModal();
+		try {
+			Swal.showLoading();
+			await updateMov(params.id, data);
+			Swal.fire({
+				icon: 'success',
+				title: 'Movimiento de caja eliminado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error('Error al eliminar el movimiento:', error);
+		}
 	});
 
 	return (
@@ -76,7 +113,6 @@ export const EditarMov = () => {
 								<Form.Control
 									className='inputedit'
 									type='date'
-
 									{...register('fecha')}
 								/>
 							</Form.Group>

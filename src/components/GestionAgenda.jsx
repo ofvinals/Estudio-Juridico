@@ -1,32 +1,46 @@
-import React, { useEffect } from 'react';
-import Table from 'react-bootstrap/Table';
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
 import { Form, Modal } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
-	useReactTable,
-	getCoreRowModel,
-	flexRender,
-	getPaginationRowModel,
-	getSortedRowModel,
-	getFilteredRowModel,
-} from '@tanstack/react-table';
+	MaterialReactTable,
+	useMaterialReactTable,
+} from 'material-react-table';
+import { Box, IconButton } from '@mui/material';
+import {
+	Edit as EditIcon,
+	Delete as DeleteIcon,
+	Visibility as VisibilityIcon,
+} from '@mui/icons-material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import dayjs from 'dayjs';
-import { useTurnos } from '../context/TurnosContext';
+import {
+	collection,
+	getDocs,
+	getDoc,
+	deleteDoc,
+	doc,
+} from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export const GestionAgenda = () => {
-	const { user } = useAuth();
-	const { getTurnos, deleteTurno, getTurno } = useTurnos();
+	const user = useAuth();
+	const {displayName} = useAuth();
+	const navigate = useNavigate();
 	const [turno, setTurno] = useState([]);
 	const [turnosVencidos, setTurnosVencidos] = useState([]);
 	const [data, setData] = useState([]);
-	const [expte, setExpte] = useState([]);
-	const [sorting, setSorting] = useState([]);
-	const [filtering, setFiltering] = useState('');
 	const [showVerTurno, setShowVerTurno] = useState(false);
+	const [summary, setSummary] = useState('');
+	const [description, setDescription] = useState('');
+	const [location, setLocation] = useState('');
+	const [startDateTime, setStartDateTime] = useState('');
+	const [endDateTime, setendDateTime] = useState('');
+	const { loginWithGoogle, createEvents } = useAuth();
 
 	// Cierra modales
 	const handleCancel = () => {
@@ -38,23 +52,32 @@ export const GestionAgenda = () => {
 			{
 				header: 'Turno',
 				accessorKey: 'turno',
+				size: 50,
 			},
 			{
 				header: 'Usuario',
 				accessorKey: 'email',
+				size: 50,
 			},
 			{
 				header: 'Motivo',
 				accessorKey: 'motivo',
 				enableResizing: true,
+				size:250,
 			},
 		],
 		[]
 	);
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedTurnos = await getTurnos();
+				Swal.showLoading();
+				const turnoRef = collection(db, 'turnos');
+				const snapshot = await getDocs(turnoRef);
+				const fetchedTurnos = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
 				// Filtrar turnos pendientes (posteriores a la fecha actual)
 				const turnosPendientes = fetchedTurnos.filter((turno) => {
 					const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
@@ -70,62 +93,83 @@ export const GestionAgenda = () => {
 						fechaTurno.isSame(fechaActual)
 					);
 				});
-				// Ordenar los turnos pendientes por fecha
-				turnosPendientes.sort((a, b) => a.turno.localeCompare(b.turno));
-				turnosVencidos.sort((a, b) => a.turno.localeCompare(b.turno));
-				setTurno(turnosPendientes);
-				setData(turnosPendientes);
-
-				setTurnosVencidos(turnosVencidos);
+				setTimeout(() => {
+					Swal.close();
+					setTurno(turnosPendientes);
+					setData(turnosPendientes);
+					setTurnosVencidos(turnosVencidos);
+				}, 500);
+				return () => clearTimeout(timer);
 			} catch (error) {
 				console.error('Error al obtener turnos', error);
 			}
 		};
-
 		fetchData();
 	}, []);
 
-	// Funcion para cargar tabla de Usuario traida de Local Storage
-	const table = useReactTable({
-		data,
+	// Funcion para cargar tabla
+	const table = useMaterialReactTable({
 		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		state: {
-			sorting,
-			globalFilter: filtering,
-			columnResizeMode: 'onChange',
+		data,
+		enableColumnFilterModes: true,
+		enableColumnOrdering: true,
+		enableGlobalFilterModes: true,
+		enableColumnPinning: true,
+		enableRowActions: true,
+		enableGrouping: true,
+		paginationDisplayMode: 'pages',
+		positionToolbarAlertBanner: 'bottom',
+		localization: MRT_Localization_ES,
+		muiSearchTextFieldProps: {
+			size: 'medium',
+			variant: 'outlined',
 		},
-		onSortingChange: setSorting,
-		onGlobalFilterChange: setFiltering,
+		muiPaginationProps: {
+			color: 'primary',
+			rowsPerPageOptions: [5, 10, 20, 30],
+			shape: 'rounded',
+			variant: 'outlined',
+		},
+		renderRowActions: ({ row, table }) => (
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'nowrap',
+					gap: '3px',
+				}}>
+				<IconButton
+					color='primary'
+					onClick={() => verTurno(row.original.id)}>
+					<VisibilityIcon />
+				</IconButton>
+				{user.user === 'ofvinals@gmail.com' && (
+					<IconButton
+						color='success'
+						onClick={() => {
+							navigate(`/editarturnos/${row.original.id}`);
+						}}>
+						<EditIcon />
+					</IconButton>
+				)}
+				{user.user === 'ofvinals@gmail.com' && (
+					<IconButton
+						color='error'
+						onClick={() => borrarTurno(row.original.id)}>
+						<DeleteIcon />
+					</IconButton>
+				)}
+			</Box>
+		),
 	});
 
-	// function cargarTablaVencidos() {
-	// 	const tabla = turnosVencidos.map((turno) => (
-	// 		<tr key={turno.id}>
-	// 			<td className='align-middle '>{turno.turno}</td>
-	// 			<td className='align-middle '>{turno.email}</td>
-	// 			<td className='align-middle '>{turno.motivo}</td>
-	// 			<td className='d-flex flex-row justify-content-around'>
-	// 				<Link
-	// 					className='btneditgestion'
-	// 					to={`/editarturnos/${turno._id}`}>
-	// 					<i className='bi bi-pen  acciconogestion'></i>
-	// 				</Link>
-	// 				<button
-	// 					className='btnborragestion'
-	// 					onClick={() => borrarTurno(turno._id)}>
-	// 					<i className='bi bi-trash-fill  acciconogestion'></i>
-	// 				</button>
-	// 			</td>
-	// 		</tr>
-	// 	));
-	// 	setTablaVencidos(tabla);
-	// }
+	const darkTheme = createTheme({
+		palette: {
+			mode: 'dark',
+		},
+	});
 
-	// funcion para eliminar usuarios
+	// funcion para eliminar turnos
+	const deleteTurno = (id) => deleteDoc(doc(db, 'turnos', id));
 	async function borrarTurno(id) {
 		try {
 			const result = await Swal.fire({
@@ -139,13 +183,17 @@ export const GestionAgenda = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
+				Swal.showLoading();
 				await deleteTurno(id);
-				window.location.reload();
 				Swal.fire(
 					'Eliminado',
 					'El turno fue eliminado con éxito',
 					'success'
 				);
+				setTimeout(() => {
+					Swal.close();
+					setData((prevData) => prevData.filter((turno) => turno.id !== id));
+				}, 500);
 			}
 		} catch (error) {
 			console.error('Error al eliminar el turno:', error);
@@ -155,17 +203,42 @@ export const GestionAgenda = () => {
 
 	// funcion para ver turnos en Modal
 	async function verTurno(id) {
-		const turno = await getTurno(id);
-		setTurno(turno);
-		setShowVerTurno(true);
+		Swal.showLoading();
+		const turnoRef = doc(db, 'turnos', id);
+		const snapshot = await getDoc(turnoRef);
+		const turnoData = snapshot.data();
+		setTurno(turnoData);
+		setTimeout(() => {
+			Swal.close();
+			setShowVerTurno(true);
+		}, 500);
+		return () => clearTimeout(timer);
 	}
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		try {
+			// Llama a createEvents con los datos del formulario
+			await createEvents(
+				summary,
+				description,
+				startDateTime,
+				endDateTime,
+				location
+			);
+			// Puedes realizar más acciones después de crear el evento, si es necesario
+		} catch (error) {
+			console.error('Error handling create-event request:', error);
+			// Manejar el error según tus necesidades
+		}
+	};
 
 	return (
 		<>
-			<div className='bodygestion container-fluid bg-dark'>
+			<div className='bodygestion container-lg bg-dark'>
 				<div className='main px-3 '>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {user.email}
+						Bienvenido de nuevo, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Agenda
@@ -175,6 +248,13 @@ export const GestionAgenda = () => {
 
 			<div className='bg-dark'>
 				<div className='d-flex justify-content-around'>
+					<button
+						type='button'
+						onClick={loginWithGoogle}
+						className='botongoogle'>
+						<i className='iconavbar bi bi-google'></i>Ver Agenda del
+						Estudio
+					</button>
 					<Link to='/Admin' className='btnpanelgestion'>
 						<i className='iconavbar bi bi-file-earmark-plus'></i>
 						Volver al Panel
@@ -183,143 +263,60 @@ export const GestionAgenda = () => {
 				<hr className='linea mx-3' />
 
 				<div>
+					<form onSubmit={handleSubmit}>
+						<label htmlFor='summary'>Sumary</label>
+						<br />
+						<input
+							type='text'
+							id='summary'
+							value={summary}
+							onChange={(e) => setSummary(e.target.value)}
+						/>
+						<label htmlFor='description'>Description</label>
+						<br />
+						<textarea
+							id='descripcion'
+							value={description}
+							onChange={(e) => setDescription(e.target.value)}
+						/>
+						<label htmlFor='location'>Location</label>
+						<br />
+						<input
+							type='text'
+							id='location'
+							value={location}
+							onChange={(e) => setLocation(e.target.value)}
+						/>
+						<label htmlFor='startDateTime'>Start Date Time</label>
+						<br />
+						<input
+							type='datetime-local'
+							id='startDateTime'
+							value={startDateTime}
+							onChange={(e) => setStartDateTime(e.target.value)}
+						/>
+						<label htmlFor='endDateTime'>End Date Time</label>
+						<br />
+						<input
+							type='datetime-local'
+							id='endDateTime'
+							value={endDateTime}
+							onChange={(e) => setendDateTime(e.target.value)}
+						/>
+						<button type='submit'>Create Event</button>
+					</form>
+				</div>
+
+				<div>
 					<p className='titletabla'>Turnos Registrados</p>
 				</div>
-				<div className='search'>
-					<p className='subtitlegestion'>Buscar Turno</p>
-					<i className='iconavbar bi bi-search'></i>
-
-					<input
-						className='searchinput'
-						type='text'
-						value={filtering}
-						onChange={(e) => setFiltering(e.target.value)}
-					/>
-				</div>
-				<div className='container table-responsive'>
-					<Table
-						striped
-						hover
-						variant='dark'
-						className='tablagestion table border border-secondary-subtle'>
-						<thead>
-							{table.getHeaderGroups().map((headerGroup) => (
-								<tr key={headerGroup.id}>
-									{headerGroup.headers.map((header) => (
-										<th
-											key={header.id}
-											onClick={header.column.getToggleSortingHandler()}>
-											{header.isPlaceholder ? null : (
-												<div>
-													{flexRender(
-														header.column.columnDef.header,
-														header.getContext()
-													)}
-
-													{
-														{ asc: '⬆️', desc: '⬇️' }[
-															header.column.getIsSorted() ?? null
-														]
-													}
-												</div>
-											)}
-										</th>
-									))}
-									<th className='botonescciongestion'>Acciones</th>
-								</tr>
-							))}
-						</thead>
-						<tbody className='table-group-divider'>
-							{table.getRowModel().rows.map((row) => (
-								<tr key={row.original._id}>
-									{row.getVisibleCells().map((cell, index) => (
-										<td key={index}>
-											{flexRender(
-												cell.column.columnDef.cell,
-												cell.getContext()
-											)}
-										</td>
-									))}
-
-									<td className='align-middle'>
-										<div className='d-flex flex-row justify-content-center'>
-											{user.email === 'admin@gmail.com' && (
-												<Link
-													className='btneditgestion'
-													to={`/editarturnos/${row.original._id}`}>
-													<i className='bi bi-pen  acciconogestion'></i>
-												</Link>
-											)}
-											{user.email === 'admin@gmail.com' && (
-												<button
-													className='btnborragestion'
-													onClick={() =>
-														borrarTurno(row.original._id)
-													}>
-													<i className='bi bi-trash-fill  acciconogestion'></i>
-												</button>
-											)}
-											<button
-												className='btnvergestion'
-												onClick={(e) => {
-													verTurno(row.original._id);
-												}}>
-												<i className='bi bi-search acciconogestion'></i>
-											</button>
-										</div>
-									</td>
-								</tr>
-							))}
-						</tbody>
-					</Table>
-				</div>
-				<div className='d-flex flex-row justify-content-center'>
-					<button
-						className='btnvpaginagestion'
-						onClick={() => table.setPageIndex(0)}>
-						<i className=' me-2 bi bi-chevron-bar-left'></i>Primer Pagina
-					</button>
-					<button
-						className='btnvpaginagestion'
-						onClick={() => table.previousPage()}>
-						<i className=' me-2 bi bi-chevron-left'></i>
-						Pagina Anterior
-					</button>
-					<button
-						className='btnvpaginagestion'
-						onClick={() => table.nextPage()}>
-						Pagina Siguiente<i className=' ms-2 bi bi-chevron-right'></i>
-					</button>
-					<button
-						className='btnvpaginagestion'
-						onClick={() => table.setPageIndex(table.getPageCount() - 1)}>
-						Ultima Pagina<i className=' ms-2 bi bi-chevron-bar-right'></i>
-					</button>
+				<div>
+					<ThemeProvider theme={darkTheme}>
+						<CssBaseline />
+						<MaterialReactTable table={table} />
+					</ThemeProvider>
 				</div>
 			</div>
-
-			{/* <div>
-					<p className='mt-3 titlegestion'>Turnos vencidos</p>
-				</div>
-				<div className='container table-responsive'>
-					<Table
-						striped
-						hover
-						variant='dark'
-						className='tablagestion table border border-secondary-subtle'>
-						<thead>
-							<tr>
-								<th>Turno</th>
-								<th>Usuario</th>
-								<th>Motivo</th>
-								<th className='botonescciongestion'>Acciones</th>
-							</tr>
-						</thead>
-						<tbody id='tablaTurnos' className='table-group-divider'>
-							{tablaVencidos}
-						</tbody>
-					</Table>
-				</div> */}
 
 			{/* Modal para ver gasto seleccionado */}
 			<Modal show={showVerTurno} onHide={() => setShowVerTurno(false)}>
@@ -337,7 +334,7 @@ export const GestionAgenda = () => {
 							<Form.Label>Cliente: {turno.email}</Form.Label>
 						</Form.Group>
 						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Motivo: $ {turno.motivo}</Form.Label>
+							<Form.Label>Motivo: {turno.motivo}</Form.Label>
 						</Form.Group>
 					</Form>
 				</Modal.Body>

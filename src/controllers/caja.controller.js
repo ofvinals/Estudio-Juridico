@@ -11,29 +11,34 @@ export const getCajas = async (req, res) => {
 
 export const createCaja = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const {
-		fecha,
-		concepto,
-		tipo,
-		monto,
-		adjunto,
-		estado,
-	} = req.body;
+	const { fecha, concepto, tipo, monto, estado } = req.body;
 
 	try {
+		const fechaObj = new Date(fecha);
 		// Crear una nueva instancia del modelo Caja utilizando los datos de la solicitud
+		const { result } = req.body;
+
 		const newCaja = new Caja({
-			fecha,
+			fecha: fechaObj,
 			concepto,
 			tipo,
 			monto,
-			adjunto,
+			url: result,
 			estado,
 		});
-		const savedCaja = await newCaja.save();
 
+		const month = fechaObj.getMonth() + 1;
+		newCaja.mes = month;
+
+		if (req.file) {
+			const { filename } = req.file;
+			const filePath = `/uploads/${filename}`; // ajusta la ruta según tu estructura de archivos
+			newCaja.setFile(filename, filePath);
+		}
+		const savedCaja = await newCaja.save();
 		res.json(savedCaja);
 	} catch (error) {
+		console.error(error);
 		return res.status(500).json({ message: error.message });
 	}
 };
@@ -51,22 +56,11 @@ export const getCaja = async (req, res) => {
 
 export const updateCaja = async (req, res) => {
 	try {
-		const {
-			fecha,
-			concepto,
-			tipo,
-			monto,
-			adjunto,
-			estado,
-		} = req.body;
+		const { fecha, concepto, tipo, monto, adjunto, estado } = req.body;
 
-		const updateCaja = await Caja.findByIdAndUpdate(
-			req.params.id,
-			req.body,
-			{
-				new: true,
-			}
-		);
+		const updateCaja = await Caja.findByIdAndUpdate(req.params.id, req.body, {
+			new: true,
+		});
 		res.json(updateCaja);
 	} catch (error) {
 		return res.status(500).json({ message: error.message });

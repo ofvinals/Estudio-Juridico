@@ -15,19 +15,19 @@
 }
 .social-icon{
    color: rgb(207, 207, 207)!important;
-	margin:3.5vw;
+	margin:10px;
 	text-align: center;
 }
 .derechos{
 	text-align: center;
-   font-size:80%;
+   font-size:70%;
 	color: rgb(207, 207, 207)!important;
-	margin-top:5vw;
+	margin-top:10px;
 }
 .text-deg {
 	text-align: center;
 	color: rgb(207, 207, 207)!important;
-	font-size: 120%;
+	font-size: 100%;
    font-weight: 700;
 }
 .text-deg a:hover {
@@ -35,5 +35,6 @@
 	opacity: 0.9;
 }
 .logofooter{
-	margin-top: 5vw!important;
+	margin-top: 10px!important;
+	border-radius: 20px;
 }

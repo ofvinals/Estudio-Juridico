@@ -6,6 +6,9 @@ const cajaSchema = new mongoose.Schema(
 			type: String,
 			require: true,
 		},
+		mes: {
+			type: String,
+		},
 		concepto: {
 			type: String,
 			require: true,
@@ -18,7 +21,12 @@ const cajaSchema = new mongoose.Schema(
 			type: Number,
 			require: true,
 		},
-		adjunto: {
+		file: {
+			type: mongoose.Schema.Types.Mixed,
+			filename: String,
+			filePath: String,
+		},
+		url:{
 			type: String,
 		},
 		estado: {
@@ -30,4 +38,15 @@ const cajaSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 );
+
+cajaSchema.methods.setFile = function setFile(
+	filename,
+	filePath
+) {
+	this.file = {
+		filename: filename,
+		filePath: filePath,
+	};
+};
+
 export default mongoose.model('Caja', cajaSchema);

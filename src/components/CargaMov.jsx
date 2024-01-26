@@ -1,27 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import '../css/Carga.css';
-import Swal from 'sweetalert2';
 import { Button, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useExptes } from '../context/ExptesContext';
-
+import { uploadFile } from '../firebase/config';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 import { format } from 'date-fns';
 
 export const CargaMov = () => {
-	const { user } = useAuth();
+	const user = useAuth();
 	const { id } = useParams();
 	const { register, handleSubmit } = useForm();
-	const { createMov, getExpte,  } = useExptes([]);
 	const [expte, setExpte] = useState([]);
-	const [movs, setMovs] = useState([]);
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(true);
-	const location = useLocation();
-	const searchParams = new URLSearchParams(location.search);
-	const nroExpte = searchParams.get('nroexpte') || id;
 
 	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
@@ -35,7 +30,8 @@ export const CargaMov = () => {
 	useEffect(() => {
 		const fetchExpte = async () => {
 			try {
-				const fetchedExptes = await getExpte(nroExpte);
+				const exptesRef = collection(db, 'expedientes');
+				const fetchedExptes = await getDocs(exptesRef);
 				setExpte(fetchedExptes);
 				console.log(expte);
 			} catch (error) {
@@ -47,13 +43,43 @@ export const CargaMov = () => {
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
-		const id = window.location.pathname.split('/').pop();
-		const formattedFecha = format(new Date(values.fecha), 'dd/MM/yyyy', {
-			useAdditionalDayOfYearTokens: true,
-			useAdditionalWeekYearTokens: true,
-		});
-		createMov({ ...values, nroexpte: expte.nroexpte, fecha: formattedFecha });
-		navigate(`/gestionmovimientos/${id}`);
+		try {
+			Swal.showLoading();
+			const id = window.location.pathname.split('/').pop();
+			let fileDownloadUrl = null;
+
+			const formattedFecha = format(new Date(values.fecha), 'dd/MM/yyyy', {
+				useAdditionalDayOfYearTokens: true,
+				useAdditionalWeekYearTokens: true,
+			});
+
+			if (values.file && values.file[0]) {
+				const file = values.file[0];
+				fileDownloadUrl = await uploadFile(file);
+			}
+
+			const movData = {
+				id: new Date().getTime(),
+				fecha: formattedFecha,
+				descripcion: values.descripcion,
+				fileUrl: fileDownloadUrl,
+			};
+			await addDoc(collection(db, 'expedientes'), movData);
+			Swal.fire({
+				icon: 'success',
+				title: 'Movimiento registrado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+				navigate(`/gestionmovimientos/${id}`);
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error(error);
+		}
 	});
 
 	return (
@@ -61,12 +87,15 @@ export const CargaMov = () => {
 			<div className='bodyedit'>
 				<Modal show={showModal} onHide={handleCloseModal}>
 					<Modal.Header closeButton>
-						<Modal.Title className='titlemodal'>
-							Cargar Nuevo Movimiento
-						</Modal.Title>
+						<Modal.Title>Cargar Nuevo Movimiento</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<Form className='Formcarga ' onSubmit={onSubmit}>
+						<Form
+							className='Formcarga '
+							onSubmit={onSubmit}
+							action='/uploads'
+							method='post'
+							encType='multipart/form-data'>
 							<Form.Group
 								className='formcargagroup'
 								controlId='inputname'>
@@ -99,10 +128,10 @@ export const CargaMov = () => {
 								controlId='inputsubname'>
 								<Form.Label className='labelcarga'>Adjunto</Form.Label>
 								<Form.Control
-									type='text'
+									type='file'
 									className='inputcarga'
 									aria-label='Default select'
-									{...register('adjunto')}></Form.Control>
+									{...register('file')}></Form.Control>
 							</Form.Group>
 
 							<Form.Group className='botonescarga'>

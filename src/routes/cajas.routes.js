@@ -7,7 +7,8 @@ import {
 	deleteCaja,
 	updateCaja,
 } from '../controllers/caja.controller.js';
-import { validateSchema } from '../middlewares/validator.Middleware.js';
+// import { validateSchema } from '../middlewares/validator.Middleware.js';
+import {upload} from '../controllers/upload.controller.js'
 
 const router = Router();
 
@@ -15,6 +16,7 @@ router.get('/cajas', authRequired, getCajas);
 router.get('/cajas/:id', authRequired, getCaja);
 router.post(
 	'/cajas',
+	upload.single('file'),
 	authRequired,
 	createCaja
 );

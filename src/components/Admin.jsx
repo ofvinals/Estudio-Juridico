@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 import '../css/Admin.css';
 
 export const Admin = () => {
-	const { user, logout } = useAuth();
+	const user = useAuth();
+	const {displayName} = useAuth();
+	const { logout } = useAuth();
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		if (!user || user.user !== 'ofvinals@gmail.com') {
+			navigate('/adminusu');
+		}
+	}, [user, navigate]);
 
 	const handleLogOut = () => {
 		logout();
@@ -21,9 +29,9 @@ export const Admin = () => {
 
 	return (
 		<>
-			<div className='bodyadmin'>
+			<div className='container-lg bodyadmin'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, {user.email}</h4>
+					<h4 className='titlead'>Bienvenido de nuevo, {displayName}</h4>
 					<h3 className='subtitleadusu'>Panel de Administracion</h3>
 				</div>
 
@@ -45,11 +53,14 @@ export const Admin = () => {
 						Gestionar Gastos
 					</Link>
 					<Link className='botonadm' to='/gestioncaja'>
-					<i className="iconavbar bi bi-cash-coin"></i>
+						<i className='iconavbar bi bi-cash-coin'></i>
 						Gestion de Caja
 					</Link>
 
-					<Link className='botonlogout' onClick={handleLogOut} to='/home'>
+					<Link
+						className='botonlogoutadmin'
+						onClick={handleLogOut}
+						to='/home'>
 						<i className='iconavbar bi bi-x-circle'></i>
 						Cerrar Sesion
 					</Link>

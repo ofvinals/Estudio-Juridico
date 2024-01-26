@@ -2,10 +2,30 @@ import React from 'react';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
 import '../css/Contact.css';
+import emailjs from '@emailjs/browser';
 
 export const Contact = () => {
+	const sendEmail = (e) => {
+		e.preventDefault();
+
+		emailjs
+			.sendForm(
+				'YOUR_SERVICE_ID',
+				'YOUR_TEMPLATE_ID',
+				form.current,
+				'YOUR_PUBLIC_KEY'
+			)
+			.then(
+				(result) => {
+					console.log(result.text);
+				},
+				(error) => {
+					console.log(error.text);
+				}
+			);
+	};
 	return (
-		<div className='bodycontact'>
+		<div className='container-lg bodycontact'>
 			<div className=''>
 				<h1 className='titulocont text-center'>¡Contactanos!</h1>
 				<p className='text-center Parrafo2'>
@@ -13,8 +33,8 @@ export const Contact = () => {
 					nos comunicaremos a la brevedad posible.
 				</p>
 			</div>
-			
-			<Form className='cajaForm'>
+
+			<Form className='cajaForm' onSubmit={sendEmail}>
 				<Form.Group className='' controlId='emailcontact'>
 					<Form.Label className='labelcontact'>Email</Form.Label>
 					<Form.Control

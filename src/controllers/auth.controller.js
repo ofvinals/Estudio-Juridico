@@ -53,11 +53,15 @@ export const login = async (req, res) => {
 
 		// Validacion usuario y contraseña por backend
 		if (!userFound)
-			return res.status(400).json(['Usuario o contraseña incorrectos']);
+			return res.status(400).json({
+				message: ['El email ingresado no existe'],
+			});
 
 		const isMatch = await bcrypt.compare(password, userFound.password);
 		if (!isMatch)
-			return res.status(400).json(['Usuario o contraseña incorrectos']);
+			return res.status(400).json({
+				message: ['La contraseña ingresada es incorrecta'],
+			});
 
 		// genera el token
 		const token = await createAccessToken({ id: userFound._id });
@@ -92,7 +96,7 @@ export const profile = async (req, res) => {
 };
 
 export const verifyToken = async (req, res) => {
-	const {token} = req.cookies;
+	const { token } = req.cookies;
 
 	if (!token) return res.send(false);
 

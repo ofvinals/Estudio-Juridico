@@ -54,7 +54,12 @@ const expteSchema = new mongoose.Schema(
 					type: String,
 					require: true,
 				},
-				adjunto: {
+				file: {
+					type: mongoose.Schema.Types.Mixed,
+					filename: String,
+					filePath: String,
+				},
+				url:{
 					type: String,
 				},
 			},
@@ -65,6 +70,16 @@ const expteSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 );
+
+expteSchema.methods.setFile = function setFile(
+	filename,
+	filePath
+) {
+	this.file = {
+		filename: filename,
+		filePath: filePath,
+	};
+};
 
 export default mongoose.model('Expte', expteSchema);
 

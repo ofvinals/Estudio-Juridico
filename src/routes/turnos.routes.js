@@ -13,12 +13,7 @@ const router = Router();
 
 router.get('/turnos', authRequired, getTurnos);
 router.get('/turnos/:id', authRequired, getTurno);
-router.post(
-	'/turnos',
-	authRequired,
-	
-	createTurno
-);
+router.post('/turnos', authRequired, createTurno);
 router.delete('/turnos/:id', authRequired, deleteTurno);
 router.put('/turnos/:id', authRequired, updateTurno);
 

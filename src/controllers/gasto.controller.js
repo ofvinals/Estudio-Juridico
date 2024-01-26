@@ -11,18 +11,25 @@ export const getGastos = async (req, res) => {
 
 export const createGasto = async (req, res) => {
 	// Extraer los campos del cuerpo de la solicitud (request body)
-	const { nroexpte, caratula, concepto, comprobante, monto, estado } = req.body;
+	const { nroexpte, caratula, concepto, monto, estado } = req.body;
 
 	try {
+		const { result } = req.body;
 		// Crear una nueva instancia del modelo Gasto utilizando los datos de la solicitud
 		const newGasto = new Gasto({
 			nroexpte,
 			caratula,
 			concepto,
-			comprobante,
 			monto,
+			url: result,
 			estado,
 		});
+
+		if (req.file) {
+			const { filename } = req.file;
+			const filePath = `/uploads/${filename}`; // ajusta la ruta según tu estructura de archivos
+			newGasto.setFile(filename, filePath);
+		}
 		const savedGasto = await newGasto.save();
 
 		// envia respuesta del registro al frontend

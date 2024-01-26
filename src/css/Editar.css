@@ -1,157 +1,111 @@
-.bodyedit{
-   display: flex;
-   flex-wrap: nowrap;
-   align-items: center;
-   justify-content:center;
-   flex-direction: row;
-   background-image: linear-gradient(rgba(5, 7, 12, 0.50), rgba(5, 12, 7, 0.50)),
-   url(/01.jpg);
-   background-size:cover;
-   object-fit:cover;
-   background-position:center;
+.bodyedit {
+	display: flex;
+	flex-wrap: nowrap;
+	align-items: center;
+	justify-content: center;
+	flex-direction: row;
 }
-.titleedit{
-   text-align: center;
-   width: 100%;
-   margin: 1vw;
-   font-size: 100%;
-   color: rgb(207, 207, 207);
+.formedit {
+	display: flex !important;
+	flex-wrap: wrap;
+	flex-direction: row !important;
+	align-items: center;
+	justify-content: space-around;
+	opacity: 0.85;
+	color: rgb(207, 207, 207);
 }
-.formedit{
-   display: flex!important;
-   flex-wrap: wrap;
-   width: 100%!important;
-   flex-direction:row !important;
-   align-items: center;
-   justify-content: space-around!important;
-   opacity: 0.85;
-   color:rgb(207, 207, 207);
+.groupedit {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }
-.labeledit{
-   font-weight: 600;
-   width: 100%;
-   text-align: center;
-   margin: 1vw;
-   padding:1vw;
-   margin-top:0vw!important;
-   background-color:transparent!important;
-   color:rgb(207, 207, 207);
-   font-size: 100%!important;
+.labeledit {
+	font-weight: 700;
+	text-align: center;
+	width: 100%;
+	padding-top: 15px;
+	background-color: transparent !important;
+	color: rgb(207, 207, 207);
+	font-size: 100% !important;
 }
-.labeleditturno{
-   font-weight: 700;
-   width: 100%;
-   text-align: center;
-   margin-bottom: 3vw!important;
-   background-color: transparent!important;
-   color:rgb(207, 207, 207);
-   font-size: 3vw!important;
+.inputedit {
+	color: rgb(36, 36, 36);
+	width: 100% !important;
+	padding: 6px;
+	border-radius: 5px;
+	outline-color: rgb(207, 207, 207);
+	font-size: 100% !important;
 }
-.inputeditturno{
-   color: rgb(207, 207, 207);
-   width: 100%!important;
-   margin-bottom: 3vw;
-   border-radius: 5px;
-   outline-color: rgb(143, 142, 139);
-   font-size: 3vw!important;
-
+.labeleditturno {
+	font-weight: 700;
+	width: 100%;
+	text-align: center;
+	margin-bottom: 3vw !important;
+	background-color: transparent !important;
+	color: rgb(207, 207, 207);
+	font-size: 3vw !important;
 }
-.inputedit{
-   color: rgb(36, 36, 36);
-   width: 100%!important;
-   margin: 1vw!important;
-   padding:1vw!important;
-   border-radius: 5px;
-   outline-color: rgb(207, 207, 207);
-   font-size: 100%!important;
+.inputeditturno {
+	color: rgb(207, 207, 207);
+	width: 100% !important;
+	margin-bottom: 3vw;
+	border-radius: 5px;
+	outline-color: rgb(143, 142, 139);
+	font-size: 3vw !important;
 }
-.botonesedit{
-   display: flex;
-   justify-content: center;
-   flex-direction: row;
-   align-items: center;
-   width: 100%;
+.botonesedit {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	align-content: center;
+	justify-content: space-around;
+	width: 100%;
 }
-.botonedit{
-   font-size: 100%!important;
-   font-weight: 600;
-   margin: 1vw;
-   margin-top:4vw!important;
-   background-color: rgb(10, 61, 4)!important;
-   color: rgb(207, 207, 207);
-   width: auto!important;
-   display: flex!important;
-   align-items: center;
-   justify-content: center;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   cursor: pointer;
-   padding:2vw!important;
-
+.botonedit {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin-top: 25px;
+	margin-right: 20px;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	text-wrap: wrap;
+	background-color: rgb(10, 61, 4) !important;
+	color: rgb(207, 207, 207);
+	width: 150px !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 5px !important;
 }
-.botoncancedit{
-   font-size: 100%!important;
-   font-weight: 600;
-   margin: 1vw;
-   margin-top:4vw!important;
-   background-color: rgb(111, 8, 10)!important;
-   color: rgb(207, 207, 207);
-   width: auto!important;
-   display: flex!important;
-   align-items: center;
-   justify-content: center;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   cursor: pointer;
-   padding:2vw!important;
-   text-decoration: none;
-   text-align: center;
+.botoncancedit {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin-top: 25px;
+	background-color: rgb(111, 8, 10) !important;
+	color: rgb(207, 207, 207);
+	width: auto !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	text-wrap: nowrap;
+	cursor: pointer;
+	padding: 5px !important;
+	text-align: center;
+	text-decoration: none;
 }
-.botonedit:hover{
-   opacity:0.8;
-   color: white;
-   background-color: transparent!important;
+.botonedit:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent !important;
 }
-.botoncancedit:hover{
-   opacity:0.8;
-   color: white;
-   background-color: transparent!important;
-}
-.titlemodal{
-   text-align: center;
-}
-.btnconfmodal{
-   font-size: 100%!important;
-   font-weight: 600;
-   margin: 1vw;
-   margin-top:4vw!important;
-   background-color: rgb(10, 61, 4)!important;
-   color: rgb(207, 207, 207);
-   width: auto!important;
-   display: flex!important;
-   align-items: center;
-   justify-content: center;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   cursor: pointer;
-   padding:2vw!important;
-}
-.btncancmodal{
-   font-size: 100%!important;
-   font-weight: 600;
-   margin: 1vw;
-   margin-top:4vw!important;
-   background-color: rgb(111, 8, 10)!important;
-   color: rgb(207, 207, 207);
-   width: auto!important;
-   display: flex!important;
-   align-items: center;
-   justify-content: center;
-   border: 0.2vw outset rgb(143, 142, 139)!important;
-   border-radius: 5px;
-   cursor: pointer;
-   padding:2vw!important;
-   text-decoration: none;
-   text-align: center;
+.botoncancedit:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent !important;
 }
 

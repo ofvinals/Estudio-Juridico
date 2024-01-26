@@ -13,129 +13,10 @@
 	background-size: cover;
 	background-position: center;
 	object-fit: cover;
-	padding-bottom: 4vw;
+	padding-bottom: 10px;
+	margin-bottom:20px
 }
 .btnpanelgestion {
-	font-weight: 500;
-	font-size: 100% !important;
-	background-color: rgb(27, 27, 27);
-	color: rgb(207, 207, 207);
-	width: auto;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	align-items: center;
-	padding: 1vw !important;
-	cursor: pointer;
-	text-align: center;
-	margin: 1vw;
-	text-decoration: none;
-	text-wrap: wrap;
-}
-.btnpanelgestion:hover {
-	opacity: 0.8;
-	background-color: rgb(27, 27, 27);
-}
-.titlegestion {
-	text-align: center;
-	font-size: 150%;
-	margin: 3vw;
-	padding-top: 4vw;
-	font-weight: 700;
-	color: rgb(207, 207, 207);
-}
-.subtitlegestion {
-	text-align: center;
-	font-size: 120%;
-	margin-top: 1vw;
-	font-weight: 400;
-	color: rgb(207, 207, 207);
-}
-.datosexptes {
-	text-align: center;
-	font-size: 80%;
-	margin-top: 3vw;
-	margin-bottom: 2vw;
-	font-weight: 400;
-	color: rgb(207, 207, 207);
-}
-.titletabla {
-	text-align: center;
-	font-size: 150%;
-	margin-top: 1vw;
-	font-weight: 700;
-	color: rgb(207, 207, 207);
-}
-.tablagestion {
-	font-size: 100% !important;
-	text-align: center;
-	color: rgb(143, 142, 139) !important;
-	width: 100%!important;
-}
-
-.search {
-	display: flex !important;
-	align-items: center;
-	flex-direction: row;
-	flex-wrap: wrap;
-	margin: 1vw;
-	padding: 1vw;
-	font-size: 100%;
-}
-.searchinput {
-	align-items: center;
-	width: auto;
-	font-size: 100%;
-	align-self: center;
-	margin: 1vw;
-	border-radius: 5px;
-	outline-color: rgb(143, 142, 139);
-}
-.mes-header{
-	font-size: 120%;
-	font-weight: 500;
-}
-.botonescciongestion {
-	width: 20% !important;
-}
-.btneditgestion {
-	color: rgb(207, 207, 207);
-	background-color: rgb(10, 61, 4);
-	padding: 1vw !important;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	cursor: pointer;
-	margin: 1vw;
-}
-.btnborragestion {
-	color: rgb(207, 207, 207);
-	background-color: rgb(111, 8, 10);
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	padding: 1vw !important;
-	cursor: pointer;
-	margin: 1vw;
-}
-.btnvergestion {
-	color: rgb(207, 207, 207);
-	background-color: rgb(21, 100, 160);
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	padding: 1vw !important;
-	cursor: pointer;
-	margin: 1vw;
-}
-.acciconogestion {
-	font-size: 100%!important;
-	color: rgb(207, 207, 207) !important;
-	padding-left: 1vw;
-	padding-right: 1vw;
-	padding-top: 0vw !important;
-	padding-bottom: 0vw !important;
-}
-.btnvpaginagestion {
 	font-weight: 500;
 	font-size: 80% !important;
 	background-color: rgb(27, 27, 27);
@@ -144,22 +25,96 @@
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	flex-wrap: wrap;
-	padding-right: 1vw;
+	padding: 5px !important;
 	cursor: pointer;
 	text-align: center;
-	margin: 1vw;
+	margin: 5px;
 	text-decoration: none;
 }
-.btnvpaginagestion:hover {
+.btnpanelgestion:hover {
 	opacity: 0.8;
-	color: white;
-	background-color: transparent;
+	background-color: rgb(27, 27, 27);
+}
+.titlegestion {
+	text-align: center;
+	font-size: 130%;
+	margin-top:20px;
+	margin-bottom: 20px;
+	font-weight: 700;
+	color: rgb(207, 207, 207);
+}
+.subtitlegestion {
+	text-align: center;
+	font-size: 120%;
+   margin-bottom: 20px;
+	font-weight: 400;
+	color: rgb(207, 207, 207);
+}
+.datosexptes {
+	text-align: center;
+	font-size: 80%;
+	margin-top: 10px;
+	margin-bottom: 5px;
+	font-weight: 400;
+	color: rgb(207, 207, 207);
+}
+.titletabla {
+	text-align: center;
+	font-size: 130%;
+	margin-top: 20px;
+	margin-bottom: 20px;
+	font-weight: 800;
+	color: rgb(207, 207, 207);
+}
+.btneditgestion {
+	color: rgb(207, 207, 207);
+	background-color: rgb(10, 61, 4);
+	padding: 5px !important;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	margin: 5px;
+}
+.btnborragestion {
+	color: rgb(207, 207, 207);
+	background-color: rgb(111, 8, 10);
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 5px !important;
+	cursor: pointer;
+	margin: 5px;
+}
+.btnvergestion {
+	color: rgb(207, 207, 207);
+	background-color: rgb(21, 100, 160);
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	padding: 5px !important;
+	cursor: pointer;
+	margin: 5px;
+}
+.btnmp{
+	background-color: rgb(12, 199, 251);
+	color:white;
+	width: 40%;
+	align-self: center;
+	padding: 8px;
+	font-weight: 700;
+	text-decoration: none!important;
+}
+.btnmp:hover {
+	opacity: 0.8;
+	background-color: rgb(27, 27, 27);
 }
 .modedittitle {
 	font-size: 120% !important;
+}
+.modal-title{
+	text-align: center!important;
+	color: rgb(143, 142, 139);
 }
 .modeditinput {
 	font-size: 100% !important;
@@ -183,7 +138,7 @@
 	background-color: rgb(27, 27, 27) !important;
 	color: rgb(207, 207, 207);
 }
-.btnusumodal {
+/* .btnusumodal {
 	background-color: rgb(207, 207, 207);
 	font-weight: 500;
 	font-size: 100%;
@@ -201,8 +156,42 @@
 .btnusumodal:hover {
 	opacity: 0.8;
 	background-color: rgb(27, 27, 27);
-}
+} */
 .errors {
 	color: rgb(207, 207, 207) !important;
 	font-size: 2vw;
+}
+.btnconfmodal {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin: 1vw;
+	margin-top: 4vw !important;
+	background-color: rgb(10, 61, 4) !important;
+	color: rgb(207, 207, 207);
+	width: auto !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 2vw !important;
+}
+.btncancmodal {
+	font-size: 100% !important;
+	font-weight: 600;
+	margin: 1vw;
+	margin-top: 4vw !important;
+	background-color: rgb(111, 8, 10) !important;
+	color: rgb(207, 207, 207);
+	width: auto !important;
+	display: flex !important;
+	align-items: center;
+	justify-content: center;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	border-radius: 5px;
+	cursor: pointer;
+	padding: 2vw !important;
+	text-decoration: none;
+	text-align: center;
 }

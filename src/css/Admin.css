@@ -13,19 +13,19 @@
 	background-size: cover;
 	background-position: center;
 	object-fit: cover;
-	padding-bottom: 4vw;
+	padding-bottom: 10px;
 }
 .titlead {
-	margin-top: 3vw;
-	margin-bottom: 5vw;
-	font-size: 150%;
+	margin-top:20px;
+	margin-bottom: 20px;
+	font-size: 130%;
 	font-weight: 800;
 	color: rgb(207, 207, 207);
 }
 .subtitleadusu {
 	font-size: 120%;
-	font-weight: 600;
-   margin-bottom: 5vw;
+	font-weight: 400;
+   margin-bottom: 20px;
 	color: rgb(207, 207, 207);
 }
 .main {
@@ -41,12 +41,12 @@
 	justify-content: space-around;
 }
 .botonadm {
-	padding: 2vw;
-	margin: 1vw;
+	padding: 5px;
+	margin: 5px;
 	font-weight: 600;
 	background-color: rgb(27, 27, 27);
-	color: rgb(207, 207, 207);
-	width: auto;
+	color: rgb(207, 207, 207)!important;
+	width: 230px;
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
 	display: flex;
@@ -54,23 +54,27 @@
 	justify-content: center;
 	cursor: pointer;
 	text-align: center;
-	text-decoration: none;
+	text-decoration: none!important;
 	align-self: center;
 	font-size: 100%;
 	text-wrap: nowrap;
 }
 .botonadm:hover {
-	opacity: 0.8;
+	opacity: 1;
 	color: white;
 	background-color: transparent;
 }
-.botonlogout {
-	margin: 1vw;
-	font-weight: 700;
-	padding: 2vw;
+.linkadmin{ 
+	color: rgb(207, 207, 207)!important;
+	text-decoration: none!important;
+}
+.botonlogoutadmin {
+	margin: 5px;
+	font-weight: 600;
+	padding: 5px;
 	background-color: rgb(60, 5, 5) !important;
 	color: rgb(207, 207, 207);
-	width: auto;
+	width: 230px;
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
 	display: flex;
@@ -83,6 +87,11 @@
 	font-size: 100%;
 }
 .botonlogout:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
+}
+.botonlogoutadmin:hover {
 	opacity: 0.8;
 	color: white;
 	background-color: transparent;

@@ -6,16 +6,21 @@ import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
-import { useTurnos } from '../context/TurnosContext';
+import { db } from '../firebase/config';
+import {
+	doc,
+	getDoc,
+	getDocs,
+	updateDoc,
+	collection,
+} from 'firebase/firestore';
 
 export const EditarTurnos = ({}) => {
-	const { user } = useAuth();
-	const params = useParams();
+	const user = useAuth();
+	const { id } = useParams();
 	const navigate = useNavigate();
-	const { getTurno, updateTurno, getTurnos } = useTurnos();
 	const { register, handleSubmit, setValue } = useForm();
 	const [turno, setTurno] = useState({});
-	const [turnos, setTurnos] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 
 	// Función para abrir el modal
@@ -24,58 +29,75 @@ export const EditarTurnos = ({}) => {
 	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		setShowModal(false);
-		if (user.email === 'admin@gmail.com') {
-			navigate('/gestionagenda');
-		} else {
-			navigate('/agendausu');
-		}
+		navigate('/agendausu');
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const turnosRef = collection(db, 'turnos');
+				const fetchedTurnos = await getDocs(turnosRef);
+				const turnosArray = Object.values(
+					fetchedTurnos.docs.map((doc) => doc.data())
+				);
+				setTurno(turnosArray);
+			} catch (error) {
+				console.error('Error al obtener turnos:', error);
+			}
+		};
+		fetchData();
+	}, []);
 
 	// Función para cargar los datos del turno al abrir la página
 	useEffect(() => {
 		async function loadTurno() {
 			try {
-				if (params.id) {
-					const turnoData = await getTurno(params.id);
-					setTurno(turnoData);
-					setValue('turno', turnoData.turno);
-					setValue('email', turnoData.email);
-					setValue('motivo', turnoData.motivo);
-					// Abre automáticamente el modal cuando se cargan los datos del turno
+				Swal.showLoading();
+				const turnoRef = doc(db, 'turnos', id);
+				const snapshot = await getDoc(turnoRef);
+				console.log('Datos del turno cargado:', snapshot.data());
+				const turnoData = snapshot.data();
+				setValue('turno', turnoData.turno);
+				setValue('email', turnoData.email);
+				setValue('motivo', turnoData.motivo);
+				handleOpenModal();
+				setTimeout(() => {
+					Swal.close();
 					handleOpenModal();
-				}
+				}, 500);
+				return () => clearTimeout(timer);
 			} catch (error) {
-				console.error('Error al cargar el expediente', error);
+				console.error('Error al cargar el turno', error);
 			}
 		}
 		loadTurno();
 	}, []);
 
-	// Carga de turnos
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const fetchedTurnos = await getTurnos();
-				setTurnos(fetchedTurnos);
-			} catch (error) {
-				console.error('Error al obtener turnos:', error);
-			}
-		};
-
-		fetchData();
-	}, []);
-
-	// Función para manejar el envío del formulario
+	// Función para envíar los datos modificados
 	const onSubmit = handleSubmit(async (data) => {
-		await updateTurno(params.id, data);
-		Swal.fire({
-			icon: 'success',
-			title: 'Turno editado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		// Cierra el modal después de guardar los cambios
-		handleCloseModal();
+		try {
+			Swal.showLoading();
+			const turnoRef = doc(db, 'turnos', id);
+			await updateDoc(turnoRef, data);
+			Swal.fire({
+				icon: 'success',
+				title: 'Turno editado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+				if (user.user === 'ofvinals@gmail.com') {
+					navigate('/gestionagenda', { replace: true });
+				} else {
+					navigate('/agendausu', { replace: true });
+				}
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error('Error al eliminar el movimiento:', error);
+		}
 	});
 
 	return (
@@ -90,24 +112,19 @@ export const EditarTurnos = ({}) => {
 					<Modal.Body>
 						<Form onSubmit={onSubmit}>
 							<div className='d-flex flex-column align-items-center'>
-								<Form.Group
-									className=''
-									controlId='turnoEditarTurno'>
+								<Form.Group className='' controlId='turnoEditarTurno'>
 									<Form.Label className='labeleditturno '>
 										Cliente
 									</Form.Label>
 									<Form.Control
 										className='inputeditturno'
 										type='text'
-										defaultValue={turno.email}
 										{...register('email')}
 										readOnly
 									/>
 								</Form.Group>
 
-								<Form.Group
-									className=''
-									controlId='turnoEditarTurno'>
+								<Form.Group className='' controlId='turnoEditarTurno'>
 									<Form.Label className='labeleditturno'>
 										Turno
 									</Form.Label>

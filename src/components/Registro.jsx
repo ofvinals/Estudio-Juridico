@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,23 +7,26 @@ import '../css/Registro.css';
 import { useAuth } from '../context/AuthContext';
 
 export const Registro = () => {
-	const { signup, isAuthenticated, errors: RegisterErrors } = useAuth();
+	const { registro} = useAuth();
 	const navigate = useNavigate();
-	const { register, handleSubmit } = useForm();
-
-	useEffect(() => {
-		if (isAuthenticated) navigate('/adminusu');
-	}, [isAuthenticated]);
+	const {
+		register,
+		getValues,
+		handleSubmit,
+		formState: { errors },
+	} = useForm();
 
 	const onSubmit = handleSubmit(async (values) => {
-		signup(values);
+		try {
+			await registro(values);
+			navigate('/adminusu', { replace: true });
+		} catch (error) {
+			console.error('Error al registrar:', error);
+		}
 	});
 
 	return (
-		<section className='register'>
-			{RegisterErrors.map((error, i) => (
-				<div key={i}>{error}</div>
-			))}
+		<section className='register container-lg'>
 			<Form
 				id='loginFormreg'
 				className='loginFormreg container fluid bg-dark'
@@ -36,7 +39,12 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='name'
-						{...register('username', { required: true })}
+						{...register('username', {
+							required: {
+								value: true,
+								message: 'El nombre o razon social es requerido.',
+							},
+						})}
 					/>
 				</Form.Group>
 
@@ -46,7 +54,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='subname'
-						{...register('apellido', { required: true })}
+						{...register('apellido')}
 					/>
 				</Form.Group>
 
@@ -56,7 +64,22 @@ export const Registro = () => {
 						className='inputreg'
 						type='number'
 						id='dni'
-						{...register('dni', { required: true })}
+						{...register('dni', {
+							required: {
+								value: true,
+								message: 'El DNI/CUIT es requerido.',
+							},
+							minLength: {
+								value: 8,
+								message:
+									'El DNI/CUIT debe contenter entre 8 y 10 digitos.',
+							},
+							maxLength: {
+								value: 11,
+								message:
+									'El DNI/CUIT debe contenter entre 8 y 10 digitos.',
+							},
+						})}
 					/>
 				</Form.Group>
 
@@ -66,7 +89,12 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='domic'
-						{...register('domicilio', { required: true })}
+						{...register('domicilio', {
+							required: {
+								value: true,
+								message: 'El domicilio es requerido.',
+							},
+						})}
 					/>
 				</Form.Group>
 
@@ -76,7 +104,20 @@ export const Registro = () => {
 						className='inputreg'
 						type='number'
 						id='cel'
-						{...register('celular', { required: true })}
+						{...register('celular', {
+							required: {
+								value: true,
+								message: 'El celular es requerido.',
+							},
+							minLength: {
+								value: 10,
+								message: 'El celular debe contenter 10 digitos.',
+							},
+							maxLength: {
+								value: 11,
+								message: 'El celular debe contenter 10 digitos.',
+							},
+						})}
 					/>
 				</Form.Group>
 
@@ -86,8 +127,20 @@ export const Registro = () => {
 						className='inputreg'
 						type='email'
 						id='email'
-						{...register('email', { required: true })}
+						{...register('email', {
+							required: {
+								value: true,
+								message: 'El email es requerido',
+							},
+							pattern: {
+								value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
+								message: 'Email no válido',
+							},
+						})}
 					/>
+					{errors.email && (
+						<span className='error-message'>{errors.email.message}</span>
+					)}
 				</Form.Group>
 
 				<Form.Group className='mb-3'>
@@ -96,7 +149,16 @@ export const Registro = () => {
 						className='inputreg'
 						type='password'
 						id='password'
-						{...register('password', { required: true })}
+						{...register('password', {
+							required: {
+								value: true,
+								message: 'La contraseña es requerida',
+							},
+							minLength: {
+								value: 7,
+								message: 'La contraseña debe ser mayor a 7 caracteres',
+							},
+						})}
 					/>
 				</Form.Group>
 
@@ -107,8 +169,29 @@ export const Registro = () => {
 					<Form.Control
 						className='inputreg'
 						type='password'
-						id='confirm'
+						id='copassword'
+						{...register('copassword', {
+							required: {
+								value: true,
+								message: 'La confirmacion de contraseña es requerida',
+							},
+							minLength: {
+								value: 7,
+								message:
+									'Confirmar contraseña debe ser mayor a 7 caracteres',
+							},
+							validate: (copassword) => {
+								const { password } = getValues();
+								return (
+									copassword === password ||
+									'Las contraseñas ingresadas no coinciden'
+								);
+							},
+						})}
 					/>
+					{errors.copassword && (
+						<span>{errors.copassword.message}</span>
+					)}
 				</Form.Group>
 
 				<Form.Group className='mb-3 botonesreg'>

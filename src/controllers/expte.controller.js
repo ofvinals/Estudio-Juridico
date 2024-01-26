@@ -104,9 +104,9 @@ export const deleteExpte = async (req, res) => {
 };
 
 export const createMov = async (req, res) => {
-	const { fecha, descripcion, adjunto } = req.body;
-
+	const { fecha, descripcion } = req.body;
 	try {
+		const { result } = req.body;
 		const expteId = req.params.id; // Asegúrate de ajustar esto según tu ruta de API
 
 		// Buscar el expediente por ID
@@ -114,12 +114,20 @@ export const createMov = async (req, res) => {
 		if (!expte) {
 			return res.status(404).json({ message: 'Expediente no encontrado' });
 		}
+
 		// Crear una nueva instancia del modelo Expte utilizando los datos de la solicitud
 		const newMovimiento = {
 			fecha,
 			descripcion,
-			adjunto,
+			url:result
 		};
+
+		if (req.file) {
+			const { filename } = req.file;
+			const filePath = `/uploads/${filename}`; // ajusta la ruta según tu estructura de archivos
+			newMovimiento.setFile(filename, filePath);
+		}
+
 		expte.movimientos.push(newMovimiento);
 
 		// Guardar el expediente actualizado en la base de datos

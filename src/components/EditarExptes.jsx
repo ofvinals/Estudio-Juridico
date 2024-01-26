@@ -5,16 +5,20 @@ import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
-import { useExptes } from '../context/ExptesContext';
 import { useForm } from 'react-hook-form';
-import { useUsers } from '../context/UsersContext';
 import { Modal } from 'react-bootstrap';
+import { db } from '../firebase/config';
+import {
+	doc,
+	getDoc,
+	getDocs,
+	collection,
+	updateDoc,
+} from 'firebase/firestore';
 
 export const EditarExptes = ({}) => {
-	const { user } = useAuth();
-	const params = useParams();
-	const { getExpte, updateExpte } = useExptes();
-	const { getUsers } = useUsers();
+	const user = useAuth();
+	const { id } = useParams();
 	const [users, setUsers] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const { register, handleSubmit, setValue, watch, unregister } = useForm();
@@ -33,24 +37,22 @@ export const EditarExptes = ({}) => {
 	useEffect(() => {
 		async function loadExpte() {
 			try {
-				if (params.id) {
-					const expte = await getExpte(params.id);
-
-					setValue('cliente', expte.cliente);
-					setValue('nroexpte', expte.nroexpte);
-					setValue('radicacion', expte.radicacion);
-					setValue('juzgado', expte.juzgado);
-					setValue('caratula', expte.caratula);
-					setValue('actor', expte.actor);
-					setValue('demandado', expte.demandado);
-					setValue('proceso', expte.proceso);
-					setValue('estado', expte.estado);
-
-					const caratulaValue = `${expte.actor} c/ ${expte.demandado} s/ ${expte.proceso}`;
-					setValue('caratula', caratulaValue);
-					// Abre automáticamente el modal cuando se cargan los datos del turno
-					handleOpenModal();
-				}
+				const expteRef = doc(db, 'expedientes', id);
+				const snapshot = await getDoc(expteRef);
+				console.log('Datos del expediente cargados:', snapshot.data());
+				const expteData = snapshot.data();
+				setValue('cliente', expteData.cliente);
+				setValue('nroexpte', expteData.nroexpte);
+				setValue('radicacion', expteData.radicacion);
+				setValue('juzgado', expteData.juzgado);
+				setValue('caratula', expteData.caratula);
+				setValue('actor', expteData.actor);
+				setValue('demandado', expteData.demandado);
+				setValue('proceso', expteData.proceso);
+				setValue('estado', expteData.estado);
+				const caratulaValue = `${expteData.actor} c/ ${expteData.demandado} s/ ${expteData.proceso}`;
+				setValue('caratula', caratulaValue);
+				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el expediente', error);
 			}
@@ -61,8 +63,12 @@ export const EditarExptes = ({}) => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedUsers = await getUsers();
-				setUsers(fetchedUsers);
+				const usuariosRef = collection(db, 'usuarios');
+				const fetchedUsers = await getDocs(usuariosRef);
+				const usersArray = Object.values(
+					fetchedUsers.docs.map((doc) => doc.data())
+				);
+				setUsers(usersArray);
 			} catch (error) {
 				console.error('Error al obtener usuarios:', error);
 			}
@@ -79,42 +85,44 @@ export const EditarExptes = ({}) => {
 			const caratulaValue = `${actor} c/ ${demandado} s/ ${proceso}`;
 			setValue('caratula', caratulaValue);
 		};
-
 		watch(['actor', 'demandado', 'proceso'], updateCaratula);
-
 		return () => {
 			unregister(['actor', 'demandado', 'proceso']);
 		};
 	}, [watch, setValue, unregister]);
 
 	const onSubmit = handleSubmit(async (data) => {
-		await updateExpte(params.id, data);
-		Swal.fire({
-			icon: 'success',
-			title: 'Expediente editado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		navigate('/gestionexpedientes');
-		// Cierra el modal después de guardar los cambios
-		handleCloseModal();
+		try {
+			Swal.showLoading();
+			const expteRef = doc(db, 'expedientes', id);
+			await updateDoc(expteRef, data);
+			Swal.fire({
+				icon: 'success',
+				title: 'Expediente editado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				navigate('/gestionexpedientes');
+				handleCloseModal();
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error('Error al eliminar el movimiento:', error);
+		}
 	});
 
 	return (
 		<>
 			<div className='bodyedit'>
-				<Modal show={showModal} onHide={handleCloseModal}>
+				<Modal size='lg' show={showModal} onHide={handleCloseModal}>
 					<Modal.Header closeButton>
-						<Modal.Title className='titlemodal'>
-							Modificar Datos de Expediente
-						</Modal.Title>
+						<Modal.Title>Modificar Datos de Expediente</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<Form
-							className='formedit'
-							onSubmit={onSubmit}>
-
-							<Form.Group className='formcargaexp' id='inputname'>
+						<Form className='formedit' onSubmit={onSubmit}>
+							<Form.Group className='groupedit' id='inputname'>
 								<Form.Label className='labeledit'>Cliente</Form.Label>
 								<select
 									className='inputedit'
@@ -129,7 +137,7 @@ export const EditarExptes = ({}) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group id='inputname'>
+							<Form.Group className='groupedit' id='inputname'>
 								<Form.Label className='labeledit'>
 									Nro Expediente
 								</Form.Label>
@@ -151,12 +159,12 @@ export const EditarExptes = ({}) => {
 								/>
 							</Form.Group>
 
-							<Form.Group id='inputsubname'>
-								<Form.Label className='labeledit'>
+							<Form.Group className='groupedit' id='inputradic'>
+								<Form.Label className='labeledit w-50'>
 									Fuero de Radicacion
 								</Form.Label>
 								<select
-									className='inputedit'
+									className='inputedit w-50'
 									aria-label='Default select'
 									{...register('radicacion')}>
 									<option>Selecciona..</option>
@@ -176,12 +184,12 @@ export const EditarExptes = ({}) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group id='inputsubname'>
-								<Form.Label className='labeledit'>
+							<Form.Group className='groupedit' id='inputradic'>
+								<Form.Label className='labeledit w-50'>
 									Juzgado de Radicacion
 								</Form.Label>
 								<select
-									className='inputedit'
+									className='inputedit w-50'
 									aria-label='Default select'
 									{...register('juzgado')}>
 									<option>Selecciona..</option>
@@ -200,7 +208,7 @@ export const EditarExptes = ({}) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group id='inputdomic'>
+							<Form.Group className='groupedit' id='inputdomic'>
 								<Form.Label className='labeledit'>Actor</Form.Label>
 								<Form.Control
 									className='inputedit'
@@ -209,7 +217,7 @@ export const EditarExptes = ({}) => {
 								/>
 							</Form.Group>
 
-							<Form.Group id='inputcel'>
+							<Form.Group className='groupedit' id='inputcel'>
 								<Form.Label className='labeledit'>Demandado</Form.Label>
 								<Form.Control
 									className='inputedit'
@@ -218,7 +226,7 @@ export const EditarExptes = ({}) => {
 								/>
 							</Form.Group>
 
-							<Form.Group id='inputemail'>
+							<Form.Group className='groupedit' id='inputemail'>
 								<Form.Label className='labeledit'>
 									Tipo de Proceso
 								</Form.Label>
@@ -245,7 +253,7 @@ export const EditarExptes = ({}) => {
 								</select>
 							</Form.Group>
 
-							<Form.Group className='' id='inputemail'>
+							<Form.Group className='groupedit' id='inputemail'>
 								<Form.Label className='labeledit'>Estado</Form.Label>
 								<select
 									className='inputedit'

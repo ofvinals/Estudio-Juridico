@@ -6,19 +6,26 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import { useAuth } from '../context/AuthContext';
 import { Table } from 'react-bootstrap';
-import { useTurnos } from '../context/TurnosContext';
-
 import Swal from 'sweetalert2';
 import dayjs from 'dayjs';
 import 'dayjs/locale/es-mx';
 import '../css/AgendaUsu.css';
+import {
+	doc,
+	addDoc,
+	getDocs,
+	collection,
+	updateDoc,
+	deleteDoc,
+} from 'firebase/firestore';
+import { db } from '../firebase/config';
 dayjs.locale('es');
 
 export const AgendaUsu = () => {
-	const { user } = useAuth();
-	const { getTurnos, createTurno, deleteTurno, turnos } = useTurnos();
+	const user = useAuth();
 	const [tablaTurnos, setTablaTurnos] = useState();
-
+	const [startDate, setStartDate] = useState(dayjs());
+	const [turnoOcupado, setTurnoOcupado] = useState([]);
 	// deshabilita seleccion de dias de fin de semana
 	const lastMonday = dayjs().startOf('week');
 	const nextSunday = dayjs().endOf('week').startOf('day');
@@ -35,20 +42,20 @@ export const AgendaUsu = () => {
 		return view === 'hours' && (isHourBefore9 || isHourAfter6);
 	};
 
-	// agarro el turno seleccionado por el cliente y traigo turnos ocupados del Local Storage
-	const [startDate, setStartDate] = useState(dayjs());
-	const [turnoOcupado, setturnoOcupado] = useState([]);
-
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedTurnos = await getTurnos();
-				cargarTablaTurnos(fetchedTurnos);
+				const turnosRef = collection(db, 'turnos');
+				const snapshot = await getDocs(turnosRef);
+				const turnossArray = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
+				setTurnoOcupado(turnossArray);
+				cargarTablaTurnos(turnossArray);
 			} catch (error) {
-				console.error('Error al obtener turnos', error);
+				console.error('Error al obtener turnos:', error);
 			}
 		};
-
 		fetchData();
 	}, []);
 
@@ -72,11 +79,7 @@ export const AgendaUsu = () => {
 			return;
 		} else {
 			// si no esta ocupado lanza modal para ingresar motivo de consulta y guarda en Localstorage
-			const {
-				value: motivoConsulta,
-				isConfirmed,
-				isDenied,
-			} = await Swal.fire({
+			const { value: motivoConsulta, isConfirmed } = await Swal.fire({
 				input: 'textarea',
 				title: 'Ingrese el motivo de su consulta',
 				inputPlaceholder: 'Ingrese el motivo aca...',
@@ -89,10 +92,15 @@ export const AgendaUsu = () => {
 			if (isConfirmed) {
 				const nuevoTurno = {
 					turno: formatoTurnoSeleccionado,
-					email: user.email,
+					email: user.user,
 					motivo: motivoConsulta,
 				};
-				createTurno(nuevoTurno);
+				const turnoDocRef = await addDoc(
+					collection(db, 'turnos'),
+					nuevoTurno
+				);
+				console.log('Documento agregado con ID: ', turnoDocRef.id);
+				// cargarTablaTurnos(tabla);
 				window.location.reload();
 				Swal.fire({
 					icon: 'success',
@@ -111,23 +119,18 @@ export const AgendaUsu = () => {
 	function cargarTablaTurnos(datosTurnos) {
 		if (datosTurnos) {
 			const turnosFiltrados = datosTurnos.filter(
-				(turno) => user.email === turno.email
+				(turno) => user.user === turno.email
 			);
 			if (turnosFiltrados.length > 0) {
-				const tabla = turnosFiltrados.map((turnos) => (
-					<tr key={turnos._id}>
-						<td className='align-middle w-25'>{turnos.turno}</td>
-						<td className='align-middle '>{turnos.email}</td>
-						<td className='align-middle '>{turnos.motivo}</td>
+				const tabla = turnosFiltrados.map((turno) => (
+					<tr key={turno.id}>
+						<td className='align-middle w-25'>{turno.turno}</td>
+						<td className='align-middle '>{turno.email}</td>
+						<td className='align-middle '>{turno.motivo}</td>
 						<td className='align-middle d-flex flex-row'>
-							<Link
-								className='btneditagusu'
-								to={`/editarturnos/${turnos._id}`}>
-								<i className='bi bi-pen acciconoagusu'></i>
-							</Link>
 							<button
 								className='btnborraagusu'
-								onClick={() => borrarTurno(turnos._id)}>
+								onClick={() => borrarTurno(turno.id)}>
 								<i className='bi bi-trash-fill acciconoagusu'></i>
 							</button>
 						</td>
@@ -143,19 +146,11 @@ export const AgendaUsu = () => {
 					</tr>
 				);
 			}
-		} else {
-			// Manejar el caso en que datosTurnos es undefined
-			setTablaTurnos(
-				<tr key='no-turnos'>
-					<td colSpan='4'>
-						<p>Usted no tiene turno/s pendiente/s</p>
-					</td>
-				</tr>
-			);
 		}
 	}
 
 	// funcion para borrar turnos
+	const deleteTurno = (id) => deleteDoc(doc(db, 'turnos', id));
 	async function borrarTurno(id) {
 		try {
 			const result = await Swal.fire({
@@ -169,29 +164,33 @@ export const AgendaUsu = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
-				deleteTurno(id);
-				window.location.reload();
+				await deleteTurno(id);
 				Swal.fire(
 					'Eliminado',
 					'El turno fue eliminado con exito',
 					'success'
 				);
+				window.location.reload();
 			}
-		} catch (error) {
-			console.error('Error al eliminar el expediente:', error);
-			Swal.fire(
-				'Error',
-				'Hubo un problema al eliminar el expediente',
-				'error'
+			setTurnoOcupado((prevData) =>
+				prevData.filter((turno) => turno.id !== id)
 			);
+		} catch (error) {
+			console.error('Error al eliminar el turno:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Hubo un error al eliminar su turno!',
+				showConfirmButton: false,
+				timer: 2500,
+			});
 		}
 	}
 
 	return (
 		<>
 			<div>
-				<div className='main px-3 bodyagusu'>
-					<h4 className='titleagusu'>Bienvenido, {user.email}</h4>
+				<div className='main bodyagusu container-lg'>
+					<h4 className='titleagusu'>Bienvenido, {user.user}</h4>
 					<p className='subtitleagusu'>Panel de Turnos Online</p>
 				</div>
 				<div className='d-flex justify-content-center'>

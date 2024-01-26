@@ -1,51 +1,61 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import Table from 'react-bootstrap/Table';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import {
-	useReactTable,
-	getCoreRowModel,
-	flexRender,
-	getPaginationRowModel,
-	getSortedRowModel,
-	getFilteredRowModel,
-} from '@tanstack/react-table';
+	MaterialReactTable,
+	useMaterialReactTable,
+} from 'material-react-table';
+import { Box, IconButton } from '@mui/material';
+import {
+	Edit as EditIcon,
+	Delete as DeleteIcon,
+	Visibility as VisibilityIcon,
+} from '@mui/icons-material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { MRT_Localization_ES } from 'material-react-table/locales/es';
 import '../css/MovExptes.css';
 import { Form, Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useExptes } from '../context/ExptesContext';
 import { format } from 'date-fns';
+import { uploadFile } from '../firebase/config';
+import { db } from '../firebase/config';
+import { v4 as uuidv4 } from 'uuid';
+import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
 
 export const GestionMovimientos = () => {
-	const { user } = useAuth();
-	const params = useParams();
+	const user = useAuth();
+	const {displayName} = useAuth();
+	const { id } = useParams();
 	const navigate = useNavigate();
-	const { getExpte, createMov, deleteMov } = useExptes();
 	const [data, setData] = useState([]);
-	const [sorting, setSorting] = useState([]);
-	const [filtering, setFiltering] = useState('');
 	const [showModal, setShowModal] = useState(false);
 	const [selectedMov, setSelectedMov] = useState([]);
 	const [showCreateModal, setShowCreateModal] = useState(false);
+	const [showViewModal, setShowViewModal] = useState(false);
+	const [showEditModal, setShowEditModal] = useState(false);
 	const [expte, setExpte] = useState([]);
-	const { register, handleSubmit, reset } = useForm();
+	const { register, handleSubmit, reset, setValue } = useForm();
 
-	// Función para abrir el modal
-	const handleOpenModal = () => setShowModal(true);
+	const handleOpenModal = () => setShowEditModal(true);
 
 	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		reset();
 		setShowModal(false);
 		setShowCreateModal(false);
+		setShowViewModal(false);
+		setShowEditModal(false);
 	};
 
 	// Cierra modales
 	const handleCancel = () => {
 		setShowModal(false);
 		setShowCreateModal(false);
+		setShowViewModal(false);
+		setShowEditModal(false);
 	};
 
 	const columns = React.useMemo(
@@ -53,81 +63,249 @@ export const GestionMovimientos = () => {
 			{
 				header: 'Fecha',
 				accessorKey: 'fecha',
+				size: 50,
 			},
 			{
 				header: 'Descripcion',
 				accessorKey: 'descripcion',
+				size: 250,
 			},
 			{
 				header: 'Adjunto',
-				accessorKey: 'adjunto',
+				accessorKey: 'file',
+				size: 50,
+				Cell: ({ row }) => {
+					if (row.original.fileUrl) {
+						return <i className='iconavbar bi bi-paperclip'></i>;
+					}
+					return null;
+				},
 			},
 		],
 		[]
 	);
 
-	// carga exptes de getExptes y guarda en exptes
+	// Funcion para cargar tabla de movimientos
+	const table = useMaterialReactTable({
+		columns,
+		data: data || [],
+		enableColumnFilterModes: true,
+		enableColumnOrdering: true,
+		enableGlobalFilterModes: true,
+		enableColumnPinning: true,
+		enableRowActions: true,
+		enableGrouping: true,
+		paginationDisplayMode: 'pages',
+		positionToolbarAlertBanner: 'bottom',
+		localization: MRT_Localization_ES,
+		muiSearchTextFieldProps: {
+			size: 'medium',
+			variant: 'outlined',
+		},
+
+		muiPaginationProps: {
+			color: 'primary',
+			rowsPerPageOptions: [5, 10, 20, 30],
+			shape: 'rounded',
+			variant: 'outlined',
+		},
+		renderRowActions: ({ row, table }) => (
+			<Box
+				sx={{
+					display: 'flex',
+					flexWrap: 'nowrap',
+					gap: '3px',
+				}}>
+				<IconButton
+					color='primary'
+					onClick={() => verMov(row.original.id, expte.id)}>
+					<VisibilityIcon />
+				</IconButton>
+				{user.user === 'ofvinals@gmail.com' && (
+					<IconButton
+						color='success'
+						onClick={() => editMov(row.original.id, expte.id)}>
+						<EditIcon />
+					</IconButton>
+				)}
+				{user.user === 'ofvinals@gmail.com' && (
+					<IconButton
+						color='error'
+						onClick={() => borrarMov(row.original.id, expte.id)}>
+						<DeleteIcon />
+					</IconButton>
+				)}
+			</Box>
+		),
+	});
+
+	const darkTheme = createTheme({
+		palette: {
+			mode: 'dark',
+		},
+	});
+
+	// carga exptes
 	useEffect(() => {
 		const fetchExpte = async () => {
 			try {
-				const fetchedExptes = await getExpte(params.id);
-				setExpte(fetchedExptes);
-				setData(fetchedExptes.movimientos);
+				const expteRef = doc(db, 'expedientes', id);
+				const snapshot = await getDoc(expteRef);
+
+				if (snapshot.exists()) {
+					const fetchedExpte = { ...snapshot.data(), id: snapshot.id };
+					setExpte(fetchedExpte);
+					// Si "movimientos" es un campo de tu documento expediente, puedes acceder a él directamente
+					setData(fetchedExpte.movimientos);
+				} else {
+					console.log(
+						'No se encontró el expediente con el ID proporcionado.'
+					);
+				}
 			} catch (error) {
 				console.error('Error al obtener movimientos del expediente', error);
 			}
 		};
+
 		fetchExpte();
 	}, []);
 
-	// Funcion para cargar tabla de Usuario traida de Local Storage
-	const table = useReactTable({
-		data,
-		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		state: {
-			sorting,
-			globalFilter: filtering,
-		},
-		onSortingChange: setSorting,
-		onGlobalFilterChange: setFiltering,
-	});
-
 	// Agrega nuevos movimientos
-	const onSubmit = handleSubmit(async (data) => {
-		const fechaFormateada = format(new Date(data.fecha), 'dd/MM/yyyy');
-		await createMov({ ...data, fecha: fechaFormateada }, params.id);
-		Swal.fire({
-			icon: 'success',
-			title: 'Movimiento creado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		const updatedExpte = await getExpte(params.id);
-		setExpte(updatedExpte);
-		setData(updatedExpte.movimientos);
-		// Cierra el modal después de guardar los cambios
-		await handleCloseModal();
+	const onSubmit = handleSubmit(async (values) => {
+		try {
+			Swal.showLoading();
+			const fechaFormateada = format(new Date(values.fecha), 'dd/MM/yyyy');
+			let fileDownloadUrl = null;
+
+			if (values.file && values.file[0]) {
+				const file = values.file[0];
+				fileDownloadUrl = await uploadFile(file);
+			}
+
+			const movData = {
+				id: uuidv4(),
+				fecha: fechaFormateada,
+				descripcion: values.descripcion,
+				fileUrl: fileDownloadUrl,
+			};
+			const expteRef = doc(db, 'expedientes', id);
+			const expteSnapshot = await getDoc(expteRef);
+			const currentMovimientos = expteSnapshot.data().movimientos || [];
+			const updatedMovimientos = [...currentMovimientos, movData];
+
+			if (!('movimientos' in expteSnapshot.data())) {
+				await updateDoc(expteRef, { movimientos: [] });
+			}
+			await updateDoc(expteRef, { movimientos: updatedMovimientos });
+			Swal.fire({
+				icon: 'success',
+				title: 'Movimiento creado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(async () => {
+				Swal.close();
+				handleCloseModal();
+				const updatedExpteSnapshot = await getDoc(expteRef);
+				const updatedExpteData = updatedExpteSnapshot.data();
+				setData(updatedExpteData.movimientos || []);
+			}, 1000);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error(error);
+		}
 	});
 
 	// funcion para ver movimientos en Modal
-	async function verMov(id) {
-		const movimientoSeleccionado = expte.movimientos.find(
-			(mov) => mov._id === id
-		);
-		setSelectedMov(movimientoSeleccionado);
-		setShowModal(true);
+	async function verMov(movimientoId, expedienteId) {
+		try {
+			Swal.showLoading();
+			const expteRef = doc(db, 'expedientes', expedienteId);
+			const snapshot = await getDoc(expteRef);
+			if (snapshot.exists()) {
+				const expedienteData = snapshot.data();
+				const selectedMovimiento = expedienteData.movimientos.find(
+					(mov) => mov.id === movimientoId
+				);
+				if (selectedMovimiento) {
+					setSelectedMov(selectedMovimiento);
+					setTimeout(() => {
+						Swal.close();
+						setShowViewModal(true);
+					}, 500);
+					return () => clearTimeout(timer);
+				} }
+		} catch (error) {
+			console.error('Error al obtener movimientos del expediente', error);
+		}
+	}
+
+	// Función para editar los datos del movimiento
+	async function editMov(movimientoId, expedienteId) {
+		try {
+			Swal.showLoading();
+			const expteRef = doc(db, 'expedientes', expedienteId);
+			const snapshot = await getDoc(expteRef);
+			if (snapshot.exists()) {
+				const expedienteData = snapshot.data();
+				const selectedMovimiento = expedienteData.movimientos.find(
+					(mov) => mov.id === movimientoId
+				);
+			}
+			const movData = snapshot.data();
+			setValue('fecha', movData.fecha);
+			setValue('descripcion', movData.descripcion);
+			setValue('adjunto', movData.adjunto);
+			setTimeout(() => {
+				Swal.close();
+				handleOpenModal();
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error('Error al cargar el movimiento', error);
+		}
 	}
 
 	// funcion para eliminar movimientos
+	const deleteMovimiento = async (movimientoId, expedienteId) => {
+		try {
+			Swal.showLoading();
+			const expteRef = doc(db, 'expedientes', expedienteId);
+			// Obtiene los movimientos actuales
+			const expteSnapshot = await getDoc(expteRef);
+			const expedienteData = expteSnapshot.data();
+			const currentMovimientos = expedienteData.movimientos || [];
+			console.log(currentMovimientos);
+			// Filtra los movimientos para excluir el que se desea eliminar
+			const updatedMovimientos = currentMovimientos.filter(
+				(mov) => mov.id !== movimientoId
+			);
+
+			// Actualiza el expediente con los movimientos actualizados
+			await updateDoc(expteRef, { movimientos: updatedMovimientos });
+			Swal.fire({
+				icon: 'success',
+				title: 'Movimiento eliminado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				setData(updatedMovimientos);
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error('Error al eliminar el movimiento:', error);
+		}
+	};
+
+	// Función para confirmar y luego llamar a deleteMovimiento
 	async function borrarMov(expedienteId, movimientoId) {
 		try {
+			Swal.showLoading();
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del movimiento?',
+				text: 'Confirmas la eliminación del movimiento?',
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#d33',
@@ -136,17 +314,13 @@ export const GestionMovimientos = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
-				await deleteMov(expedienteId, movimientoId);
-				Swal.fire({
-					icon: 'success',
-					title: 'Movimiento eliminado correctamente',
-					showConfirmButton: false,
-					timer: 1500,
-				});
-				setData((prevData) =>
-					prevData.filter((mov) => mov._id !== movimientoId)
-				);
+				// Llama a la función para eliminar el movimiento
+				await deleteMovimiento(expedienteId, movimientoId);
 			}
+			setTimeout(() => {
+				Swal.close();
+			}, 500);
+			return () => clearTimeout(timer);
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
 		}
@@ -154,10 +328,10 @@ export const GestionMovimientos = () => {
 
 	return (
 		<>
-			<div className='bg-dark'>
+			<div className='container-lg bg-dark'>
 				<div className='main bodygestion'>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {user.email}
+						Bienvenido de nuevo, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Movimientos de Expedientes
@@ -165,7 +339,7 @@ export const GestionMovimientos = () => {
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.email === 'admin@gmail.com' && (
+						{user.user === 'ofvinals@gmail.com' && (
 							<button
 								className='btnpanelgestion'
 								onClick={() => setShowCreateModal(true)}>
@@ -202,132 +376,11 @@ export const GestionMovimientos = () => {
 						<hr className='linea mx-3' />
 					</div>
 					<h2 className='titletabla'>Movimientos del Expediente</h2>
-					<div className='search'>
-						<p className='subtitlegestion'>Buscar Movimiento</p>
-						<i className='iconavbar bi bi-search'></i>
-						<input
-							className='searchinput'
-							type='text'
-							value={filtering}
-							onChange={(e) => setFiltering(e.target.value)}
-						/>
-					</div>
-					<div className='table-responsive'>
-						<Table
-							striped
-							hover
-							variant='dark'
-							className='tablagestion table border border-secondary-subtle'>
-							<thead>
-								{table.getHeaderGroups().map((headerGroup) => (
-									<tr key={headerGroup.id}>
-										{headerGroup.headers.map((header) => (
-											<th
-												key={header.id}
-												onClick={header.column.getToggleSortingHandler()}>
-												{header.isPlaceholder ? null : (
-													<div>
-														{flexRender(
-															header.column.columnDef.header,
-															header.getContext()
-														)}
-
-														{
-															{ asc: '⬆️', desc: '⬇️' }[
-																header.column.getIsSorted() ??
-																	null
-															]
-														}
-													</div>
-												)}
-											</th>
-										))}
-										<th className='botonescciongestion'>Acciones</th>
-									</tr>
-								))}
-							</thead>
-							<tbody className='table-group-divider'>
-								{table.getRowModel().rows.map((row) => (
-									<tr key={row.original._id}>
-										{row.getVisibleCells().map((cell, index) => (
-											<td key={index}>
-												{cell.column.id === 'adjunto' ? (
-													<span>
-														{row.original.adjunto ? (
-															<i className='bi bi-paperclip'></i>
-														) : (
-															<span>{row.original.adjunto}</span>
-														)}
-													</span>
-												) : (
-													flexRender(
-														cell.column.columnDef.cell,
-														cell.getContext()
-													)
-												)}
-											</td>
-										))}
-
-										<td className='align-middle'>
-											<div className='d-flex flex-row justify-content-center'>
-												{user.email === 'admin@gmail.com' && (
-													<Link
-														className='btneditgestion'
-														to={`/editarmov/${row.original._id}?nroexpte=${expte._id}`}>
-														<i className='bi bi-pen  acciconogestion'></i>
-													</Link>
-												)}
-												{user.email === 'admin@gmail.com' && (
-													<button
-														className='btnborragestion'
-														onClick={() =>
-															borrarMov(
-																expte._id,
-																row.original._id
-															)
-														}>
-														<i className='bi bi-trash-fill  acciconogestion'></i>
-													</button>
-												)}
-												<button
-													className='btnvergestion'
-													onClick={() => verMov(row.original._id)}>
-													<i className='bi bi-search acciconogestion'></i>
-												</button>
-											</div>
-										</td>
-									</tr>
-								))}
-							</tbody>
-						</Table>
-					</div>
-					<div className='d-flex flex-row justify-content-center'>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.setPageIndex(0)}>
-							<i className=' me-2 bi bi-chevron-bar-left'></i>Primer
-							Pagina
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.previousPage()}>
-							<i className=' me-2 bi bi-chevron-left'></i>
-							Pagina Anterior
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() => table.nextPage()}>
-							Pagina Siguiente
-							<i className=' ms-2 bi bi-chevron-right'></i>
-						</button>
-						<button
-							className='btnvpaginagestion'
-							onClick={() =>
-								table.setPageIndex(table.getPageCount() - 1)
-							}>
-							Ultima Pagina
-							<i className=' ms-2 bi bi-chevron-bar-right'></i>
-						</button>
+					<div>
+						<ThemeProvider theme={darkTheme}>
+							<CssBaseline />
+							<MaterialReactTable table={table} />
+						</ThemeProvider>
 					</div>
 				</div>
 			</div>
@@ -368,10 +421,10 @@ export const GestionMovimientos = () => {
 							<Form.Group className='formcargagroup' id='inputsubname'>
 								<Form.Label className='labelcarga'>Adjunto</Form.Label>
 								<Form.Control
-									type='text'
+									type='file'
 									className='inputcarga'
 									aria-label='Default select'
-									{...register('adjunto')}></Form.Control>
+									{...register('file')}></Form.Control>
 							</Form.Group>
 
 							<Form.Group className='botonescarga'>
@@ -395,7 +448,7 @@ export const GestionMovimientos = () => {
 			</div>
 
 			{/* Modal para ver movimientos del expediente */}
-			<Modal show={showModal} onHide={() => setShowModal(false)}>
+			<Modal show={showViewModal} onHide={() => setShowViewModal(false)}>
 				<Modal.Header closeButton>
 					<Modal.Title>Consultar Movimiento</Modal.Title>
 				</Modal.Header>
@@ -411,7 +464,18 @@ export const GestionMovimientos = () => {
 						</Form.Group>
 						<Form.Group className='mb-3' id=''>
 							<Form.Label>
-								Archivos Adjuntos: {selectedMov.archivo}
+								Archivo Adjunto:{' '}
+								{selectedMov.fileUrl ? (
+									<a
+										href={selectedMov.fileUrl}
+										target='_blank'
+										className='text-white'
+										rel='noopener noreferrer'>
+										Ver Archivo Adjunto
+									</a>
+								) : (
+									'Sin archivo adjunto'
+								)}
 							</Form.Label>
 						</Form.Group>
 					</Form>
@@ -419,8 +483,67 @@ export const GestionMovimientos = () => {
 				<Modal.Footer>
 					<button
 						className='btneditgestion px-2'
-						onClick={() => {
-							handleCancel();
+						onClick={(e) => {
+							handleCancel(e);
+						}}>
+						Volver
+					</button>
+				</Modal.Footer>
+			</Modal>
+
+			{/* Modal para editar movimientos del expediente */}
+			<Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
+				<Modal.Header closeButton>
+					<Modal.Title>Editar Movimiento</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group
+							className='mb-3 grupocaratula'
+							controlId='inputcaratula'>
+							<Form.Label className='labelcarga'>Fecha</Form.Label>
+							<Form.Control
+								className='labelcarcaratula'
+								type='date'
+								{...register('fecha')}
+							/>
+						</Form.Group>
+						<Form.Group
+							className='mb-3 grupocaratula'
+							controlId='inputcaratula'>
+							<Form.Label className='labelcarga'>Descripcion</Form.Label>
+							<Form.Control
+								className='labelcarcaratula'
+								as='textarea'
+								rows={7}
+								cols={70}
+								{...register('descripcion')}
+							/>
+						</Form.Group>
+
+						<Form.Group className='mb-3' id=''>
+							<Form.Label>
+								Archivo Adjunto:{' '}
+								{selectedMov.fileUrl ? (
+									<a
+										href={selectedMov.fileUrl}
+										target='_blank'
+										className='text-white'
+										rel='noopener noreferrer'>
+										Ver Archivo Adjunto
+									</a>
+								) : (
+									'Sin archivo adjunto'
+								)}
+							</Form.Label>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<button
+						className='btneditgestion px-2'
+						onClick={(e) => {
+							handleCancel(e);
 						}}>
 						Volver
 					</button>

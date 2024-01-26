@@ -15,10 +15,14 @@ const gastoSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		comprobante: {
+		file: {
+			type: mongoose.Schema.Types.Mixed,
+			filename: String,
+			filePath: String,
+		},	
+		url:{
 			type: String,
-
-		},		
+		},
 		monto: {
 			type: Number,
 			required: true,
@@ -32,5 +36,15 @@ const gastoSchema = new mongoose.Schema(
 		timestamps: true,
 	}
 );
+
+gastoSchema.methods.setFile = function setFile(
+	filename,
+	filePath
+) {
+	this.file = {
+		filename: filename,
+		filePath: filePath,
+	};
+};
 
 export default mongoose.model('Gasto', gastoSchema);

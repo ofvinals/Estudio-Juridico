@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import {  useNavigate } from 'react-router-dom';
-import {  Modal } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
 import { useAuth } from '../context/AuthContext';
-import { useUsers } from '../context/UsersContext';
 import { useForm } from 'react-hook-form';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export const CargaUsu = () => {
-	const { user } = useAuth();
+	const user = useAuth();
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm();
-	const { users, createUser } = useUsers();
 	const [showModal, setShowModal] = useState(true);
 
 	// Función para abrir el modal
@@ -25,15 +25,25 @@ export const CargaUsu = () => {
 	};
 
 	const onSubmit = handleSubmit(async (values) => {
-		createUser(values);
-		Swal.fire({
-			icon: 'success',
-			title: 'Usuario registrado correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		handleCloseModal();
-		navigate('/gestionusuarios');
+		try {
+			Swal.showLoading();
+			const usuariosRef = collection(db, 'usuarios');
+			await addDoc(usuariosRef, values);
+			Swal.fire({
+				icon: 'success',
+				title: 'Usuario registrado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+				navigate('/gestionusuarios');
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error('Error al eliminar el movimiento:', error);
+		}
 	});
 
 	return (
@@ -46,10 +56,7 @@ export const CargaUsu = () => {
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<Form
-							className='Formcarga '
-							onSubmit={onSubmit}>
-
+						<Form className='Formcarga ' onSubmit={onSubmit}>
 							<Form.Group className='mb-3' controlId='inputname'>
 								<Form.Label className='labelcarga'>
 									Nombre/s o Razon Social
@@ -130,7 +137,10 @@ export const CargaUsu = () => {
 									<i className='iconavbar bi bi-check2-square'></i>
 									Guardar Usuario
 								</button>
-								<button type='button' onClick={handleCloseModal} className='btncancmodal'>
+								<button
+									type='button'
+									onClick={handleCloseModal}
+									className='btncancmodal'>
 									<i className='iconavbar bi bi-x-circle-fill'></i>
 									Cancelar
 								</button>

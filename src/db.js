@@ -1,11 +1,10 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import mongoose from "mongoose";
+import { MONGODB_URI } from "./config.js";
 
-dotenv.config();
 
-export const connectDB = async () => {
+export const connectDB = async () => {	
 	try {
-		await mongoose.connect("mongodb+srv://ofvinals:estudio620@cluster0.u0gqupb.mongodb.net/");
+		await mongoose.connect(MONGODB_URI);
 		console.log('MongoDB is connected at Atlas');
 	} catch (error) {
 		console.error(error);

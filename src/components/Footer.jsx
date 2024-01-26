@@ -1,10 +1,10 @@
 import React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import '../css/Footer.css';
 
 export const Footer = () => {
 	return (
-		<footer className='bg-dark'>
+		<footer className=' container-lg bg-dark'>
 			<hr className='linea mx-3' />
 			<div className='container text-center'>
 				<div className='row'>
@@ -30,13 +30,13 @@ export const Footer = () => {
 					<div className='social-item col-6 col-md-4 d-flex flex-wrap align-items-center justify-content-center my-1'>
 						<Link
 							className='social-icon'
-							to='http://www.facebook.com'
+							to='https://www.facebook.com/estudiopossetucuman?mibextid=ZbWKwL'
 							target='_blank'>
 							<i className='bi bi-facebook'></i>
 						</Link>
 						<Link
 							className='social-icon'
-							href='http://www.instagram.com'
+							href='https://www.instagram.com/estudioposseasociados?igsh=bmYzN3VybGdlZGgw'
 							target='_blank'>
 							<i className='bi bi-instagram'></i>
 						</Link>
@@ -50,14 +50,14 @@ export const Footer = () => {
 					
 					<div className='logofooter col-12 col-md-4 text-center align-items-center'>
 						<Link className=' text-center' to='/home'>
-							<img
+							<img className='logofooter'
 								src='/logo estudio.png'
 								width={100}
 								alt='logoestudio'
 							/>
 						</Link>
 						<p className='text-center derechos'>
-							© 2023 Derechos Reservados - Estudio Juridico Integral
+							© 2024 Todos los Derechos Reservados - Estudio Juridico Posse & Asoc.
 						</p>
 					</div>
 				</div>

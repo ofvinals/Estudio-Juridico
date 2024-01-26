@@ -10,7 +10,7 @@ import '../css/Interes.css';
 
 export const Interes = () => {
 	return (
-		<section className='interes p-2'>
+		<section className='interes container-lg'>
 			<h1 className='titleint'>Webs de Interes</h1>
 			<Container>
 				<Row>

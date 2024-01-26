@@ -1,18 +1,8 @@
-.css-a643pv-MuiStack-root {
-	width: 60%;
-	font-size: 120% !important;
-	margin-left: 25%;
-	margin-right: 25%;
-	margin-bottom: 3vw;
-}
-.css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input {
+.css-nxo287-MuiInputBase-input-MuiOutlinedInput-input{
 	background-color: rgb(27, 27, 27);
 	color: rgb(143, 142, 139) !important;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px !important;
 	text-align: center;
 	font-size: 100% !important;
-	border-color: rgb(143, 142, 139) !important;
 }
 .css-kzf2d7-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused
 	.MuiOutlinedInput-notchedOutline {
@@ -138,19 +128,20 @@
 	background-size: cover;
 	background-position: center;
 	object-fit: cover;
-	padding-bottom: 4vw;
+	padding-bottom: 10px;
 }
 .titleagusu {
 	text-align: center;
-	font-size: 150%;
-	margin-top: 1vw;
+	font-size: 130%;
+	margin-top:20px;
+	margin-bottom: 20px;
 	font-weight: 700;
 	color: rgb(207, 207, 207);
 }
 .subtitleagusu {
 	text-align: center;
 	font-size: 120%;
-	margin-top: 1vw;
+   margin-bottom: 20px;
 	font-weight: 400;
 	color: rgb(207, 207, 207);
 }
@@ -166,41 +157,46 @@
 .btneditagusu {
 	color: rgb(207, 207, 207);
 	background-color: rgb(10, 61, 4);
-	padding: 1vw !important;
+	padding: 5px !important;
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
 	cursor: pointer;
-	margin: 1vw;
+	margin: 5px;
 }
 .btnborraagusu {
 	color: rgb(207, 207, 207);
 	background-color: rgb(111, 8, 10);
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-	padding: 1vw !important;
+	padding: 5px !important;
 	cursor: pointer;
+	margin: 5px;
+
 }
 .btnveragusu {
 	color: rgb(207, 207, 207);
 	background-color: rgb(21, 100, 160);
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-	padding: 1vw !important;
+	padding: 5px !important;
 	cursor: pointer;
+	margin: 5px;
 }
 .btnagusuverif {
 	font-weight: 500;
 	font-size: 80%;
-  margin: 1vw;
+	margin: 5px;
+	margin-top: 25px;
 	background-color: rgb(10, 61, 4);
 	color: rgb(207, 207, 207);
 	width: auto;
 	border: 0.2vw outset rgb(143, 142, 139) !important;
 	border-radius: 5px;
-	padding-right: 1vw !important;
-  display: flex !important;
-	justify-content: center !important;
-	align-items: center !important;
+	padding: 5px !important;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
 	cursor: pointer;
 	text-align: center;
 	text-decoration: none;
@@ -232,12 +228,11 @@
 	flex-wrap: wrap;
 	justify-content: center;
 	align-items: center;
-	padding-right: 1vw !important;
+	padding: 5px !important;
 	cursor: pointer;
 	text-align: center;
-	margin: 1vw;
+	margin: 5px;
 	text-decoration: none;
-	text-wrap: wrap;
 }
 .btnpanelagusu:hover {
 	opacity: 0.8;

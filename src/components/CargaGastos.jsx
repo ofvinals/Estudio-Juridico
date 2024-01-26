@@ -6,17 +6,17 @@ import Swal from 'sweetalert2';
 import '../css/Carga.css';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
-import { useGastos } from '../context/GastosContext';
-import { useExptes } from '../context/ExptesContext';
+import { uploadFile } from '../firebase/config';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export const CargaGastos = () => {
-	const { user } = useAuth();
+	const user = useAuth();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm();
-	const { createGasto, getGastos } = useGastos();
-	const { getExptes } = useExptes();
 	const [exptes, setExptes] = useState([]);
+	const [users, setUsers] = useState([]);
 	const [gastos, setGastos] = useState([]);
 	const [showModal, setShowModal] = useState(true);
 	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
@@ -33,8 +33,12 @@ export const CargaGastos = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedGastos = await getGastos();
-				setGastos(fetchedGastos);
+				const gastosRef = collection(db, 'gastos');
+				const fetchedGastos = await getDocs(gastosRef);
+				const gastosArray = Object.values(
+					fetchedGastos.docs.map((doc) => doc.data())
+				);
+				setGastos(gastosArray);
 			} catch (error) {
 				console.error('Error al obtener gastos:', error);
 			}
@@ -45,8 +49,12 @@ export const CargaGastos = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedExptes = await getExptes();
-				setExptes(fetchedExptes);
+				const exptesRef = collection(db, 'expedientes');
+				const fetchedExptes = await getDocs(exptesRef);
+				const exptesArray = Object.values(
+					fetchedExptes.docs.map((doc) => doc.data())
+				);
+				setExptes(exptesArray);
 			} catch (error) {
 				console.error('Error al obtener expedientes:', error);
 			}
@@ -54,28 +62,55 @@ export const CargaGastos = () => {
 		fetchData();
 	}, []);
 
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const usuariosRef = collection(db, 'usuarios');
+				const fetchedUsers = await getDocs(usuariosRef);
+				const usersArray = Object.values(
+					fetchedUsers.docs.map((doc) => doc.data())
+				);
+				setUsers(usersArray);
+			} catch (error) {
+				console.error('Error al obtener usuarios:', error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	const onSubmit = handleSubmit(async (values) => {
-		console.log(values);
 		try {
-			const caratulaToSend = selectedExpteCaratula;
-
-			// Actualiza el gasto de manera asíncrona
-			await createGasto({ ...values, caratula: caratulaToSend });
-
-			// Muestra un mensaje de éxito
+			Swal.showLoading();
+			let fileDownloadUrl = null;
+			if (values.file && values.file[0]) {
+				const file = values.file[0];
+				fileDownloadUrl = await uploadFile(file);
+			}
+			const gastoData = {
+				expte: values.nroexpte,
+				cliente: values.cliente,
+				caratula: selectedExpteCaratula,
+				concepto: values.concepto,
+				monto: parseInt(values.monto, 10),
+				fileUrl: fileDownloadUrl,
+				estado: values.estado,
+			};
+			await addDoc(collection(db, 'gastos'), gastoData);
 			Swal.fire({
 				icon: 'success',
 				title: 'Gasto registrado correctamente',
 				showConfirmButton: false,
 				timer: 1500,
 			});
-
-			// Cierra el modal y navega a la página de gestión de gastos
-			handleCloseModal();
-			navigate('/gestiongastos');
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+				navigate('/gestiongastos');
+			}, 500);
+			return () => clearTimeout(timer);
 		} catch (error) {
-			console.error('Error al crear el gasto', error);
-			// Puedes agregar manejo de errores aquí si es necesario
+			console.error(error);
 		}
 	});
 
@@ -83,18 +118,14 @@ export const CargaGastos = () => {
 	const handleExpteSelectChange = async (e) => {
 		const selectedExpteNro = e.target.value;
 		console.log(selectedExpteNro);
-
 		const selectedExpte = exptes.find(
 			(expte) => expte.nroexpte === selectedExpteNro
 		);
 		console.log(selectedExpte);
-
 		// Obtén la carátula del expediente seleccionado
 		const caratulaToUpdate = selectedExpte ? selectedExpte.caratula : '';
-
 		// Actualiza la carátula de manera asíncrona
 		await setSelectedExpteCaratula(caratulaToUpdate);
-
 		// Continúa con otras operaciones después de asegurarte de que la carátula está actualizada
 		console.log(selectedExpteCaratula);
 	};
@@ -121,7 +152,7 @@ export const CargaGastos = () => {
 									onChange={handleExpteSelectChange}>
 									<option>Selecciona..</option>
 									{exptes.map((expte) => (
-										<option key={expte._id} value={expte.nroexpte}>
+										<option key={expte.mid} value={expte.nroexpte}>
 											{expte.nroexpte}
 										</option>
 									))}
@@ -138,6 +169,21 @@ export const CargaGastos = () => {
 									value={selectedExpteCaratula}
 									{...register('caratula')}
 								/>
+							</Form.Group>
+
+							<Form.Group className='mb-3' controlId='inputname'>
+								<Form.Label className='labelcarga'>Cliente</Form.Label>
+								<select
+									className='inputcarga'
+									aria-label='Default select'
+									{...register('cliente')}>
+									<option>Selecciona..</option>
+									{users.map((user) => (
+										<option key={user._id} value={user.cliente}>
+											{user.cliente}
+										</option>
+									))}
+								</select>
 							</Form.Group>
 
 							<Form.Group className='mb-3' controlId='inputconcepto'>
@@ -177,14 +223,14 @@ export const CargaGastos = () => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='' controlId='inputcel'>
+							<Form.Group className='' controlId='file'>
 								<Form.Label className='labelcarga'>
 									Comprobante de gasto
 								</Form.Label>
 								<Form.Control
 									className='inputcarga'
 									type='file'
-									{...register('comprobante')}
+									{...register('file')}
 								/>
 							</Form.Group>
 

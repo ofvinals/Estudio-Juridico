@@ -6,15 +6,16 @@ import Swal from 'sweetalert2';
 import '../css/Carga.css';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../context/AuthContext';
-import { useCajas } from '../context/CajasContext';
 import { format } from 'date-fns';
+import { uploadFile } from '../firebase/config.js';
+import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 export const CargaCajas = () => {
-	const { user } = useAuth();
+	const user = useAuth();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm();
-	const { createCaja, getCajas } = useCajas();
 	const [cajas, setCajas] = useState([]);
 	const [showModal, setShowModal] = useState(true);
 
@@ -30,8 +31,12 @@ export const CargaCajas = () => {
 	useEffect(() => {
 		const fetchData = async () => {
 			try {
-				const fetchedCajas = await getCajas();
-				setCajas(fetchedCajas);
+				const cajasRef = collection(db, 'cajas');
+				const fetchedCajas = await getDocs(cajasRef);
+				const cajasArray = Object.values(
+					fetchedCajas.docs.map((doc) => doc.data())
+				);
+				setCajas(cajasArray);
 			} catch (error) {
 				console.error('Error al obtener cajas:', error);
 			}
@@ -40,15 +45,45 @@ export const CargaCajas = () => {
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
-		createCaja(values);
-		Swal.fire({
-			icon: 'success',
-			title: 'Caja registrada correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		handleCloseModal();
-		navigate('/gestioncaja');
+		try {
+			Swal.showLoading();
+			let fileDownloadUrl = null;
+			if (values.file && values.file[0]) {
+				const file = values.file[0];
+				fileDownloadUrl = await uploadFile(file);
+			}
+			const fechaSeleccionada = new Date(values.fecha);
+
+			fechaSeleccionada.setMinutes(fechaSeleccionada.getMinutes() - fechaSeleccionada.getTimezoneOffset());
+			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-AR');
+			const cajaData = {
+				fecha: fechaFormateada,
+				mes: fechaSeleccionada.getMonth() + 1,
+				concepto: values.concepto,
+				tipo: values.tipo,
+				monto: parseInt(values.monto, 10),
+				fileUrl: fileDownloadUrl,
+				estado: values.estado,
+			};
+
+			const cajaDocRef = await addDoc(collection(db, 'cajas'), cajaData);
+			console.log('Documento agregado con ID: ', cajaDocRef.id);
+			Swal.fire({
+				icon: 'success',
+				title: 'Caja registrada correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				setShowModal(true);
+				handleCloseModal();
+				navigate('/gestioncaja');
+			}, 500);
+			return () => clearTimeout(timer);
+
+		} catch (error) {
+			console.error(error);
+		}
 	});
 
 	return (
@@ -61,8 +96,13 @@ export const CargaCajas = () => {
 						</Modal.Title>
 					</Modal.Header>
 					<Modal.Body>
-						<Form className='Formcarga' onSubmit={onSubmit}>
-							<Form.Group className='mb-3' id='inputname'>
+						<Form
+							className='Formcarga'
+							onSubmit={onSubmit}
+							action='/uploads'
+							method='post'
+							encType='multipart/form-data'>
+							<Form.Group id='inputname'>
 								<Form.Label className='labelcarga'>Fecha</Form.Label>
 								<Form.Control
 									type='date'
@@ -72,28 +112,28 @@ export const CargaCajas = () => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='mb-3' id='inputconcepto'>
+							<Form.Group id='inputconcepto'>
 								<Form.Label className='labelcarga'>Concepto</Form.Label>
 								<Form.Control
 									type='text'
-									className='inputcarga'
+									className='inputcarga '
 									aria-label='Default select'
 									{...register('concepto')}></Form.Control>
 							</Form.Group>
 
-							<Form.Group className='mb-3' id='inputtipo'>
+							<Form.Group id='inputtipo'>
 								<Form.Label className='labelcarga'>Tipo</Form.Label>
 								<select
 									className='inputcarga'
 									aria-label='Default select'
 									{...register('tipo')}>
 									<option>Selecciona..</option>
-									<option value='INGRESO'>Ingreso</option>
-									<option value='EGRESO'>Egreso</option>
+									<option value='INGRESO'>INGRESO</option>
+									<option value='EGRESO'>EGRESO</option>
 								</select>
 							</Form.Group>
 
-							<Form.Group className='mb-3' id='inputmonto'>
+							<Form.Group id='inputmonto'>
 								<Form.Label className='labelcarga'>Monto</Form.Label>
 								<Form.Control
 									className='inputcarga'
@@ -102,18 +142,18 @@ export const CargaCajas = () => {
 								/>
 							</Form.Group>
 
-							<Form.Group className='' id='inputcel'>
+							<Form.Group id='inputcel'>
 								<Form.Label className='labelcarga'>
 									Comprobante de caja
 								</Form.Label>
 								<Form.Control
 									className='inputcarga'
-									type='text'
-									{...register('adjunto')}
+									type='file'
+									{...register('file')}
 								/>
 							</Form.Group>
 
-							<Form.Group className='formcargagroup' id='inputsubname'>
+							<Form.Group id='inputsubname'>
 								<Form.Label className='labelcarga'>Estado</Form.Label>
 								<select
 									className='inputcarga'
@@ -127,9 +167,7 @@ export const CargaCajas = () => {
 								</select>
 							</Form.Group>
 
-							<Form.Group
-								className='mb-3 botonescarga'
-								id='inputpassword'>
+							<Form.Group className='botonescarga' id='inputpassword'>
 								<Button className='botoneditcarga' type='submit'>
 									<i className='iconavbar bi bi-check2-square'></i>
 									Registrar Movimiento

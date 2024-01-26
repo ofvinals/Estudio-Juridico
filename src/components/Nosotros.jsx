@@ -6,7 +6,7 @@ import '../css/Nosotros.css';
 export const Nosotros = () => {
 	return (
 		<>
-			<div className='about'>
+			<div className='container-lg about'>
 				<h1 className='tituloabout'>Sobre Nosotros</h1>
 				<h2 className='subtituloabout'>Historia</h2>
 

@@ -5,16 +5,16 @@ import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
-import {  Modal } from 'react-bootstrap';
-import { useCajas } from '../context/CajasContext';
+import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { db } from '../firebase/config';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export const EditarCajas = ({}) => {
-	const { user } = useAuth();
-	const params = useParams();
+	const user = useAuth();
+	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit, setValue } = useForm();
-	const { getCaja, updateCaja } = useCajas();
 	const [showModal, setShowModal] = useState(false);
 
 	// Función para abrir el modal
@@ -30,17 +30,22 @@ export const EditarCajas = ({}) => {
 	useEffect(() => {
 		async function loadCaja() {
 			try {
-				if (params.id) {
-					const caja = await getCaja(params.id);
-					setValue('fecha', caja.fecha);
-					setValue('concepto', caja.concepto);
-					setValue('tipo', caja.tipo);
-					setValue('monto', caja.monto);
-					setValue('adjunto', caja.adjunto);
-					setValue('estado', caja.estado);
-					// Abre automáticamente el modal cuando se cargan los datos del turno
+				Swal.showLoading();
+				const cajaRef = doc(db, 'cajas', id);
+				const snapshot = await getDoc(cajaRef);
+				console.log('Datos de la caja cargada:', snapshot.data());
+				const cajaData = snapshot.data();
+				setValue('fecha', cajaData.fecha);
+				setValue('concepto', cajaData.concepto);
+				setValue('tipo', cajaData.tipo);
+				setValue('monto', cajaData.monto);
+				setValue('adjunto', cajaData.file);
+				setValue('estado', cajaData.estado);
+				setTimeout(() => {
+					Swal.close();
 					handleOpenModal();
-				}
+				}, 500);
+				return () => clearTimeout(timer);
 			} catch (error) {
 				console.error('Error al cargar el caja', error);
 			}
@@ -48,17 +53,40 @@ export const EditarCajas = ({}) => {
 		loadCaja();
 	}, []);
 
-	const onSubmit = handleSubmit(async (data) => {
-		await updateCaja(params.id, data);
-		Swal.fire({
-			icon: 'success',
-			title: 'Caja editada correctamente',
-			showConfirmButton: false,
-			timer: 1500,
-		});
-		// Cierra el modal después de guardar los cambios
-		handleCloseModal();
-		navigate('/gestioncaja');
+	const onSubmit = handleSubmit(async (values) => {
+		try {
+			Swal.showLoading();
+			let fileDownloadUrl = null;
+			if (values.file && values.file[0]) {
+				const file = values.file[0];
+				fileDownloadUrl = await uploadFile(file);
+			}
+			const fechaSeleccionada = new Date(values.fecha);
+			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-AR');
+			const cajaData = {
+				fecha: fechaFormateada,
+				concepto: values.concepto,
+				tipo: values.tipo,
+				monto: parseInt(values.monto, 10),
+				fileUrl: fileDownloadUrl,
+				estado: values.estado,
+			};
+			const cajaRef = doc(db, 'cajas', id);
+			await updateDoc(cajaRef, cajaData);
+			Swal.fire({
+				icon: 'success',
+				title: 'Caja editada correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				handleCloseModal();
+				navigate('/gestioncaja');
+			}, 500);
+		} catch (error) {
+			console.error(error);
+		}
 	});
 
 	return (
@@ -98,8 +126,8 @@ export const EditarCajas = ({}) => {
 									aria-label='Default select'
 									{...register('tipo')}>
 									<option>Selecciona..</option>
-									<option value='Ingreso'>Ingreso</option>
-									<option value='Egreso'>Egreso</option>
+									<option value='INGRESO'>INGRESO</option>
+									<option value='EGRESO'>EGRESO</option>
 								</select>
 							</Form.Group>
 
@@ -118,8 +146,8 @@ export const EditarCajas = ({}) => {
 								</Form.Label>
 								<Form.Control
 									className='inputcarga'
-									type='text'
-									{...register('comprobante')}
+									type='file'
+									{...register('file')}
 								/>
 							</Form.Group>
 
@@ -140,13 +168,13 @@ export const EditarCajas = ({}) => {
 							</Form.Group>
 
 							<Form.Group className='botonesedit'>
-								<button className='btnconfmodal' type='submit'>
+								<button className='botonedit' type='submit'>
 									<i className='iconavbar bi bi-check2-square'></i>
 									Guardar Cambios
 								</button>
 								<button
 									type='button'
-									className='btncancmodal'
+									className='botoncancedit'
 									onClick={handleCloseModal}>
 									<i className='iconavbar bi bi-x-circle-fill'></i>
 									Cancelar
