@@ -124,7 +124,7 @@ export const GastosArchivados = () => {
 				);
 
 				const filteredGastos =
-					user.user === 'ofvinals@gmail.com'
+					user.user === 'ofvinals@gmail.com' 
 						? filteredByEstado
 						: filteredByEstado.filter(
 								(gasto) => gasto.cliente === user.user

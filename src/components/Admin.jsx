@@ -11,7 +11,7 @@ export const Admin = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!user || user.user !== 'ofvinals@gmail.com') {
+		if (!user || user.user !== 'ofvinals@gmail.com' && user.user !== 'admin@estudio.com') {
 			navigate('/adminusu');
 		}
 	}, [user, navigate]);

@@ -226,7 +226,7 @@ export const GestionCaja = () => {
 					onClick={() => verCaja(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -314,7 +314,7 @@ export const GestionCaja = () => {
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' && (
+						{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 							<Link
 								type='button'
 								className='btnpanelgestion'

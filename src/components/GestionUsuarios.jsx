@@ -120,7 +120,7 @@ export const GestionUsuarios = () => {
 					onClick={() => verUsuario(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 					<IconButton
 						hidden={row.original.email === 'ofvinals@gmail.com'}
 						color='success'
@@ -220,7 +220,7 @@ export const GestionUsuarios = () => {
 					</Link>
 					<Link
 						to={
-							user.user === 'ofvinals@gmail.com' ? '/Admin' : '/AdminUsu'
+							user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? '/Admin' : '/AdminUsu'
 						}
 						className='btnpanelgestion'>
 						<i className='iconavbar bi bi-box-arrow-left'></i>

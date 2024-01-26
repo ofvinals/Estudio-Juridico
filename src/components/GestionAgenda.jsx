@@ -142,7 +142,7 @@ export const GestionAgenda = () => {
 					onClick={() => verTurno(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -250,7 +250,7 @@ export const GestionAgenda = () => {
 				<div className='d-flex justify-content-around'>
 					<button
 						type='button'
-						onClick={loginWithGoogle}
+						// onClick={loginWithGoogle}
 						className='botongoogle'>
 						<i className='iconavbar bi bi-google'></i>Ver Agenda del
 						Estudio
@@ -262,7 +262,7 @@ export const GestionAgenda = () => {
 				</div>
 				<hr className='linea mx-3' />
 
-				<div>
+				{/* <div>
 					<form onSubmit={handleSubmit}>
 						<label htmlFor='summary'>Sumary</label>
 						<br />
@@ -305,7 +305,7 @@ export const GestionAgenda = () => {
 						/>
 						<button type='submit'>Create Event</button>
 					</form>
-				</div>
+				</div> */}
 
 				<div>
 					<p className='titletabla'>Turnos Registrados</p>

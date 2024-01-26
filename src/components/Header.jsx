@@ -38,8 +38,8 @@ export const Header = () => {
 	return (
 		<>
 			<Navbar bg='dark' data-bs-theme='dark' expand='xxl' className='mb-3'>
-				<Container>
-					<Navbar.Brand href='/home'><img className='logoheader'
+				<Container className='-d-flex flex-column justify-content-center'>
+					<Navbar.Brand href='/home'><img className='ms-3'
 								src='/logo estudio.png'
 								width={40}
 								alt='logoestudio'
@@ -109,7 +109,7 @@ export const Header = () => {
 									<i className='iconavbar bi bi-person-fill-check'></i>
 									Panel de Usuarios
 								</Link>
-								{user && user.user === 'ofvinals@gmail.com' && (
+								{user && user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 									<Link
 										className='btnnav'
 										to='/admin'

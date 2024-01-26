@@ -133,7 +133,7 @@ export const GestionGastos = () => {
 					(gasto) => gasto.estado !== 'Cancelado'
 				);
 				const filteredGastos =
-					user.user === 'ofvinals@gmail.com'
+					user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com'
 						? filteredByEstado
 						: filteredByEstado.filter(
 								(gasto) => gasto.cliente === user.user
@@ -185,7 +185,7 @@ export const GestionGastos = () => {
 					onClick={() => verGasto(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -275,7 +275,7 @@ export const GestionGastos = () => {
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' && (
+						{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
 							<Link
 								type='button'
 								className='btnpanelgestion'
@@ -298,7 +298,7 @@ export const GestionGastos = () => {
 						)}
 						<Link
 							to={
-								user.user === 'ofvinals@gmail.com'
+								user.user === 'ofvinals@gmail.com'|| user.user === 'admin@estudio.com'
 									? '/Admin'
 									: '/AdminUsu'
 							}

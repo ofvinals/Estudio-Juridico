@@ -99,7 +99,10 @@ export const AuthProvider = ({ children }) => {
 				setIsAuthenticated(true);
 				localStorage.setItem('displayName', displayNameValue);
 			}
-			if (data.email === 'ofvinals@gmail.com') {
+			if (
+				data.email === 'ofvinals@gmail.com' ||
+				data.email === 'admin@estudio.com'
+			) {
 				navigate('/admin', { replace: true });
 			} else {
 				navigate('/adminusu', { replace: true });
@@ -226,8 +229,8 @@ export const AuthProvider = ({ children }) => {
 						const updatedUser = auth.currentUser;
 						// Envía un correo electrónico de verificación al nuevo correo electrónico
 						await sendEmailVerification(updatedUser);
-						const newUser = auth.currentUser.email
-						console.log(newUser)
+						const newUser = auth.currentUser.email;
+						console.log(newUser);
 						setUser(newUser);
 					})
 					.catch((error) => {
