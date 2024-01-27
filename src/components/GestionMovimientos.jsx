@@ -155,7 +155,6 @@ export const GestionMovimientos = () => {
 				if (snapshot.exists()) {
 					const fetchedExpte = { ...snapshot.data(), id: snapshot.id };
 					setExpte(fetchedExpte);
-					// Si "movimientos" es un campo de tu documento expediente, puedes acceder a él directamente
 					setData(fetchedExpte.movimientos);
 				} else {
 					console.log(
@@ -314,7 +313,6 @@ export const GestionMovimientos = () => {
 				cancelButtonText: 'Cancelar',
 			});
 			if (result.isConfirmed) {
-				// Llama a la función para eliminar el movimiento
 				await deleteMovimiento(expedienteId, movimientoId);
 			}
 			setTimeout(() => {

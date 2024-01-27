@@ -96,8 +96,9 @@
 	cursor: pointer;
 	margin: 5px;
 }
-.btnmp{
+.botonmp{
 	background-color: rgb(12, 199, 251);
+	border: 0.2vw outset rgb(4, 45, 89) !important;
 	color:white;
 	width: auto;
 	align-self: center;
@@ -105,9 +106,31 @@
 	font-weight: 700;
 	text-decoration: none!important;
 }
-.btnmp:hover {
+.botonmp:hover {
 	opacity: 0.8;
-	background-color: rgb(27, 27, 27);
+	background-color: rgb(4, 75, 105);
+}
+.botongoogleagenda {
+	text-align: center;
+	font-size: 80% !important;
+	font-weight: 500;
+	text-decoration: none;
+	background-color: rgb(9, 19, 92);
+	color: rgb(207, 207, 207) !important;
+	width: auto;
+	border-radius: 5px;
+	border: 0.2vw outset rgb(143, 142, 139) !important;
+	cursor: pointer;
+	display: flex !important;
+	justify-content: center;
+	align-items: center;
+	padding: 5px !important;
+}
+
+.botongoogleagenda:hover {
+	opacity: 0.8;
+	color: white;
+	background-color: transparent;
 }
 .modedittitle {
 	font-size: 120% !important;
@@ -138,25 +161,6 @@
 	background-color: rgb(27, 27, 27) !important;
 	color: rgb(207, 207, 207);
 }
-/* .btnusumodal {
-	background-color: rgb(207, 207, 207);
-	font-weight: 500;
-	font-size: 100%;
-	margin: 1vw;
-	padding: 2vw;
-	background-color: rgb(27, 27, 27);
-	color: rgb(207, 207, 207);
-	width: auto;
-	border: 0.2vw outset rgb(143, 142, 139) !important;
-	border-radius: 5px;
-	cursor: pointer;
-	text-align: center;
-	text-decoration: none;
-}
-.btnusumodal:hover {
-	opacity: 0.8;
-	background-color: rgb(27, 27, 27);
-} */
 .errors {
 	color: rgb(207, 207, 207) !important;
 	font-size: 2vw;

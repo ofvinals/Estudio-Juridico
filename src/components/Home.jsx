@@ -124,7 +124,7 @@ export const Home = () => {
 				<div className='w-75 d-flex flex-column justify-content-center align-content-center'>
 					<p className='titlesect4'>PORQUE ELEGIRNOS</p>
 					<p className='textsec4'>
-						+ de 35 años de ejercicio de la abogacoa avalan el profesionalismo con el que llevamos a cabo el
+						Mas de 35 años de ejercicio de la abogacia avalan el profesionalismo con el que llevamos a cabo el
 						servicio de asesoría legal, nos caracteriza la seriedad en la
 						relacion con nuestros clientes
 					</p>

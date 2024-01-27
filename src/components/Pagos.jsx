@@ -61,9 +61,9 @@ export const Pagos = () => {
 							className='mb-3 text-white d-flex flex-column'
 							controlId=''>
 							<Form.Label>Mercado Pago :</Form.Label>
-							<button className='btnmp'>
+							<button className='botonmp'>
 								<a
-									className='btnmp'
+									className='text-white text-decoration-none'
 									href='https://link.mercadopago.com.ar/estudioposse'
 									target='_blank'>
 									<i className='pe-2 fa-solid fa-handshake-simple'></i>

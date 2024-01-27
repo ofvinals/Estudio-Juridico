@@ -29,7 +29,7 @@ import { db } from '../firebase/config';
 
 export const GestionAgenda = () => {
 	const user = useAuth();
-	const {displayName} = useAuth();
+	const { displayName } = useAuth();
 	const navigate = useNavigate();
 	const [turno, setTurno] = useState([]);
 	const [turnosVencidos, setTurnosVencidos] = useState([]);
@@ -41,7 +41,7 @@ export const GestionAgenda = () => {
 	const [startDateTime, setStartDateTime] = useState('');
 	const [endDateTime, setendDateTime] = useState('');
 	const { loginWithGoogle, createEvents } = useAuth();
-
+	const [showCargaVenc, setShowCargaVenc] = useState(false);
 	// Cierra modales
 	const handleCancel = () => {
 		setShowVerTurno(false);
@@ -63,7 +63,7 @@ export const GestionAgenda = () => {
 				header: 'Motivo',
 				accessorKey: 'motivo',
 				enableResizing: true,
-				size:250,
+				size: 250,
 			},
 		],
 		[]
@@ -142,7 +142,8 @@ export const GestionAgenda = () => {
 					onClick={() => verTurno(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
+				{user.user === 'ofvinals@gmail.com' ||
+				user.user === 'admin@estudio.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -150,7 +151,7 @@ export const GestionAgenda = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				):null}
+				) : null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
@@ -192,7 +193,9 @@ export const GestionAgenda = () => {
 				);
 				setTimeout(() => {
 					Swal.close();
-					setData((prevData) => prevData.filter((turno) => turno.id !== id));
+					setData((prevData) =>
+						prevData.filter((turno) => turno.id !== id)
+					);
 				}, 500);
 			}
 		} catch (error) {
@@ -218,7 +221,6 @@ export const GestionAgenda = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			// Llama a createEvents con los datos del formulario
 			await createEvents(
 				summary,
 				description,
@@ -226,10 +228,8 @@ export const GestionAgenda = () => {
 				endDateTime,
 				location
 			);
-			// Puedes realizar más acciones después de crear el evento, si es necesario
 		} catch (error) {
 			console.error('Error handling create-event request:', error);
-			// Manejar el error según tus necesidades
 		}
 	};
 
@@ -250,19 +250,81 @@ export const GestionAgenda = () => {
 				<div className='d-flex justify-content-around'>
 					<button
 						type='button'
-						// onClick={loginWithGoogle}
-						className='botongoogle'>
+						onClick={() =>
+							window.open(
+								'https://calendar.google.com/calendar/embed?src=365fa9c4ffc2a2c85cd2d4c3e28942427e52a6a2a6d92386566dbe9ada6d50fe%40group.calendar.google.com&ctz=America%2FArgentina%2FBuenos_Aires'
+							)
+						}
+						className='botongoogleagenda'>
 						<i className='iconavbar bi bi-google'></i>Ver Agenda del
 						Estudio
 					</button>
+					<button
+						type='button'
+						// onClick={loginWithGoogle}
+						className='btnpanelgestion'>
+						<i className='iconavbar bi bi-file-earmark-plus'></i>Cargar
+						vencimientos
+					</button>
 					<Link to='/Admin' className='btnpanelgestion'>
-						<i className='iconavbar bi bi-file-earmark-plus'></i>
+						<i className='iconavbar bi bi-box-arrow-left'></i>
 						Volver al Panel
 					</Link>
 				</div>
 				<hr className='linea mx-3' />
 
-				{/* <div>
+				<div>
+					<p className='titletabla'>Turnos Registrados</p>
+				</div>
+				<div>
+					<ThemeProvider theme={darkTheme}>
+						<CssBaseline />
+						<MaterialReactTable table={table} />
+					</ThemeProvider>
+				</div>
+			</div>
+
+			{/* Modal para ver gasto seleccionado */}
+			<Modal show={showVerTurno} onHide={() => setShowVerTurno(false)}>
+				<Modal.Header closeButton>
+					<Modal.Title className='text-white'>
+						Ver Turno seleccionado
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						<Form.Group className='mb-3 text-white' controlId=''>
+							<Form.Label>Turno: {turno.turno}</Form.Label>
+						</Form.Group>
+						<Form.Group className='mb-3 text-white' controlId=''>
+							<Form.Label>Cliente: {turno.email}</Form.Label>
+						</Form.Group>
+						<Form.Group className='mb-3 text-white' controlId=''>
+							<Form.Label>Motivo: {turno.motivo}</Form.Label>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
+				<Modal.Footer>
+					<button
+						className='btneditgestion px-2'
+						onClick={() => {
+							handleCancel();
+						}}>
+						Volver
+					</button>
+				</Modal.Footer>
+			</Modal>
+
+			{/* Modal para cargar vencimientos */}
+			<Modal show={showCargaVenc} onHide={() => setShowCargaVenc(false)}>
+				<Modal.Header closeButton>
+					<Modal.Title className='text-white'>
+						Cargar Vencimientos
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form>
+						{/* <div>
 					<form onSubmit={handleSubmit}>
 						<label htmlFor='summary'>Sumary</label>
 						<br />
@@ -306,36 +368,6 @@ export const GestionAgenda = () => {
 						<button type='submit'>Create Event</button>
 					</form>
 				</div> */}
-
-				<div>
-					<p className='titletabla'>Turnos Registrados</p>
-				</div>
-				<div>
-					<ThemeProvider theme={darkTheme}>
-						<CssBaseline />
-						<MaterialReactTable table={table} />
-					</ThemeProvider>
-				</div>
-			</div>
-
-			{/* Modal para ver gasto seleccionado */}
-			<Modal show={showVerTurno} onHide={() => setShowVerTurno(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title className='text-white'>
-						Ver Turno seleccionado
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Turno: {turno.turno}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Cliente: {turno.email}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Motivo: {turno.motivo}</Form.Label>
-						</Form.Group>
 					</Form>
 				</Modal.Body>
 				<Modal.Footer>
