@@ -5,7 +5,7 @@ import {
 	getTurnosRequest,
 	getTurnoRequest,
 	updateTurnoRequest,
-} from '../api/turnos';
+} from '../src/api/turnos';
 
 const TurnoContext = createContext();
 

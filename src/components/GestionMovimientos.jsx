@@ -121,13 +121,13 @@ export const GestionMovimientos = () => {
 					onClick={() => verMov(row.original.id, expte.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => editMov(row.original.id, expte.id)}>
 						<EditIcon />
 					</IconButton>
-				)}
+				): null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'

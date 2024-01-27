@@ -5,7 +5,7 @@ import {
 	getCajasRequest,
 	getCajaRequest,
 	updateCajaRequest,
-} from '../api/cajas';
+} from '../src/api/cajas';
 
 const CajaContext = createContext();
 

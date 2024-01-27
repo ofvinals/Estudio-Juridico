@@ -5,7 +5,7 @@ import {
 	getUsersRequest,
 	getUserRequest,
 	updateUserRequest,
-} from '../api/users';
+} from '../src/api/users';
 
 const UserContext = createContext();
 

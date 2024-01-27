@@ -5,10 +5,10 @@ import {
 	logout,
 	profile,
 	verifyToken,
-} from '../controllers/auth.controller.js';
-import { authRequired } from '../middlewares/validateToken.js';
-import { validateSchema } from '../middlewares/validator.Middleware.js';
-import { registerSchema, loginSchema } from '../schemas/auth.Schema.js';
+} from '../src/controllers/auth.controller.js';
+import { authRequired } from '../src/middlewares/validateToken.js';
+import { validateSchema } from '../src/middlewares/validator.Middleware.js';
+import { registerSchema, loginSchema } from '../src/schemas/auth.Schema.js';
 import { config } from 'dotenv';
 
 config();

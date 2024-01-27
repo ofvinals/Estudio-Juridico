@@ -185,7 +185,7 @@ export const GestionGastos = () => {
 					onClick={() => verGasto(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -193,7 +193,7 @@ export const GestionGastos = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				)}
+				):null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'

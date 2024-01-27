@@ -226,7 +226,7 @@ export const GestionCaja = () => {
 					onClick={() => verCaja(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -234,7 +234,7 @@ export const GestionCaja = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				)}
+				):null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'

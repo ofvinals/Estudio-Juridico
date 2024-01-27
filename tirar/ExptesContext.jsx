@@ -7,7 +7,7 @@ import {
 	updateExpteRequest,
 	createMovRequest,
 	deleteMovRequest,
-} from '../api/exptes';
+} from '../src/api/exptes';
 
 const ExpteContext = createContext();
 

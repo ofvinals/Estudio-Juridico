@@ -7,7 +7,6 @@ import '../css/Editar.css';
 import Swal from 'sweetalert2';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useExptes } from '../context/ExptesContext';
 import { db } from '../firebase/config';
 import { doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
 
@@ -17,7 +16,6 @@ export const EditarMov = () => {
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(false);
 	const { register, handleSubmit, setValue } = useForm();
-	const { getMov, updateMov } = useExptes();
 
 	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);

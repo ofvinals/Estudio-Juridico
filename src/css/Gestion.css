@@ -99,7 +99,7 @@
 .btnmp{
 	background-color: rgb(12, 199, 251);
 	color:white;
-	width: 40%;
+	width: auto;
 	align-self: center;
 	padding: 8px;
 	font-weight: 700;

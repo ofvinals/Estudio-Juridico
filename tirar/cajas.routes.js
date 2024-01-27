@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import { authRequired } from '../middlewares/validateToken.js';
+import { authRequired } from '../src/middlewares/validateToken.js';
 import {
 	getCajas,
 	getCaja,
 	createCaja,
 	deleteCaja,
 	updateCaja,
-} from '../controllers/caja.controller.js';
+} from '../src/controllers/caja.controller.js';
 // import { validateSchema } from '../middlewares/validator.Middleware.js';
-import {upload} from '../controllers/upload.controller.js'
+import {upload} from '../src/controllers/upload.controller.js'
 
 const router = Router();
 

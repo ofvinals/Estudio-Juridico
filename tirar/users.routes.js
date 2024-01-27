@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { authRequired } from '../middlewares/validateToken.js';
+import { authRequired } from '../src/middlewares/validateToken.js';
 import {
 	getUsers,
 	getUser,
 	createUser,
 	deleteUser,
 	updateUser,
-} from '../controllers/user.controller.js';
-import { validateSchema } from '../middlewares/validator.Middleware.js';
+} from '../src/controllers/user.controller.js';
+import { validateSchema } from '../src/middlewares/validator.Middleware.js';
 
 const router = Router();
 

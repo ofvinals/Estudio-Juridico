@@ -109,7 +109,7 @@ export const Header = () => {
 									<i className='iconavbar bi bi-person-fill-check'></i>
 									Panel de Usuarios
 								</Link>
-								{user && user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+								{user && user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
 									<Link
 										className='btnnav'
 										to='/admin'
@@ -117,7 +117,7 @@ export const Header = () => {
 										<i className='iconavbar bi bi-person-fill-gear'></i>
 										Panel de Administracion
 									</Link>
-								)}
+								):null}
 								<div className='botones'>
 									<p className='estadolog'>
 										Estas logueado como: {estadoLogin}

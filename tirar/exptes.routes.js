@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authRequired } from '../middlewares/validateToken.js';
+import { authRequired } from '../src/middlewares/validateToken.js';
 import {
 	getExptes,
 	getExpte,
@@ -8,10 +8,10 @@ import {
 	updateExpte,
 	createMov,
 	deleteMov,
-} from '../controllers/expte.controller.js';
-import { validateSchema } from '../middlewares/validator.Middleware.js';
-import { createExpteSchema } from '../schemas/expte.Schema.js';
-import {upload} from '../controllers/upload.controller.js'
+} from '../src/controllers/expte.controller.js';
+import { validateSchema } from '../src/middlewares/validator.Middleware.js';
+import { createExpteSchema } from '../src/schemas/expte.Schema.js';
+import {upload} from '../src/controllers/upload.controller.js'
 
 const router = Router();
 

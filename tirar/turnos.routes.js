@@ -1,13 +1,13 @@
 import { Router } from 'express';
-import { authRequired } from '../middlewares/validateToken.js';
+import { authRequired } from '../src/middlewares/validateToken.js';
 import {
 	getTurnos,
 	getTurno,
 	createTurno,
 	deleteTurno,
 	updateTurno,
-} from '../controllers/turno.controller.js';
-import { validateSchema } from '../middlewares/validator.Middleware.js';
+} from '../src/controllers/turno.controller.js';
+import { validateSchema } from '../src/middlewares/validator.Middleware.js';
 
 const router = Router();
 

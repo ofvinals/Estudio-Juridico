@@ -34,136 +34,94 @@ import { EditarMov } from '../src/components/EditarMov';
 import { CargaGastos } from '../src/components/CargaGastos';
 import { EditarGastos } from '../src/components/EditarGastos';
 import { EditarCajas } from '../src/components/EditarCajas';
-import { ExpteProvider } from '../src/context/ExptesContext';
-import { UserProvider } from '../src/context/UsersContext';
-import { TurnoProvider } from '../src/context/TurnosContext';
-import { GastoProvider } from '../src/context/GastosContext';
 import { GestionCaja } from '../src/components/GestionCaja';
 import { CargaMov } from '../src/components/CargaMov';
 import { CargaCajas } from '../src/components/CargaCajas';
-import { CajaProvider } from '../src/context/CajasContext';
 import { Pagos } from '../src/components/Pagos';
-
 
 export const AppRouter = () => {
 	return (
 		<BrowserRouter>
 			<GoogleOAuthProvider clientId='1050424447842-ekhv37d2lp8shcg8imrsbik8rrrerqh7.apps.googleusercontent.com'>
 				<AuthProvider>
-					<ExpteProvider>
-						<UserProvider>
-							<GastoProvider>
-								<TurnoProvider>
-									<CajaProvider>
-										<Header />
-										<Routes>
-											<Route path='/' element={<Home />}></Route>
-											<Route path='/home' element={<Home />}></Route>
-											<Route
-												path='/login'
-												element={<Login />}></Route>
-											<Route
-												path='/registro'
-												element={<Registro />}></Route>
-											<Route
-												path='/nosotros'
-												element={<Nosotros />}></Route>
-											<Route
-												path='/contact'
-												element={<Contact />}></Route>
-											<Route
-												path='/recuperar'
-												element={<Recuperar />}></Route>
-											<Route
-												path='/especialidad'
-												element={<Especialidad />}></Route>
-											<Route
-												path='/interes'
-												element={<Interes />}></Route>
-											<Route element={<PrivateRoute />}>
-												<Route
-													path='/gestioncaja'
-													element={<GestionCaja />}></Route>
-												<Route
-													path='/exptesarchivados'
-													element={<ExptesArchivados />}></Route>
-															<Route
-													path='/cajasarchivadas'
-													element={<CajasArchivadas />}></Route>
-														<Route
-													path='/gastosarchivados'
-													element={<GastosArchivados />}></Route>
-												<Route
-													path='/gestionmovimientos/:id'
-													element={<GestionMovimientos />}></Route>
-												<Route
-													path='/gestiongastos'
-													element={<GestionGastos />}></Route>
-												<Route
-													path='/cargagastos'
-													element={<CargaGastos />}></Route>
-												<Route
-													path='/editargastos/:id'
-													element={<EditarGastos />}></Route>
-												<Route
-													path='/editarcajas/:id'
-													element={<EditarCajas />}></Route>
-												<Route
-													path='/editarusu/:id'
-													element={<EditarUsu />}></Route>
-												<Route
-													path='/editarmov/:id'
-													element={<EditarMov />}></Route>
-												<Route
-													path='/editarturnos/:id'
-													element={<EditarTurnos />}></Route>
-																<Route
-													path='/pagos'
-													element={<Pagos />}></Route>
-												<Route
-													path='/editarexptes/:id'
-													element={<EditarExptes />}></Route>
-												<Route
-													path='/cargamov/:id'
-													element={<CargaMov />}></Route>
-												<Route
-													path='/cargausu'
-													element={<CargaUsu />}></Route>
-												<Route
-													path='/cargacajas'
-													element={<CargaCajas />}></Route>
-												<Route
-													path='/admin'
-													element={<Admin />}></Route>
-												<Route
-													path='/gestionusuarios'
-													element={<GestionUsuarios />}></Route>
-												<Route
-													path='/gestionexpedientes'
-													element={<GestionExpedientes />}></Route>
-												<Route
-													path='/gestionagenda'
-													element={<GestionAgenda />}></Route>
-												<Route
-													path='/gestiongastos'
-													element={<GestionGastos />}></Route>
-												<Route
-													path='/adminusu'
-													element={<AdminUsu />}></Route>
-												<Route
-													path='/cargaexptes'
-													element={<CargaExptes />}></Route>
-												<Route
-													path='/agendausu'
-													element={<AgendaUsu />}></Route>
-											</Route>
-										</Routes>
-										<Footer />
-									</CajaProvider>
-								</TurnoProvider>
-							</GastoProvider>
-						</UserProvider>
-					</ExpteProvider>
+					<Header />
+					<Routes>
+						<Route path='/' element={<Home />}></Route>
+						<Route path='/home' element={<Home />}></Route>
+						<Route path='/login' element={<Login />}></Route>
+						<Route path='/registro' element={<Registro />}></Route>
+						<Route path='/nosotros' element={<Nosotros />}></Route>
+						<Route path='/contact' element={<Contact />}></Route>
+						<Route path='/recuperar' element={<Recuperar />}></Route>
+						<Route
+							path='/especialidad'
+							element={<Especialidad />}></Route>
+						<Route path='/interes' element={<Interes />}></Route>
+						<Route element={<PrivateRoute />}>
+							<Route
+								path='/gestioncaja'
+								element={<GestionCaja />}></Route>
+							<Route
+								path='/exptesarchivados'
+								element={<ExptesArchivados />}></Route>
+							<Route
+								path='/cajasarchivadas'
+								element={<CajasArchivadas />}></Route>
+							<Route
+								path='/gastosarchivados'
+								element={<GastosArchivados />}></Route>
+							<Route
+								path='/gestionmovimientos/:id'
+								element={<GestionMovimientos />}></Route>
+							<Route
+								path='/gestiongastos'
+								element={<GestionGastos />}></Route>
+							<Route
+								path='/cargagastos'
+								element={<CargaGastos />}></Route>
+							<Route
+								path='/editargastos/:id'
+								element={<EditarGastos />}></Route>
+							<Route
+								path='/editarcajas/:id'
+								element={<EditarCajas />}></Route>
+							<Route
+								path='/editarusu/:id'
+								element={<EditarUsu />}></Route>
+							<Route
+								path='/editarmov/:id'
+								element={<EditarMov />}></Route>
+							<Route
+								path='/editarturnos/:id'
+								element={<EditarTurnos />}></Route>
+							<Route path='/pagos' element={<Pagos />}></Route>
+							<Route
+								path='/editarexptes/:id'
+								element={<EditarExptes />}></Route>
+							<Route path='/cargamov/:id' element={<CargaMov />}></Route>
+							<Route path='/cargausu' element={<CargaUsu />}></Route>
+							<Route path='/cargacajas' element={<CargaCajas />}></Route>
+							<Route path='/admin' element={<Admin />}></Route>
+							<Route
+								path='/gestionusuarios'
+								element={<GestionUsuarios />}></Route>
+							<Route
+								path='/gestionexpedientes'
+								element={<GestionExpedientes />}></Route>
+							<Route
+								path='/gestionagenda'
+								element={<GestionAgenda />}></Route>
+							<Route
+								path='/gestiongastos'
+								element={<GestionGastos />}></Route>
+							<Route path='/adminusu' element={<AdminUsu />}></Route>
+							<Route
+								path='/cargaexptes'
+								element={<CargaExptes />}></Route>
+							<Route path='/agendausu' element={<AgendaUsu />}></Route>
+						</Route>
+					</Routes>
+					<Footer />
 				</AuthProvider>
 			</GoogleOAuthProvider>
 		</BrowserRouter>

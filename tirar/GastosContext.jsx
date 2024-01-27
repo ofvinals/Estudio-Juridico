@@ -5,7 +5,7 @@ import {
 	getGastosRequest,
 	getGastoRequest,
 	updateGastoRequest,
-} from '../api/gastos';
+} from '../src/api/gastos';
 
 const GastoContext = createContext();
 

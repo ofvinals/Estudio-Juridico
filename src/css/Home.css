@@ -65,6 +65,7 @@
 	height: 270px;
 	filter: brightness(80%);
 	margin-top: 15px;
+	color: white;
 	background-color: white!important;
 	background-image: url(/LOGOHOME.jpg);
 	background-size: contain;
@@ -81,7 +82,7 @@
 	color: rgb(207, 207, 207);
 	margin-top: 50px;
 	margin-bottom: 50px;
-	text-shadow: 9px 12px 7px rgba(241, 241, 241, 0.41);
+	text-shadow: 9px 12px 7px rgba(241, 241, 241, 0.41)!important;
 }
 .btnhome {
 	padding: 5px;
@@ -200,6 +201,7 @@
 	filter: brightness(80%);
 	opacity: 0.8;
 	margin-top: 15px;
+	color: white;
 	background-color: white!important;
 	background-image: url(/LOGOHOME.jpg);
 	background-size: contain;

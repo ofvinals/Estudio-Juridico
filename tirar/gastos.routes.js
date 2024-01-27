@@ -1,14 +1,14 @@
 import { Router } from 'express';
-import { authRequired } from '../middlewares/validateToken.js';
+import { authRequired } from '../src/middlewares/validateToken.js';
 import {
 	getGastos,
 	getGasto,
 	createGasto,
 	deleteGasto,
 	updateGasto,
-} from '../controllers/gasto.controller.js';
-import { validateSchema } from '../middlewares/validator.Middleware.js';
-import { upload } from '../controllers/upload.controller.js';
+} from '../src/controllers/gasto.controller.js';
+import { validateSchema } from '../src/middlewares/validator.Middleware.js';
+import { upload } from '../src/controllers/upload.controller.js';
 
 const router = Router();
 

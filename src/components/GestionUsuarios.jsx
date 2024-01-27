@@ -120,19 +120,19 @@ export const GestionUsuarios = () => {
 					onClick={() => verUsuario(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
 					<IconButton
-						hidden={row.original.email === 'ofvinals@gmail.com'}
+						hidden={row.original.email === 'ofvinals@gmail.com' || row.original.email === 'admin@estudio.com'}
 						color='success'
 						onClick={() => {
 							navigate(`/editarusu/${row.original.id}`);
 						}}>
 						<EditIcon />
 					</IconButton>
-				)}
+				):null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
-						hidden={row.original.email === 'ofvinals@gmail.com'}
+						hidden={row.original.email === 'ofvinals@gmail.com' || row.original.email === 'admin@estudio.com'}
 						color='error'
 						onClick={() => borrarUsuario(row.original.id)}>
 						<DeleteIcon />

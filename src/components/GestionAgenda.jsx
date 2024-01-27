@@ -142,7 +142,7 @@ export const GestionAgenda = () => {
 					onClick={() => verTurno(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -150,7 +150,7 @@ export const GestionAgenda = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				)}
+				):null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
