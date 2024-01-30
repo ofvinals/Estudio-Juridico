@@ -260,7 +260,7 @@ export const GestionCaja = () => {
 			Swal.showLoading();
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
-				text: 'Confirmas la eliminacion del movimient de la caja?',
+				text: 'Confirmas la eliminacion del movimiento de la caja?',
 				icon: 'warning',
 				showCancelButton: true,
 				confirmButtonColor: '#d33',

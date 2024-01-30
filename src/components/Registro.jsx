@@ -1,10 +1,12 @@
-import React  from 'react';
+import React, {useRef} from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../css/Registro.css';
 import { useAuth } from '../context/AuthContext';
+import emailjs from '@emailjs/browser';
+
 
 export const Registro = () => {
 	const { registro} = useAuth();
@@ -15,11 +17,19 @@ export const Registro = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+	const form = useRef();
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registro(values);
 			navigate('/adminusu', { replace: true });
+			emailjs
+			.sendForm(
+				'service_iew5q2g',
+				'template_fgl8bsq',
+				form.current,
+				'saMzvd5sdlHj2BhYr'
+			)
 		} catch (error) {
 			console.error('Error al registrar:', error);
 		}
@@ -30,7 +40,8 @@ export const Registro = () => {
 			<Form
 				id='loginFormreg'
 				className='loginFormreg container fluid bg-dark'
-				onSubmit={onSubmit}>
+				onSubmit={onSubmit}
+				ref={form}>
 				<h2 className='login-tituloreg'>Crear Nueva Cuenta</h2>
 
 				<Form.Group className='mb-3' id='inputname'>
@@ -39,6 +50,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='name'
+						name='username'
 						{...register('username', {
 							required: {
 								value: true,
@@ -54,6 +66,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='subname'
+						name= 'apellido'
 						{...register('apellido')}
 					/>
 				</Form.Group>
@@ -64,6 +77,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='number'
 						id='dni'
+						name= 'dni'
 						{...register('dni', {
 							required: {
 								value: true,
@@ -89,6 +103,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='domic'
+						name= 'domicilio'
 						{...register('domicilio', {
 							required: {
 								value: true,
@@ -104,6 +119,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='number'
 						id='cel'
+						name= 'cel'
 						{...register('celular', {
 							required: {
 								value: true,
@@ -127,6 +143,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='email'
 						id='email'
+						name= 'email'
 						{...register('email', {
 							required: {
 								value: true,

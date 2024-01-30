@@ -15,6 +15,7 @@ import {
 	collection,
 	updateDoc,
 } from 'firebase/firestore';
+import { DateTimePicker } from '@mui/x-date-pickers';
 
 export const EditarExptes = ({}) => {
 	const user = useAuth();
@@ -136,7 +137,7 @@ export const EditarExptes = ({}) => {
 									))}
 								</select>
 							</Form.Group>
-
+<DateTimePicker/>
 							<Form.Group className='groupedit' id='inputname'>
 								<Form.Label className='labeledit'>
 									Nro Expediente

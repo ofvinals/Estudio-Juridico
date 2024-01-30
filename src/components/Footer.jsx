@@ -59,6 +59,7 @@ export const Footer = () => {
 						<p className='text-center derechos'>
 							© 2024 Todos los Derechos Reservados - Estudio Juridico Posse & Asoc.
 						</p>
+						<p className='text-center derechos'>Diseño y Desarrollo: Oscar Frias Viñals</p>`
 					</div>
 				</div>
 			</div>

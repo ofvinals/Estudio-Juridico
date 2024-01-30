@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
@@ -20,9 +20,12 @@ import {
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 dayjs.locale('es');
+import emailjs from '@emailjs/browser';
 
 export const AgendaUsu = () => {
 	const user = useAuth();
+	const { displayName } = useAuth();
+	const form = useRef();
 	const [tablaTurnos, setTablaTurnos] = useState();
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setTurnoOcupado] = useState([]);
@@ -95,19 +98,31 @@ export const AgendaUsu = () => {
 					email: user.user,
 					motivo: motivoConsulta,
 				};
-				const turnoDocRef = await addDoc(
-					collection(db, 'turnos'),
-					nuevoTurno
-				);
-				console.log('Documento agregado con ID: ', turnoDocRef.id);
-				// cargarTablaTurnos(tabla);
-				window.location.reload();
-				Swal.fire({
-					icon: 'success',
-					title: 'Su turno fue registrado!',
-					showConfirmButton: false,
-					timer: 2500,
-				});
+				try {
+					await emailjs.send(
+						'service_iew5q2g',
+						'template_fgl8bsq',
+						nuevoTurno,
+						'saMzvd5sdlHj2BhYr'
+					);
+					const turnoDocRef = await addDoc(
+						collection(db, 'turnos'),
+						nuevoTurno
+					);
+					console.log('Documento agregado con ID: ', turnoDocRef.id);
+					await Swal.fire({
+						icon: 'success',
+						title: 'Su turno fue registrado!',
+						showConfirmButton: false,
+						timer: 2500,
+					});
+					window.location.reload();
+				} catch (error) {
+					console.error(
+						'Error al enviar el formulario por EmailJS:',
+						error
+					);
+				}
 			} else {
 				Swal.fire('Su turno no fue agendado', '', 'info');
 			}
@@ -190,7 +205,7 @@ export const AgendaUsu = () => {
 		<>
 			<div>
 				<div className='main bodyagusu container-lg'>
-					<h4 className='titleagusu'>Bienvenido, {user.user}</h4>
+					<h4 className='titleagusu'>Bienvenido, {displayName}</h4>
 					<p className='subtitleagusu'>Panel de Turnos Online</p>
 				</div>
 				<div className='d-flex justify-content-center'>
@@ -246,6 +261,7 @@ export const AgendaUsu = () => {
 						<div className='btnesagusu'>
 							<button
 								className='btnagusuverif'
+								ref={form}
 								onClick={handleCrearCita}>
 								<i className='iconavbar bi bi-calendar-check'></i>
 								Verificar turno
@@ -253,7 +269,7 @@ export const AgendaUsu = () => {
 						</div>
 						<hr className='linea mx-3' />
 
-						<h2 className='titleagusu'>Turnos pendientes</h2>
+						<h2 className='titleagusu'>Turnos Registrados</h2>
 						<div className='table-responsive'>
 							<Table
 								striped

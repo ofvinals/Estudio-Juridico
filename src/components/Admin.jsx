@@ -1,17 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 import '../css/Admin.css';
+import { Notas } from './Notas';
 
 export const Admin = () => {
 	const user = useAuth();
-	const {displayName} = useAuth();
+	const { displayName } = useAuth();
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		if (!user || user.user !== 'ofvinals@gmail.com' && user.user !== 'admin@estudio.com') {
+		if (
+			!user ||
+			(user.user !== 'ofvinals@gmail.com' &&
+				user.user !== 'admin@estudio.com')
+		) {
 			navigate('/adminusu');
 		}
 	}, [user, navigate]);
@@ -66,6 +71,7 @@ export const Admin = () => {
 					</Link>
 				</div>
 			</div>
+			<Notas />
 		</>
 	);
 };

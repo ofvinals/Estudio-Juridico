@@ -54,7 +54,10 @@ export const CargaCajas = () => {
 			}
 			const fechaSeleccionada = new Date(values.fecha);
 
-			fechaSeleccionada.setMinutes(fechaSeleccionada.getMinutes() - fechaSeleccionada.getTimezoneOffset());
+			fechaSeleccionada.setMinutes(
+				fechaSeleccionada.getMinutes() -
+					fechaSeleccionada.getTimezoneOffset()
+			);
 			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-AR');
 			const cajaData = {
 				fecha: fechaFormateada,
@@ -80,7 +83,6 @@ export const CargaCajas = () => {
 				navigate('/gestioncaja');
 			}, 500);
 			return () => clearTimeout(timer);
-
 		} catch (error) {
 			console.error(error);
 		}
@@ -99,7 +101,6 @@ export const CargaCajas = () => {
 						<Form
 							className='Formcarga'
 							onSubmit={onSubmit}
-							action='/uploads'
 							method='post'
 							encType='multipart/form-data'>
 							<Form.Group id='inputname'>

@@ -34,6 +34,7 @@ export const useAuth = () => {
 export const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState('');
 	const [displayName, setDisplayName] = useState('');
+	const [accessToken, setAccessToken] = useState('');
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
 	const [isAuthChecked, setIsAuthChecked] = useState(false);
@@ -42,19 +43,48 @@ export const AuthProvider = ({ children }) => {
 	// FUNCION REGISTRO DE USUARIOS
 	const registro = async (values) => {
 		try {
-			const response = await createUserWithEmailAndPassword(
+			const emailExists = await getAuth().fetchSignInMethodsForEmail(
+				values.email
+			);
+			if (emailExists.length > 0) {
+				Swal.fire({
+					icon: 'error',
+					title: 'Error de registro',
+					text: 'El correo electrónico ya está registrado.',
+					showConfirmButton: false,
+					timer: 2500,
+				});
+				return;
+			}
+
+			const dniExistsSnapshot = await getDocs(
+				query(collection(db, 'usuarios'), where('dni', '==', values.dni))
+			);
+			if (!isEmpty(dniExistsSnapshot.docs)) {
+				Swal.fire({
+					icon: 'error',
+					title: 'Error de registro',
+					text: 'El DNI ya está registrado.',
+					showConfirmButton: false,
+					timer: 2500,
+				});
+				return;
+			}
+
+			await createUserWithEmailAndPassword(
 				auth,
 				values.email,
 				values.password
 			);
 			const usuariosRef = collection(db, 'usuarios');
-			await addDoc(usuariosRef, values).then;
+			await addDoc(usuariosRef, values);
 			Swal.fire({
 				icon: 'success',
 				title: 'Bienvenido! Registro de cuenta exitoso!',
 				showConfirmButton: false,
 				timer: 2500,
 			});
+
 			const displayNameValue = `${values.username} ${values.apellido}`;
 			setDisplayName(displayNameValue);
 			setIsAuthenticated(true);
@@ -64,8 +94,8 @@ export const AuthProvider = ({ children }) => {
 			console.error(error);
 			Swal.fire({
 				icon: 'error',
-				title: 'Ingreso rechazado',
-				text: 'El usuario y/o contraseña no son correctos!',
+				title: 'Error de registro',
+				text: 'Hubo un error en el registro de usuario. Intenta nuevamente!',
 				showConfirmButton: false,
 				timer: 1500,
 			});
@@ -122,20 +152,30 @@ export const AuthProvider = ({ children }) => {
 	// FUNCION LOGIN CON CUENTA GOOGLE
 	const loginWithGoogle = async () => {
 		try {
-			const responseGoogle = new GoogleAuthProvider();
+			const responseGoogle = new GoogleAuthProvider({
+				provider: 'google',
+				options: {
+					scopes: 'https://www.googleapis.com/auth/calendar',
+				},
+			});
 			responseGoogle.addScope('email');
 			responseGoogle.addScope('profile');
 			signInWithPopup(auth, responseGoogle)
-				.then((result) => {
+				.then(async (result) => {
+					console.log(result);
 					const userRes = result.user;
 					const display = result.user.displayName;
+					const accessToken = result._tokenResponse.oauthAccessToken;
 					const email = userRes.providerData.map((profile) => {
 						return profile.email;
 					});
 					const userEmail = email[0];
 					setIsAuthenticated(true);
 					setDisplayName(display);
+					setAccessToken(accessToken);
 					setUser(userEmail);
+
+					console.log(accessToken);
 					console.log('display:', displayName, 'user:', user);
 					localStorage.setItem('displayName', displayName);
 					Swal.fire({
@@ -277,6 +317,7 @@ export const AuthProvider = ({ children }) => {
 		<AuthContext.Provider
 			value={{
 				user,
+				accessToken,
 				displayName,
 				loginWithGoogle,
 				isAuthenticated,

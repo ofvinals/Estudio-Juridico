@@ -38,7 +38,8 @@ import { GestionCaja } from '../src/components/GestionCaja';
 import { CargaMov } from '../src/components/CargaMov';
 import { CargaCajas } from '../src/components/CargaCajas';
 import { Pagos } from '../src/components/Pagos';
-
+import { GoogleCalendar } from '../src/components/GoogleCalendar';
+import {Notas} from '../src/components/Notas'
 export const AppRouter = () => {
 	return (
 		<BrowserRouter>
@@ -67,6 +68,9 @@ export const AppRouter = () => {
 							<Route
 								path='/cajasarchivadas'
 								element={<CajasArchivadas />}></Route>
+								<Route
+								path='/googlecalendar'
+								element={<GoogleCalendar />}></Route>
 							<Route
 								path='/gastosarchivados'
 								element={<GastosArchivados />}></Route>
@@ -102,6 +106,8 @@ export const AppRouter = () => {
 							<Route path='/cargausu' element={<CargaUsu />}></Route>
 							<Route path='/cargacajas' element={<CargaCajas />}></Route>
 							<Route path='/admin' element={<Admin />}></Route>
+							<Route path='/notas' element={<Notas />}></Route>
+
 							<Route
 								path='/gestionusuarios'
 								element={<GestionUsuarios />}></Route>

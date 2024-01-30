@@ -1,29 +1,36 @@
-import React from 'react';
-import Form from 'react-bootstrap/Form';
-import { Link } from 'react-router-dom';
-import '../css/Contact.css';
+import React, { useRef } from 'react';
 import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
+import '../css/Contact.css';
 
 export const Contact = () => {
+	const form = useRef();
+
 	const sendEmail = (e) => {
 		e.preventDefault();
 
 		emailjs
 			.sendForm(
-				'YOUR_SERVICE_ID',
-				'YOUR_TEMPLATE_ID',
+				'service_iew5q2g',
+				'template_qar0tof',
 				form.current,
-				'YOUR_PUBLIC_KEY'
+				'saMzvd5sdlHj2BhYr'
 			)
 			.then(
 				(result) => {
-					console.log(result.text);
+					Swal.fire({
+						icon: 'success',
+						title: 'Mensaje enviado correctamente! Te responderemos a la brevedad posible!',
+						showConfirmButton: false,
+						timer: 3000,
+					});
 				},
 				(error) => {
 					console.log(error.text);
 				}
 			);
 	};
+
 	return (
 		<div className='container-lg bodycontact'>
 			<div className=''>
@@ -33,33 +40,29 @@ export const Contact = () => {
 					nos comunicaremos a la brevedad posible.
 				</p>
 			</div>
-
-			<Form className='cajaForm' onSubmit={sendEmail}>
-				<Form.Group className='' controlId='emailcontact'>
-					<Form.Label className='labelcontact'>Email</Form.Label>
-					<Form.Control
-						type='email'
-						placeholder='Ingrese su email..'
-						className='inputcontactemail'
-					/>
-				</Form.Group>
-				<Form.Group className='' controlId='comentariocontact'>
-					<Form.Label className='labelcontact'>
-						Escribe tu comentario
-					</Form.Label>
-					<Form.Control
-						as='textarea'
-						rows={5}
-						className='inputcontactcoment'
-						placeholder='Ingrese su comentario..'
-					/>
-				</Form.Group>
-				<div className='d-flex justify-content-center row '>
-					<Link type='submit' className='btncont'>
-						Enviar
-					</Link>
-				</div>
-			</Form>
+			<form className='cajaForm' ref={form} onSubmit={sendEmail}>
+				<label className='labelcontact'>Tu Nombre</label>
+				<input
+					className='inputcontactemail'
+					type='text'
+					name='user_name'
+					required
+				/>
+				<label className='labelcontact' placeholder='Ingrese su email..'>
+					Email
+				</label>
+				<input
+					className='inputcontactemail'
+					type='email'
+					name='user_email'
+					required
+				/>
+				<label className='labelcontact' placeholder='Ingrese su mensaje..'>
+					Mensaje
+				</label>
+				<textarea className='inputcontactcoment' name='message' required />
+				<input className='btncont' type='submit' value='Enviar' />
+			</form>
 		</div>
 	);
 };

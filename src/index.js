@@ -1,9 +1,12 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
 import morgan from 'morgan';
 import authRoutes from '../src/routes/auth.routes.js';
 import googleRoutes from '../src/routes/google.routes.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
+
 
 const app = express();
 
@@ -27,7 +30,6 @@ app.use((req, res, next) => {
 	// Configuración de COEP: same-origin
 	res.setHeader('Cross-Origin-Embedder-Policy: require-corp');
 
-	// Continuar con el siguiente middleware
 	next();
 });
 

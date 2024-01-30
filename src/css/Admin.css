@@ -21,6 +21,7 @@
 	font-size: 130%;
 	font-weight: 800;
 	color: rgb(207, 207, 207);
+	text-align: center;
 }
 .subtitleadusu {
 	font-size: 120%;
@@ -95,4 +96,13 @@
 	opacity: 0.8;
 	color: white;
 	background-color: transparent;
+}
+.Formcargarecord{
+	display: flex !important;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-around !important;
+	align-items: center;
+	align-content: center;
+	opacity: 0.85;
 }

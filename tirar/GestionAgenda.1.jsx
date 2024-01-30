@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
-import { Form, Modal } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../src/context/AuthContext.jsx';
+import { useForm } from 'react-hook-form';
 import {
 	MaterialReactTable,
 	useMaterialReactTable,
@@ -25,23 +26,47 @@ import {
 	deleteDoc,
 	doc,
 } from 'firebase/firestore';
-import { db } from '../firebase/config';
+import { db } from '../src/firebase/config.js';
+import { insertEvent } from '../google_calendar.js';
 
 export const GestionAgenda = () => {
 	const user = useAuth();
 	const { displayName } = useAuth();
+	const { register, handleSubmit } = useForm();
 	const navigate = useNavigate();
 	const [turno, setTurno] = useState([]);
 	const [turnosVencidos, setTurnosVencidos] = useState([]);
 	const [data, setData] = useState([]);
 	const [showVerTurno, setShowVerTurno] = useState(false);
+	const [summary, setSummary] = useState('');
+	const [description, setDescription] = useState('');
+	const [location, setLocation] = useState('');
+	const [startDateTime, setStartDateTime] = useState('');
+	const [endDateTime, setendDateTime] = useState('');
+	const [exptes, setExptes] = useState([]);
+	const { loginWithGoogle, createEvents } = useAuth();
 	const [showCargaVenc, setShowCargaVenc] = useState(false);
-
 	// Cierra modales
 	const handleCancel = () => {
 		setShowVerTurno(false);
 		setShowCargaVenc(false);
 	};
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const exptesRef = collection(db, 'expedientes');
+				const fetchedExptes = await getDocs(exptesRef);
+				const exptesArray = Object.values(
+					fetchedExptes.docs.map((doc) => doc.data())
+				);
+				setExptes(exptesArray);
+			} catch (error) {
+				console.error('Error al obtener expedientes:', error);
+			}
+		};
+		fetchData();
+	}, []);
 
 	const columns = React.useMemo(
 		() => [
@@ -214,6 +239,55 @@ export const GestionAgenda = () => {
 		return () => clearTimeout(timer);
 	}
 
+	const onSubmit = handleSubmit(async (values) => {
+		Swal.showLoading();
+		try {
+			// const event = {
+			// 	summary: 'vencimiento estudio', // Ajusta según la estructura de tu formulario
+			// 	description: values.vencimiento,
+			// 	start: {
+			// 		dateTime: values.fechavenc,
+			// 		timeZone: 'America/Argentina',
+			// 	},
+			// 	end: {
+			// 		dateTime: values.fechavencfin,
+			// 		timeZone: 'America/Argentina',
+			// 	},
+			// };
+
+			// const result = await insertEvent(event);
+
+			Swal.fire({
+				icon: 'success',
+				title: 'Vencimiento registrado correctamente',
+				showConfirmButton: false,
+				timer: 1500,
+			});
+			setTimeout(() => {
+				Swal.close();
+				navigate('/gestionagenda');
+			}, 500);
+			return () => clearTimeout(timer);
+		} catch (error) {
+			console.error(error);
+		}
+	});
+
+	// const handleSubmit = async (e) => {
+	// 	e.preventDefault();
+	// 	try {
+	// 		await createEvents(
+	// 			summary,
+	// 			description,
+	// 			startDateTime,
+	// 			endDateTime,
+	// 			location
+	// 		);
+	// 	} catch (error) {
+	// 		console.error('Error handling create-event request:', error);
+	// 	}
+	// };
+
 	return (
 		<>
 			<div className='bodygestion container-lg bg-dark'>
@@ -240,10 +314,13 @@ export const GestionAgenda = () => {
 						<i className='iconavbar bi bi-google'></i>Ver Agenda del
 						Estudio
 					</button>
-					<Link to='/googlecalendar' className='btnpanelgestion'>
+					<button
+						type='button'
+						onClick={() => setShowCargaVenc(true)}
+						className='btnpanelgestion'>
 						<i className='iconavbar bi bi-file-earmark-plus'></i>Cargar
-						vencimientos/audiencias
-					</Link>
+						vencimientos
+					</button>
 					<Link to='/Admin' className='btnpanelgestion'>
 						<i className='iconavbar bi bi-box-arrow-left'></i>
 						Volver al Panel
@@ -252,7 +329,7 @@ export const GestionAgenda = () => {
 				<hr className='linea mx-3' />
 
 				<div>
-					<p className='titletabla'>Turnos y Vencimientos Pendientes</p>
+					<p className='titletabla'>Turnos Registrados</p>
 				</div>
 				<div>
 					<ThemeProvider theme={darkTheme}>
@@ -291,6 +368,82 @@ export const GestionAgenda = () => {
 						Volver
 					</button>
 				</Modal.Footer>
+			</Modal>
+
+			{/* Modal para cargar vencimientos */}
+			<Modal show={showCargaVenc} onHide={() => setShowCargaVenc(true)}>
+				<Modal.Header closeButton>
+					<Modal.Title className='text-white'>
+						Cargar Vencimientos
+					</Modal.Title>
+				</Modal.Header>
+				<Modal.Body>
+					<Form className='Formcarga' onSubmit={onSubmit}>
+						<Form.Group className='labelcarga' Id='vencimiento'>
+							<Form.Label className=''>Vencimiento</Form.Label>
+							<Form.Control
+								className='inputcarga'
+								as='textarea'
+								id='vencimiento'
+								{...register('vencimiento')}
+							/>
+						</Form.Group>
+
+						<Form.Group className='labelcarga' Id='expte'>
+							<Form.Label className=''>Expediente</Form.Label>
+							<select
+								className='inputcarga'
+								aria-label='Default select'
+								id='expte'
+								{...register('nroexpte')}>
+								<option>Selecciona..</option>
+								{exptes.map((expte) => (
+									<option key={expte.mid} value={expte.nroexpte}>
+										{expte.nroexpte}
+									</option>
+								))}
+							</select>
+						</Form.Group>
+
+						<Form.Group className='labelcarga' Id='ubicacion'>
+							<Form.Label className=''>Ubicacion</Form.Label>
+							<Form.Control
+								type='text'
+								id='ubicacion'
+								{...register('ubicacion')}
+							/>
+						</Form.Group>
+
+						<Form.Group className='labelcarga' Id='ubicacion'>
+							<Form.Label className=''>Fecha de Vencimiento</Form.Label>
+							<Form.Control
+								type='date'
+								id='date'
+								{...register('fechavenc')}
+							/>
+						</Form.Group>
+
+						<label htmlFor='endDateTime'>End Date Time</label>
+						<br />
+						<input type='date' id='date' {...register('fechavencfin')} />
+						<Form.Group
+							className='mb-3 botonescarga'
+							controlId='inputpassword'>
+							<Button className='botoneditcarga' type='submit'>
+								<i className='iconavbar bi bi-check2-square'></i>
+								Cargar Vencimiento
+							</Button>
+							<Button
+								onClick={() => {
+									handleCancel();
+								}}
+								className='btncanccarga'>
+								<i className='iconavbar bi bi-x-circle-fill'></i>
+								Cancelar
+							</Button>
+						</Form.Group>
+					</Form>
+				</Modal.Body>
 			</Modal>
 		</>
 	);
