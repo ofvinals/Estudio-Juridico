@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -7,9 +7,8 @@ import '../css/Registro.css';
 import { useAuth } from '../context/AuthContext';
 import emailjs from '@emailjs/browser';
 
-
 export const Registro = () => {
-	const { registro} = useAuth();
+	const { registro } = useAuth();
 	const navigate = useNavigate();
 	const {
 		register,
@@ -18,18 +17,19 @@ export const Registro = () => {
 		formState: { errors },
 	} = useForm();
 	const form = useRef();
+	const [showPassword, setShowPassword] = useState(false);
+	const toggleShowPassword = () => setShowPassword(!showPassword);
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registro(values);
 			navigate('/adminusu', { replace: true });
-			emailjs
-			.sendForm(
+			emailjs.sendForm(
 				'service_iew5q2g',
 				'template_fgl8bsq',
 				form.current,
 				'saMzvd5sdlHj2BhYr'
-			)
+			);
 		} catch (error) {
 			console.error('Error al registrar:', error);
 		}
@@ -66,7 +66,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='subname'
-						name= 'apellido'
+						name='apellido'
 						{...register('apellido')}
 					/>
 				</Form.Group>
@@ -77,7 +77,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='number'
 						id='dni'
-						name= 'dni'
+						name='dni'
 						{...register('dni', {
 							required: {
 								value: true,
@@ -86,12 +86,12 @@ export const Registro = () => {
 							minLength: {
 								value: 8,
 								message:
-									'El DNI/CUIT debe contenter entre 8 y 10 digitos.',
+									'El DNI/CUIT debe contenter entre 8 y 11 digitos.',
 							},
 							maxLength: {
-								value: 11,
+								value: 12,
 								message:
-									'El DNI/CUIT debe contenter entre 8 y 10 digitos.',
+									'El DNI/CUIT debe contenter entre 8 y 11 digitos.',
 							},
 						})}
 					/>
@@ -103,7 +103,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='text'
 						id='domic'
-						name= 'domicilio'
+						name='domicilio'
 						{...register('domicilio', {
 							required: {
 								value: true,
@@ -119,7 +119,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='number'
 						id='cel'
-						name= 'cel'
+						name='cel'
 						{...register('celular', {
 							required: {
 								value: true,
@@ -143,7 +143,7 @@ export const Registro = () => {
 						className='inputreg'
 						type='email'
 						id='email'
-						name= 'email'
+						name='email'
 						{...register('email', {
 							required: {
 								value: true,
@@ -164,8 +164,7 @@ export const Registro = () => {
 					<Form.Label className='labelreg'>Contraseña</Form.Label>
 					<Form.Control
 						className='inputreg'
-						type='password'
-						id='password'
+						type={showPassword ? 'text' : 'password'}						id='password'
 						{...register('password', {
 							required: {
 								value: true,
@@ -179,36 +178,46 @@ export const Registro = () => {
 					/>
 				</Form.Group>
 
-				<Form.Group className='mb-3'>
+				<Form.Group className='mb-3 d-flex flex-column'>
 					<Form.Label className='labelreg' id='inputconfirm'>
 						Confirmar Contraseña
 					</Form.Label>
-					<Form.Control
-						className='inputreg'
-						type='password'
-						id='copassword'
-						{...register('copassword', {
-							required: {
-								value: true,
-								message: 'La confirmacion de contraseña es requerida',
-							},
-							minLength: {
-								value: 7,
-								message:
-									'Confirmar contraseña debe ser mayor a 7 caracteres',
-							},
-							validate: (copassword) => {
-								const { password } = getValues();
-								return (
-									copassword === password ||
-									'Las contraseñas ingresadas no coinciden'
-								);
-							},
-						})}
-					/>
-					{errors.copassword && (
-						<span>{errors.copassword.message}</span>
-					)}
+					<div className='d-flex flex-row'>
+						<Form.Control
+							className='inputreg'
+							type={showPassword ? 'text' : 'password'}							id='copassword'
+							{...register('copassword', {
+								required: {
+									value: true,
+									message:
+										'La confirmacion de contraseña es requerida',
+								},
+								minLength: {
+									value: 7,
+									message:
+										'Confirmar contraseña debe ser mayor a 7 caracteres',
+								},
+								validate: (copassword) => {
+									const { password } = getValues();
+									return (
+										copassword === password ||
+										'Las contraseñas ingresadas no coinciden'
+									);
+								},
+							})}
+						/>
+						<button
+							type='button'
+							onClick={toggleShowPassword}
+							id='vercontrasena'
+							className='btncontrasena'>
+							<i
+								className={`iconavbar p-0 ${
+									showPassword ? 'bi-eye-slash' : 'bi-eye'
+								}`}></i>
+						</button>
+					</div>
+					{errors.copassword && <span>{errors.copassword.message}</span>}
 				</Form.Group>
 
 				<Form.Group className='mb-3 botonesreg'>

@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import * as React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -22,22 +21,24 @@ export const GoogleCalendar = () => {
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
 	const user = useAuth();
-	const accessToken = useAuth();
-	const { loginWithGoogle } = useAuth();
+	const { accessToken, loginWithGoogle } = useAuth();
 
 	const handleCloseModal = () => {
 		setShowModal(false);
 		navigate('/gestionagenda');
 	};
 
-	const handleGoogle = (e) => {
-		e.preventDefault();
-		loginWithGoogle();
+	const handleGoogle = async (e) => {
+		try {
+			e.preventDefault();
+			await loginWithGoogle();
+			setShowModal(true);
+		} catch (error) {
+			console.error('Error al iniciar sesión con Google:', error);
+		}
 	};
-	console.log(user.accessToken);
 
 	const createEvent = async function createCalendarEvent() {
-		console.log('Creando evento de calendario');
 		try {
 			const event = {
 				summary: eventName,
@@ -51,20 +52,18 @@ export const GoogleCalendar = () => {
 					timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 				},
 			};
-			console.log(user.accessToken);
 			await fetch(
 				'https://www.googleapis.com/calendar/v3/calendars/365fa9c4ffc2a2c85cd2d4c3e28942427e52a6a2a6d92386566dbe9ada6d50fe@group.calendar.google.com/events',
 				{
 					method: 'POST',
 					headers: {
-						Authorization: 'Bearer ' + user.accessToken, // Access token for google ERROR. FALTA AUTORIZACION SCOPE P CALENDAR
+						Authorization: 'Bearer ' + accessToken,
 					},
 					body: JSON.stringify(event),
 				}
 			)
 				.then((data) => data.json())
 				.then((data) => {
-					console.log(data);
 					console.log('Evento creado, revisa tu Google Calendar');
 				});
 		} catch (error) {
@@ -72,24 +71,15 @@ export const GoogleCalendar = () => {
 		}
 	};
 
-	console.log(user.accesoToken);
-	console.log('Fecha de inicio:', start.toISOString());
-	console.log('Fecha de finalización:', end.toISOString());
-	console.log(eventName);
-	console.log(eventDescription);
-
 	const handleCrearVenc = async () => {
-		// Convierte el turno seleccionado al formato
 		const formatoTurnoSeleccionado = dayjs(start).format('DD/MM/YYYY HH:mm');
-
 		const nuevoTurno = {
 			turno: formatoTurnoSeleccionado,
 			email: eventName,
 			motivo: eventDescription,
 		};
 		try {
-			const turnoDocRef = await addDoc(collection(db, 'turnos'), nuevoTurno);
-			console.log('Documento agregado con ID: ', turnoDocRef.id);
+			await addDoc(collection(db, 'turnos'), nuevoTurno);
 			await Swal.fire({
 				icon: 'success',
 				title: 'El vencimiento fue registrado!',
@@ -103,146 +93,115 @@ export const GoogleCalendar = () => {
 		}
 	};
 
-	try {
-		return (
-			<Modal show={showModal} onHide={handleCloseModal}>
-				<Modal.Header closeButton>
-					<Modal.Title className='titlemodal'>
-						Cargar Vencimientos / Audiencias
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<div className='d-flex flex-column justify-content-center align-items-center'>
-						{user ? (
-							<>
-								<p className='labelcarga'>Fecha de inicio</p>
-								<LocalizationProvider
-									dateAdapter={AdapterDayjs}
-									adapterLocale='es-mx'>
-									<DemoContainer components={['NobileDateTimePicker']}>
-										<DemoItem label=''>
-											<MobileDateTimePicker
-												defaultValue={dayjs()}
-												formatDensity='spacious'
-												disablePast={true}
-												ampm={false}
-												inputFormat='DD/MM/YYYY HH:mm'
-												selected={start}
-												onChange={(date) => setStart(date)}
-												minutesStep={30}
-												views={[
-													'year',
-													'month',
-													'day',
-													'hours',
-													'minutes',
-												]}
-												slotProps={{
-													textField: ({ position }) => ({
-														color: 'success',
-														focused: true,
-														size: 'medium',
-													}),
-												}}
-												disableHighlightToday={false}
-											/>
-										</DemoItem>
-									</DemoContainer>
-								</LocalizationProvider>
-								<p className='labelcarga'>Fecha de finalizacion</p>
-								<LocalizationProvider
-									dateAdapter={AdapterDayjs}
-									adapterLocale='es-mx'>
-									<DemoContainer components={['NobileDateTimePicker']}>
-										<DemoItem label=''>
-											<MobileDateTimePicker
-												defaultValue=	{dayjs()}
-												formatDensity='spacious'
-												disablePast={true}
-												ampm={false}
-												inputFormat='DD/MM/YYYY HH:mm'
-												selected={start}
-												onChange={(date) => setEnd(date)}
-												minutesStep={30}
-												views={[
-													'year',
-													'month',
-													'day',
-													'hours',
-													'minutes',
-												]}
-												slotProps={{
-													textField: ({ position }) => ({
-														color: 'success',
-														focused: true,
-														size: 'medium',
-													}),
-												}}
-												disableHighlightToday={false}
-											/>
-										</DemoItem>
-									</DemoContainer>
-								</LocalizationProvider>
-
-								<p className='labelcarga'> Tipo de evento</p>
-								<select
-									className='inputcarga w-50'
-									aria-label='Default select'
-									onChange={(e) => setEventName(e.target.value)}>
-									<option>Selecciona..</option>
-									<option value='AUDIENCIA'>AUDIENCIA</option>
-									<option value='VENCIMIENTO'>VENCIMIENTO</option>
-								</select>
-								<p className='labelcarga'>Descripcion</p>
-								<textarea
-									rows='5'
-									cols='33'
-									onChange={(e) => setEventDescription(e.target.value)}
-								/>
-
-								<div className='botonescarga'>
-									<button
-										className='botoneditcarga'
-										onClick={async () => {
-											try {
-												await Promise.all([
-													handleCrearVenc(),
-													createEvent(),
-												]);
-											} catch (error) {
-												// Manejar errores aquí si es necesario
-												console.error(
-													'Error al crear evento:',
-													error
+	return (
+		<Modal show={showModal} onHide={handleCloseModal}>
+			<Modal.Header closeButton>
+				<Modal.Title className='titlemodal'>
+					Cargar Vencimientos / Audiencias
+				</Modal.Title>
+			</Modal.Header>
+			<Modal.Body>
+				<div className='d-flex flex-column justify-content-center align-items-center'>
+					{accessToken ? (
+						<>
+							<p className='labelcarga'>Fecha del Evento</p>
+							<LocalizationProvider
+								dateAdapter={AdapterDayjs}
+								adapterLocale='es-mx'>
+								<DemoContainer components={['NobileDateTimePicker']}>
+									<DemoItem label=''>
+										<MobileDateTimePicker
+											defaultValue={dayjs()}
+											formatDensity='spacious'
+											disablePast={true}
+											ampm={false}
+											inputFormat='DD/MM/YYYY HH:mm'
+											selected={start}
+											onChange={(startDate) => {
+												setStart(startDate);
+												const newEndDate = dayjs(startDate).add(
+													1,
+													'hour'
 												);
-											}
-										}}>
-										<i className='iconavbar bi bi-check2-square'></i>
-										Crear Evento
-									</button>
-									<Link to='/gestionagenda' className='btncanccarga'>
-										<i className='iconavbar bi bi-x-circle-fill'></i>
-										Cancelar
-									</Link>
-								</div>
-							</>
-						) : (
-							<>
-								<button onClick={(e) => handleGoogle(e)}>
-									Ingresa con Google
+												setEnd((prevEnd) => {
+													return newEndDate.toDate();
+												});
+											}}
+											minutesStep={30}
+											views={[
+												'year',
+												'month',
+												'day',
+												'hours',
+												'minutes',
+											]}
+											slotProps={{
+												textField: ({ position }) => ({
+													color: 'success',
+													focused: true,
+													size: 'medium',
+												}),
+											}}
+											disableHighlightToday={false}
+										/>
+									</DemoItem>
+								</DemoContainer>
+							</LocalizationProvider>
+
+							<p className='labelcarga'> Tipo de evento</p>
+							<select
+								className='inputcarga w-50'
+								aria-label='Default select'
+								onChange={(e) => setEventName(e.target.value)}>
+								<option>Selecciona..</option>
+								<option value='AUDIENCIA'>AUDIENCIA</option>
+								<option value='VENCIMIENTO'>VENCIMIENTO</option>
+							</select>
+							<p className='labelcarga'>Descripcion</p>
+							<textarea
+								rows='5'
+								cols='33'
+								onChange={(e) => setEventDescription(e.target.value)}
+							/>
+
+							<div className='botonescarga'>
+								<button
+									className='botoneditcarga'
+									onClick={async () => {
+										try {
+											await Promise.all([
+												handleCrearVenc(),
+												createEvent(),
+											]);
+										} catch (error) {
+											console.error('Error al crear evento:', error);
+										}
+									}}>
+									<i className='iconavbar bi bi-check2-square'></i>
+									Crear Evento
 								</button>
 								<Link to='/gestionagenda' className='btncanccarga'>
 									<i className='iconavbar bi bi-x-circle-fill'></i>
 									Cancelar
 								</Link>
-							</>
-						)}
-					</div>
-				</Modal.Body>
-			</Modal>
-		);
-	} catch (error) {
-		console.error('Error durante el renderizado:', error);
-		return null;
-	}
+							</div>
+						</>
+					) : (
+						<>
+							<button
+								className='botongoogle'
+								onClick={(e) => handleGoogle(e)}>
+								<i className='iconavbar bi bi-google'></i>
+								Ingresa con Google
+							</button>
+							<Link to='/gestionagenda' className='btncanccarga'>
+								<i className='iconavbar bi bi-x-circle-fill'></i>
+								Cancelar
+							</Link>
+						</>
+					)}
+				</div>
+			</Modal.Body>
+		</Modal>
+	);
 };

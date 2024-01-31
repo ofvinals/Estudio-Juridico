@@ -306,7 +306,7 @@ export const GestionCaja = () => {
 			<div className='container-lg bg-dark'>
 				<div className='main px-3 bodygestion'>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {displayName}
+						Bienvenido, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Gestion de Caja del Estudio

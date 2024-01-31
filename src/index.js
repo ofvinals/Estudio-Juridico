@@ -1,6 +1,4 @@
 import express from 'express';
-import dotenv from 'dotenv';
-dotenv.config();
 import morgan from 'morgan';
 import authRoutes from '../src/routes/auth.routes.js';
 import googleRoutes from '../src/routes/google.routes.js';
@@ -22,16 +20,6 @@ app.use(
 		optionsSuccessStatus: 200,
 	})
 );
-
-app.use((req, res, next) => {
-	// Configuración de COOP: same-origin y same-origin-allow-popups
-	res.setHeader('Cross-Origin-Opener-Policy: restrict-properties');
-
-	// Configuración de COEP: same-origin
-	res.setHeader('Cross-Origin-Embedder-Policy: require-corp');
-
-	next();
-});
 
 app.use(cookieParser());
 

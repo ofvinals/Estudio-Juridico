@@ -1,4 +1,4 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
@@ -57,10 +57,12 @@ export const Admin = () => {
 						<i className='iconavbar bi bi-coin'></i>
 						Gestionar Gastos
 					</Link>
-					<Link className='botonadm' to='/gestioncaja'>
-						<i className='iconavbar bi bi-cash-coin'></i>
-						Gestion de Caja
-					</Link>
+					{!user || user.user === 'ofvinals@gmail.com' ? (
+						<Link className='botonadm' to='/gestioncaja'>
+							<i className='iconavbar bi bi-cash-coin'></i>
+							Gestion de Caja
+						</Link>
+					) : null}
 
 					<Link
 						className='botonlogoutadmin'

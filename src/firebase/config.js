@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getAuth, sendPasswordResetEmail, setPersistence,  browserSessionPersistence } from 'firebase/auth';
+import { getAuth, setPersistence,  browserSessionPersistence } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { v4 } from 'uuid';
 
@@ -21,11 +21,7 @@ export const storage = getStorage(app);
 export const auth = getAuth(app);
 setPersistence(auth, browserSessionPersistence)
 	.then(() => {
-		// Existing and future Auth states are now persisted in the current
-		// session only. Closing the window would clear any existing state even
-		// if a user forgets to sign out.
-		// ...
-		// New sign-in will be persisted with session persistence.
+
 		return signInWithEmailAndPassword(auth, email, password);
 	})
 	.catch((error) => {

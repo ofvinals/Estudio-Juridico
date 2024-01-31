@@ -30,24 +30,25 @@ export const Login = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			if (user.user === 'ofvinals@gmail.com') {
+			if (user === 'ofvinals@gmail.com') {
 				navigate('/admin');
 			} else {
 				navigate('/adminusu');
 			}
 		}
-	}, [isAuthenticated, user.email, navigate]);
+	}, []);
 
 	return (
 		<section className='login container-lg'>
 			<Form id='loginForm' className='logform bg-dark' onSubmit={onSubmit}>
 				<h2 className='titulolog'>Ingreso a Mi cuenta</h2>
 				<Form.Group className='d-flex flex-column' controlId='inputemail'>
-					<Form.Label className='labellog'>Email</Form.Label>
+					<Form.Label className='labellog' id='email'>Email</Form.Label>
 					<input
 						className='inputlog'
 						type='email'
 						id='email'
+						name='email'
 						{...register('email', {
 							required: {
 								value: true,

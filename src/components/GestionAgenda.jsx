@@ -120,6 +120,14 @@ export const GestionAgenda = () => {
 			size: 'medium',
 			variant: 'outlined',
 		},
+		initialState: {
+			sorting: [
+				{
+					id: 'turno', 
+					desc: false,
+				},
+			],
+		},
 		muiPaginationProps: {
 			color: 'primary',
 			rowsPerPageOptions: [5, 10, 20, 30],
@@ -182,11 +190,12 @@ export const GestionAgenda = () => {
 			if (result.isConfirmed) {
 				Swal.showLoading();
 				await deleteTurno(id);
-				Swal.fire(
-					'Eliminado',
-					'El turno fue eliminado con éxito',
-					'success'
-				);
+				Swal.fire({
+					icon: 'success',
+					title: 'El turno fue eliminado!',
+					showConfirmButton: false,
+					timer: 2500,
+				});
 				setTimeout(() => {
 					Swal.close();
 					setData((prevData) =>
@@ -219,7 +228,7 @@ export const GestionAgenda = () => {
 			<div className='bodygestion container-lg bg-dark'>
 				<div className='main px-3 '>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {displayName}
+						Bienvenido, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Agenda

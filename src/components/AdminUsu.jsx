@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 import '../css/Admin.css';
 import { db } from '../firebase/config';
-import { doc, getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 
 export const AdminUsu = () => {
 	const user = useAuth();
@@ -14,7 +14,6 @@ export const AdminUsu = () => {
 	const navigate = useNavigate();
 	const [userLog, setUserLog] = useState([]);
 
-	// Trae usuarios de getUsers y guarda en data y users
 	useEffect(() => {
 		async function loadUser() {
 			try {
@@ -24,8 +23,8 @@ export const AdminUsu = () => {
 				const userDoc = snapshot.docs.find(
 					(doc) => doc.data().email === userEmail
 				);
-				console.log
 				const userId = userDoc.id;
+		
 				setUserLog(userId);
 			} catch (error) {
 				console.error('Error al obtener usuarios:', error);

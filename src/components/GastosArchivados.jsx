@@ -201,7 +201,7 @@ export const GastosArchivados = () => {
 			<div className='container-lg bg-dark'>
 				<div className='main bodygestion'>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {displayName}
+						Bienvenido, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Gastos Archivados

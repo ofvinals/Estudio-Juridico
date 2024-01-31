@@ -17,16 +17,11 @@ export const EditarUsu = () => {
 		register,
 		handleSubmit,
 		setValue,
-		watch,
 		formState: { errors },
 	} = useForm();
-	const password = watch('contraseña', ''); // Obtener el valor del campo contraseña
 	const navigate = useNavigate();
 	const [showPassword, setShowPassword] = useState(false);
-	const [newPassword, setNewPassword] = useState('');
-	const [newMail, setNewMail] = useState('');
 	const [showModal, setShowModal] = useState(false);
-	const { updatePass, updateMail } = useAuth();
 
 	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
@@ -57,8 +52,7 @@ export const EditarUsu = () => {
 				setValue('dni', userData.dni);
 				setValue('domicilio', userData.domicilio);
 				setValue('celular', userData.celular);
-				setNewPassword(userData.contraseña);
-				setNewMail(userData.email);
+				setValue('password', userData.password);
 				setTimeout(() => {
 					Swal.close();
 					handleOpenModal();
@@ -75,20 +69,7 @@ export const EditarUsu = () => {
 		try {
 			Swal.showLoading();
 			const usuarioRef = doc(db, 'usuarios', id);
-			
-			// if (
-				
-			// 	data.contraseñaAnterior !== userData.contraseña
-			// ) {
-			// 	setError('contraseñaAnterior', {
-			// 		type: 'manual',
-			// 		message: 'La contraseña anterior no es correcta',
-			// 	});
-			// 	Swal.close();
-			// 	return;
-			// }
 			await updateDoc(usuarioRef, data);
-			await updateMail(newMail);
 			// if (data.contraseña) {
 			// 	await updatePass(data.contraseña);
 			// }
@@ -216,51 +197,20 @@ export const EditarUsu = () => {
 										})}
 									/>
 								</Form.Group>
-								{/* <Form.Group className='mb-3' id='emailEditarUsuario'>
-									<Form.Label className='labeledit'>Email</Form.Label>
-									<Form.Control
-										className='inputedit'
-										type='email'
-										id='email'
-										{...register('email', {
-											required: {
-												value: true,
-												message: 'El email es requerido',
-											},
-											pattern: {
-												value: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/,
-												message: 'Email no válido',
-											},
-										})}
-									/>
-								</Form.Group> */}
-								{/* <Form.Group className='mb-3' id='passEditarUsuario'>
-									<Form.Label className='labeledit'>
-										Contraseña Anterior
-									</Form.Label>
-									<div className='d-flex flex-row justify-content-center'>
-										<Form.Control
-											className='inputedit'
-											type={showPassword ? 'text' : 'password'}
-											{...register('contraseña', {
-												minLength: {
-													value: 7,
-													message:
-														'La contraseña debe ser mayor a 7 caracteres',
-												},
-											})}
-										/>
-									</div>
-								</Form.Group>
+
 								<Form.Group className='mb-3' id='passEditarUsuario'>
 									<Form.Label className='labeledit'>
-										Nueva Contraseña
+										Contraseña 
 									</Form.Label>
 									<div className='d-flex flex-row justify-content-center'>
 										<Form.Control
 											className='inputedit'
 											type={showPassword ? 'text' : 'password'}
-											{...register('contraseña', {
+											{...register('password', {
+												required: {
+													value: true,
+													message: 'La contraseña es requerida.'
+												},
 												minLength: {
 													value: 7,
 													message:
@@ -279,7 +229,8 @@ export const EditarUsu = () => {
 												}`}></i>
 										</button>
 									</div>
-								</Form.Group> */}
+								</Form.Group>
+
 								<Form.Group className='botonesedit'>
 									<button className='btnconfmodal' type='submit'>
 										<i className='iconavbar bi bi-check2-square'></i>

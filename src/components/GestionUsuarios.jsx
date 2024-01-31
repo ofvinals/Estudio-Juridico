@@ -204,7 +204,7 @@ export const GestionUsuarios = () => {
 			<div className='container-lg bodygestion bg-dark'>
 				<div className='main'>
 					<h4 className='titlegestion'>
-						Bienvenido de nuevo, {displayName}
+						Bienvenido, {displayName}
 					</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Usuarios
