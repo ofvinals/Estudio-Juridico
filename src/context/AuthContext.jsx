@@ -247,15 +247,19 @@ export const AuthProvider = ({ children }) => {
 					setIsAuthenticated(false);
 				} else {
 					setIsAuthenticated(true);
-
+					setIsLoading(true)
 					// Obtén datos del almacenamiento local de forma síncrona
 					const storedUser = await localStorage.getItem('user');
+					console.log(storedUser)
 					const storedAccessToken = await localStorage.getItem(
 						'accessToken'
 					);
+					console.log(storedAccessToken)
+
 					const storedDisplayName = await localStorage.getItem(
 						'displayName'
 					);
+					console.log(storedDisplayName)
 
 					// Actualiza el estado inmediatamente con los datos del almacenamiento local
 					setUser(storedUser);
@@ -264,9 +268,7 @@ export const AuthProvider = ({ children }) => {
 				}
 			} catch (error) {
 				console.error('Error durante el proceso de autenticación', error);
-			} finally {
-				setIsLoading(false);
-			}
+			} 
 		});
 
 		return () => unsubscribe();

@@ -5,7 +5,7 @@ const PrivateRoute = () => {
 	const {user, loading, isAuthenticated } = useAuth();
 
 	
-	if (!loading && !isAuthenticated) return <Navigate to='/login' replace />;
+	if (!loading && !isAuthenticated) return <Navigate to='/login' />;
 
 	return <Outlet />;
 };
