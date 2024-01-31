@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { getAuth, setPersistence,  browserSessionPersistence } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 import { getFirestore } from 'firebase/firestore';
 import { v4 } from 'uuid';
 
@@ -19,16 +19,16 @@ export const app = initializeApp(firebaseConfig);
 export const storage = getStorage(app);
 
 export const auth = getAuth(app);
-setPersistence(auth, browserSessionPersistence)
-	.then(() => {
+// setPersistence(auth, browserSessionPersistence)
+// 	.then(() => {
 
-		return signInWithEmailAndPassword(auth, email, password);
-	})
-	.catch((error) => {
-		// Handle Errors here.
-		const errorCode = error.code;
-		const errorMessage = error.message;
-	});
+// 		return signInWithEmailAndPassword(auth, email, password);
+// 	})
+// 	.catch((error) => {
+// 		// Handle Errors here.
+// 		const errorCode = error.code;
+// 		const errorMessage = error.message;
+// 	});
 
 export const db = getFirestore(app);
 

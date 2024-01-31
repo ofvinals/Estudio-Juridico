@@ -29,7 +29,7 @@ export const useAuth = () => {
 };
 
 export const AuthProvider = ({ children }) => {
-	const [user, setUser] = useState('');
+	const [user, setUser] = useState(null);
 	const [displayName, setDisplayName] = useState('');
 	const [accessToken, setAccessToken] = useState('');
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,9 +52,9 @@ export const AuthProvider = ({ children }) => {
 				displayName: displayNameValue,
 				phoneNumber: phoneNumberValue,
 			});
-						setIsAuthenticated(true);
+			setIsAuthenticated(true);
 			setUser(profile.email);
-			setDisplayName(profile.displayName)
+			setDisplayName(profile.displayName);
 			localStorage.setItem('user', profile.email);
 			localStorage.setItem('accessToken', '');
 			localStorage.setItem('displayName', profile.displayName);
@@ -88,7 +88,7 @@ export const AuthProvider = ({ children }) => {
 			await signInWithEmailAndPassword(auth, data.email, data.password);
 
 			const currentUser = auth.currentUser;
-			await new Promise(resolve => setTimeout(resolve, 100));
+			await new Promise((resolve) => setTimeout(resolve, 100));
 
 			const profiles = currentUser.providerData.map((profile) => {
 				return {
@@ -100,11 +100,11 @@ export const AuthProvider = ({ children }) => {
 
 			setIsAuthenticated(true);
 			setUser(profile.email);
-			setDisplayName(profile.displayName)
+			setDisplayName(profile.displayName);
 			localStorage.setItem('user', profile.email);
 			localStorage.setItem('accessToken', '');
 			localStorage.setItem('displayName', profile.displayName);
-			console.log()
+			console.log();
 			Swal.fire({
 				icon: 'success',
 				title: 'Inicio de sesión exitoso!',
@@ -112,7 +112,10 @@ export const AuthProvider = ({ children }) => {
 				timer: 1500,
 			});
 
-			if (user === 'ofvinals@gmail.com' || user === 'estudioposseyasociados@gmail.com') {
+			if (
+				user === 'ofvinals@gmail.com' ||
+				user === 'estudioposseyasociados@gmail.com'
+			) {
 				navigate('/admin', { replace: true });
 			} else {
 				navigate('/adminusu', { replace: true });
@@ -234,26 +237,40 @@ export const AuthProvider = ({ children }) => {
 
 	// Función que se ejecutará al cambiar el estado de autenticación
 	useEffect(() => {
-		const unsubscribe = onAuthStateChanged(auth, (user) => {
-			if (!user) {
-				console.log('No hay usuario autenticado en Firebase');
-				setUser(null);
-				setIsAuthenticated(false);
-			} else {
-				setIsAuthenticated(true);
-				setIsLoading(true);
-				const storedUser = localStorage.getItem('user');
-				const storedAccessToken = localStorage.getItem('accessToken');
-				const storedDisplayName = localStorage.getItem('displayName');
-				setUser(storedUser);
-				setAccessToken(storedAccessToken);
-				setDisplayName(storedDisplayName);
+		const unsubscribe = onAuthStateChanged(auth, async (user) => {
+			setIsLoading(true);
+
+			try {
+				if (!user) {
+					console.log('No hay usuario autenticado en Firebase');
+					setUser(null);
+					setIsAuthenticated(false);
+				} else {
+					setIsAuthenticated(true);
+
+					// Obtén datos del almacenamiento local de forma síncrona
+					const storedUser = await localStorage.getItem('user');
+					const storedAccessToken = await localStorage.getItem(
+						'accessToken'
+					);
+					const storedDisplayName = await localStorage.getItem(
+						'displayName'
+					);
+
+					// Actualiza el estado inmediatamente con los datos del almacenamiento local
+					setUser(storedUser);
+					setAccessToken(storedAccessToken);
+					setDisplayName(storedDisplayName);
+				}
+			} catch (error) {
+				console.error('Error durante el proceso de autenticación', error);
+			} finally {
+				setIsLoading(false);
 			}
-			setIsLoading(false);
 		});
+
 		return () => unsubscribe();
 	}, []);
-
 
 	return (
 		<AuthContext.Provider

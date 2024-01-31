@@ -7,7 +7,6 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { MobileDateTimePicker } from '@mui/x-date-pickers/MobileDateTimePicker';
 import dayjs from 'dayjs';
 dayjs.locale('es');
-import '../css/googlecalendar.css';
 import { Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import { addDoc, collection } from 'firebase/firestore';

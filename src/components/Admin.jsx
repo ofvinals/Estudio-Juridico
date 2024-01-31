@@ -11,16 +11,6 @@ export const Admin = () => {
 	const { logout } = useAuth();
 	const navigate = useNavigate();
 
-	useEffect(() => {
-		if (
-			!user ||
-			(user.user !== 'ofvinals@gmail.com' &&
-				user.user !== 'estudioposseyasociados@gmail.com')
-		) {
-			navigate('/adminusu');
-		}
-	}, [user, navigate]);
-
 	const handleLogOut = () => {
 		logout();
 		Swal.fire({
