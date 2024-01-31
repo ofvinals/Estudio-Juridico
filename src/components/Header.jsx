@@ -109,7 +109,7 @@ export const Header = () => {
 									<i className='iconavbar bi bi-person-fill-check'></i>
 									Panel de Usuarios
 								</Link>
-								{!user || user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
+								{!user || user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
 									<Link
 										className='btnnav'
 										to='/admin'

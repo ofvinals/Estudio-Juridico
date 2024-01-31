@@ -15,7 +15,7 @@ export const Admin = () => {
 		if (
 			!user ||
 			(user.user !== 'ofvinals@gmail.com' &&
-				user.user !== 'admin@estudio.com')
+				user.user !== 'estudioposseyasociados@gmail.com')
 		) {
 			navigate('/adminusu');
 		}

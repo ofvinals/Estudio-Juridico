@@ -68,7 +68,7 @@ export const GestionExpedientes = () => {
 				});
 
 				const filteredExptes =
-					user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com'
+					user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com'
 						? fetchedExptes
 						: fetchedExptes.filter(
 								(expte) => expte.cliente === user.user
@@ -123,7 +123,7 @@ export const GestionExpedientes = () => {
 					}}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -196,7 +196,7 @@ export const GestionExpedientes = () => {
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' && (
+						{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' && (
 							<Link
 								type='button'
 								className='btnpanelgestion'
@@ -215,7 +215,7 @@ export const GestionExpedientes = () => {
 						)}
 						<Link
 							to={
-								user.user === 'ofvinals@gmail.com'|| user.user === 'admin@estudio.com'
+								user.user === 'ofvinals@gmail.com'|| user.user === 'estudioposseyasociados@gmail.com'
 									? '/Admin'
 									: '/AdminUsu'
 							}

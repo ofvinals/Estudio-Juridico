@@ -120,9 +120,9 @@ export const GestionUsuarios = () => {
 					onClick={() => verUsuario(row.original.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? (
+				{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
-						hidden={row.original.email === 'ofvinals@gmail.com' || row.original.email === 'admin@estudio.com'}
+						hidden={row.original.email === 'ofvinals@gmail.com' || row.original.email === 'estudioposseyasociados@gmail.com'}
 						color='success'
 						onClick={() => {
 							navigate(`/editarusu/${row.original.id}`);
@@ -132,7 +132,7 @@ export const GestionUsuarios = () => {
 				):null}
 				{user.user === 'ofvinals@gmail.com' && (
 					<IconButton
-						hidden={row.original.email === 'ofvinals@gmail.com' || row.original.email === 'admin@estudio.com'}
+						hidden={row.original.email === 'ofvinals@gmail.com' || row.original.email === 'estudioposseyasociados@gmail.com'}
 						color='error'
 						onClick={() => borrarUsuario(row.original.id)}>
 						<DeleteIcon />
@@ -220,7 +220,7 @@ export const GestionUsuarios = () => {
 					</Link>
 					<Link
 						to={
-							user.user === 'ofvinals@gmail.com' || user.user === 'admin@estudio.com' ? '/Admin' : '/AdminUsu'
+							user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? '/Admin' : '/AdminUsu'
 						}
 						className='btnpanelgestion'>
 						<i className='iconavbar bi bi-box-arrow-left'></i>

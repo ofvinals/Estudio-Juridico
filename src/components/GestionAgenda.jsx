@@ -147,7 +147,7 @@ export const GestionAgenda = () => {
 					<VisibilityIcon />
 				</IconButton>
 				{user.user === 'ofvinals@gmail.com' ||
-				user.user === 'admin@estudio.com' ? (
+				user.user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {

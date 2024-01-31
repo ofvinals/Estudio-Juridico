@@ -112,7 +112,7 @@ export const AuthProvider = ({ children }) => {
 				timer: 1500,
 			});
 
-			if (user === 'ofvinals@gmail.com' || user === 'admin@estudio.com') {
+			if (user === 'ofvinals@gmail.com' || user === 'estudioposseyasociados@gmail.com') {
 				navigate('/admin', { replace: true });
 			} else {
 				navigate('/adminusu', { replace: true });
