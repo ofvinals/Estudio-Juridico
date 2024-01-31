@@ -248,20 +248,14 @@ export const AuthProvider = ({ children }) => {
 				} else {
 					setIsAuthenticated(true);
 					setIsLoading(true)
-					// Obtén datos del almacenamiento local de forma síncrona
 					const storedUser = await localStorage.getItem('user');
-					console.log(storedUser)
 					const storedAccessToken = await localStorage.getItem(
 						'accessToken'
 					);
-					console.log(storedAccessToken)
-
 					const storedDisplayName = await localStorage.getItem(
 						'displayName'
 					);
-					console.log(storedDisplayName)
 
-					// Actualiza el estado inmediatamente con los datos del almacenamiento local
 					setUser(storedUser);
 					setAccessToken(storedAccessToken);
 					setDisplayName(storedDisplayName);
