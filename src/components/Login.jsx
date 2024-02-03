@@ -16,17 +16,11 @@ export const Login = () => {
 	} = useForm();
 	const [showPassword, setShowPassword] = useState(false);
 	const { currentUser, isAuthenticated, login, loginWithGoogle } = useAuth();
-	const user = currentUser ? currentUser.email : null;
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
 			await login(data);
-			Swal.fire({
-				icon: 'success',
-				title: 'Inicio de sesión exitoso!',
-				showConfirmButton: false,
-				timer: 1500,
-			});
+			const user = currentUser ? currentUser.email : null;
 
 			if (
 				user === 'ofvinals@gmail.com' ||
@@ -36,6 +30,12 @@ export const Login = () => {
 			} else {
 				navigate('/adminusu', { replace: true });
 			}
+			Swal.fire({
+				icon: 'success',
+				title: 'Inicio de sesión exitoso!',
+				showConfirmButton: false,
+				timer: 2000,
+			});
 		} catch (error) {
 			console.error('Error en el inicio de sesión:', error);
 			Swal.fire({
@@ -83,13 +83,16 @@ export const Login = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
+			// El estado de carga ya no es necesario aquí, ya que se maneja con 'isLoading'
+			const user = currentUser?.email;
+
 			if (user === 'ofvinals@gmail.com') {
 				navigate('/admin');
 			} else {
 				navigate('/adminusu');
 			}
 		}
-	}, []);
+	}, [isAuthenticated, currentUser, navigate]);
 
 	return (
 		<section className='login container-lg'>

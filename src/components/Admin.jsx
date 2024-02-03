@@ -6,21 +6,21 @@ import { Notas } from './Notas';
 import Swal from 'sweetalert2';
 
 export const Admin = () => {
-	const { currentUser, logout } = useAuth();
+	const { currentUser, logout } = useAuth({});
 	const navigate = useNavigate();
 	const user = currentUser.email
 	const displayName = currentUser.displayName
-	console.log(currentUser.email)
+	console.log(user)
 	
-	useEffect(() => {
-		if (
-			!user ||
-			(user !== 'ofvinals@gmail.com' &&
-				user !== 'estudioposseyasociados@gmail.com')
-		) {
-			navigate('/adminusu');
-		}
-	}, []);
+	// useEffect(() => {
+	// 	if (
+	// 		!user ||
+	// 		(user !== 'ofvinals@gmail.com' ||
+	// 			user !== 'estudioposseyasociados@gmail.com')
+	// 	) {
+	// 		navigate('/adminusu');
+	// 	}
+	// }, []);
 
 	const handleLogOut = async () => {
 		await logout();

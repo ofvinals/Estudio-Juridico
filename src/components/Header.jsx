@@ -6,6 +6,7 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import '../css/Header.css';
+import Swal from 'sweetalert2';
 
 export const Header = () => {
 	const [estadoLogin, setEstadoLogin] = useState('');
