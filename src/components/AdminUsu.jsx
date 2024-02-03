@@ -1,46 +1,44 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Swal from 'sweetalert2';
 import '../css/Admin.css';
 import { db } from '../firebase/config';
 import { getDocs, collection } from 'firebase/firestore';
+import Swal from 'sweetalert2';
 
 export const AdminUsu = () => {
-	const user = useAuth();
-	const { displayName } = useAuth();
-	const { id } = useParams();
-	const { logout } = useAuth();
+	const { currentUser, logout } = useAuth({});
+	const [userId, setUserId] = useState('');
 	const navigate = useNavigate();
-	const [userLog, setUserLog] = useState([]);
+	const user = currentUser.email;
+	const displayName = currentUser.displayName;
+	console.log(currentUser.email);
 
 	useEffect(() => {
-		async function loadUser() {
+		const fetchUsuario = async () => {
 			try {
-				const userEmail = user.user;
 				const usuariosRef = collection(db, 'usuarios');
 				const snapshot = await getDocs(usuariosRef);
 				const userDoc = snapshot.docs.find(
-					(doc) => doc.data().email === userEmail
+					(doc) => doc.data().email === user
 				);
 				const userId = userDoc.id;
-		
-				setUserLog(userId);
+				setUserId(userId);
 			} catch (error) {
-				console.error('Error al obtener usuarios:', error);
+				console.error('Error al obtener usuario:', error);
 			}
-		}
-		loadUser();
+		};
+		fetchUsuario();
 	}, []);
+	console.log(userId)
 
-	const handleLogOut = () => {
-		logout();
-		console.log('Deslogueado');
+	const handleLogOut = async () => {
+		await logout();
 		Swal.fire({
 			icon: 'success',
 			title: 'Su sesion fue cerrada!',
 			showConfirmButton: false,
-			timer: 2500,
+			timer: 1500,
 		});
 		navigate('/home');
 	};
@@ -49,7 +47,7 @@ export const AdminUsu = () => {
 		<>
 			<div className='bodycontact container-lg'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, {displayName}</h4>
+					<h4 className='titlead'>Bienvenido de nuevo, {displayName} </h4>
 					<p className='subtitleadusu'>Panel de Usuario</p>
 				</div>
 
@@ -75,10 +73,15 @@ export const AdminUsu = () => {
 							Consultas Online
 						</a>
 					</button>
-					<Link className='botonadm' to={`/editarusu/${userLog}`}>
+					<button
+						className='botonadm'
+						type='button'
+						onClick={() => {
+							navigate(`/editarusu/${userId}`);
+						}}>
 						<i className='iconavbar bi bi-person-fill-gear'></i>
 						Modificar Datos
-					</Link>
+					</button>
 					<Link className='botonadm' to='/pagos'>
 						<i className='iconavbar bi bi-cash-coin'></i>
 						Ver Medios de Pago

@@ -1,28 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../context/AuthContext';
 import { uploadFile } from '../firebase/config';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const CargaGastos = () => {
-	const user = useAuth();
-	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm();
 	const [exptes, setExptes] = useState([]);
 	const [users, setUsers] = useState([]);
-	const [gastos, setGastos] = useState([]);
 	const [showModal, setShowModal] = useState(true);
 	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
-
-	// Función para abrir el modal
-	const handleOpenModal = () => setShowModal(true);
 
 	// Función para cerrar el modal
 	const handleCloseModal = () => {
@@ -31,23 +24,7 @@ export const CargaGastos = () => {
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const gastosRef = collection(db, 'gastos');
-				const fetchedGastos = await getDocs(gastosRef);
-				const gastosArray = Object.values(
-					fetchedGastos.docs.map((doc) => doc.data())
-				);
-				setGastos(gastosArray);
-			} catch (error) {
-				console.error('Error al obtener gastos:', error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	useEffect(() => {
-		const fetchData = async () => {
+		const fetchExptes = async () => {
 			try {
 				const exptesRef = collection(db, 'expedientes');
 				const fetchedExptes = await getDocs(exptesRef);
@@ -59,11 +36,11 @@ export const CargaGastos = () => {
 				console.error('Error al obtener expedientes:', error);
 			}
 		};
-		fetchData();
+		fetchExptes();
 	}, []);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchUsuarios = async () => {
 			try {
 				const usuariosRef = collection(db, 'usuarios');
 				const fetchedUsers = await getDocs(usuariosRef);
@@ -75,8 +52,7 @@ export const CargaGastos = () => {
 				console.error('Error al obtener usuarios:', error);
 			}
 		};
-
-		fetchData();
+		fetchUsuarios();
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
@@ -103,14 +79,17 @@ export const CargaGastos = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-				navigate('/gestiongastos');
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleCloseModal();
+			navigate('/gestiongastos');
 		} catch (error) {
 			console.error(error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al registrar el gasto. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

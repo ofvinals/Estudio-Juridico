@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -18,7 +17,6 @@ import {
 import { DateTimePicker } from '@mui/x-date-pickers';
 
 export const EditarExptes = ({}) => {
-	const user = useAuth();
 	const { id } = useParams();
 	const [users, setUsers] = useState([]);
 	const [showModal, setShowModal] = useState(false);
@@ -62,7 +60,7 @@ export const EditarExptes = ({}) => {
 	}, []);
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchUsuarios = async () => {
 			try {
 				const usuariosRef = collection(db, 'usuarios');
 				const fetchedUsers = await getDocs(usuariosRef);
@@ -75,7 +73,7 @@ export const EditarExptes = ({}) => {
 			}
 		};
 
-		fetchData();
+		fetchUsuarios();
 	}, []);
 
 	useEffect(() => {
@@ -103,14 +101,17 @@ export const EditarExptes = ({}) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				navigate('/gestionexpedientes');
-				handleCloseModal();
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			navigate('/gestionexpedientes');
+			handleCloseModal();
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al editar el movimiento. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 
@@ -137,7 +138,7 @@ export const EditarExptes = ({}) => {
 									))}
 								</select>
 							</Form.Group>
-<DateTimePicker/>
+							<DateTimePicker />
 							<Form.Group className='groupedit' id='inputname'>
 								<Form.Label className='labeledit'>
 									Nro Expediente

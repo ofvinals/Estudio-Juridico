@@ -5,13 +5,11 @@ import Col from 'react-bootstrap/Col';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Container from 'react-bootstrap/Container';
 import Swal from 'sweetalert2';
-
 import '../css/Especialidad.css';
 
 export const Especialidad = () => {
 	const handleClickCiv = (e) => {
 		Swal.fire({
-			
 			title: 'Derecho Civil',
 			text: 'lorem',
 			confirmButtonColor: '#8f8e8b',

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import '../css/Carga.css';
 import { Button, Modal } from 'react-bootstrap';
@@ -11,15 +10,10 @@ import { db } from '../firebase/config';
 import { format } from 'date-fns';
 
 export const CargaMov = () => {
-	const user = useAuth();
-	const { id } = useParams();
 	const { register, handleSubmit } = useForm();
 	const [expte, setExpte] = useState([]);
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(true);
-
-	// Función para abrir el modal
-	const handleOpenModal = () => setShowModal(true);
 
 	// Función para cerrar el modal
 	const handleCloseModal = (movId) => {
@@ -38,7 +32,6 @@ export const CargaMov = () => {
 				console.error('Error al obtener expedientes', error);
 			}
 		};
-
 		fetchExpte();
 	}, []);
 
@@ -47,17 +40,14 @@ export const CargaMov = () => {
 			Swal.showLoading();
 			const id = window.location.pathname.split('/').pop();
 			let fileDownloadUrl = null;
-
 			const formattedFecha = format(new Date(values.fecha), 'dd/MM/yyyy', {
 				useAdditionalDayOfYearTokens: true,
 				useAdditionalWeekYearTokens: true,
 			});
-
 			if (values.file && values.file[0]) {
 				const file = values.file[0];
 				fileDownloadUrl = await uploadFile(file);
 			}
-
 			const movData = {
 				id: new Date().getTime(),
 				fecha: formattedFecha,
@@ -71,12 +61,9 @@ export const CargaMov = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-				navigate(`/gestionmovimientos/${id}`);
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleCloseModal();
+			navigate(`/gestionmovimientos/${id}`);
 		} catch (error) {
 			console.error(error);
 		}

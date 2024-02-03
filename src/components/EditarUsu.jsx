@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
@@ -23,22 +22,17 @@ export const EditarUsu = () => {
 	const [showPassword, setShowPassword] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 
-	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
-
 	const toggleShowPassword = () => setShowPassword(!showPassword);
-
-	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		setShowModal(false);
-		if (user.user === 'ofvinals@gmail.com') {
+		if (user === 'ofvinals@gmail.com') {
 			navigate('/gestionusuarios');
 		} else {
 			navigate('/adminusu');
 		}
 	};
 
-	// Función para cargar los datos del usuario al abrir la página
 	useEffect(() => {
 		async function loadUser() {
 			try {
@@ -53,11 +47,8 @@ export const EditarUsu = () => {
 				setValue('domicilio', userData.domicilio);
 				setValue('celular', userData.celular);
 				setValue('password', userData.password);
-				setTimeout(() => {
-					Swal.close();
-					handleOpenModal();
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el usuario', error);
 			}
@@ -79,13 +70,16 @@ export const EditarUsu = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
 				Swal.close();
 				handleCloseModal();
-			}, 500);
-			return () => clearTimeout(timer);
 		} catch (error) {
 			console.error('Error al eliminar el usuario:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al editar el usuario. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 
@@ -200,7 +194,7 @@ export const EditarUsu = () => {
 
 								<Form.Group className='mb-3' id='passEditarUsuario'>
 									<Form.Label className='labeledit'>
-										Contraseña 
+										Contraseña
 									</Form.Label>
 									<div className='d-flex flex-row justify-content-center'>
 										<Form.Control
@@ -209,7 +203,7 @@ export const EditarUsu = () => {
 											{...register('password', {
 												required: {
 													value: true,
-													message: 'La contraseña es requerida.'
+													message: 'La contraseña es requerida.',
 												},
 												minLength: {
 													value: 7,

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useMemo } from 'react';
 import {
 	MaterialReactTable,
@@ -21,11 +21,36 @@ import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const GestionExpedientes = () => {
-	const { id } = useParams();
-	const {displayName} = useAuth();
-	const user = useAuth();
+	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
+	const user = currentUser.email;
+	const displayName = currentUser.displayName;
+
+	useEffect(() => {
+		const fetchExptes = async () => {
+			try {
+				Swal.showLoading();
+				const exptesRef = collection(db, 'expedientes');
+				const snapshot = await getDocs(exptesRef);
+				const fetchedExptes = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
+				const filteredExptes =
+					user === 'ofvinals@gmail.com' ||
+					user === 'estudioposseyasociados@gmail.com'
+						? fetchedExptes
+						: fetchedExptes.filter((expte) => expte.cliente === user);
+				Swal.close();
+				setData(filteredExptes);
+			} catch (error) {
+				console.error('Error al obtener expedientes', error);
+			}
+		};
+
+		fetchExptes();
+	}, []);
+
 	const columns = useMemo(
 		() => [
 			{
@@ -56,37 +81,7 @@ export const GestionExpedientes = () => {
 		[]
 	);
 
-	// Trae exptes y guarda en data y exptes
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				Swal.showLoading();
-				const exptesRef = collection(db, 'expedientes');
-				const snapshot = await getDocs(exptesRef);
-				const fetchedExptes = snapshot.docs.map((doc) => {
-					return { ...doc.data(), id: doc.id };
-				});
-
-				const filteredExptes =
-					user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com'
-						? fetchedExptes
-						: fetchedExptes.filter(
-								(expte) => expte.cliente === user.user
-						  );
-				setTimeout(() => {
-					Swal.close();
-					setData(filteredExptes);
-				}, 500);
-				return () => clearTimeout(timer)
-			} catch (error) {
-				console.error('Error al obtener expedientes', error);
-			}
-		};
-
-		fetchData();
-	}, []);
-
-		// Funcion para cargar tabla 
+	// Funcion para cargar tabla
 	const table = useMaterialReactTable({
 		columns,
 		data,
@@ -123,7 +118,8 @@ export const GestionExpedientes = () => {
 					}}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
+				{user === 'ofvinals@gmail.com' ||
+				user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -131,8 +127,8 @@ export const GestionExpedientes = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				):null }
-				{user.user === 'ofvinals@gmail.com' && (
+				) : null}
+				{user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
 						onClick={() => borrarExpte(row.original.id)}>
@@ -172,11 +168,8 @@ export const GestionExpedientes = () => {
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				setTimeout(() => {
-					Swal.close();
-					setData((prevData) => prevData.filter((expte) => expte.id !== id));
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				setData((prevData) => prevData.filter((expte) => expte.id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el expediente:', error);
@@ -187,27 +180,26 @@ export const GestionExpedientes = () => {
 		<>
 			<div className='container-lg bg-dark'>
 				<div className='main bodygestion '>
-					<h4 className='titlegestion'>
-						Bienvenido, {displayName}
-					</h4>
+					<h4 className='titlegestion'>Bienvenido, {displayName}</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Expedientes
 					</p>
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' && (
-							<Link
-								type='button'
-								className='btnpanelgestion'
-								to='/CargaExptes'
-								data-bs-toggle='modal'
-								data-bs-target='#Modal'>
-								<i className='iconavbar bi bi-file-earmark-plus'></i>
-								Agregar expediente
-							</Link>
-						)}
-						{user.user === 'ofvinals@gmail.com' && (
+						{user === 'ofvinals@gmail.com' ||
+							user === 'estudioposseyasociados@gmail.com' ? (
+								<Link
+									type='button'
+									className='btnpanelgestion'
+									to='/CargaExptes'
+									data-bs-toggle='modal'
+									data-bs-target='#Modal'>
+									<i className='iconavbar bi bi-file-earmark-plus'></i>
+									Agregar expediente
+								</Link>
+								) : null}
+						{user === 'ofvinals@gmail.com' && (
 							<Link to='/exptesarchivados' className='btnpanelgestion'>
 								<i className='iconavbar bi bi-archive'></i>
 								Expedientes Archivados
@@ -215,7 +207,8 @@ export const GestionExpedientes = () => {
 						)}
 						<Link
 							to={
-								user.user === 'ofvinals@gmail.com'|| user.user === 'estudioposseyasociados@gmail.com'
+								user === 'ofvinals@gmail.com' ||
+								user === 'estudioposseyasociados@gmail.com'
 									? '/Admin'
 									: '/AdminUsu'
 							}

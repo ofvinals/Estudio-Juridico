@@ -10,45 +10,23 @@ import { db } from '../firebase/config';
 import {
 	doc,
 	getDoc,
-	getDocs,
 	updateDoc,
-	collection,
-} from 'firebase/firestore';
+	} from 'firebase/firestore';
 
 export const EditarTurnos = ({}) => {
 	const user = useAuth();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit, setValue } = useForm();
-	const [turno, setTurno] = useState({});
 	const [showModal, setShowModal] = useState(false);
 
-	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
 
-	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		setShowModal(false);
 		navigate('/agendausu');
 	};
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const turnosRef = collection(db, 'turnos');
-				const fetchedTurnos = await getDocs(turnosRef);
-				const turnosArray = Object.values(
-					fetchedTurnos.docs.map((doc) => doc.data())
-				);
-				setTurno(turnosArray);
-			} catch (error) {
-				console.error('Error al obtener turnos:', error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	// Función para cargar los datos del turno al abrir la página
 	useEffect(() => {
 		async function loadTurno() {
 			try {
@@ -61,11 +39,8 @@ export const EditarTurnos = ({}) => {
 				setValue('email', turnoData.email);
 				setValue('motivo', turnoData.motivo);
 				handleOpenModal();
-				setTimeout(() => {
-					Swal.close();
-					handleOpenModal();
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el turno', error);
 			}
@@ -73,7 +48,6 @@ export const EditarTurnos = ({}) => {
 		loadTurno();
 	}, []);
 
-	// Función para envíar los datos modificados
 	const onSubmit = handleSubmit(async (data) => {
 		try {
 			Swal.showLoading();
@@ -85,18 +59,21 @@ export const EditarTurnos = ({}) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-				if (user.user === 'ofvinals@gmail.com') {
-					navigate('/gestionagenda', { replace: true });
-				} else {
-					navigate('/agendausu', { replace: true });
-				}
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleCloseModal();
+			if (user === 'ofvinals@gmail.com') {
+				navigate('/gestionagenda', { replace: true });
+			} else {
+				navigate('/agendausu', { replace: true });
+			}
 		} catch (error) {
-			console.error('Error al eliminar el movimiento:', error);
+			console.error('Error al eliminar el turno:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al editar el turno. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

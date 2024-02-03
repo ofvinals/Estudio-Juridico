@@ -19,8 +19,7 @@ export const GoogleCalendar = () => {
 	const [end, setEnd] = useState(new Date());
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
-	const user = useAuth();
-	const { accessToken, loginWithGoogle } = useAuth();
+	const { loginWithGoogle } = useAuth();
 
 	const handleCloseModal = () => {
 		setShowModal(false);

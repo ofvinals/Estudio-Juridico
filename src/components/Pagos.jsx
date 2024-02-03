@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { Modal, Form } from 'react-bootstrap';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 export const Pagos = () => {
-	const user = useAuth();
 	const [showModal, setShowModal] = useState(true);
 	const navigate = useNavigate();
 	// Función para cerrar el modal

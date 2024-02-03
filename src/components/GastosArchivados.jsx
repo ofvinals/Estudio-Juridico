@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
@@ -18,18 +18,42 @@ import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const GastosArchivados = () => {
-	const user = useAuth();
-	const {displayName} = useAuth();
+	const { displayName, user } = useAuth();
 	const { id } = useParams();
 	const [data, setData] = useState([]);
 	const [gasto, setGasto] = useState([]);
-	const [exptes, setExptes] = useState([]);
 	const [showVerGasto, setShowVerGasto] = useState(false);
 
 	// Cierra modales
 	const handleCancel = () => {
 		setShowVerGasto(false);
 	};
+
+	useEffect(() => {
+		const fetchGastos = async () => {
+			try {
+				Swal.showLoading();
+				const gastosRef = collection(db, 'gastos');
+				const snapshot = await getDocs(gastosRef);
+				const fetchedGastos = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
+				const filteredByEstado = fetchedGastos.filter(
+					(gasto) => gasto.estado === 'Cancelado'
+				);
+				const filteredGastos =
+					user === 'ofvinals@gmail.com'
+						? filteredByEstado
+						: filteredByEstado.filter((gasto) => gasto.cliente === user);
+				Swal.close();
+				setData(filteredGastos);
+				setGasto(filteredGastos);
+			} catch (error) {
+				console.error('Error al obtener gastos', error);
+			}
+		};
+		fetchGastos();
+	}, []);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {
@@ -92,57 +116,6 @@ export const GastosArchivados = () => {
 		[]
 	);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const exptesRef = collection(db, 'expedientes');
-				const fetchedExptes = await getDocs(exptesRef);
-				const exptesArray = Object.values(
-					fetchedExptes.docs.map((doc) => doc.data())
-				);
-				setExptes(exptesArray);
-			} catch (error) {
-				console.error('Error al obtener expedientes:', error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	// Carga gastos y guarda en data y gasto
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				Swal.showLoading();
-				const gastosRef = collection(db, 'gastos');
-				const snapshot = await getDocs(gastosRef);
-				const fetchedGastos = snapshot.docs.map((doc) => {
-					return { ...doc.data(), id: doc.id };
-				});
-
-				const filteredByEstado = fetchedGastos.filter(
-					(gasto) => gasto.estado === 'Cancelado'
-				);
-
-				const filteredGastos =
-					user.user === 'ofvinals@gmail.com' 
-						? filteredByEstado
-						: filteredByEstado.filter(
-								(gasto) => gasto.cliente === user.user
-						  );
-
-				setTimeout(() => {
-					Swal.close();
-					setData(filteredGastos);
-					setGasto(filteredGastos);
-				}, 1000);
-				return () => clearTimeout(timer);
-			} catch (error) {
-				console.error('Error al obtener gastos', error);
-			}
-		};
-		fetchData();
-	}, []);
-
 	const table = useMaterialReactTable({
 		columns,
 		data,
@@ -200,9 +173,7 @@ export const GastosArchivados = () => {
 		<>
 			<div className='container-lg bg-dark'>
 				<div className='main bodygestion'>
-					<h4 className='titlegestion'>
-						Bienvenido, {displayName}
-					</h4>
+					<h4 className='titlegestion'>Bienvenido, {displayName}</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Gastos Archivados
 					</p>

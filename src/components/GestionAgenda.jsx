@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
-import { Form, Modal } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -21,27 +20,52 @@ import dayjs from 'dayjs';
 import {
 	collection,
 	getDocs,
-	getDoc,
 	deleteDoc,
 	doc,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const GestionAgenda = () => {
-	const user = useAuth();
-	const { displayName } = useAuth();
+	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 	const [turno, setTurno] = useState([]);
-	const [turnosVencidos, setTurnosVencidos] = useState([]);
 	const [data, setData] = useState([]);
-	const [showVerTurno, setShowVerTurno] = useState(false);
-	const [showCargaVenc, setShowCargaVenc] = useState(false);
-
-	// Cierra modales
-	const handleCancel = () => {
-		setShowVerTurno(false);
-		setShowCargaVenc(false);
-	};
+	const user = currentUser.email;
+	const displayName = currentUser.displayName;
+	
+		useEffect(() => {
+		const fetchTurnos = async () => {
+			try {
+				Swal.showLoading();
+				const turnoRef = collection(db, 'turnos');
+				const snapshot = await getDocs(turnoRef);
+				const fetchedTurnos = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
+				// Filtrar turnos pendientes (posteriores a la fecha actual)
+				const turnosPendientes = fetchedTurnos.filter((turno) => {
+					const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
+					const fechaActual = dayjs();
+					return fechaTurno.isAfter(fechaActual);
+				});
+				// Filtrar turnos vencidos (anteriores a la fecha actual)
+				const turnosVencidos = fetchedTurnos.filter((turno) => {
+					const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
+					const fechaActual = dayjs();
+					return (
+						fechaTurno.isBefore(fechaActual) ||
+						fechaTurno.isSame(fechaActual)
+					);
+				});
+				Swal.close();
+				setTurno(turnosPendientes);
+				setData(turnosPendientes);
+			} catch (error) {
+				console.error('Error al obtener turnos', error);
+			}
+		};
+		fetchTurnos();
+	}, []);
 
 	const columns = React.useMemo(
 		() => [
@@ -65,44 +89,6 @@ export const GestionAgenda = () => {
 		[]
 	);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				Swal.showLoading();
-				const turnoRef = collection(db, 'turnos');
-				const snapshot = await getDocs(turnoRef);
-				const fetchedTurnos = snapshot.docs.map((doc) => {
-					return { ...doc.data(), id: doc.id };
-				});
-				// Filtrar turnos pendientes (posteriores a la fecha actual)
-				const turnosPendientes = fetchedTurnos.filter((turno) => {
-					const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
-					const fechaActual = dayjs();
-					return fechaTurno.isAfter(fechaActual);
-				});
-				// Filtrar turnos vencidos (anteriores a la fecha actual)
-				const turnosVencidos = fetchedTurnos.filter((turno) => {
-					const fechaTurno = dayjs(turno.turno, 'DD-MM-YYYY HH:mm');
-					const fechaActual = dayjs();
-					return (
-						fechaTurno.isBefore(fechaActual) ||
-						fechaTurno.isSame(fechaActual)
-					);
-				});
-				setTimeout(() => {
-					Swal.close();
-					setTurno(turnosPendientes);
-					setData(turnosPendientes);
-					setTurnosVencidos(turnosVencidos);
-				}, 500);
-				return () => clearTimeout(timer);
-			} catch (error) {
-				console.error('Error al obtener turnos', error);
-			}
-		};
-		fetchData();
-	}, []);
-
 	// Funcion para cargar tabla
 	const table = useMaterialReactTable({
 		columns,
@@ -123,7 +109,7 @@ export const GestionAgenda = () => {
 		initialState: {
 			sorting: [
 				{
-					id: 'turno', 
+					id: 'turno',
 					desc: false,
 				},
 			],
@@ -143,11 +129,13 @@ export const GestionAgenda = () => {
 				}}>
 				<IconButton
 					color='primary'
-					onClick={() => verTurno(row.original.id)}>
+					onClick={() => {
+						navigate(`/verturno/${row.original.id}`);
+					}}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' ||
-				user.user === 'estudioposseyasociados@gmail.com' ? (
+				{user === 'ofvinals@gmail.com' ||
+				user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -156,7 +144,7 @@ export const GestionAgenda = () => {
 						<EditIcon />
 					</IconButton>
 				) : null}
-				{user.user === 'ofvinals@gmail.com' && (
+				{user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
 						onClick={() => borrarTurno(row.original.id)}>
@@ -166,7 +154,6 @@ export const GestionAgenda = () => {
 			</Box>
 		),
 	});
-
 	const darkTheme = createTheme({
 		palette: {
 			mode: 'dark',
@@ -196,12 +183,8 @@ export const GestionAgenda = () => {
 					showConfirmButton: false,
 					timer: 2500,
 				});
-				setTimeout(() => {
-					Swal.close();
-					setData((prevData) =>
-						prevData.filter((turno) => turno.id !== id)
-					);
-				}, 500);
+				Swal.close();
+				setData((prevData) => prevData.filter((turno) => turno.id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el turno:', error);
@@ -209,27 +192,11 @@ export const GestionAgenda = () => {
 		}
 	}
 
-	// funcion para ver turnos en Modal
-	async function verTurno(id) {
-		Swal.showLoading();
-		const turnoRef = doc(db, 'turnos', id);
-		const snapshot = await getDoc(turnoRef);
-		const turnoData = snapshot.data();
-		setTurno(turnoData);
-		setTimeout(() => {
-			Swal.close();
-			setShowVerTurno(true);
-		}, 500);
-		return () => clearTimeout(timer);
-	}
-
 	return (
 		<>
 			<div className='bodygestion container-lg bg-dark'>
 				<div className='main px-3 '>
-					<h4 className='titlegestion'>
-						Bienvenido, {displayName}
-					</h4>
+					<h4 className='titlegestion'>Bienvenido, {displayName}</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Agenda
 					</p>
@@ -270,37 +237,6 @@ export const GestionAgenda = () => {
 					</ThemeProvider>
 				</div>
 			</div>
-
-			{/* Modal para ver gasto seleccionado */}
-			<Modal show={showVerTurno} onHide={() => setShowVerTurno(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title className='text-white'>
-						Ver Turno seleccionado
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Turno: {turno.turno}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Cliente: {turno.email}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Motivo: {turno.motivo}</Form.Label>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btneditgestion px-2'
-						onClick={() => {
-							handleCancel();
-						}}>
-						Volver
-					</button>
-				</Modal.Footer>
-			</Modal>
 		</>
 	);
 };

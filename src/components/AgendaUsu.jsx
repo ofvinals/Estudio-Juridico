@@ -15,7 +15,6 @@ import {
 	addDoc,
 	getDocs,
 	collection,
-	updateDoc,
 	deleteDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
@@ -23,12 +22,13 @@ dayjs.locale('es');
 import emailjs from '@emailjs/browser';
 
 export const AgendaUsu = () => {
-	const user = useAuth();
-	const { displayName } = useAuth();
+	const { currentUser  } = useAuth();
 	const form = useRef();
 	const [tablaTurnos, setTablaTurnos] = useState();
 	const [startDate, setStartDate] = useState(dayjs());
 	const [turnoOcupado, setTurnoOcupado] = useState([]);
+	const user = currentUser.email
+	const displayName = currentUser.displayName
 	// deshabilita seleccion de dias de fin de semana
 	const lastMonday = dayjs().startOf('week');
 	const nextSunday = dayjs().endOf('week').startOf('day');
@@ -95,7 +95,7 @@ export const AgendaUsu = () => {
 			if (isConfirmed) {
 				const nuevoTurno = {
 					turno: formatoTurnoSeleccionado,
-					email: user.user,
+					email: user,
 					motivo: motivoConsulta,
 				};
 				try {
@@ -134,7 +134,7 @@ export const AgendaUsu = () => {
 	function cargarTablaTurnos(datosTurnos) {
 		if (datosTurnos) {
 			const turnosFiltrados = datosTurnos.filter(
-				(turno) => user.user === turno.email
+				(turno) => user === turno.email
 			);
 			if (turnosFiltrados.length > 0) {
 				const tabla = turnosFiltrados.map((turno) => (

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import Form from 'react-bootstrap/Form';
 import '../css/Carga.css';
@@ -10,37 +9,35 @@ import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const CargaExptes = () => {
-	const  user  = useAuth();
 	const { register, handleSubmit } = useForm();
 	const [users, setUsers] = useState([]);
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(true);
 
-	// Función para abrir el modal
-	const handleOpenModal = () => setShowModal(true);
-
-	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		setShowModal(false);
 		navigate('/gestionexpedientes');
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchUsuarios = async () => {
 			try {
 				const usuariosRef = collection(db, 'usuarios');
 				const fetchedUsers = await getDocs(usuariosRef);
-				const usersArray = Object.values(fetchedUsers.docs.map((doc) => doc.data()));
+				const usersArray = Object.values(
+					fetchedUsers.docs.map((doc) => doc.data())
+				);
 				setUsers(usersArray);
 			} catch (error) {
 				console.error('Error al obtener usuarios:', error);
 			}
 		};
 
-		fetchData();
+		fetchUsuarios();
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
+		try{
 		Swal.showLoading();
 		const expteRef = collection(db, 'expedientes');
 		await addDoc(expteRef, values);
@@ -50,11 +47,11 @@ export const CargaExptes = () => {
 			showConfirmButton: false,
 			timer: 1500,
 		});
-		setTimeout(() => {
-			Swal.close();
-			navigate('/gestionexpedientes');
-		}, 500);
-		return () => clearTimeout(timer);
+		Swal.close();
+		navigate('/gestionexpedientes');
+	} catch (error) {
+		console.error('Error al obtener expedientes:', error);
+	}
 	});
 
 	return (

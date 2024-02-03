@@ -12,34 +12,49 @@ import { Especialidad } from '../src/components/Especialidad';
 import { Recuperar } from '../src/components/Recuperar';
 import { Home } from '../src/components/Home';
 import { Interes } from '../src/components/Interes';
+
+import { AuthProvider } from '../src/context/AuthContext';
+import PrivateRoute from './PrivateRoute';
+
 import { Admin } from '../src/components/Admin';
+import { AdminUsu } from '../src/components/AdminUsu';
 import { GestionUsuarios } from '../src/components/GestionUsuarios';
 import { GestionExpedientes } from '../src/components/GestionExpedientes';
 import { GestionAgenda } from '../src/components/GestionAgenda';
 import { GestionGastos } from '../src/components/GestionGastos';
+import { GestionMovimientos } from '../src/components/GestionMovimientos';
+import { GestionCaja } from '../src/components/GestionCaja';
 import { AgendaUsu } from '../src/components/AgendaUsu';
-import { AdminUsu } from '../src/components/AdminUsu';
+
 import { CargaExptes } from '../src/components/CargaExptes';
-import PrivateRoute from './PrivateRoute';
-import { AuthProvider } from '../src/context/AuthContext';
-import { EditarExptes } from '../src/components/EditarExptes';
+import { CargaGastos } from '../src/components/CargaGastos';
+import { CargaMov } from '../src/components/CargaMov';
+import { CargaCajas } from '../src/components/CargaCajas';
 import { CargaUsu } from '../src/components/CargaUsu';
+
+import { EditarExptes } from '../src/components/EditarExptes';
 import { EditarUsu } from '../src/components/EditarUsu';
 import { EditarTurnos } from '../src/components/EditarTurnos';
-import { GestionMovimientos } from '../src/components/GestionMovimientos';
+import { EditarMov } from '../src/components/EditarMov';
+import { EditarCajas } from '../src/components/EditarCajas';
+import { EditarGastos } from '../src/components/EditarGastos';
+
+import { VerCaja } from '../src/components/VerCaja';
+import { VerTurno } from '../src/components/VerTurno';
+import { VerUsu } from '../src/components/VerUsu';
+import { VerGasto } from '../src/components/VerGasto';
+
+import { BorraUsu } from '../src/components/BorraUsu';
+
 import { ExptesArchivados } from '../src/components/ExptesArchivados';
 import { GastosArchivados } from '../src/components/GastosArchivados';
 import { CajasArchivadas } from '../src/components/CajasArchivadas';
-import { EditarMov } from '../src/components/EditarMov';
-import { CargaGastos } from '../src/components/CargaGastos';
-import { EditarGastos } from '../src/components/EditarGastos';
-import { EditarCajas } from '../src/components/EditarCajas';
-import { GestionCaja } from '../src/components/GestionCaja';
-import { CargaMov } from '../src/components/CargaMov';
-import { CargaCajas } from '../src/components/CargaCajas';
+
 import { Pagos } from '../src/components/Pagos';
 import { GoogleCalendar } from '../src/components/GoogleCalendar';
-import {Notas} from '../src/components/Notas'
+import {Notas} from '../src/components/Notas';
+import Tabla from '../src/components/Tabla'
+
 export const AppRouter = () => {
 	return (
 		<BrowserRouter>
@@ -107,6 +122,12 @@ export const AppRouter = () => {
 							<Route path='/cargacajas' element={<CargaCajas />}></Route>
 							<Route path='/admin' element={<Admin />}></Route>
 							<Route path='/notas' element={<Notas />}></Route>
+							<Route path='/vercaja/:id' element={<VerCaja />}></Route>
+							<Route path='/verturno/:id' element={<VerTurno />}></Route>
+							<Route path='/verusu/:id' element={<VerUsu />}></Route>
+							<Route path='/vergasto/:id' element={<VerGasto />}></Route>
+							<Route path='/tabla' element={<Tabla />}></Route>
+							<Route path='/borrausu/:id' element={<BorraUsu />}></Route>
 
 							<Route
 								path='/gestionusuarios'

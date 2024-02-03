@@ -1,26 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate} from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
 import { useForm } from 'react-hook-form';
-import { useAuth } from '../context/AuthContext';
-import { format } from 'date-fns';
 import { uploadFile } from '../firebase/config.js';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const CargaCajas = () => {
-	const user = useAuth();
-	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm();
 	const [cajas, setCajas] = useState([]);
 	const [showModal, setShowModal] = useState(true);
-
-	// Función para abrir el modal
-	const handleOpenModal = () => setShowModal(true);
 
 	// Función para cerrar el modal
 	const handleCloseModal = () => {
@@ -29,7 +22,7 @@ export const CargaCajas = () => {
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchCajas = async () => {
 			try {
 				const cajasRef = collection(db, 'cajas');
 				const fetchedCajas = await getDocs(cajasRef);
@@ -41,7 +34,7 @@ export const CargaCajas = () => {
 				console.error('Error al obtener cajas:', error);
 			}
 		};
-		fetchData();
+		fetchCajas();
 	}, []);
 
 	const onSubmit = handleSubmit(async (values) => {
@@ -53,7 +46,6 @@ export const CargaCajas = () => {
 				fileDownloadUrl = await uploadFile(file);
 			}
 			const fechaSeleccionada = new Date(values.fecha);
-
 			fechaSeleccionada.setMinutes(
 				fechaSeleccionada.getMinutes() -
 					fechaSeleccionada.getTimezoneOffset()
@@ -68,7 +60,6 @@ export const CargaCajas = () => {
 				fileUrl: fileDownloadUrl,
 				estado: values.estado,
 			};
-
 			const cajaDocRef = await addDoc(collection(db, 'cajas'), cajaData);
 			console.log('Documento agregado con ID: ', cajaDocRef.id);
 			Swal.fire({
@@ -77,14 +68,17 @@ export const CargaCajas = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				setShowModal(true);
-				handleCloseModal();
-				navigate('/gestioncaja');
-			}, 500);
-			return () => clearTimeout(timer);
+			handleCloseModal();
+			Swal.close();
+			navigate('/gestioncaja');
 		} catch (error) {
 			console.error(error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al registrar la caja. Intente de nuevo',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

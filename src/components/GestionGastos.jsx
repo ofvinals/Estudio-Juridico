@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useNavigate} from 'react-router-dom';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
 import {
@@ -17,7 +16,6 @@ import {
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
-import { Form, Modal } from 'react-bootstrap';
 import {
 	doc,
 	getDoc,
@@ -28,19 +26,39 @@ import {
 import { db } from '../firebase/config';
 
 export const GestionGastos = () => {
-	const user = useAuth();
-	const { displayName } = useAuth();
-	const { id } = useParams();
+	const { currentUser } = useAuth();
 	const [data, setData] = useState([]);
 	const [gasto, setGasto] = useState([]);
-	const [exptes, setExptes] = useState([]);
 	const navigate = useNavigate();
-	const [showVerGasto, setShowVerGasto] = useState(false);
+	const user = currentUser.email
+	const displayName = currentUser.displayName
 
-	// Cierra modales
-	const handleCancel = () => {
-		setShowVerGasto(false);
-	};
+	useEffect(() => {
+		const fetchGastos = async () => {
+			try {
+				Swal.showLoading();
+				const gastosRef = collection(db, 'gastos');
+				const snapshot = await getDocs(gastosRef);
+				const fetchedGastos = snapshot.docs.map((doc) => {
+					return { ...doc.data(), id: doc.id };
+				});
+				const filteredByEstado = fetchedGastos.filter(
+					(gasto) => gasto.estado !== 'Cancelado'
+				);
+				const filteredGastos =
+					user === 'ofvinals@gmail.com' ||
+					user === 'estudioposseyasociados@gmail.com'
+						? filteredByEstado
+						: filteredByEstado.filter((gasto) => gasto.cliente === user);
+				setData(filteredGastos);
+				setGasto(filteredByEstado);
+				Swal.close();
+			} catch (error) {
+				console.error('Error al obtener gastos', error);
+			}
+		};
+		fetchGastos();
+	}, []);
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {
@@ -103,54 +121,6 @@ export const GestionGastos = () => {
 		[]
 	);
 
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const exptesRef = collection(db, 'expedientes');
-				const fetchedExptes = await getDocs(exptesRef);
-				const exptesArray = Object.values(
-					fetchedExptes.docs.map((doc) => doc.data())
-				);
-				setExptes(exptesArray);
-			} catch (error) {
-				console.error('Error al obtener expedientes:', error);
-			}
-		};
-		fetchData();
-	}, []);
-
-	// Carga gastos y guarda en data y gasto
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				Swal.showLoading();
-				const gastosRef = collection(db, 'gastos');
-				const snapshot = await getDocs(gastosRef);
-				const fetchedGastos = snapshot.docs.map((doc) => {
-					return { ...doc.data(), id: doc.id };
-				});
-				const filteredByEstado = fetchedGastos.filter(
-					(gasto) => gasto.estado !== 'Cancelado'
-				);
-				const filteredGastos =
-					user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com'
-						? filteredByEstado
-						: filteredByEstado.filter(
-								(gasto) => gasto.cliente === user.user
-						  );
-
-				setTimeout(() => {
-					Swal.close();
-					setData(filteredGastos);
-					setGasto(filteredByEstado);
-				}, 1000);
-			} catch (error) {
-				console.error('Error al obtener gastos', error);
-			}
-		};
-		fetchData();
-	}, []);
-
 	const table = useMaterialReactTable({
 		columns,
 		data,
@@ -182,10 +152,13 @@ export const GestionGastos = () => {
 				}}>
 				<IconButton
 					color='primary'
-					onClick={() => verGasto(row.original.id)}>
+					onClick={() => {
+						navigate(`/vergasto/${row.original.id}`);
+					}}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
+				{user === 'ofvinals@gmail.com' ||
+				user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -193,8 +166,8 @@ export const GestionGastos = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				):null}
-				{user.user === 'ofvinals@gmail.com' && (
+				) : null}
+				{user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
 						onClick={() => borrarGasto(row.original.id)}>
@@ -204,7 +177,6 @@ export const GestionGastos = () => {
 			</Box>
 		),
 	});
-
 	const darkTheme = createTheme({
 		palette: {
 			mode: 'dark',
@@ -235,62 +207,42 @@ export const GestionGastos = () => {
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				setTimeout(() => {
-					Swal.close();
-					setData((prevData) =>
-						prevData.filter((gasto) => gasto.id !== id)
-					);
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				setData((prevData) => prevData.filter((gasto) => gasto.id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el gasto:', error);
 		}
 	}
 
-	// funcion para ver movimientos en Modal
-	async function verGasto(id) {
-		Swal.showLoading();
-		const gastosRef = doc(db, 'gastos', id);
-		const snapshot = await getDoc(gastosRef);
-		const gastoData = snapshot.data();
-		setTimeout(() => {
-			Swal.close();
-			setGasto(gastoData);
-			setShowVerGasto(true);
-		}, 500);
-		return () => clearTimeout(timer);
-	}
-
 	return (
 		<>
 			<div className='container-lg bg-dark'>
 				<div className='main bodygestion'>
-					<h4 className='titlegestion'>
-						Bienvenido, {displayName}
-					</h4>
+					<h4 className='titlegestion'>Bienvenido, {displayName}</h4>
 					<p className='subtitlegestion'>
 						Panel de Administracion de Gastos
 					</p>
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' && (
-							<Link
-								type='button'
-								className='btnpanelgestion'
-								to='/cargagastos'>
-								<i className='iconavbar bi bi-file-earmark-plus'></i>
-								Agregar gastos
-							</Link>
-						)}
+						{user === 'ofvinals@gmail.com' ||
+							user === 'estudioposseyasociados@gmail.com' ? (
+								<Link
+									type='button'
+									className='btnpanelgestion'
+									to='/cargagastos'>
+									<i className='iconavbar bi bi-file-earmark-plus'></i>
+									Agregar gastos
+								</Link>
+						) : null}
 
 						<Link type='button' className='btnpanelgestion' to='/pagos'>
 							<i className='iconavbar bi bi-cash-coin'></i>
 							Medios de pago
 						</Link>
 
-						{user.user === 'ofvinals@gmail.com' && (
+						{user === 'ofvinals@gmail.com' && (
 							<Link to='/gastosarchivados' className='btnpanelgestion'>
 								<i className='iconavbar bi bi-archive'></i>
 								Gastos Cancelados
@@ -298,7 +250,8 @@ export const GestionGastos = () => {
 						)}
 						<Link
 							to={
-								user.user === 'ofvinals@gmail.com'|| user.user === 'estudioposseyasociados@gmail.com'
+								user === 'ofvinals@gmail.com' ||
+								user === 'estudioposseyasociados@gmail.com'
 									? '/Admin'
 									: '/AdminUsu'
 							}
@@ -321,53 +274,6 @@ export const GestionGastos = () => {
 					</div>
 				</div>
 			</div>
-
-			{/* Modal para ver gasto seleccionado */}
-			<Modal show={showVerGasto} onHide={() => setShowVerGasto(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title className='text-white'>
-						Ver Gasto seleccionado
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Nro Expte: {gasto.expte}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Concepto: {gasto.concepto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Monto: $ {gasto.monto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>
-								Comprobante Adjunto:{' '}
-								{gasto.fileUrl ? (
-									<a
-										href={gasto.fileUrl}
-										target='_blank'
-										className='text-white'
-										rel='noopener noreferrer'>
-										Ver Comprobante
-									</a>
-								) : (
-									'Sin comprobante adjunto'
-								)}
-							</Form.Label>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btneditgestion px-2'
-						onClick={() => {
-							handleCancel();
-						}}>
-						Volver
-					</button>
-				</Modal.Footer>
-			</Modal>
 		</>
 	);
 };

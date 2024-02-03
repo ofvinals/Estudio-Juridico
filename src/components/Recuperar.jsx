@@ -1,4 +1,4 @@
-import { React, useRef, useState } from 'react';
+import { React, useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Recuperar.css';
 import { useNavigate } from 'react-router-dom';

@@ -1,17 +1,14 @@
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { db } from '../firebase/config';
-import { doc, getDoc, getDocs, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, getDocs } from 'firebase/firestore';
 
 export const EditarMov = () => {
-	const user = useAuth();
 	const params = useParams();
 	const navigate = useNavigate();
 	const [showModal, setShowModal] = useState(false);
@@ -28,7 +25,7 @@ export const EditarMov = () => {
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchExptes = async () => {
 			try {
 				const exptesRef = collection(db, 'expedientes');
 				const fetchedExptes = await getDocs(exptesRef);
@@ -40,7 +37,7 @@ export const EditarMov = () => {
 				console.error('Error al obtener expedientes:', error);
 			}
 		};
-		fetchData();
+		fetchExptes();
 	}, []);
 
 	// Función para cargar los datos del expediente al abrir la página
@@ -61,11 +58,8 @@ export const EditarMov = () => {
 				setValue('fecha', formattedDate);
 				setValue('descripcion', movData.descripcion);
 				setValue('adjunto', movData.adjunto);
-				setTimeout(() => {
-					Swal.close();
-					handleOpenModal();
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el movimiento', error);
 			}
@@ -79,17 +73,20 @@ export const EditarMov = () => {
 			await updateMov(params.id, data);
 			Swal.fire({
 				icon: 'success',
-				title: 'Movimiento de caja eliminado correctamente',
+				title: 'Movimiento eliminado correctamente',
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleCloseModal();
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al carga el movimiento. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 	MaterialReactTable,
 	useMaterialReactTable,
@@ -14,27 +14,22 @@ import {
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
-import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
-import { Modal, Form } from 'react-bootstrap';
 import {
 	collection,
 	getDocs,
-	getDoc,
 	deleteDoc,
 	doc,
 } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const GestionCaja = () => {
-	const user = useAuth();
-	const {displayName} = useAuth();
-	const { id } = useParams();
+	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
-	const [caja, setCaja] = useState([]);
-	const [showVerCaja, setShowVerCaja] = useState(false);
+	const user = currentUser.email;
+	const displayName = currentUser.displayName;
 	const meses = [
 		'Enero',
 		'Febrero',
@@ -50,13 +45,8 @@ export const GestionCaja = () => {
 		'Diciembre',
 	];
 
-	// Cierra modales
-	const handleCancel = () => {
-		setShowVerCaja(false);
-	};
-
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchCajas = async () => {
 			try {
 				Swal.showLoading();
 				const cajasRef = collection(db, 'cajas');
@@ -70,17 +60,13 @@ export const GestionCaja = () => {
 					const isMesActual = caja.mes === mesActual;
 					return isMesActual;
 				});
-				setTimeout(() => {
-					Swal.close();
-					setData(cajasMesActual);
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				setData(cajasMesActual);
 			} catch (error) {
 				console.error('Error al obtener caja', error);
 			}
 		};
-
-		fetchData();
+		fetchCajas();
 	}, []);
 
 	const formatValue = (value) => {
@@ -126,7 +112,7 @@ export const GestionCaja = () => {
 		);
 	}
 
-	// Carga info de columnas
+
 	const columns = React.useMemo(() => {
 		return [
 			{
@@ -223,10 +209,13 @@ export const GestionCaja = () => {
 				}}>
 				<IconButton
 					color='primary'
-					onClick={() => verCaja(row.original.id)}>
+					onClick={() => {
+						navigate(`/vercaja/${row.original.id}`);
+					}}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
+				{user === 'ofvinals@gmail.com' ||
+				user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => {
@@ -234,8 +223,8 @@ export const GestionCaja = () => {
 						}}>
 						<EditIcon />
 					</IconButton>
-				):null}
-				{user.user === 'ofvinals@gmail.com' && (
+				) : null}
+				{user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
 						onClick={() => borrarCaja(row.original.id)}>
@@ -245,7 +234,6 @@ export const GestionCaja = () => {
 			</Box>
 		),
 	});
-
 	const darkTheme = createTheme({
 		palette: {
 			mode: 'dark',
@@ -276,45 +264,27 @@ export const GestionCaja = () => {
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				setTimeout(() => {
-					Swal.close();
-					setData((prevData) => prevData.filter((caja) => caja.id !== id));
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				setData((prevData) => prevData.filter((caja) => caja.id !== id));
 			}
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
 		}
 	}
 
-	// funcion para ver movimientos de caja en Modal
-	async function verCaja(id) {
-		Swal.showLoading();
-		const cajaRef = doc(db, 'cajas', id);
-		const snapshot = await getDoc(cajaRef);
-		const cajaData = snapshot.data();
-		setTimeout(() => {
-			Swal.close();
-			setCaja(cajaData);
-			setShowVerCaja(true);
-		}, 500);
-		return () => clearTimeout(timer);
-	}
-
 	return (
 		<>
 			<div className='container-lg bg-dark'>
 				<div className='main px-3 bodygestion'>
-					<h4 className='titlegestion'>
-						Bienvenido, {displayName}
-					</h4>
+					<h4 className='titlegestion'>Bienvenido, {displayName}</h4>
 					<p className='subtitlegestion'>
 						Panel de Gestion de Caja del Estudio
 					</p>
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' && (
+						{user === 'ofvinals@gmail.com' ||
+						user === 'estudioposseyasociados@gmail.com' ? (
 							<Link
 								type='button'
 								className='btnpanelgestion'
@@ -322,14 +292,14 @@ export const GestionCaja = () => {
 								<i className='iconavbar bi bi-file-earmark-plus'></i>
 								Agregar Movimiento
 							</Link>
-						)}
-						{user.user === 'ofvinals@gmail.com' && (
+						) : null}
+						{user === 'ofvinals@gmail.com' && (
 							<Link to='/cajasarchivadas' className='btnpanelgestion'>
 								<i className='iconavbar bi bi-archive'></i>
 								Movimientos Archivados
 							</Link>
 						)}
-						<Link to={'/Admin'} className='btnpanelgestion'>
+						<Link to={'/admin'} className='btnpanelgestion'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
 						</Link>
@@ -350,54 +320,6 @@ export const GestionCaja = () => {
 					</div>
 				</div>
 			</div>
-
-			{/* Modal para ver movimiento de caja seleccionada */}
-			<Modal show={showVerCaja} onHide={() => setShowVerCaja(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title>Ver Movimiento de Caja</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3' id='fecha'>
-							<Form.Label>Fecha: {caja.fecha}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='concepto'>
-							<Form.Label>Concepto: {caja.concepto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='monto'>
-							<Form.Label>Monto: $ {caja.monto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='comprobante'>
-							<Form.Label>
-								Comprobante Adjunto:{' '}
-								{caja.fileUrl ? (
-									<a
-										href={caja.fileUrl}
-										target='_blank'
-										className='text-white'
-										rel='noopener noreferrer'>
-										Ver Comprobante
-									</a>
-								) : (
-									'Sin comprobante adjunto'
-								)}
-							</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='estado'>
-							<Form.Label>Estado: {caja.estado}</Form.Label>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btneditgestion px-2'
-						onClick={() => {
-							handleCancel();
-						}}>
-						Volver
-					</button>
-				</Modal.Footer>
-			</Modal>
 		</>
 	);
 };

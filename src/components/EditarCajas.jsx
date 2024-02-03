@@ -1,5 +1,4 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
@@ -11,16 +10,12 @@ import { db } from '../firebase/config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export const EditarCajas = ({}) => {
-	const user = useAuth();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const { register, handleSubmit, setValue } = useForm();
 	const [showModal, setShowModal] = useState(false);
 
-	// Función para abrir el modal
 	const handleOpenModal = () => setShowModal(true);
-
-	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		setShowModal(false);
 		navigate('/gestioncaja');
@@ -41,11 +36,8 @@ export const EditarCajas = ({}) => {
 				setValue('monto', cajaData.monto);
 				setValue('adjunto', cajaData.file);
 				setValue('estado', cajaData.estado);
-				setTimeout(() => {
-					Swal.close();
-					handleOpenModal();
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el caja', error);
 			}
@@ -79,13 +71,17 @@ export const EditarCajas = ({}) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-				navigate('/gestioncaja');
-			}, 500);
+			Swal.close();
+			handleCloseModal();
+			navigate('/gestioncaja');
 		} catch (error) {
 			console.error(error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al editar la caja. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

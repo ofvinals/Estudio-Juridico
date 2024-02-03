@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from '../context/AuthContext';
 import Swal from 'sweetalert2';
 import '../css/Admin.css';
 import { useForm } from 'react-hook-form';
@@ -14,7 +13,6 @@ import {
 import { db } from '../firebase/config';
 
 export const Notas = () => {
-	const user = useAuth();
 	const [notas, setNotas] = useState();
 	const [tablaNotas, setTablaNotas] = useState();
 	const { register, handleSubmit, reset } = useForm();
@@ -107,17 +105,14 @@ export const Notas = () => {
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				setTimeout(async () => {
-					Swal.close();
-					const updatedNotas = await getDocs(collection(db, 'notas'));
-					const updatedNotasArray = updatedNotas.docs.map((doc) => ({
-						...doc.data(),
-						id: doc.id,
-					}));
-					setNotas(updatedNotasArray);
-				}, 500);
+				Swal.close();
+				const updatedNotas = await getDocs(collection(db, 'notas'));
+				const updatedNotasArray = updatedNotas.docs.map((doc) => ({
+					...doc.data(),
+					id: doc.id,
+				}));
+				setNotas(updatedNotasArray);
 			}
-			return () => clearTimeout(timer);
 		} catch (error) {
 			console.error('Error al eliminar la nota:', error);
 		}

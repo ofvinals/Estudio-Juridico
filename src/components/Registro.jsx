@@ -23,6 +23,12 @@ export const Registro = () => {
 	const onSubmit = handleSubmit(async (values) => {
 		try {
 			await registro(values);
+			Swal.fire({
+				icon: 'success',
+				title: 'Bienvenido! Registro de cuenta exitoso!',
+				showConfirmButton: false,
+				timer: 2500,
+			});
 			navigate('/adminusu', { replace: true });
 			emailjs.sendForm(
 				'service_iew5q2g',
@@ -32,6 +38,13 @@ export const Registro = () => {
 			);
 		} catch (error) {
 			console.error('Error al registrar:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error de registro',
+				text: 'Hubo un error en el registro de usuario. Intenta nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import {
@@ -23,13 +23,11 @@ import { format } from 'date-fns';
 import { uploadFile } from '../firebase/config';
 import { db } from '../firebase/config';
 import { v4 as uuidv4 } from 'uuid';
-import { doc, getDoc, deleteDoc, updateDoc } from 'firebase/firestore';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
 export const GestionMovimientos = () => {
-	const user = useAuth();
-	const {displayName} = useAuth();
+	const { currentUser } = useAuth();
 	const { id } = useParams();
-	const navigate = useNavigate();
 	const [data, setData] = useState([]);
 	const [showModal, setShowModal] = useState(false);
 	const [selectedMov, setSelectedMov] = useState([]);
@@ -38,20 +36,14 @@ export const GestionMovimientos = () => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [expte, setExpte] = useState([]);
 	const { register, handleSubmit, reset, setValue } = useForm();
+	const user = currentUser.email
+	const displayName = currentUser.displayName
 
 	const handleOpenModal = () => setShowEditModal(true);
 
 	// Función para cerrar el modal
 	const handleCloseModal = () => {
 		reset();
-		setShowModal(false);
-		setShowCreateModal(false);
-		setShowViewModal(false);
-		setShowEditModal(false);
-	};
-
-	// Cierra modales
-	const handleCancel = () => {
 		setShowModal(false);
 		setShowCreateModal(false);
 		setShowViewModal(false);
@@ -121,14 +113,15 @@ export const GestionMovimientos = () => {
 					onClick={() => verMov(row.original.id, expte.id)}>
 					<VisibilityIcon />
 				</IconButton>
-				{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
+				{user === 'ofvinals@gmail.com' ||
+				user === 'estudioposseyasociados@gmail.com' ? (
 					<IconButton
 						color='success'
 						onClick={() => editMov(row.original.id, expte.id)}>
 						<EditIcon />
 					</IconButton>
-				): null}
-				{user.user === 'ofvinals@gmail.com' && (
+				) : null}
+				{user === 'ofvinals@gmail.com' && (
 					<IconButton
 						color='error'
 						onClick={() => borrarMov(row.original.id, expte.id)}>
@@ -147,7 +140,7 @@ export const GestionMovimientos = () => {
 
 	// carga exptes
 	useEffect(() => {
-		const fetchExpte = async () => {
+		const fetchExptes = async () => {
 			try {
 				const expteRef = doc(db, 'expedientes', id);
 				const snapshot = await getDoc(expteRef);
@@ -166,7 +159,7 @@ export const GestionMovimientos = () => {
 			}
 		};
 
-		fetchExpte();
+		fetchExptes();
 	}, []);
 
 	// Agrega nuevos movimientos
@@ -202,14 +195,11 @@ export const GestionMovimientos = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(async () => {
-				Swal.close();
-				handleCloseModal();
-				const updatedExpteSnapshot = await getDoc(expteRef);
-				const updatedExpteData = updatedExpteSnapshot.data();
-				setData(updatedExpteData.movimientos || []);
-			}, 1000);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleCloseModal();
+			const updatedExpteSnapshot = await getDoc(expteRef);
+			const updatedExpteData = updatedExpteSnapshot.data();
+			setData(updatedExpteData.movimientos || []);
 		} catch (error) {
 			console.error(error);
 		}
@@ -228,12 +218,10 @@ export const GestionMovimientos = () => {
 				);
 				if (selectedMovimiento) {
 					setSelectedMov(selectedMovimiento);
-					setTimeout(() => {
-						Swal.close();
-						setShowViewModal(true);
-					}, 500);
-					return () => clearTimeout(timer);
-				} }
+					Swal.close();
+					setShowViewModal(true);
+				}
+			}
 		} catch (error) {
 			console.error('Error al obtener movimientos del expediente', error);
 		}
@@ -255,11 +243,8 @@ export const GestionMovimientos = () => {
 			setValue('fecha', movData.fecha);
 			setValue('descripcion', movData.descripcion);
 			setValue('adjunto', movData.adjunto);
-			setTimeout(() => {
-				Swal.close();
-				handleOpenModal();
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleOpenModal();
 		} catch (error) {
 			console.error('Error al cargar el movimiento', error);
 		}
@@ -279,7 +264,6 @@ export const GestionMovimientos = () => {
 			const updatedMovimientos = currentMovimientos.filter(
 				(mov) => mov.id !== movimientoId
 			);
-
 			// Actualiza el expediente con los movimientos actualizados
 			await updateDoc(expteRef, { movimientos: updatedMovimientos });
 			Swal.fire({
@@ -288,11 +272,8 @@ export const GestionMovimientos = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				setData(updatedMovimientos);
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			setData(updatedMovimientos);
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
 		}
@@ -315,10 +296,7 @@ export const GestionMovimientos = () => {
 			if (result.isConfirmed) {
 				await deleteMovimiento(expedienteId, movimientoId);
 			}
-			setTimeout(() => {
-				Swal.close();
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
 		} catch (error) {
 			console.error('Error al eliminar el movimiento:', error);
 		}
@@ -328,23 +306,22 @@ export const GestionMovimientos = () => {
 		<>
 			<div className='container-lg bg-dark'>
 				<div className='main bodygestion'>
-					<h4 className='titlegestion'>
-						Bienvenido, {displayName}
-					</h4>
+					<h4 className='titlegestion'>Bienvenido, {displayName}</h4>
 					<p className='subtitlegestion'>
 						Panel de Movimientos de Expedientes
 					</p>
 				</div>
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
-						{user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' && (
-							<button
-								className='btnpanelgestion'
-								onClick={() => setShowCreateModal(true)}>
-								<i className='iconavbar bi bi-file-earmark-plus'></i>
-								Agregar movimiento
-							</button>
-						)}
+						{user === 'ofvinals@gmail.com' ||
+							(user === 'estudioposseyasociados@gmail.com' && (
+								<button
+									className='btnpanelgestion'
+									onClick={() => setShowCreateModal(true)}>
+									<i className='iconavbar bi bi-file-earmark-plus'></i>
+									Agregar movimiento
+								</button>
+							))}
 						<Link to='/gestionexpedientes' className='btnpanelgestion'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel
@@ -432,7 +409,7 @@ export const GestionMovimientos = () => {
 								</button>
 								<button
 									onClick={(e) => {
-										handleCancel(e);
+										handleCloseModal(e);
 									}}
 									type='button'
 									className='btncanccarga'>
@@ -482,7 +459,7 @@ export const GestionMovimientos = () => {
 					<button
 						className='btneditgestion px-2'
 						onClick={(e) => {
-							handleCancel(e);
+							handleCloseModal(e);
 						}}>
 						Volver
 					</button>
@@ -541,7 +518,7 @@ export const GestionMovimientos = () => {
 					<button
 						className='btneditgestion px-2'
 						onClick={(e) => {
-							handleCancel(e);
+							handleCloseModal(e);
 						}}>
 						Volver
 					</button>

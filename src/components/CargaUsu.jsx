@@ -4,19 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import { Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
-import { useAuth } from '../context/AuthContext';
 import { useForm } from 'react-hook-form';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
+import { collection, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const CargaUsu = () => {
-	const user = useAuth();
 	const navigate = useNavigate();
 	const { register, handleSubmit } = useForm();
 	const [showModal, setShowModal] = useState(true);
-
-	// Función para abrir el modal
-	const handleOpenModal = () => setShowModal(true);
 
 	// Función para cerrar el modal
 	const handleCloseModal = () => {
@@ -35,14 +30,17 @@ export const CargaUsu = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-				navigate('/gestionusuarios');
-			}, 500);
-			return () => clearTimeout(timer);
+			Swal.close();
+			handleCloseModal();
+			navigate('/gestionusuarios');
 		} catch (error) {
-			console.error('Error al eliminar el movimiento:', error);
+			console.error('Error al registrar el usuario:', error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al cargar el usuario. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

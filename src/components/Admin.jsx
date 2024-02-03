@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import Swal from 'sweetalert2';
 import '../css/Admin.css';
 import { Notas } from './Notas';
+import Swal from 'sweetalert2';
 
 export const Admin = () => {
-	const user = useAuth();
-	const { displayName } = useAuth();
-	const { logout } = useAuth();
+	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
+	const user = currentUser.email
+	const displayName = currentUser.displayName
+	console.log(currentUser.email)
+	
+	useEffect(() => {
+		if (
+			!user ||
+			(user !== 'ofvinals@gmail.com' &&
+				user !== 'estudioposseyasociados@gmail.com')
+		) {
+			navigate('/adminusu');
+		}
+	}, []);
 
-	const handleLogOut = () => {
-		logout();
+	const handleLogOut = async () => {
+		await logout();
 		Swal.fire({
 			icon: 'success',
 			title: 'Su sesion fue cerrada!',
@@ -26,7 +37,7 @@ export const Admin = () => {
 		<>
 			<div className='container-lg bodyadmin'>
 				<div className='main px-3 '>
-					<h4 className='titlead'>Bienvenido de nuevo, {displayName}</h4>
+					<h4 className='titlead'>Bienvenido de nuevo, {displayName} </h4>
 					<h3 className='subtitleadusu'>Panel de Administracion</h3>
 				</div>
 
@@ -47,7 +58,7 @@ export const Admin = () => {
 						<i className='iconavbar bi bi-coin'></i>
 						Gestionar Gastos
 					</Link>
-					{!user || user.user === 'ofvinals@gmail.com' ? (
+					{!user || user === 'ofvinals@gmail.com' ? (
 						<Link className='botonadm' to='/gestioncaja'>
 							<i className='iconavbar bi bi-cash-coin'></i>
 							Gestion de Caja

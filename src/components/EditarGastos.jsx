@@ -1,7 +1,5 @@
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Editar.css';
 import Swal from 'sweetalert2';
@@ -17,11 +15,10 @@ import {
 } from 'firebase/firestore';
 
 export const EditarGastos = ({}) => {
-	const user = useAuth();
 	const { id } = useParams();
 	const navigate = useNavigate();
 	const [exptes, setExptes] = useState([]);
-	const { register, handleSubmit, setValue, watch, unregister } = useForm();
+	const { register, handleSubmit, setValue, watch } = useForm();
 	const [showModal, setShowModal] = useState(false);
 	const [selectedExpteCaratula, setSelectedExpteCaratula] = useState('');
 
@@ -35,7 +32,7 @@ export const EditarGastos = ({}) => {
 	};
 
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchExptes = async () => {
 			try {
 				const exptesRef = collection(db, 'expedientes');
 				const fetchedExptes = await getDocs(exptesRef);
@@ -47,10 +44,9 @@ export const EditarGastos = ({}) => {
 				console.error('Error al obtener expedientes:', error);
 			}
 		};
-		fetchData();
+		fetchExptes();
 	}, []);
 
-	// Función para cargar los datos de gastos al abrir la página
 	useEffect(() => {
 		async function loadGasto() {
 			try {
@@ -65,11 +61,8 @@ export const EditarGastos = ({}) => {
 				setValue('comprobante', gastoData.comprobante);
 				setValue('monto', gastoData.monto);
 				setValue('estado', gastoData.estado);
-				setTimeout(() => {
-					Swal.close();
-					handleOpenModal();
-				}, 500);
-				return () => clearTimeout(timer);
+				Swal.close();
+				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el gasto', error);
 			}
@@ -125,13 +118,17 @@ export const EditarGastos = ({}) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			setTimeout(() => {
-				Swal.close();
-				handleCloseModal();
-				navigate('/gestiongastos');
-			}, 500);
+			Swal.close();
+			handleCloseModal();
+			navigate('/gestiongastos');
 		} catch (error) {
 			console.error(error);
+			Swal.fire({
+				icon: 'error',
+				title: 'Error al editar el gasto. Intente nuevamente!',
+				showConfirmButton: false,
+				timer: 1500,
+			});
 		}
 	});
 

@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect }from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import {
 	MaterialReactTable,
 	useMaterialReactTable,
@@ -10,21 +10,15 @@ import { Visibility as VisibilityIcon } from '@mui/icons-material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
-import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
-import { Modal, Form } from 'react-bootstrap';
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config.js';
 
 export const CajasArchivadas = () => {
-	const user = useAuth();
-	const {displayName} = useAuth();
-	const { id } = useParams();
-	const navigate = useNavigate();
+	const { displayName } = useAuth();
 	const [data, setData] = useState([]);
-	const [caja, setCaja] = useState([]);
-	const [showVerCaja, setShowVerCaja] = useState(false);
+
 	const meses = [
 		'Enero',
 		'Febrero',
@@ -40,13 +34,8 @@ export const CajasArchivadas = () => {
 		'Diciembre',
 	];
 
-	// Cierra modales
-	const handleCancel = () => {
-		setShowVerCaja(false);
-	};
-
 	useEffect(() => {
-		const fetchData = async () => {
+		const fetchCajas = async () => {
 			try {
 				Swal.showLoading();
 				const cajasRef = collection(db, 'cajas');
@@ -56,21 +45,17 @@ export const CajasArchivadas = () => {
 				});
 				// Obtener el mes actual
 				const mesActual = new Date().getMonth() + 1;
-
 				// Filtrar los datos para mostrar solamente los meses pasados
 				const cajasPasadas = fetchedCajas.filter(
 					(caja) => caja.mes < mesActual
 				);
-				setTimeout(() => {
-					Swal.close();
-					setData(cajasPasadas);
-				}, 1000);
+				Swal.close();
+				setData(cajasPasadas);
 			} catch (error) {
 				console.error('Error al obtener caja', error);
 			}
 		};
-
-		fetchData();
+		fetchCajas();
 	}, []);
 
 	const formatValue = (value) => {
@@ -219,25 +204,11 @@ export const CajasArchivadas = () => {
 			</Box>
 		),
 	});
-
 	const darkTheme = createTheme({
 		palette: {
 			mode: 'dark',
 		},
 	});
-
-	// funcion para ver movimientos de caja en Modal
-	async function verCaja(id) {
-		Swal.showLoading();
-		const cajaRef = doc(db, 'cajas', id);
-		const snapshot = await getDoc(cajaRef);
-		const cajaData = snapshot.data();
-		setCaja(cajaData);
-		setTimeout(() => {
-			Swal.close();
-			setShowVerCaja(true);
-		}, 500);
-	}
 
 	return (
 		<>
@@ -273,54 +244,6 @@ export const CajasArchivadas = () => {
 					</div>
 				</div>
 			</div>
-
-			{/* Modal para ver movimiento de caja seleccionada */}
-			<Modal show={showVerCaja} onHide={() => setShowVerCaja(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title>Ver Movimiento de Caja</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3' id='fecha'>
-							<Form.Label>Fecha: {caja.fecha}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='concepto'>
-							<Form.Label>Concepto: {caja.concepto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='monto'>
-							<Form.Label>Monto: $ {caja.monto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='comprobante'>
-							<Form.Label>
-								Comprobante Adjunto:{' '}
-								{caja.fileUrl ? (
-									<a
-										href={caja.fileUrl}
-										target='_blank'
-										className='text-white'
-										rel='noopener noreferrer'>
-										Ver Comprobante
-									</a>
-								) : (
-									'Sin comprobante adjunto'
-								)}
-							</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3' id='estado'>
-							<Form.Label>Estado: {caja.estado}</Form.Label>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btneditgestion px-2'
-						onClick={() => {
-							handleCancel();
-						}}>
-						Volver
-					</button>
-				</Modal.Footer>
-			</Modal>
 		</>
 	);
 };

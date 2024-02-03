@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -10,15 +10,15 @@ import '../css/Header.css';
 export const Header = () => {
 	const [estadoLogin, setEstadoLogin] = useState('');
 	const [expand, setExpand] = useState(false);
-	const user = useAuth();
-	const { logout } = useAuth();
+	const { currentUser, logout } = useAuth();
 	const navigate = useNavigate();
+	const user = currentUser ? currentUser.email : null;
 
 	useEffect(() => {
-		if (!user.user) {
+		if (!user) {
 			setEstadoLogin('No hay usuario logueado');
 		} else {
-			setEstadoLogin(user.user);
+			setEstadoLogin(user);
 		}
 	}, [user]);
 
@@ -30,8 +30,14 @@ export const Header = () => {
 		setExpand(false);
 	};
 
-	const handleLogOut = () => {
-		logout();
+	const handleLogOut = async () => {
+		await logout();
+		Swal.fire({
+			icon: 'success',
+			title: 'Su sesion fue cerrada!',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 		navigate('/home');
 	};
 
@@ -109,7 +115,7 @@ export const Header = () => {
 									<i className='iconavbar bi bi-person-fill-check'></i>
 									Panel de Usuarios
 								</Link>
-								{!user || user.user === 'ofvinals@gmail.com' || user.user === 'estudioposseyasociados@gmail.com' ? (
+								{user === 'ofvinals@gmail.com' || user === 'estudioposseyasociados@gmail.com' ? (
 									<Link
 										className='btnnav'
 										to='/admin'
@@ -122,7 +128,7 @@ export const Header = () => {
 									<p className='estadolog'>
 										Estas logueado como: {estadoLogin}
 									</p>
-									{user.user ? (
+									{user ? (
 										<button
 											onClick={(e) => {handleNavCollapse(); handleLogOut()}}
 											className='botonlogout'>
@@ -141,13 +147,10 @@ export const Header = () => {
 									<Link
 										to='/registro'
 										className={`botonnavreg ${
-											user.user ? 'regdisable' : ''
+											user ? 'regdisable' : ''
 										}`}
 										onClick={(e) => {
 											handleNavCollapse();
-											if (user.user) {
-												e.preventDefault();
-											}
 										}}>
 										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme
