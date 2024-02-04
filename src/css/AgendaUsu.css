@@ -145,6 +145,13 @@
 	font-weight: 400;
 	color: rgb(207, 207, 207);
 }
+.horario{
+	text-align: center;
+	font-size: 80%;
+   margin-bottom: 20px;
+	font-weight: 400;
+	color: rgb(207, 207, 207);
+}
 .formagusu {
 	display: flex;
 	justify-content: center;

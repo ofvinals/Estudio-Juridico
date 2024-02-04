@@ -6,6 +6,7 @@ import { Button } from 'react-bootstrap';
 import '../css/Registro.css';
 import { useAuth } from '../context/AuthContext';
 import emailjs from '@emailjs/browser';
+import Swal from 'sweetalert2';
 
 export const Registro = () => {
 	const { registro } = useAuth();
@@ -22,14 +23,15 @@ export const Registro = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
+			Swal.showLoading();
 			await registro(values);
+			Swal.close();
 			Swal.fire({
 				icon: 'success',
 				title: 'Bienvenido! Registro de cuenta exitoso!',
 				showConfirmButton: false,
 				timer: 2500,
 			});
-			navigate('/adminusu', { replace: true });
 			emailjs.sendForm(
 				'service_iew5q2g',
 				'template_fgl8bsq',

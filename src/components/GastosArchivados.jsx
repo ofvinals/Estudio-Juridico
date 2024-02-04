@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
-import { Link, useParams } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Gestion.css';
@@ -13,21 +13,15 @@ import { Visibility as VisibilityIcon } from '@mui/icons-material';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { MRT_Localization_ES } from 'material-react-table/locales/es';
-import { Form, Modal } from 'react-bootstrap';
-import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { getDocs, collection } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const GastosArchivados = () => {
-	const { displayName, user } = useAuth();
-	const { id } = useParams();
+	const { currentUser } = useAuth();
 	const [data, setData] = useState([]);
 	const [gasto, setGasto] = useState([]);
-	const [showVerGasto, setShowVerGasto] = useState(false);
-
-	// Cierra modales
-	const handleCancel = () => {
-		setShowVerGasto(false);
-	};
+	const user = currentUser.email;
+	const displayName = currentUser.displayName;
 
 	useEffect(() => {
 		const fetchGastos = async () => {
@@ -147,7 +141,9 @@ export const GastosArchivados = () => {
 				}}>
 				<IconButton
 					color='primary'
-					onClick={() => verGasto(row.original.id)}>
+					onClick={() => {
+						navigate(`/vergasto/${row.original.id}`);
+					}}>
 					<VisibilityIcon />
 				</IconButton>
 			</Box>
@@ -159,15 +155,6 @@ export const GastosArchivados = () => {
 			mode: 'dark',
 		},
 	});
-
-	// funcion para ver movimientos en Modal
-	async function verGasto(id) {
-		const gastosRef = doc(db, 'gastos', id);
-		const snapshot = await getDoc(gastosRef);
-		const gastoData = snapshot.data();
-		setGasto(gastoData);
-		setShowVerGasto(true);
-	}
 
 	return (
 		<>
@@ -199,53 +186,6 @@ export const GastosArchivados = () => {
 					</div>
 				</div>
 			</div>
-
-			{/* Modal para ver gasto seleccionado */}
-			<Modal show={showVerGasto} onHide={() => setShowVerGasto(false)}>
-				<Modal.Header closeButton>
-					<Modal.Title className='text-white'>
-						Ver Gasto seleccionado
-					</Modal.Title>
-				</Modal.Header>
-				<Modal.Body>
-					<Form>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Nro Expte: {gasto.expte}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Concepto: {gasto.concepto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>Monto: $ {gasto.monto}</Form.Label>
-						</Form.Group>
-						<Form.Group className='mb-3 text-white' controlId=''>
-							<Form.Label>
-								Comprobante Adjunto:{' '}
-								{gasto.fileUrl ? (
-									<a
-										href={gasto.fileUrl}
-										target='_blank'
-										className='text-white'
-										rel='noopener noreferrer'>
-										Ver Comprobante
-									</a>
-								) : (
-									'Sin comprobante adjunto'
-								)}
-							</Form.Label>
-						</Form.Group>
-					</Form>
-				</Modal.Body>
-				<Modal.Footer>
-					<button
-						className='btneditgestion px-2'
-						onClick={() => {
-							handleCancel();
-						}}>
-						Volver
-					</button>
-				</Modal.Footer>
-			</Modal>
 		</>
 	);
 };

@@ -11,6 +11,9 @@ import {
 	updatePassword,
 	updateProfile,
 } from 'firebase/auth';
+import { useNavigate } from 'react-router-dom';
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase/config';
 
 // crea contexto
 const AuthContext = createContext();
@@ -29,6 +32,7 @@ export const AuthProvider = ({ children }) => {
 	const [accessToken, setAccessToken] = useState(null);
 	const [isAuthenticated, setIsAuthenticated] = useState(false);
 	const [isLoading, setIsLoading] = useState(true);
+	const navigate = useNavigate();
 
 	// FUNCION REGISTRO DE USUARIOS
 	const registro = async (values) => {
@@ -40,6 +44,16 @@ export const AuthProvider = ({ children }) => {
 			displayName: displayNameValue,
 			phoneNumber: phoneNumberValue,
 		});
+		const usuariosRef = collection(db, 'usuarios');
+		await addDoc(usuariosRef, values);
+		if (
+			currentUser.email === 'ofvinals@gmail.com' ||
+			currentUser.email === 'estudioposseyasociados@gmail.com'
+		) {
+			navigate('/admin', { replace: true });
+		} else {
+			navigate('/adminusu', { replace: true });
+		}
 	};
 
 	// FUNCION LOGIN CON CORREO ELECTRONICO
@@ -47,6 +61,14 @@ export const AuthProvider = ({ children }) => {
 		await signInWithEmailAndPassword(auth, data.email, data.password);
 		const currentUser = auth.currentUser;
 		setCurrentUser(currentUser);
+		if (
+			currentUser.email === 'ofvinals@gmail.com' ||
+			currentUser.email === 'estudioposseyasociados@gmail.com'
+		) {
+			navigate('/admin', { replace: true });
+		} else {
+			navigate('/adminusu', { replace: true });
+		}
 	};
 
 	// FUNCION LOGIN CON CUENTA GOOGLE
@@ -62,12 +84,19 @@ export const AuthProvider = ({ children }) => {
 			.then((result) => {
 				const credential = GoogleAuthProvider.credentialFromResult(result);
 				const accessToken = credential.accessToken;
-				console.log(result.user.providerData[0])
+				console.log(result.user);
 
-				const currentUser = result.user;
-				// Ahora currentUser debe tener la información del usuario, incluido el correo electrónico
+				const currentUser = result.user.providerData[0];
 				setCurrentUser(currentUser);
 				setAccessToken(accessToken);
+				if (
+					currentUser.email === 'ofvinals@gmail.com' ||
+					currentUser.email === 'estudioposseyasociados@gmail.com'
+				) {
+					navigate('/admin', { replace: true });
+				} else {
+					navigate('/adminusu', { replace: true });
+				}
 			})
 			.catch((error) => {
 				console.error(error);
@@ -109,7 +138,7 @@ export const AuthProvider = ({ children }) => {
 				console.log(currentUser);
 				setCurrentUser(currentUser);
 				setIsAuthenticated(true);
-				setAccessToken(accessToken)
+				setAccessToken(accessToken);
 				setIsLoading(false);
 			} else {
 				console.log('No hay usuario autenticado en Firebase');

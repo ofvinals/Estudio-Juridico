@@ -44,8 +44,6 @@ import { VerTurno } from '../src/components/VerTurno';
 import { VerUsu } from '../src/components/VerUsu';
 import { VerGasto } from '../src/components/VerGasto';
 
-import { BorraUsu } from '../src/components/BorraUsu';
-
 import { ExptesArchivados } from '../src/components/ExptesArchivados';
 import { GastosArchivados } from '../src/components/GastosArchivados';
 import { CajasArchivadas } from '../src/components/CajasArchivadas';
@@ -53,7 +51,6 @@ import { CajasArchivadas } from '../src/components/CajasArchivadas';
 import { Pagos } from '../src/components/Pagos';
 import { GoogleCalendar } from '../src/components/GoogleCalendar';
 import {Notas} from '../src/components/Notas';
-import Tabla from '../src/components/Tabla'
 
 export const AppRouter = () => {
 	return (
@@ -126,9 +123,6 @@ export const AppRouter = () => {
 							<Route path='/verturno/:id' element={<VerTurno />}></Route>
 							<Route path='/verusu/:id' element={<VerUsu />}></Route>
 							<Route path='/vergasto/:id' element={<VerGasto />}></Route>
-							<Route path='/tabla' element={<Tabla />}></Route>
-							<Route path='/borrausu/:id' element={<BorraUsu />}></Route>
-
 							<Route
 								path='/gestionusuarios'
 								element={<GestionUsuarios />}></Route>

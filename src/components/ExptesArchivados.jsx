@@ -12,9 +12,12 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config';
 
 export const ExptesArchivados = () => {
-	const { displayName } = useAuth();
+	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
+	const user = currentUser.email
+	const displayName = currentUser.displayName
+
 	useEffect(() => {
 		const fetchData = async () => {
 			try {

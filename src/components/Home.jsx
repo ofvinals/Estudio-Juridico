@@ -5,7 +5,7 @@ import '../css/Home.css';
 
 export const Home = () => {
 	return (
-		<div className='bg-dark container-lg'>
+		<div className='container-lg'>
 			<a
 				href='https://api.whatsapp.com/send?phone=+543814581382&text=Hola!%20Quiero%20consultar%20por%20servicios%20de%20asesoramiento%20legal.%20'
 				className='float'
@@ -124,9 +124,9 @@ export const Home = () => {
 				<div className='w-75 d-flex flex-column justify-content-center align-content-center'>
 					<p className='titlesect4'>PORQUE ELEGIRNOS</p>
 					<p className='textsec4'>
-						Mas de 35 años de ejercicio de la abogacia avalan el profesionalismo con el que llevamos a cabo el
-						servicio de asesoría legal, nos caracteriza la seriedad en la
-						relacion con nuestros clientes
+						Mas de 35 años de ejercicio de la abogacia avalan el profesionalismo con el que llevamos a cabo un
+						servicio de asesoría legal de excelencia. Nos caracteriza la seriedad y responsabilidad en la
+						relacion con nuestros clientes.-
 					</p>
 				</div>
 			</div>

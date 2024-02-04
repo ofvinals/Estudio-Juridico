@@ -16,9 +16,10 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/config.js';
 
 export const CajasArchivadas = () => {
-	const { displayName } = useAuth();
+	const { currentUser } = useAuth();
 	const [data, setData] = useState([]);
-
+	const user = currentUser.email
+	const displayName = currentUser.displayName
 	const meses = [
 		'Enero',
 		'Febrero',

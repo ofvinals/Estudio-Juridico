@@ -10,17 +10,16 @@ export const Admin = () => {
 	const navigate = useNavigate();
 	const user = currentUser.email
 	const displayName = currentUser.displayName
-	console.log(user)
 	
-	// useEffect(() => {
-	// 	if (
-	// 		!user ||
-	// 		(user !== 'ofvinals@gmail.com' ||
-	// 			user !== 'estudioposseyasociados@gmail.com')
-	// 	) {
-	// 		navigate('/adminusu');
-	// 	}
-	// }, []);
+	useEffect(() => {
+		if (
+			!user ||
+			(user !== 'ofvinals@gmail.com' &&
+				user !== 'estudioposseyasociados@gmail.com')
+		) {
+			navigate('/adminusu');
+		}
+	}, []);
 
 	const handleLogOut = async () => {
 		await logout();

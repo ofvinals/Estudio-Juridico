@@ -19,7 +19,7 @@ export const GoogleCalendar = () => {
 	const [end, setEnd] = useState(new Date());
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
-	const { loginWithGoogle } = useAuth();
+	const { loginWithGoogle, accessToken } = useAuth();
 
 	const handleCloseModal = () => {
 		setShowModal(false);
@@ -186,6 +186,7 @@ export const GoogleCalendar = () => {
 						</>
 					) : (
 						<>
+						<p className='text-center'>Para cargar eventos en el calendario del Estudio debes estar logueado con una cuenta de Google</p>
 							<button
 								className='botongoogle'
 								onClick={(e) => handleGoogle(e)}>

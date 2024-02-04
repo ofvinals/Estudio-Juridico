@@ -219,8 +219,11 @@ export const AgendaUsu = () => {
 				<div className='formagusu'>
 					<div>
 						<h1 className='titleagusu'>Turnos Online</h1>
+						<p className='horario'>
+							(Horario de atencion al publico: Lunes a Jueves de 09 a 19hs.)
+						</p>
 						<p className='subtitleagusu'>
-							Seleccioná el dia y hora de tu preferencia:{' '}
+							Seleccioná el dia y hora de tu preferencia:
 						</p>
 
 						<LocalizationProvider

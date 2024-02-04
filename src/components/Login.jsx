@@ -20,16 +20,7 @@ export const Login = () => {
 	const onSubmit = handleSubmit(async (data) => {
 		try {
 			await login(data);
-			const user = currentUser ? currentUser.email : null;
 
-			if (
-				user === 'ofvinals@gmail.com' ||
-				user === 'estudioposseyasociados@gmail.com'
-			) {
-				navigate('/admin', { replace: true });
-			} else {
-				navigate('/adminusu', { replace: true });
-			}
 			Swal.fire({
 				icon: 'success',
 				title: 'Inicio de sesión exitoso!',
@@ -60,15 +51,6 @@ export const Login = () => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-
-			if (
-				user === 'ofvinals@gmail.com' ||
-				user === 'estudioposseyasociados@gmail.com'
-			) {
-				navigate('/admin', { replace: true });
-			} else {
-				navigate('/adminusu', { replace: true });
-			}
 		} catch (error) {
 			console.error('Error en el inicio de sesión:', error);
 			Swal.fire({
@@ -83,9 +65,7 @@ export const Login = () => {
 
 	useEffect(() => {
 		if (isAuthenticated) {
-			// El estado de carga ya no es necesario aquí, ya que se maneja con 'isLoading'
 			const user = currentUser?.email;
-
 			if (user === 'ofvinals@gmail.com') {
 				navigate('/admin');
 			} else {
