@@ -20,6 +20,7 @@ export const GoogleCalendar = () => {
 	const [eventName, setEventName] = useState('');
 	const [eventDescription, setEventDescription] = useState('');
 	const { loginWithGoogle, accessToken } = useAuth();
+	const [loggedIn, setLoggedIn] = useState(false);
 
 	const handleCloseModal = () => {
 		setShowModal(false);
@@ -30,6 +31,7 @@ export const GoogleCalendar = () => {
 		try {
 			e.preventDefault();
 			await loginWithGoogle();
+			navigate ('/googlecalendar')
 			setShowModal(true);
 		} catch (error) {
 			console.error('Error al iniciar sesión con Google:', error);
