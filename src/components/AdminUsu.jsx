@@ -30,7 +30,6 @@ export const AdminUsu = () => {
 		};
 		fetchUsuario();
 	}, []);
-	console.log(userId)
 
 	const handleLogOut = async () => {
 		await logout();

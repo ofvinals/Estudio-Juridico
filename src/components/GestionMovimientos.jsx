@@ -271,7 +271,6 @@ export const GestionMovimientos = () => {
 			const expteSnapshot = await getDoc(expteRef);
 			const expedienteData = expteSnapshot.data();
 			const currentMovimientos = expedienteData.movimientos || [];
-			console.log(currentMovimientos);
 			// Filtra los movimientos para excluir el que se desea eliminar
 			const updatedMovimientos = currentMovimientos.filter(
 				(mov) => mov.id !== movimientoId

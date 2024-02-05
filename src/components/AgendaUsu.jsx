@@ -109,7 +109,6 @@ export const AgendaUsu = () => {
 						collection(db, 'turnos'),
 						nuevoTurno
 					);
-					console.log('Documento agregado con ID: ', turnoDocRef.id);
 					await Swal.fire({
 						icon: 'success',
 						title: 'Su turno fue registrado!',

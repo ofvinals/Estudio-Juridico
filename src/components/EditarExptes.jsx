@@ -38,7 +38,6 @@ export const EditarExptes = ({}) => {
 			try {
 				const expteRef = doc(db, 'expedientes', id);
 				const snapshot = await getDoc(expteRef);
-				console.log('Datos del expediente cargados:', snapshot.data());
 				const expteData = snapshot.data();
 				setValue('cliente', expteData.cliente);
 				setValue('nroexpte', expteData.nroexpte);

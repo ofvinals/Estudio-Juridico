@@ -62,7 +62,6 @@ export const CargaCajas = () => {
 				estado: values.estado,
 			};
 			const cajaDocRef = await addDoc(collection(db, 'cajas'), cajaData);
-			console.log('Documento agregado con ID: ', cajaDocRef.id);
 			Swal.fire({
 				icon: 'success',
 				title: 'Caja registrada correctamente',

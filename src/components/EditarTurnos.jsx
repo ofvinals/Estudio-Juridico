@@ -37,7 +37,6 @@ export const EditarTurnos = ({}) => {
 				});
 				const turnoRef = doc(db, 'turnos', id);
 				const snapshot = await getDoc(turnoRef);
-				console.log('Datos del turno cargado:', snapshot.data());
 				const turnoData = snapshot.data();
 				setValue('turno', turnoData.turno);
 				setValue('email', turnoData.email);

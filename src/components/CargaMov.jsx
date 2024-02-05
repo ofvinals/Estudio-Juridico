@@ -17,7 +17,6 @@ export const CargaMov = () => {
 
 	// Función para cerrar el modal
 	const handleCloseModal = (movId) => {
-		console.log(movId);
 		setShowModal(false);
 	};
 
@@ -27,7 +26,6 @@ export const CargaMov = () => {
 				const exptesRef = collection(db, 'expedientes');
 				const fetchedExptes = await getDocs(exptesRef);
 				setExpte(fetchedExptes);
-				console.log(expte);
 			} catch (error) {
 				console.error('Error al obtener expedientes', error);
 			}

@@ -19,7 +19,6 @@ export const EditarMov = () => {
 
 	// Función para cerrar el modal
 	const handleCloseModal = (movId) => {
-		console.log(movId);
 		setShowModal(false);
 		navigate(`/gestionmovimientos/${movId}`, { replace: true });
 	};

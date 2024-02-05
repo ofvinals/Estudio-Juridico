@@ -100,17 +100,14 @@ export const CargaGastos = () => {
 	// Función para manejar el cambio en el select de número de expediente
 	const handleExpteSelectChange = async (e) => {
 		const selectedExpteNro = e.target.value;
-		console.log(selectedExpteNro);
 		const selectedExpte = exptes.find(
 			(expte) => expte.nroexpte === selectedExpteNro
 		);
-		console.log(selectedExpte);
 		// Obtén la carátula del expediente seleccionado
 		const caratulaToUpdate = selectedExpte ? selectedExpte.caratula : '';
 		// Actualiza la carátula de manera asíncrona
 		await setSelectedExpteCaratula(caratulaToUpdate);
 		// Continúa con otras operaciones después de asegurarte de que la carátula está actualizada
-		console.log(selectedExpteCaratula);
 	};
 
 	return (

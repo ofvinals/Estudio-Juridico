@@ -33,7 +33,6 @@ export const EditarCajas = ({}) => {
 				});
 				const cajaRef = doc(db, 'cajas', id);
 				const snapshot = await getDoc(cajaRef);
-				console.log('Datos de la caja cargada:', snapshot.data());
 				const cajaData = snapshot.data();
 				setValue('fecha', cajaData.fecha);
 				setValue('concepto', cajaData.concepto);

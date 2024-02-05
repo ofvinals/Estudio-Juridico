@@ -57,7 +57,6 @@ export const EditarGastos = ({}) => {
 				});
 				const gastoRef = doc(db, 'gastos', id);
 				const snapshot = await getDoc(gastoRef);
-				console.log('Datos del gasto cargado:', snapshot.data());
 				const gastoData = snapshot.data();
 				setValue('nroexpte', gastoData.expte);
 				setValue('caratula', gastoData.caratula);
@@ -111,7 +110,6 @@ export const EditarGastos = ({}) => {
 	}, [watch('nroexpte')]);
 
 	const onSubmit = handleSubmit(async (values) => {
-		console.log(values);
 		try {
 			Swal.fire({
 				title: 'Cargando...',
