@@ -18,7 +18,11 @@ export const VerGasto = () => {
 	useEffect(() => {
 		async function loadGasto() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const gastosRef = doc(db, 'gastos', id);
 				const snapshot = await getDoc(gastosRef);
 				const gastoData = snapshot.data();

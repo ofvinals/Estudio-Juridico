@@ -36,8 +36,8 @@ export const GestionMovimientos = () => {
 	const [showEditModal, setShowEditModal] = useState(false);
 	const [expte, setExpte] = useState([]);
 	const { register, handleSubmit, reset, setValue } = useForm();
-	const user = currentUser.email
-	const displayName = currentUser.displayName
+	const user = currentUser.email;
+	const displayName = currentUser.displayName;
 
 	const handleOpenModal = () => setShowEditModal(true);
 
@@ -165,7 +165,11 @@ export const GestionMovimientos = () => {
 	// Agrega nuevos movimientos
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const fechaFormateada = format(new Date(values.fecha), 'dd/MM/yyyy');
 			let fileDownloadUrl = null;
 
@@ -208,7 +212,11 @@ export const GestionMovimientos = () => {
 	// funcion para ver movimientos en Modal
 	async function verMov(movimientoId, expedienteId) {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const expteRef = doc(db, 'expedientes', expedienteId);
 			const snapshot = await getDoc(expteRef);
 			if (snapshot.exists()) {
@@ -230,7 +238,11 @@ export const GestionMovimientos = () => {
 	// Función para editar los datos del movimiento
 	async function editMov(movimientoId, expedienteId) {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const expteRef = doc(db, 'expedientes', expedienteId);
 			const snapshot = await getDoc(expteRef);
 			if (snapshot.exists()) {
@@ -282,7 +294,11 @@ export const GestionMovimientos = () => {
 	// Función para confirmar y luego llamar a deleteMovimiento
 	async function borrarMov(expedienteId, movimientoId) {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
 				text: 'Confirmas la eliminación del movimiento?',
@@ -314,14 +330,14 @@ export const GestionMovimientos = () => {
 				<div className='bg-dark'>
 					<div className='d-flex justify-content-around'>
 						{user === 'ofvinals@gmail.com' ||
-							(user === 'estudioposseyasociados@gmail.com' && (
-								<button
-									className='btnpanelgestion'
-									onClick={() => setShowCreateModal(true)}>
-									<i className='iconavbar bi bi-file-earmark-plus'></i>
-									Agregar movimiento
-								</button>
-							))}
+						user === 'estudioposseyasociados@gmail.com' ? (
+							<button
+								className='btnpanelgestion'
+								onClick={() => setShowCreateModal(true)}>
+								<i className='iconavbar bi bi-file-earmark-plus'></i>
+								Agregar movimiento
+							</button>
+						) : null}
 						<Link to='/gestionexpedientes' className='btnpanelgestion'>
 							<i className='iconavbar bi bi-box-arrow-left'></i>
 							Volver al Panel

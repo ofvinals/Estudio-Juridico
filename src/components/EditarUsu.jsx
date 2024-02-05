@@ -36,7 +36,11 @@ export const EditarUsu = () => {
 	useEffect(() => {
 		async function loadUser() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const usuarioRef = doc(db, 'usuarios', id);
 				const snapshot = await getDoc(usuarioRef);
 				const userData = snapshot.data();
@@ -58,7 +62,11 @@ export const EditarUsu = () => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const usuarioRef = doc(db, 'usuarios', id);
 			await updateDoc(usuarioRef, data);
 			// if (data.contraseña) {
@@ -73,7 +81,7 @@ export const EditarUsu = () => {
 				Swal.close();
 				handleCloseModal();
 		} catch (error) {
-			console.error('Error al eliminar el usuario:', error);
+			console.error('Error al editar el usuario:', error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Error al editar el usuario. Intente nuevamente!',

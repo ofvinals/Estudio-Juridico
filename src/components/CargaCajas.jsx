@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button, Modal } from 'react-bootstrap';
 import Swal from 'sweetalert2';
 import '../css/Carga.css';
@@ -39,18 +39,19 @@ export const CargaCajas = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			let fileDownloadUrl = null;
 			if (values.file && values.file[0]) {
 				const file = values.file[0];
 				fileDownloadUrl = await uploadFile(file);
 			}
 			const fechaSeleccionada = new Date(values.fecha);
-			fechaSeleccionada.setMinutes(
-				fechaSeleccionada.getMinutes() -
-					fechaSeleccionada.getTimezoneOffset()
-			);
-			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-AR');
+
+			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-ES');
 			const cajaData = {
 				fecha: fechaFormateada,
 				mes: fechaSeleccionada.getMonth() + 1,

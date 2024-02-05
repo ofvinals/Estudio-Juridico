@@ -19,7 +19,11 @@ export const VerUsu = () => {
 	useEffect(() => {
 		async function loadUsuario() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const usuarioRef = doc(db, 'usuarios', id);
 				const snapshot = await getDoc(usuarioRef);
 				const usuarioData = snapshot.data();

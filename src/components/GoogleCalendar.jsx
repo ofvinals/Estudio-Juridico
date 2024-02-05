@@ -80,14 +80,14 @@ export const GoogleCalendar = () => {
 			await addDoc(collection(db, 'turnos'), nuevoTurno);
 			await Swal.fire({
 				icon: 'success',
-				title: 'El vencimiento fue registrado!',
+				title: 'El evento fue registrado!',
 				showConfirmButton: false,
 				timer: 2500,
 			});
 			handleCloseModal();
 		} catch (error) {
 			console.log(error);
-			Swal.fire('El vencimiento no fue agendado', '', 'info');
+			Swal.fire('El evento no fue agendado', '', 'info');
 		}
 	};
 

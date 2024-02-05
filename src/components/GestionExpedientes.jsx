@@ -30,7 +30,11 @@ export const GestionExpedientes = () => {
 	useEffect(() => {
 		const fetchExptes = async () => {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const exptesRef = collection(db, 'expedientes');
 				const snapshot = await getDocs(exptesRef);
 				const fetchedExptes = snapshot.docs.map((doc) => {
@@ -149,7 +153,11 @@ export const GestionExpedientes = () => {
 	const deleteExpte = (id) => deleteDoc(doc(db, 'expedientes', id));
 	async function borrarExpte(id) {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
 				text: 'Confirmas la eliminación del expediente?',

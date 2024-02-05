@@ -147,7 +147,11 @@ export const GestionUsuarios = () => {
 	const deleteUsuario = (id) => deleteDoc(doc(db, 'usuarios', id));
 	async function borrarUsuario(id) {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
 				text: 'Confirmas la eliminacion del usuario',

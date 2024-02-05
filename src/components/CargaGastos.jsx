@@ -57,7 +57,11 @@ export const CargaGastos = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			let fileDownloadUrl = null;
 			if (values.file && values.file[0]) {
 				const file = values.file[0];

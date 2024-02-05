@@ -50,7 +50,11 @@ export const EditarGastos = ({}) => {
 	useEffect(() => {
 		async function loadGasto() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const gastoRef = doc(db, 'gastos', id);
 				const snapshot = await getDoc(gastoRef);
 				console.log('Datos del gasto cargado:', snapshot.data());
@@ -61,10 +65,23 @@ export const EditarGastos = ({}) => {
 				setValue('comprobante', gastoData.comprobante);
 				setValue('monto', gastoData.monto);
 				setValue('estado', gastoData.estado);
-				Swal.close();
+				Swal.fire({
+					icon: 'success',
+					title: 'Gasto editado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+					
+				});
 				handleOpenModal();
+				Swal.close();
 			} catch (error) {
 				console.error('Error al cargar el gasto', error);
+				Swal.fire({
+					icon: 'error',
+					title: 'Error al editar el gasto. Intente nuevamente!',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			}
 		}
 		loadGasto();
@@ -96,7 +113,11 @@ export const EditarGastos = ({}) => {
 	const onSubmit = handleSubmit(async (values) => {
 		console.log(values);
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			let fileDownloadUrl = null;
 			if (values.file && values.file[0]) {
 				const file = values.file[0];

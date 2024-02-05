@@ -6,6 +6,7 @@ import '../css/Editar.css';
 import Swal from 'sweetalert2';
 import { Modal } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { uploadFile } from '../firebase/config.js';
 import { db } from '../firebase/config';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 
@@ -25,7 +26,11 @@ export const EditarCajas = ({}) => {
 	useEffect(() => {
 		async function loadCaja() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const cajaRef = doc(db, 'cajas', id);
 				const snapshot = await getDoc(cajaRef);
 				console.log('Datos de la caja cargada:', snapshot.data());
@@ -36,10 +41,21 @@ export const EditarCajas = ({}) => {
 				setValue('monto', cajaData.monto);
 				setValue('adjunto', cajaData.file);
 				setValue('estado', cajaData.estado);
-				Swal.close();
 				handleOpenModal();
+				Swal.fire({
+					icon: 'success',
+					title: 'Caja editada correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			} catch (error) {
 				console.error('Error al cargar el caja', error);
+				Swal.fire({
+					icon: 'error',
+					title: 'Error al editar la caja. Intente nuevamente!',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			}
 		}
 		loadCaja();
@@ -47,16 +63,21 @@ export const EditarCajas = ({}) => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			let fileDownloadUrl = null;
 			if (values.file && values.file[0]) {
 				const file = values.file[0];
 				fileDownloadUrl = await uploadFile(file);
 			}
 			const fechaSeleccionada = new Date(values.fecha);
-			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-AR');
+			const fechaFormateada = fechaSeleccionada.toLocaleDateString('es-ES');
 			const cajaData = {
 				fecha: fechaFormateada,
+				mes: fechaSeleccionada.getMonth() + 1,
 				concepto: values.concepto,
 				tipo: values.tipo,
 				monto: parseInt(values.monto, 10),
@@ -71,8 +92,8 @@ export const EditarCajas = ({}) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			Swal.close();
 			handleCloseModal();
+			Swal.close();
 			navigate('/gestioncaja');
 		} catch (error) {
 			console.error(error);

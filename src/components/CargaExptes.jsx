@@ -38,7 +38,11 @@ export const CargaExptes = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try{
-		Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 		const expteRef = collection(db, 'expedientes');
 		await addDoc(expteRef, values);
 		Swal.fire({
@@ -51,6 +55,12 @@ export const CargaExptes = () => {
 		navigate('/gestionexpedientes');
 	} catch (error) {
 		console.error('Error al obtener expedientes:', error);
+		Swal.fire({
+			icon: 'error',
+			title: 'Error al registrar el expediente. Intente nuevamente!',
+			showConfirmButton: false,
+			timer: 1500,
+		});
 	}
 	});
 

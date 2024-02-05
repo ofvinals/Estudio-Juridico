@@ -37,7 +37,11 @@ export const CargaMov = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const id = window.location.pathname.split('/').pop();
 			let fileDownloadUrl = null;
 			const formattedFecha = format(new Date(values.fecha), 'dd/MM/yyyy', {

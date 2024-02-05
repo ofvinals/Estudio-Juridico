@@ -15,7 +15,6 @@ export const ExptesArchivados = () => {
 	const { currentUser } = useAuth();
 	const navigate = useNavigate();
 	const [data, setData] = useState([]);
-	const user = currentUser.email
 	const displayName = currentUser.displayName
 
 	useEffect(() => {
@@ -115,7 +114,7 @@ export const ExptesArchivados = () => {
 										color='primary'
 										onClick={() => {
 											navigate(
-												`/gestionmovimientos/${row.original._id}`
+												`/gestionmovimientos/${row.original.id}`
 											);
 										}}>
 										<VisibilityIcon />

@@ -19,7 +19,11 @@ export const VerTurno = () => {
 	useEffect(() => {
 		async function loadTurno() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const turnoRef = doc(db, 'turnos', id);
 				const snapshot = await getDoc(turnoRef);
 				const turnoData = snapshot.data();

@@ -36,7 +36,11 @@ export const GestionAgenda = () => {
 		useEffect(() => {
 		const fetchTurnos = async () => {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const turnoRef = collection(db, 'turnos');
 				const snapshot = await getDocs(turnoRef);
 				const fetchedTurnos = snapshot.docs.map((doc) => {

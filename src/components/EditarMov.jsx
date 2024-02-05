@@ -44,7 +44,11 @@ export const EditarMov = () => {
 	useEffect(() => {
 		async function loadMov() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const expteRef = doc(db, 'expedientes', expedienteId);
 				const snapshot = await getDoc(expteRef);
 				if (snapshot.exists()) {
@@ -58,10 +62,23 @@ export const EditarMov = () => {
 				setValue('fecha', formattedDate);
 				setValue('descripcion', movData.descripcion);
 				setValue('adjunto', movData.adjunto);
+
+				Swal.fire({
+					icon: 'success',
+					title: 'Movimiento editado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 				Swal.close();
 				handleOpenModal();
 			} catch (error) {
 				console.error('Error al cargar el movimiento', error);
+				Swal.fire({
+					icon: 'error',
+					title: 'Movimiento editado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			}
 		}
 		loadMov();
@@ -69,7 +86,11 @@ export const EditarMov = () => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			await updateMov(params.id, data);
 			Swal.fire({
 				icon: 'success',
@@ -80,7 +101,7 @@ export const EditarMov = () => {
 			Swal.close();
 			handleCloseModal();
 		} catch (error) {
-			console.error('Error al eliminar el movimiento:', error);
+			console.error('Error al editar el movimiento:', error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Error al carga el movimiento. Intente nuevamente!',

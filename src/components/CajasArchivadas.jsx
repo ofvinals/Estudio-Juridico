@@ -1,6 +1,6 @@
-import React, { useState, useEffect }from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext.jsx';
-import { Link} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import {
 	MaterialReactTable,
 	useMaterialReactTable,
@@ -18,8 +18,8 @@ import { db } from '../firebase/config.js';
 export const CajasArchivadas = () => {
 	const { currentUser } = useAuth();
 	const [data, setData] = useState([]);
-	const user = currentUser.email
-	const displayName = currentUser.displayName
+	const displayName = currentUser.displayName;
+	const navigate = useNavigate();
 	const meses = [
 		'Enero',
 		'Febrero',
@@ -38,7 +38,11 @@ export const CajasArchivadas = () => {
 	useEffect(() => {
 		const fetchCajas = async () => {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const cajasRef = collection(db, 'cajas');
 				const snapshot = await getDocs(cajasRef);
 				const fetchedCajas = snapshot.docs.map((doc) => {
@@ -199,7 +203,9 @@ export const CajasArchivadas = () => {
 				}}>
 				<IconButton
 					color='primary'
-					onClick={() => verCaja(row.original.id)}>
+					onClick={() => {
+						navigate(`/vercaja/${row.original.id}`);
+					}}>
 					<VisibilityIcon />
 				</IconButton>
 			</Box>

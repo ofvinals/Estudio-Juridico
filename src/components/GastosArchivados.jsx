@@ -26,7 +26,11 @@ export const GastosArchivados = () => {
 	useEffect(() => {
 		const fetchGastos = async () => {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const gastosRef = collection(db, 'gastos');
 				const snapshot = await getDocs(gastosRef);
 				const fetchedGastos = snapshot.docs.map((doc) => {

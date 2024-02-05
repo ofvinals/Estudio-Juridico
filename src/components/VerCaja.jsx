@@ -19,7 +19,11 @@ export const VerCaja = () => {
 	useEffect(() => {
 		async function loadCaja() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const cajaRef = doc(db, 'cajas', id);
 				const snapshot = await getDoc(cajaRef);
 				const cajaData = snapshot.data();

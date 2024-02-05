@@ -48,7 +48,11 @@ export const GestionCaja = () => {
 	useEffect(() => {
 		const fetchCajas = async () => {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const cajasRef = collection(db, 'cajas');
 				const snapshot = await getDocs(cajasRef);
 				const fetchedCajas = snapshot.docs.map((doc) => {
@@ -71,7 +75,7 @@ export const GestionCaja = () => {
 
 	const formatValue = (value) => {
 		if (value instanceof Date) {
-			return value.toLocaleDateString('es-ES');
+			return value.toLocaleDateString('es-AR');
 		} else if (value && value.toDate instanceof Function) {
 			// Convert Firestore timestamp to Date
 			const date = value.toDate();
@@ -245,7 +249,11 @@ export const GestionCaja = () => {
 
 	async function borrarCaja(id) {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const result = await Swal.fire({
 				title: '¿Estás seguro?',
 				text: 'Confirmas la eliminacion del movimiento de la caja?',
@@ -258,13 +266,14 @@ export const GestionCaja = () => {
 			});
 			if (result.isConfirmed) {
 				await deleteCaja(id);
+				Swal.close();
 				Swal.fire({
 					icon: 'success',
 					title: 'Movimiento de caja eliminado correctamente',
 					showConfirmButton: false,
 					timer: 1500,
 				});
-				Swal.close();
+		
 				setData((prevData) => prevData.filter((caja) => caja.id !== id));
 			}
 		} catch (error) {

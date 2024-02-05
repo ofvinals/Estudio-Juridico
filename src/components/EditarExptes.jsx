@@ -53,7 +53,7 @@ export const EditarExptes = ({}) => {
 				setValue('caratula', caratulaValue);
 				handleOpenModal();
 			} catch (error) {
-				console.error('Error al cargar el expediente', error);
+				console.error('Error al editar el expediente', error);
 			}
 		}
 		loadExpte();
@@ -92,7 +92,11 @@ export const EditarExptes = ({}) => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const expteRef = doc(db, 'expedientes', id);
 			await updateDoc(expteRef, data);
 			Swal.fire({
@@ -101,14 +105,14 @@ export const EditarExptes = ({}) => {
 				showConfirmButton: false,
 				timer: 1500,
 			});
-			Swal.close();
 			navigate('/gestionexpedientes');
+			Swal.close();
 			handleCloseModal();
 		} catch (error) {
-			console.error('Error al eliminar el movimiento:', error);
+			console.error('Error al eliminar el expediente:', error);
 			Swal.fire({
 				icon: 'error',
-				title: 'Error al editar el movimiento. Intente nuevamente!',
+				title: 'Error al editar el expediente. Intente nuevamente!',
 				showConfirmButton: false,
 				timer: 1500,
 			});

@@ -21,7 +21,11 @@ export const CargaUsu = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const usuariosRef = collection(db, 'usuarios');
 			await addDoc(usuariosRef, values);
 			Swal.fire({

@@ -30,7 +30,11 @@ export const EditarTurnos = ({}) => {
 	useEffect(() => {
 		async function loadTurno() {
 			try {
-				Swal.showLoading();
+				Swal.fire({
+					title: 'Cargando...',
+					allowOutsideClick: false,
+					showConfirmButton: false,
+				});
 				const turnoRef = doc(db, 'turnos', id);
 				const snapshot = await getDoc(turnoRef);
 				console.log('Datos del turno cargado:', snapshot.data());
@@ -41,8 +45,20 @@ export const EditarTurnos = ({}) => {
 				handleOpenModal();
 				Swal.close();
 				handleOpenModal();
+				Swal.fire({
+					icon: 'success',
+					title: 'Turno editado correctamente',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			} catch (error) {
 				console.error('Error al cargar el turno', error);
+				Swal.fire({
+					icon: 'error',
+					title: 'Error al editar el turno. Intente nuevamente!',
+					showConfirmButton: false,
+					timer: 1500,
+				});
 			}
 		}
 		loadTurno();
@@ -50,7 +66,11 @@ export const EditarTurnos = ({}) => {
 
 	const onSubmit = handleSubmit(async (data) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			const turnoRef = doc(db, 'turnos', id);
 			await updateDoc(turnoRef, data);
 			Swal.fire({
@@ -67,7 +87,7 @@ export const EditarTurnos = ({}) => {
 				navigate('/agendausu', { replace: true });
 			}
 		} catch (error) {
-			console.error('Error al eliminar el turno:', error);
+			console.error('Error al editar el turno:', error);
 			Swal.fire({
 				icon: 'error',
 				title: 'Error al editar el turno. Intente nuevamente!',

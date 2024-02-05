@@ -23,7 +23,11 @@ export const Registro = () => {
 
 	const onSubmit = handleSubmit(async (values) => {
 		try {
-			Swal.showLoading();
+			Swal.fire({
+				title: 'Cargando...',
+				allowOutsideClick: false,
+				showConfirmButton: false,
+			});
 			await registro(values);
 			Swal.close();
 			Swal.fire({
