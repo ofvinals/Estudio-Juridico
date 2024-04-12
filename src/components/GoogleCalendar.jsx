@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -52,6 +52,7 @@ export const GoogleCalendar = () => {
 					timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 				},
 			};
+			console.log(accessToken)
 			await fetch(
 				'https://www.googleapis.com/calendar/v3/calendars/365fa9c4ffc2a2c85cd2d4c3e28942427e52a6a2a6d92386566dbe9ada6d50fe@group.calendar.google.com/events',
 				{
@@ -63,7 +64,7 @@ export const GoogleCalendar = () => {
 				}
 			)
 				.then((data) => data.json())
-				.then((data) => {
+				.then(() => {
 					console.log('Evento creado, revisa tu Google Calendar');
 				});
 		} catch (error) {

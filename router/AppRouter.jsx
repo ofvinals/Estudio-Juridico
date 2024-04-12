@@ -2,16 +2,16 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-import { Login } from '../src/components/Login';
-import { Header } from '../src/components/Header';
-import { Footer } from '../src/components/Footer';
-import { Nosotros } from '../src/components/Nosotros';
-import { Contact } from '../src/components/Contact';
-import { Registro } from '../src/components/Registro';
-import { Especialidad } from '../src/components/Especialidad';
+import { Login } from '../src/pages/Login';
+import { Header } from '../src/pages/Header';
+import { Footer } from '../src/pages/Footer';
+import { Nosotros } from '../src/pages/Nosotros';
+import { Contact } from '../src/pages/Contact';
+import { Registro } from '../src/pages/Registro';
+import { Especialidad } from '../src/pages/Especialidad';
 import { Recuperar } from '../src/components/Recuperar';
-import { Home } from '../src/components/Home';
-import { Interes } from '../src/components/Interes';
+import { Home } from '../src/pages/Home';
+import { Interes } from '../src/pages/Interes';
 
 import { AuthProvider } from '../src/context/AuthContext';
 import PrivateRoute from './PrivateRoute';

@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,7 +7,7 @@ import Swal from 'sweetalert2';
 import '../css/Especialidad.css';
 
 export const Especialidad = () => {
-	const handleClickCiv = (e) => {
+	const handleClickCiv = () => {
 		Swal.fire({
 			title: 'Derecho Civil',
 			text: 'lorem',
@@ -16,7 +15,7 @@ export const Especialidad = () => {
 		});
 	};
 
-	const handleClickLab = (e) => {
+	const handleClickLab = () => {
 		Swal.fire({
 			title: 'Derecho Laboral',
 			html: `
@@ -28,7 +27,7 @@ export const Especialidad = () => {
 		});
 	};
 
-	const handleClickSus = (e) => {
+	const handleClickSus = () => {
 		Swal.fire({
 			title: 'Derecho Sucesorio',
 			html: `
@@ -41,7 +40,7 @@ export const Especialidad = () => {
 		});
 	};
 
-	const handleClickConc = (e) => {
+	const handleClickConc = () => {
 		Swal.fire({
 			title: 'Derecho Concursal',
 			html: `
@@ -52,7 +51,7 @@ export const Especialidad = () => {
 		});
 	};
 
-	const handleClickSoc = (e) => {
+	const handleClickSoc = () => {
 		Swal.fire({
 			title: 'Derecho Societario',
 			html: `
@@ -63,7 +62,7 @@ export const Especialidad = () => {
 		});
 	};
 
-	const handleClickCom = (e) => {
+	const handleClickCom = () => {
 		Swal.fire({
 			title: 'Derecho Comercial',
 			html: `
@@ -84,7 +83,7 @@ export const Especialidad = () => {
 						<Col xs={10} md={4}>
 							<Card className='cardbody'>
 								<div className=''>
-									<i class='iconespecialidad fa-solid fa-file-contract'></i>
+									<i className='iconespecialidad fa-solid fa-file-contract'></i>
 									<Card.Title className='titlecard'>
 										Derecho Civil
 									</Card.Title>
@@ -106,7 +105,7 @@ export const Especialidad = () => {
 						<Col xs={10} md={4}>
 							<Card className='cardbody'>
 								<div className=''>
-									<i class='iconespecialidad fa-solid fa-person-digging'></i>
+									<i className='iconespecialidad fa-solid fa-person-digging'></i>
 									<Card.Title className='titlecard'>
 										Derecho Laboral
 									</Card.Title>
@@ -128,7 +127,7 @@ export const Especialidad = () => {
 						<Col xs={10} md={4}>
 							<Card className='cardbody'>
 								<div className=''>
-									<i class='iconespecialidad fa-solid fa-stamp'></i>
+									<i className='iconespecialidad fa-solid fa-stamp'></i>
 									<Card.Title className='titlecard'>
 										Derecho Sucesorio
 									</Card.Title>
@@ -149,7 +148,7 @@ export const Especialidad = () => {
 						<Col xs={10} md={4}>
 							<Card className='cardbody'>
 								<div className=''>
-									<i class='iconespecialidad fa-solid fa-landmark'></i>
+									<i className='iconespecialidad fa-solid fa-landmark'></i>
 									<Card.Title className='titlecard'>
 										Derecho Comercial
 									</Card.Title>
@@ -193,7 +192,7 @@ export const Especialidad = () => {
 						<Col xs={10} md={4}>
 							<Card className='cardbody'>
 								<div className='y'>
-									<i class='iconespecialidad fa-solid fa-scale-balanced'></i>
+									<i className='iconespecialidad fa-solid fa-scale-balanced'></i>
 									<Card.Title className='titlecard'>
 										Derecho Concursal
 									</Card.Title>

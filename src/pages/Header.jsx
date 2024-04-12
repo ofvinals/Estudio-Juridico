@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
@@ -131,7 +131,7 @@ export const Header = () => {
 									</p>
 									{user ? (
 										<button
-											onClick={(e) => {handleNavCollapse(); handleLogOut()}}
+											onClick={(e) => {handleNavCollapse(e); handleLogOut(e)}}
 											className='botonlogout'>
 											<i className='iconavbar bi bi-box-arrow-left'></i>
 											Cerrar Sesión
@@ -151,7 +151,7 @@ export const Header = () => {
 											user ? 'regdisable' : ''
 										}`}
 										onClick={(e) => {
-											handleNavCollapse();
+											handleNavCollapse(e);
 										}}>
 										<i className='iconavbar bi bi-r-circle-fill'></i>
 										Registrarme

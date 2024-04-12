@@ -29,14 +29,4 @@ app.use(express.json());
 
 app.use('/api', authRoutes);
 
-// async function main() {
-// 	try {
-// 		await connectDB();
-// 		console.log(`Server listening on`, 4000);
-// 		app.listen(4000);
-// 	} catch (error) {
-// 		console.error(error);
-// 	}
-// }
 
-// main();

@@ -1,4 +1,4 @@
-import { React, useRef } from 'react';
+import { useRef } from 'react';
 import Form from 'react-bootstrap/Form';
 import '../css/Recuperar.css';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +13,7 @@ export const Recuperar = () => {
 		e.preventDefault();
 		try {
 			await resetPassword(emailRef.current.value);
-			navigate ('/home')
+			navigate('/home');
 		} catch (error) {
 			console.error('Error al restablecer la contraseña:', error);
 		}
@@ -29,7 +29,12 @@ export const Recuperar = () => {
 				</p>
 
 				<Form.Group controlId='inputemail'>
-					<input className='inputrec' type='email' name='emailRef' ref={emailRef} />
+					<input
+						className='inputrec'
+						type='email'
+						name='emailRef'
+						ref={emailRef}
+					/>
 				</Form.Group>
 
 				<Form.Group

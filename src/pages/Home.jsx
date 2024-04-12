@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import Carousel from 'react-bootstrap/Carousel';
 import '../css/Home.css';
@@ -9,7 +8,8 @@ export const Home = () => {
 			<a
 				href='https://api.whatsapp.com/send?phone=+543814581382&text=Hola!%20Quiero%20consultar%20por%20servicios%20de%20asesoramiento%20legal.%20'
 				className='float'
-				target='_blank'>
+				target='_blank'
+				rel='noreferrer'>
 				<i className='fa fa-whatsapp my-float'></i>
 			</a>
 			<div className='imagennav'>

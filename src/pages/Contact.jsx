@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import emailjs from '@emailjs/browser';
 import Swal from 'sweetalert2';
 import '../css/Contact.css';
@@ -17,7 +17,7 @@ export const Contact = () => {
 				'saMzvd5sdlHj2BhYr'
 			)
 			.then(
-				(result) => {
+				() => {
 					Swal.fire({
 						icon: 'success',
 						title: 'Mensaje enviado correctamente! Te responderemos a la brevedad posible!',

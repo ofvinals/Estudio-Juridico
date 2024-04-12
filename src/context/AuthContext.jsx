@@ -78,7 +78,7 @@ export const AuthProvider = ({ children }) => {
 		provider.addScope('email');
 		provider.addScope('https://www.googleapis.com/auth/userinfo.email');
 		provider.addScope('https://www.googleapis.com/auth/userinfo.profile');
-		provider.addScope('https://www.googleapis.com/auth/calendar.events');
+
 
 		const result = await signInWithPopup(auth, provider)
 			.then((result) => {
