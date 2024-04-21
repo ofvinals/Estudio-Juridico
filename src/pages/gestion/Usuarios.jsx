@@ -14,7 +14,7 @@ import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { Table } from '../../components/Gestion/Table';
 import { Detail } from '../../components/Gestion/Detail';
-import { VerUsu } from '../../components/ViewModals/Verusu';
+import { VerUsu } from '../../components/ViewModals/VerUsu';
 import { EditarUsu } from '../../components/EditModals/EditarUsu';
 export const Usuarios = () => {
 	const { currentUser } = useAuth();
