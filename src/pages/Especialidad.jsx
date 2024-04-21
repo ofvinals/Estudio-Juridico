@@ -22,7 +22,7 @@ export const Especialidad = () => {
 			<div style="text-align: left; font-size: 16px; line-height: 1.5;">
 			<p style="margin-bottom: 10px;">Contamos con la idoneidad y experiencia para asesorar a trabajadores que han sufrido despidos sin justa causa, despido indirecto, despido discriminatorio o han sido víctimas de violencia laboral, mobbing o acoso laboral.</p>
 			<p style="margin-bottom: 10px;">Te representamos en litigios por enfermedades profesionales o accidentes laborales.</p>
-		 </div>`,
+		   </div>`,
 			confirmButtonColor: '#8f8e8b',
 		});
 	};
@@ -32,10 +32,10 @@ export const Especialidad = () => {
 			title: 'Derecho Sucesorio',
 			html: `
       <div style="text-align: left; font-size: 16px; line-height: 1.5;">
-        <p style="margin-bottom: 10px;">Gestión integral en procesos de sucesión de bienes, agilidad en declaratorias de herederos.</p>
-        <p style="margin-bottom: 10px;">Anticipación mediante planificación sucesoria, testamentos y fideicomisos.</p>
+         <p style="margin-bottom: 10px;">Gestión integral en procesos de sucesión de bienes, agilidad en declaratorias de herederos.</p>
+         <p style="margin-bottom: 10px;">Anticipación mediante planificación sucesoria, testamentos y fideicomisos.</p>
       </div>
-    `,
+      `,
 			confirmButtonColor: '#8f8e8b',
 		});
 	};

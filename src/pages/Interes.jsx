@@ -1,11 +1,9 @@
-import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CardGroup from 'react-bootstrap/CardGroup';
 import Container from 'react-bootstrap/Container';
 import { NavLink } from 'react-router-dom';
-
 import '../css/Interes.css';
 
 export const Interes = () => {

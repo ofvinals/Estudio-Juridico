@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 import '../css/Admin.css';
 import { useForm } from 'react-hook-form';
@@ -32,7 +33,7 @@ export const Notas = () => {
 			}
 		};
 		fetchData();
-	}, []);
+	}, [notas]);
 
 	// funcion para cargar notas
 	function cargarTablaNotas(datosNotas) {

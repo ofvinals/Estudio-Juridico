@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Modal, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
@@ -63,7 +63,8 @@ export const Pagos = () => {
 								<a
 									className='text-white text-decoration-none'
 									href='https://link.mercadopago.com.ar/estudioposse'
-									target='_blank'>
+									target='_blank'
+									rel="noreferrer">
 									<i className='pe-2 fa-solid fa-handshake-simple'></i>
 									Boton de Pago
 								</a>

@@ -1,7 +1,7 @@
-import React, { useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
 import '../css/Registro.css';
 import { useAuth } from '../context/AuthContext';
@@ -10,7 +10,6 @@ import Swal from 'sweetalert2';
 
 export const Registro = () => {
 	const { registro } = useAuth();
-	const navigate = useNavigate();
 	const {
 		register,
 		getValues,
